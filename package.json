@@ -1,0 +1,15 @@
+{
+  "name": "mygroton-reporting",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "Seth Battis <sbattis@groton.org>",
+  "license": "GPL-3.0",
+  "dependencies": {
+    "dotenv": "^10.0.0",
+    "puppeteer": "^10.2.0"
+  },
+  "devDependencies": {
+    "@types/puppeteer": "^5.4.4",
+    "typescript": "^4.4.3"
+  }
+}
