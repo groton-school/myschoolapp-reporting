@@ -18,7 +18,7 @@
     "build:compile": "lerna run build",
     "release": "run-s release:*",
     "release:changeset": "changeset version",
-    "release:publish": "pnpm publish -r --otp $(op item get npm --otp)"
+    "release:publish": "pnpm publish -r --otp $(op item get npm --otp) --access public"
   },
   "devDependencies": {
     "@battis/eslint-config": "^2.0.2",
