@@ -46,7 +46,7 @@
     "datadirect": "workspace:*",
     "dotenv": "^16.4.7",
     "ejs": "^3.1.10",
-    "puppeteer": "^23.10.4"
+    "puppeteer": "^23.11.1"
   },
   "devDependencies": {
     "@tsconfig/node20": "^20.1.4",
@@ -54,7 +54,7 @@
     "@types/content-disposition": "^0.5.8",
     "@types/express": "^5.0.0",
     "del-cli": "^6.0.0",
-    "globals": "^15.13.0",
+    "globals": "^15.14.0",
     "npm-run-all": "^4.1.5",
     "typescript": "^5.7.2"
   },
