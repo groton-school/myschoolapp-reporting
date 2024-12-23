@@ -1,5 +1,11 @@
 # datadirect
 
+## 0.2.2
+
+### Patch Changes
+
+- 9606767: Switch repos (again, returning)
+
 ## 0.2.1
 
 ### Patch Changes

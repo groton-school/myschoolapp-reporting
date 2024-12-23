@@ -1,6 +1,6 @@
 {
   "name": "datadirect",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "Types for working with Blackbaud's APIs",
   "keywords": [
     "blackbaud",
