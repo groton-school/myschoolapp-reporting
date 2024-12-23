@@ -15,7 +15,10 @@
   "scripts": {
     "build": "run-s build:*",
     "build:paths": "monorepo-package-paths --repository --homepage --author -w",
-    "build:compile": "lerna run build"
+    "build:compile": "lerna run build",
+    "release": "run-s release:*",
+    "release:changeset": "changeset version",
+    "release:publish": "pnpm publish -r --otp $(op item get npm --otp)"
   },
   "devDependencies": {
     "@battis/eslint-config": "^2.0.2",
