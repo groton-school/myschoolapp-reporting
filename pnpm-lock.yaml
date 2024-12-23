@@ -23,6 +23,9 @@ importers:
       monorepo-package-paths:
         specifier: ^0.3.7
         version: 0.3.7(prettier@3.4.2)
+      myschoolapp-reporting:
+        specifier: workspace:*
+        version: link:packages/myschoolapp-reporting
       npm-run-all:
         specifier: ^4.1.5
         version: 4.1.5

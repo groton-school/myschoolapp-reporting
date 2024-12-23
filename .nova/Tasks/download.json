@@ -11,7 +11,7 @@
     },
     "run" : {
       "enabled" : true,
-      "script" : "cd packages\/myschoolapp-reporting\nsource .env\nnode .\/dist\/bin\/msar.js download --stdoutLevel all --logFilePath .\/var\/download.log -u \"$(op item get $OP_ITEM --fields username)\" -p \"$(op item get $OP_ITEM --fields password --reveal)\" --sso $SSO --outputPath \"$OUT\" --pretty \"$DOWNLOAD\""
+      "script" : "source .env\nmsar download --stdoutLevel all --logFilePath .\/var\/download.log -u \"$(op item get $OP_ITEM --fields username)\" -p \"$(op item get $OP_ITEM --fields password --reveal)\" --sso $SSO --outputPath \"$OUT\" --pretty \"$DOWNLOAD\""
     }
   },
   "buildBeforeRunning" : true,
