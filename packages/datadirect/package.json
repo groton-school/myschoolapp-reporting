@@ -1,0 +1,42 @@
+{
+  "name": "datadirect",
+  "version": "0.2.1",
+  "description": "Types for working with Blackbaud's APIs",
+  "keywords": [
+    "blackbaud",
+    "datadirect",
+    "sky",
+    "api"
+  ],
+  "homepage": "https://github.com/battis/myschoolapp-reporting/tree/main/packages/datadirect#readme",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/battis/myschoolapp-reporting.git",
+    "directory": "packages/datadirect"
+  },
+  "license": "MIT",
+  "author": {
+    "name": "Seth Battis",
+    "url": "https://github.com/battis"
+  },
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "clean": "del ./dist",
+    "build": "run-s build:*",
+    "build:clean": "run-s clean",
+    "build:compile": "tsc",
+    "release": "run-s release:*",
+    "release:build": "run-s build",
+    "release:changeset": "changeset version",
+    "release:publish": "pnpm publish -r --otp $(op item get npm --otp)"
+  },
+  "prettier": "@battis/prettier-config",
+  "devDependencies": {
+    "@tsconfig/recommended": "^1.0.8",
+    "del-cli": "^6.0.0",
+    "npm-run-all": "^4.1.5",
+    "typescript": "^5.7.2"
+  }
+}

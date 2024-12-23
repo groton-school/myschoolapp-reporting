@@ -10,6 +10,7 @@ repos:
       - id: check-merge-conflict
       - id: check-symlinks
       - id: check-executables-have-shebangs
+      - id: check-shebang-scripts-are-executable
       - id: check-docstring-first
       - id: check-case-conflict
       - id: forbid-submodules
@@ -42,3 +43,7 @@ repos:
     rev: 3.0.5
     hooks:
       - id: sqlfluff-lint
+  - repo: https://github.com/hija/clean-dotenv
+    rev: v0.0.7
+    hooks:
+      - id: clean-dotenv

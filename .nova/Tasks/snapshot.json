@@ -11,7 +11,7 @@
     },
     "run" : {
       "enabled" : true,
-      "script" : "source .env\nnode .\/dist\/bin\/msar.js snapshot --stdoutLevel all -u \"$(op item get $OP_ITEM --fields username)\" -p \"$(op item get $OP_ITEM --fields password --reveal)\" --sso $SSO --outputPath \"$OUT\" --pretty \"$URL\"\n"
+      "script" : "cd packages\/myschoolapp-reporting\nsource .env\nnode .\/dist\/bin\/msar.js snapshot --stdoutLevel all -u \"$(op item get $OP_ITEM --fields username)\" -p \"$(op item get $OP_ITEM --fields password --reveal)\" --sso $SSO --outputPath \"$OUT\" --pretty --no-gradebook --no-bulletinBoard --no-topics \"$URL\"\n"
     }
   },
   "buildBeforeRunning" : true,
