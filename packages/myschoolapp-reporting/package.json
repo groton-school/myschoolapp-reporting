@@ -34,12 +34,13 @@
   "prettier": "@battis/prettier-config",
   "dependencies": {
     "@battis/qui-cli": "^0.8.5",
-    "@battis/typescript-tricks": "^0.6.1",
+    "@battis/typescript-tricks": "^0.7.1",
     "@oauth2-cli/sky-api": "^0.1.0",
     "async-mutex": "^0.5.0",
     "cli-progress": "^3.12.0",
     "content-disposition": "^0.5.4",
     "datadirect": "workspace:*",
+    "datadirect-puppeteer": "workspace:*",
     "dotenv": "^16.4.7",
     "ejs": "^3.1.10",
     "puppeteer": "^23.11.1"

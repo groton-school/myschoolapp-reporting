@@ -4,8 +4,8 @@ import { Page } from 'puppeteer';
 
 export type Data = {
   markingPeriods?: {
-    markingPeriod: api.DataDirect.MarkingPeriod;
-    gradebook: api.DataDirect.Gradebook;
+    markingPeriod: api.datadirect.MarkingPeriod;
+    gradebook: api.datadirect.Gradebook;
   }[];
 };
 
@@ -20,7 +20,7 @@ export async function capture(
     const gradebook = await page.evaluate(
       async (groupId: string, params: string) => {
         const host = window.location.host;
-        const markingPeriods: api.DataDirect.MarkingPeriod[] = await (
+        const markingPeriods: api.datadirect.MarkingPeriod[] = await (
           await fetch(
             `https://${host}/api/datadirect/GradeBookMarkingPeriodList?sectionId=${groupId}`
           )

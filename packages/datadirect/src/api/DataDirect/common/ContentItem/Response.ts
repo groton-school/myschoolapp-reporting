@@ -1,4 +1,8 @@
-export type ContentItem = {
+export type Container = {
+  ContentId: number;
+};
+
+export type Response = {
   AlbumDescription?: string | null;
   AllowDownload?: NumericBoolean | null;
   AllowDownloadMsag?: string | null;

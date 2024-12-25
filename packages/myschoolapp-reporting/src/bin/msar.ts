@@ -19,7 +19,7 @@ if (commands.includes(command)) {
   process.argv[1] = path.join(import.meta.dirname, 'commands', filename);
   import(process.argv[1]);
 } else if (/^-?-h(elp)?$/.test(command)) {
-  console.log(`Usage:
+  cli.log.info(`Usage:
   ${path.basename(process.argv[1])} command -h --help
 
   Available commands: ${commands.map((command) => cli.colors.value(command)).join(', ')}

@@ -1,4 +1,4 @@
-export type SectionTopic = {
+export type Item = {
   AllowCopy: boolean;
   AllowEdit: boolean;
   ContextLabelId: number;
@@ -25,3 +25,5 @@ export type SectionTopic = {
   ViewerIsManagerInd: NumericBoolean;
   ViewerIsOwnerInd: NumericBoolean;
 };
+
+export type Response = Item[];

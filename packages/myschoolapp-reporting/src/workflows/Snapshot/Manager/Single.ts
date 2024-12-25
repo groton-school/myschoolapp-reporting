@@ -1,4 +1,5 @@
 import cli from '@battis/qui-cli';
+import { api as types } from 'datadirect';
 import { Page } from 'puppeteer';
 import * as common from '../../../common.js';
 import * as Assignments from '../Assignments.js';
@@ -6,6 +7,7 @@ import * as BulletinBoard from '../BulletinBoard.js';
 import * as Gradebook from '../Gradebook.js';
 import * as SectionInfo from '../SectionInfo.js';
 import * as Topics from '../Topics.js';
+import { TEMPORARY_payloadToURLSearchParams } from './TEMPORARY_payloadToURLSearchParams.js';
 
 export type Metadata = {
   Host: string;
@@ -17,7 +19,7 @@ export type Metadata = {
 export type Data = {
   Metadata: Metadata;
   SectionInfo: Awaited<ReturnType<typeof SectionInfo.capture>>;
-  GroupId: string;
+  GroupId: number;
   BulletinBoard?: Awaited<ReturnType<typeof BulletinBoard.capture>>;
   Topics?: Awaited<ReturnType<typeof Topics.capture>>;
   Assignments?: Awaited<ReturnType<typeof Assignments.capture>>;
@@ -29,13 +31,13 @@ export type BaseOptions = {
   topics?: boolean;
   assignments?: boolean;
   gradebook?: boolean;
-  params?: URLSearchParams;
+  payload?: types.datadirect.common.ContentItem.Payload;
   ignoreErrors?: boolean;
 } & common.SkyAPI.args.Parsed['skyApiOptons'];
 
 export type Options = BaseOptions & {
   url?: string;
-  groupId?: string;
+  groupId?: number;
 };
 
 export async function capture(
@@ -47,7 +49,7 @@ export async function capture(
     topics,
     assignments,
     gradebook,
-    params = new URLSearchParams(),
+    payload = { format: 'json' },
     outputPath,
     pretty,
     ignoreErrors,
@@ -55,7 +57,7 @@ export async function capture(
   }: Options & Partial<common.output.args.Parsed['outputOptions']>
 ) {
   if (url && groupId === undefined) {
-    groupId = (url.match(/https:\/\/[^0-9]+(\d+)/) || { 1: undefined })[1];
+    groupId = parseInt((url.match(/https:\/\/[^0-9]+(\d+)/) || { 1: '' })[1]);
   }
 
   if (groupId) {
@@ -69,11 +71,16 @@ export async function capture(
     const [s, b, t, g] = await Promise.all([
       SectionInfo.capture(page, groupId, ignoreErrors),
       bulletinBoard
-        ? BulletinBoard.capture(page, groupId, params, ignoreErrors)
+        ? BulletinBoard.capture(page, groupId, payload, ignoreErrors)
         : undefined,
-      topics ? Topics.capture(page, groupId, params, ignoreErrors) : undefined,
+      topics ? Topics.capture(page, groupId, payload, ignoreErrors) : undefined,
       gradebook
-        ? Gradebook.capture(page, groupId, params, ignoreErrors)
+        ? Gradebook.capture(
+            page,
+            groupId.toString(),
+            TEMPORARY_payloadToURLSearchParams(payload),
+            ignoreErrors
+          )
         : undefined
     ]);
 
@@ -93,7 +100,12 @@ export async function capture(
       BulletinBoard: b,
       Topics: t,
       Assignments: assignments
-        ? await Assignments.capture(page, groupId, params, oauthOptions)
+        ? await Assignments.capture(
+            page,
+            groupId.toString(),
+            TEMPORARY_payloadToURLSearchParams(payload),
+            oauthOptions
+          )
         : undefined,
       Gradebook: g
     };
@@ -124,7 +136,7 @@ export async function capture(
           topics,
           assignments,
           gradebook,
-          params
+          payload
         },
         { pretty }
       );

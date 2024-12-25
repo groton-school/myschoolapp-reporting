@@ -1,5 +1,5 @@
 import cli from '@battis/qui-cli';
-import { api } from 'datadirect';
+import { api } from 'datadirect-puppeteer';
 import { Page } from 'puppeteer';
 
 export async function all(page: Page, year?: string) {
@@ -12,16 +12,7 @@ export async function all(page: Page, year?: string) {
       year = `${now.getFullYear() - 1}%20-%20${now.getFullYear()}`;
     }
   }
-  const groups: api.DataDirect.Group[] = await page.evaluate(
-    async (year: string) => {
-      return await (
-        await fetch(
-          `https://${window.location.host}/api/dataDirect/groupFinderByYear?schoolYearLabel=${year}`
-        )
-      ).json();
-    },
-    year
-  );
-  cli.log.info(`${groups.length} groups found for ${year}`);
-  return groups;
+  return await api.datadirect.groupFinderByYear(page, {
+    schoolYearLabel: year
+  });
 }

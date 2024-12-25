@@ -1,5 +1,6 @@
 import cli from '@battis/qui-cli';
-import { api, SKY } from 'datadirect';
+import { SKY, api as types } from 'datadirect';
+import { api } from 'datadirect-puppeteer';
 import { Page } from 'puppeteer';
 import * as common from '../../common.js';
 
@@ -18,19 +19,16 @@ export async function capture(
     `school/v1/academics/sections/${groupId}/assignments`
   )) as SKY.AssignmentList;
 
-  const assignments: api.Assignment2.Response[] = [];
+  const assignments: types.Assignment2.UserAssignmentDetailsGetAllData.Response[] =
+    [];
   if (assignmentList.count > 0) {
-    const host = new URL(page.url()).hostname;
-
     for (const assignment of assignmentList.value) {
       assignments.push(
-        await page.evaluate(async (id: number) => {
-          return await (
-            await fetch(
-              `https://${host}/api/assignment2/UserAssignmentDetailsGetAllStudentData?assignmentIndexId=${id}&studentUserId=-1&personaId=3`
-            )
-          ).json();
-        }, assignment.index_id)
+        await api.Assignment2.UserAssignmentDetailsGetAllData(page, {
+          assignmentIndexId: assignment.index_id,
+          studentUserId: -1,
+          personaId: 3
+        })
       );
     }
   }

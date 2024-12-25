@@ -1,4 +1,4 @@
-export type SectionInfo = {
+export type Item = {
   AssociationId: number;
   Block: string;
   CourseTopic: string | null;
@@ -28,3 +28,5 @@ export type SectionInfo = {
   TeacherId: number;
   building_id: number | null;
 };
+
+export type Response = Item[];

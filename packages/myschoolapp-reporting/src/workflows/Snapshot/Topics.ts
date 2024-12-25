@@ -1,115 +1,101 @@
 import cli from '@battis/qui-cli';
-import { api } from 'datadirect';
+import { api as types } from 'datadirect';
+import { api } from 'datadirect-puppeteer';
 import { Page } from 'puppeteer';
 
-type Data = api.DataDirect.SectionTopic & {
-  Content?: (api.DataDirect.ContentItem & {
-    ObjectType?: api.DataDirect.ObjectType;
-    Content?: any; // FIXME type
-  })[];
+type Item = types.datadirect.topiccontentget.Item & {
+  ObjectType?: types.datadirect.TopicContentTypesGet.Item;
+  Content?: types.datadirect.ContentItem.Response | { error: any };
 };
+
+type Topic = types.datadirect.sectiontopicsget.Item & {
+  Content?: Item[];
+};
+
+type Data = Topic[];
 
 export async function capture(
   page: Page,
-  groupId: string,
-  params: URLSearchParams,
+  Id: number,
+  payload: types.datadirect.common.ContentItem.Payload,
   ignoreErrors = true
-): Promise<Data[] | undefined> {
-  cli.log.debug(`Group ${groupId}: Start capturing topics`);
+): Promise<Data | undefined> {
+  cli.log.debug(`Group ${Id}: Start capturing topics`);
   try {
-    const topics = await page.evaluate(
-      async (groupId: string, params: string) => {
-        const host = window.location.host;
-        const possibleContent: api.DataDirect.ObjectType[] = await (
-          await fetch(`https://${host}/api/DataDirect/TopicContentTypesGet`)
-        ).json();
-        const topics: Data[] = await (
-          await fetch(
-            `https://${host}/api/datadirect/sectiontopicsget/${groupId}/?format=json&active=true&future=false&expired=false&sharedTopics=false`
-          )
-        ).json();
-        for (const topic of topics) {
-          topic.Content = await (
-            await fetch(
-              `https://${host}/api/datadirect/topiccontentget/${topic.TopicID}/?format=json&index_id=${topic.TopicIndexID}&id=${topic.TopicIndexID}`
-            )
-          ).json();
-          for (const item of topic.Content || []) {
-            const itemParams = new URLSearchParams(params);
-            item.ObjectType = possibleContent.find(
-              (e) => e.Id == item.ContentId
-            );
-            try {
-              let endpoint: string | undefined;
-              switch (item.ObjectType?.Name) {
-                case 'Audio':
-                case 'Video':
-                case 'Photo':
-                  endpoint = `media/sectionmediaget/${groupId}/`;
-                  itemParams.append('contentId', item.ContentId.toString());
-                  break;
-                case 'Widget':
-                  endpoint = 'widget/WidgetGet/';
-                  itemParams.append('contextValue', groupId);
-                  break;
-                case 'Discussion Thread':
-                  endpoint = 'discussionitem/discussionitemsget/';
-                  itemParams.append(
-                    'contentIndexId',
-                    topic.TopicIndexID.toString()
-                  );
-                  itemParams.append('contentId', '386'); // FIXME this can't be right!!
-                  itemParams.append(
-                    'topicIndexId',
-                    topic.TopicIndexID.toString()
-                  );
-                  itemParams.append('viewDate', '');
-                  break;
-                case 'Assignment':
-                  endpoint = 'topic/topicassignmentsget/';
-                  itemParams.append('id', topic.TopicID.toString());
-                  itemParams.append('leadSectionId', groupId);
-                  itemParams.append('row', '0');
-                  itemParams.append('column', '1');
-                  itemParams.append('cell', '5');
-                  itemParams.append('selectedOnly', 'true');
-                  break;
-                case 'Cover Brief':
-                case 'Cover Image':
-                case 'Cover Title':
-                case 'Learning Tool':
-                case 'Horizontal Line':
-                case 'Spacer':
-                  endpoint = undefined;
-                  break;
-                case 'Downloads':
-                case 'Expectations':
-                case 'Links':
-                case 'Events': // TODO not verified
-                  endpoint = `${item.ObjectType.Name.replace(/^(.+)s$/, '$1')}/forsection/${groupId}/`;
-                  break;
-                default:
-                  endpoint = `${item.ObjectType?.Name.toLowerCase().replace(' ', '')}/forsection/${groupId}/`;
-              }
-              if (endpoint) {
-                item.Content = await (
-                  await fetch(`https://${host}/api/${endpoint}?${itemParams}`)
-                ).json();
-              }
-            } catch (error) {
-              item.Content = { error };
-            }
-          }
-        }
-        return topics;
+    const Topics: Data = [];
+    // FIXME cache response from TopicContentTypesGet
+    const possibleContent = await api.datadirect.TopicContentTypesGet(page, {});
+    const topics = await api.datadirect.sectiontopicsget(
+      page,
+      {
+        format: 'json',
+        sharedTopics: true,
+        future: !!payload.future,
+        expired: !!payload.expired,
+        active: !!payload.active
       },
-      groupId,
-      params.toString()
+      { Id }
     );
-    cli.log.debug(`Group ${groupId}: Topics captured`);
-    return topics;
+    for (const topic of topics) {
+      const { TopicID } = topic;
+      const Content: Item[] = [];
+      for (const item of await api.datadirect.topiccontentget(
+        page,
+        {
+          format: 'json',
+          index_id: topic.TopicIndexID,
+          id: topic.TopicIndexID // TODO should this be topic.TopicID?
+        },
+        {
+          TopicID
+        }
+      )) {
+        const ObjectType = possibleContent.find(
+          (t: types.datadirect.TopicContentTypesGet.Item) =>
+            t.Id == item.ContentId
+        );
+        try {
+          Content?.push({
+            ...item,
+            ObjectType,
+            Content: await api.datadirect.TopicContent_detail(
+              item,
+              possibleContent
+            )(
+              page,
+              {
+                ...payload,
+                id: TopicID,
+                leadSectionId: Id,
+                contextValue: Id,
+                topicIndexId: TopicID,
+                contentIndexId: topic.TopicIndexID,
+                row: item.RowIndex,
+                column: item.ColumnIndex,
+                cell: item.CellIndex
+              },
+              { Id }
+            )
+          });
+        } catch (error) {
+          Content?.push({
+            ...item,
+            ObjectType,
+            Content: { error }
+          });
+          cli.log.error(
+            `Error capturing Topic ${TopicID} content of type ${
+              ObjectType?.Name
+            } for group ${Id}: ${cli.colors.error(error)}`
+          );
+        }
+      }
+      Topics.push({ ...topic, Content: Content.length ? Content : undefined });
+    }
+    cli.log.debug(`Group ${Id}: Topics captured`);
+    return Topics;
   } catch (error) {
-    const message = `Group ${groupId}: Error capturing topics: ${cli.colors.error(error || 'unknown')}`;
+    const message = `Group ${Id}: Error capturing topics: ${cli.colors.error(error || 'unknown')}`;
     if (ignoreErrors) {
       cli.log.error(message);
       return undefined;

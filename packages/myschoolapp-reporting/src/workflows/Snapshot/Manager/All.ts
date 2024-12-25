@@ -80,7 +80,7 @@ export async function capture(
         cli.log.debug(`Group ${groups[i].lead_pk}: ${pad(i)}.json`);
         try {
           const snapshot = await Single.capture(parent, {
-            groupId: groups[i].lead_pk.toString(),
+            groupId: groups[i].lead_pk,
             ignoreErrors,
             ...options
           });
@@ -134,7 +134,7 @@ export async function capture(
           common.output.filePathFromOutputPath(outputPath, 'snapshot.json'),
           common.output.AddTimestamp
         );
-        const { bulletinBoard, topics, assignments, gradebook, params } =
+        const { bulletinBoard, topics, assignments, gradebook, payload } =
           options;
         common.output.writeJSON(filepath, data, { pretty });
         common.output.writeJSON(filepath.replace(/\.json$/, '.metadata.json'), {
@@ -148,7 +148,7 @@ export async function capture(
           topics,
           assignments,
           gradebook,
-          params
+          payload
         });
         if (errors.length) {
           const errorsPath = filepath.replace(/\.json$/, '.errors.json');

@@ -1,0 +1,34 @@
+{
+  "name": "datadirect-puppeteer",
+  "version": "0.0.0",
+  "description": "An implementation of scraping Blackbaud's front-end APIs using Puppeteer",
+  "homepage": "https://github.com/battis/myschoolapp-reporting/tree/main/packages/datadirect-puppeteer#readme",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/battis/myschoolapp-reporting.git",
+    "directory": "packages/datadirect-puppeteer"
+  },
+  "author": {
+    "name": "Seth Battis",
+    "url": "https://github.com/battis"
+  },
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "clean": "del ./dist",
+    "build": "run-s build:*",
+    "build:clean": "run-s clean",
+    "build:compile": "tsc"
+  },
+  "devDependencies": {
+    "@tsconfig/node20": "^20.1.4",
+    "del-cli": "^6.0.0",
+    "npm-run-all": "^4.1.5",
+    "typescript": "^5.7.2"
+  },
+  "peerDependencies": {
+    "datadirect": "workspace:*",
+    "puppeteer": "*"
+  }
+}

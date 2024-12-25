@@ -32,9 +32,37 @@ importers:
 
   packages/datadirect:
     devDependencies:
-      '@tsconfig/recommended':
-        specifier: ^1.0.8
-        version: 1.0.8
+      '@battis/typescript-tricks':
+        specifier: ^0.6.1
+        version: 0.6.1
+      '@tsconfig/node20':
+        specifier: ^20.1.4
+        version: 20.1.4
+      '@types/node':
+        specifier: ^22.10.2
+        version: 22.10.2
+      del-cli:
+        specifier: ^6.0.0
+        version: 6.0.0
+      npm-run-all:
+        specifier: ^4.1.5
+        version: 4.1.5
+      typescript:
+        specifier: ^5.7.2
+        version: 5.7.2
+
+  packages/datadirect-puppeteer:
+    dependencies:
+      datadirect:
+        specifier: workspace:*
+        version: link:../datadirect
+      puppeteer:
+        specifier: '*'
+        version: 23.11.1(typescript@5.7.2)
+    devDependencies:
+      '@tsconfig/node20':
+        specifier: ^20.1.4
+        version: 20.1.4
       del-cli:
         specifier: ^6.0.0
         version: 6.0.0
@@ -51,8 +79,8 @@ importers:
         specifier: ^0.8.5
         version: 0.8.5
       '@battis/typescript-tricks':
-        specifier: ^0.6.1
-        version: 0.6.1
+        specifier: ^0.7.1
+        version: 0.7.1
       '@oauth2-cli/sky-api':
         specifier: ^0.1.0
         version: 0.1.0(ejs@3.1.10)
@@ -68,6 +96,9 @@ importers:
       datadirect:
         specifier: workspace:*
         version: link:../datadirect
+      datadirect-puppeteer:
+        specifier: workspace:*
+        version: link:../datadirect-puppeteer
       dotenv:
         specifier: ^16.4.7
         version: 16.4.7
@@ -218,6 +249,9 @@ packages:
 
   '@battis/typescript-tricks@0.6.1':
     resolution: {integrity: sha512-vI87YZ7W1WEUeGxPl3Kwt2l3jigPSx5bb9Kvc/4DihZvN1m1PLYW7U+rG5N9nW9WAXWI/3JVgYANsbUmGAdjLA==}
+
+  '@battis/typescript-tricks@0.7.1':
+    resolution: {integrity: sha512-bbiPwOuZgJSieWFrv8oA5RqLzlh0yHctfHKqfA753RqNkRKW2Qr6kdxGwCgt1kptXVqGZNfJYT73t+DlTJbnUA==}
 
   '@changesets/apply-release-plan@7.0.7':
     resolution: {integrity: sha512-qnPOcmmmnD0MfMg9DjU1/onORFyRpDXkMMl2IJg9mECY6RnxL3wN0TCCc92b2sXt1jt8DgjAUUsZYGUGTdYIXA==}
@@ -704,9 +738,6 @@ packages:
 
   '@tsconfig/node20@20.1.4':
     resolution: {integrity: sha512-sqgsT69YFeLWf5NtJ4Xq/xAF8p4ZQHlmGW74Nu2tD4+g5fAsposc4ZfaaPixVu4y01BEiDCWLRDCvDM5JOsRxg==}
-
-  '@tsconfig/recommended@1.0.8':
-    resolution: {integrity: sha512-TotjFaaXveVUdsrXCdalyF6E5RyG6+7hHHQVZonQtdlk1rJZ1myDIvPUUKPhoYv+JAzThb2lQJh9+9ZfF46hsA==}
 
   '@tufjs/canonical-json@2.0.0':
     resolution: {integrity: sha512-yVtV8zsdo8qFHe+/3kw81dSLyF7D576A5cCFCi4X7B39tWT7SekaEFUnvnWJHz+9qO7qJTah1JbrDjWKqFtdWA==}
@@ -1494,8 +1525,8 @@ packages:
     resolution: {integrity: sha512-cgwlv/1iFQiFnU96XXgROh8xTeetsnJiDsTc7TYCLFd9+/WNkIqPTxiM/8pSd8VIrhXGTf1Ny1q1hquVqDJB5w==}
     engines: {node: '>= 4'}
 
-  domutils@3.1.0:
-    resolution: {integrity: sha512-H78uMmQtI2AhgDJjWeQmHwJJ2bLPD3GMmO7Zja/ZZh84wkm+4ut+IUnUdRa8uCGX88DiVx1j6FRe1XfxEgjEZA==}
+  domutils@3.2.1:
+    resolution: {integrity: sha512-xWXmuRnN9OMP6ptPd2+H0cCbcYBULa5YDTbMm/2lvkWvNA3O4wcW+GvzooqBuNM8yy6pl3VIAeJTUUWUbfI5Fw==}
 
   dot-prop@5.3.0:
     resolution: {integrity: sha512-QM8q3zDe58hqUqjraQOmzZ1LIH9SWQJTlEKCH4kJ2oQvLZk7RbQXvtDM2XEq3fwkV9CCvvH4LA0AV+ogFsBM2Q==}
@@ -4344,6 +4375,8 @@ snapshots:
 
   '@battis/typescript-tricks@0.6.1': {}
 
+  '@battis/typescript-tricks@0.7.1': {}
+
   '@changesets/apply-release-plan@7.0.7':
     dependencies:
       '@changesets/config': 3.0.5
@@ -5160,8 +5193,6 @@ snapshots:
       - supports-color
 
   '@tsconfig/node20@20.1.4': {}
-
-  '@tsconfig/recommended@1.0.8': {}
 
   '@tufjs/canonical-json@2.0.0': {}
 
@@ -5995,7 +6026,7 @@ snapshots:
     dependencies:
       domelementtype: 2.3.0
 
-  domutils@3.1.0:
+  domutils@3.2.1:
     dependencies:
       dom-serializer: 2.0.0
       domelementtype: 2.3.0
@@ -6677,7 +6708,7 @@ snapshots:
     dependencies:
       domelementtype: 2.3.0
       domhandler: 5.0.3
-      domutils: 3.1.0
+      domutils: 3.2.1
       entities: 4.5.0
 
   http-cache-semantics@4.1.1: {}

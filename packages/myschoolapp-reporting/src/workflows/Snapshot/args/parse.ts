@@ -23,7 +23,7 @@ export function parse(values: Record<string, any>): Result {
     fromDate,
     toDate
   } = values;
-  const params = new URLSearchParams({
+  const payload = {
     format,
     contextLabelId,
     editMode,
@@ -32,7 +32,7 @@ export function parse(values: Record<string, any>): Result {
     expired,
     fromDate,
     toDate
-  });
+  };
   const all = !!values.all;
   const bulletinBoard = !!values.bulletinBoard;
   const topics = !!values.topics;
@@ -45,7 +45,7 @@ export function parse(values: Record<string, any>): Result {
 
   return {
     snapshotOptions: {
-      params,
+      payload,
       bulletinBoard,
       topics,
       assignments,
