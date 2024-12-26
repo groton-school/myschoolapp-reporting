@@ -9,6 +9,20 @@ export type Item = types.datadirect.BulletinBoardContentGet.Item & {
 };
 export type Data = Item[];
 
+let possibleContent:
+  | types.datadirect.GroupPossibleContentGet.Response
+  | undefined = undefined;
+
+async function getPossibleContent(page: Page, leadSectionId: number) {
+  if (!possibleContent) {
+    possibleContent = await api.datadirect.GroupPossibleContentGet(page, {
+      format: 'json',
+      leadSectionId
+    });
+  }
+  return possibleContent;
+}
+
 export async function capture(
   page: Page,
   Id: number,
@@ -18,12 +32,7 @@ export async function capture(
   cli.log.debug(`Group ${Id}: Start capturing bulletin board`);
   try {
     const BulletinBoard: Data = [];
-    // FIXME cache response from GroupPossibleContentGet
-    const possibleContent: types.datadirect.GroupPossibleContentGet.Response =
-      await api.datadirect.GroupPossibleContentGet(page, {
-        format: 'json',
-        leadSectionId: Id
-      });
+    await getPossibleContent(page, Id);
     const items = await api.datadirect.BulletinBoardContentGet(page, {
       format: 'json',
       sectionId: Id,
@@ -31,7 +40,7 @@ export async function capture(
       pendingInd: false
     });
     for (const item of items) {
-      const ContentType = possibleContent.find(
+      const ContentType = possibleContent!.find(
         (e: types.datadirect.ContentType.Any) => e.ContentId == item.ContentId
       );
       try {
@@ -40,7 +49,7 @@ export async function capture(
           ContentType,
           Content: await api.datadirect.BulletinBoardContent_detail(
             item,
-            possibleContent
+            possibleContent!
           )(page, { ...payload, contextValue: Id }, { Id })
         });
       } catch (error) {

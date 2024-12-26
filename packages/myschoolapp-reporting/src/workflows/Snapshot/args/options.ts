@@ -1,6 +1,11 @@
 import cli from '@battis/qui-cli';
 import * as common from '../../../common.js';
 
+let defaultYear = `${new Date().getFullYear()} - ${new Date().getFullYear() + 1}`;
+if (new Date().getMonth() <= 6) {
+  defaultYear = `${new Date().getFullYear() - 1} -  ${new Date().getFullYear()}`;
+}
+
 export const options = {
   ...common.args.options,
   fromDate: {
@@ -38,6 +43,7 @@ export const options = {
     description: `Path to output directory or file to save filtered groups listing (include placeholder ${cli.colors.quotedValue('"%TIMESTAMP%"')} to specify its location, otherwise it is added automatically when needed to avoid overwriting existing files)`
   },
   year: {
-    description: `If ${cli.colors.value(`--all`)} flag is used, which year to download. (Default: current year)`
+    description: `If ${cli.colors.value(`--all`)} flag is used, which year to download. (Default: ${cli.colors.quotedValue(`"${defaultYear}"`)})`,
+    default: defaultYear
   }
 };

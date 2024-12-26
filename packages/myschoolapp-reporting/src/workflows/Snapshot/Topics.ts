@@ -35,7 +35,7 @@ export async function capture(
   cli.log.debug(`Group ${Id}: Start capturing topics`);
   try {
     const Topics: Data = [];
-    getPossibleContent(page);
+    await getPossibleContent(page);
     const topics = await api.datadirect.sectiontopicsget(
       page,
       {

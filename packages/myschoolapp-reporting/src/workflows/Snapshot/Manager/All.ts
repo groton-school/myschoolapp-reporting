@@ -20,6 +20,10 @@ export type Options = Single.BaseOptions & {
 
 const TEMP = path.join('/tmp/msar/snapshot', crypto.randomUUID());
 
+function cleanSplit(list?: string) {
+  return (list || '').split(',').map((item) => item.trim());
+}
+
 export async function capture(
   parent: Page,
   {
@@ -35,8 +39,8 @@ export async function capture(
   }: Options & common.output.args.Parsed['outputOptions']
 ) {
   return new Promise<Single.Data[]>(async (resolve) => {
-    const _assoc = (association || '').split(',').map((t) => t.trim());
-    const _terms = (termsOffered || '').split(',').map((t) => t.trim());
+    const _assoc = cleanSplit(association);
+    const _terms = cleanSplit(termsOffered);
     const groups = (await Groups.all(parent, year)).filter(
       (group) =>
         (association === undefined || _assoc.includes(group.association)) &&
