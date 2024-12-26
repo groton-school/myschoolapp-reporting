@@ -50,17 +50,33 @@ export async function capture(
     for (const topic of topics) {
       const { TopicID } = topic;
       const Content: Item[] = [];
-      for (const item of await api.datadirect.topiccontentget(
-        page,
-        {
-          format: 'json',
-          index_id: topic.TopicIndexID,
-          id: topic.TopicIndexID // TODO should this be topic.TopicID?
-        },
-        {
-          TopicID
+      const items = (
+        await api.datadirect.topiccontentget(
+          page,
+          {
+            format: 'json',
+            index_id: topic.TopicIndexID,
+            id: topic.TopicIndexID // TODO should this be topic.TopicID?
+          },
+          {
+            TopicID
+          }
+        )
+      ).reduce((merged, item) => {
+        if (
+          !merged.find(
+            (m) =>
+              m.ColumnIndex === item.ColumnIndex &&
+              m.RowIndex === item.RowIndex &&
+              m.CellIndex === item.CellIndex &&
+              m.ContentId === item.ContentId
+          )
+        ) {
+          merged.push(item);
         }
-      )) {
+        return merged;
+      }, [] as types.datadirect.topiccontentget.Response);
+      for (const item of items) {
         const ObjectType = possibleContent!.find(
           (t: types.datadirect.TopicContentTypesGet.Item) =>
             t.Id == item.ContentId
