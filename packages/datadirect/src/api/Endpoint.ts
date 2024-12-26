@@ -6,7 +6,7 @@ import {
 
 export type Response = JSONValue;
 
-export type Method = 'GET' | 'POST';
+export type Method = 'GET' | 'POST' | 'DELETE';
 
 export type Payload = Record<string, JSONPrimitiveTypes> | JSONObject;
 
@@ -15,6 +15,7 @@ export type FetchParams = {
   init: { method: Method; body?: string };
 };
 
+// TODO handle DELETE (no Payload) schema as well
 export type Prepare<P extends Payload> = (
   payload: P,
   base?: string
