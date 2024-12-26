@@ -42,7 +42,7 @@ export function prepareContent(
     case 'Downloads':
     case 'Expectations':
     case 'Links':
-    case 'Events': // TODO not verified
+    case 'Events':
       return base(contentType, { plural: true });
     default:
       if (contentType) {
