@@ -36,6 +36,9 @@ export function prepareContent(
     case 'Cover Brief':
     case 'Cover Image':
     case 'Cover Title':
+      throw new Error(
+        `All content for ${contentType.Content} is captured by /api/topiccontentget/:TopicID`
+      );
     case 'Roster':
     case 'Learning Tool':
       throw new Error(`Capturing ${contentType.Content} is not yet supported`);

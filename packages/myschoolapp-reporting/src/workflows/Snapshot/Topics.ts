@@ -78,16 +78,22 @@ export async function capture(
             )
           });
         } catch (error) {
-          Content?.push({
-            ...item,
-            ObjectType,
-            Content: { error }
-          });
-          cli.log.error(
-            `Error capturing Topic ${TopicID} content of type ${
-              ObjectType?.Name
-            } for group ${Id}: ${cli.colors.error(error)}`
-          );
+          if (
+            `${error}`.endsWith('is captured by /api/topiccontentget/:TopicID')
+          ) {
+            Content.push({ ...item, ObjectType });
+          } else {
+            Content?.push({
+              ...item,
+              ObjectType,
+              Content: { error }
+            });
+            cli.log.error(
+              `Error capturing Topic ${TopicID} content of type ${
+                ObjectType?.Name
+              } for group ${Id}: ${cli.colors.error(error)}`
+            );
+          }
         }
       }
       Topics.push({ ...topic, Content: Content.length ? Content : undefined });
