@@ -93,6 +93,10 @@ export class Spider {
               exclude,
               haltOnError
             });
+            /*
+             * FIXME FileName files in topics are at /ftpimages/:SchoolId/topics/:FileName
+             *   :SchoolId can be determined by calling `/api/schoolinfo/schoolparams`
+             */
           } else if (
             /Url$/i.test(key) ||
             (/FilePath$/i.test(key) &&
