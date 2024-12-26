@@ -14,6 +14,18 @@ type Topic = types.datadirect.sectiontopicsget.Item & {
 
 type Data = Topic[];
 
+let possibleContent:
+  | types.datadirect.TopicContentTypesGet.Response
+  | undefined = undefined;
+
+async function getPossibleContent(page: Page) {
+  if (!possibleContent) {
+    possibleContent = possibleContent =
+      await api.datadirect.TopicContentTypesGet(page, {});
+  }
+  return possibleContent;
+}
+
 export async function capture(
   page: Page,
   Id: number,
@@ -23,8 +35,7 @@ export async function capture(
   cli.log.debug(`Group ${Id}: Start capturing topics`);
   try {
     const Topics: Data = [];
-    // FIXME cache response from TopicContentTypesGet
-    const possibleContent = await api.datadirect.TopicContentTypesGet(page, {});
+    getPossibleContent(page);
     const topics = await api.datadirect.sectiontopicsget(
       page,
       {
@@ -50,7 +61,7 @@ export async function capture(
           TopicID
         }
       )) {
-        const ObjectType = possibleContent.find(
+        const ObjectType = possibleContent!.find(
           (t: types.datadirect.TopicContentTypesGet.Item) =>
             t.Id == item.ContentId
         );
@@ -60,7 +71,7 @@ export async function capture(
             ObjectType,
             Content: await api.datadirect.TopicContent_detail(
               item,
-              possibleContent
+              possibleContent!
             )(
               page,
               {
