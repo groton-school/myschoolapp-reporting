@@ -239,7 +239,6 @@ export class AuthenticatedFetch extends EventEmitter implements Strategy {
   }
 
   private filepathVariants({ url, filename, guid }: FilepathVariantsOptions) {
-    // TODO configurable default Downloads directory
     const urlFilename = path.basename(new URL(url).pathname);
     const filenameVariants: Record<string, string> = { urlFilename };
     if (filename) {

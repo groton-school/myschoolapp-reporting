@@ -8,6 +8,7 @@ export function base(
   contentType: ContentType.Any,
   { plural = false }: Options = {}
 ) {
+  // TODO filater base payload
   let pathComponent = contentType?.Content.toLowerCase().replace(' ', '');
   if (plural) {
     pathComponent = contentType.Content.replace(/^(.+)s$/, '$1');

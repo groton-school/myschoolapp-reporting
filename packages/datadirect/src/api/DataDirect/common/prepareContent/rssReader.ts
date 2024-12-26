@@ -3,6 +3,7 @@ import { Payload } from '../ContentItem.js';
 
 export function rssReader() {
   return (payload: Payload, base?: string) => {
+    // TODO filter rssReader payload
     if (!payload.contextValue) {
       throw new Error(`contextValue must be set (usually to section.Id)`);
     }
