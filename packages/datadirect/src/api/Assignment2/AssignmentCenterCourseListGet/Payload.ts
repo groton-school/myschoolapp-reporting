@@ -5,7 +5,7 @@ type DropDownItem = {
 type DropDownList = { DropDownList: DropDownItem[] };
 
 type Column = {
-  DatabaseColumn: string;
+  DatabaseColumn?: string;
   PropertyName?: string;
   DataType?: number;
   Selected: boolean;
@@ -20,7 +20,7 @@ type Column = {
   DisplayName?: string;
   Description?: string;
   SortOrder?: number;
-  OrderColumnAdded: number;
+  OrderColumnAdded?: number;
   SortColumn?: string;
   AdditionalDatabaseColumns?: string[];
   DisplayFormat?: number;
@@ -43,21 +43,23 @@ type FilterValue = {
 };
 
 type Filter = {
-  Column: Column;
+  Column?: Column;
   Values: FilterValue[];
   Category: string;
   FilterType: number;
   UserDefinedId: number;
   Selected: boolean;
-  SelectedOption: number;
+  SelectedOption?: number | NumericString;
   HasChildFilters: boolean;
   SelectedValues: any[]; // TODO Assignent2/AssignmentCenterCourseListGet/Payload.Filter.SelectedValues type
   FilterClass: string;
   ServiceFilterClass: string;
-  FilterLabel: string;
+  FilterLabel?: string;
   UseViewerId: boolean;
   FilterAlwaysSelected: boolean;
-  DoNotClear: boolean;
+  FilterOn?: string;
+  DoNotClear?: boolean;
+  Hidden?: boolean;
 };
 
 export type Payload = {
@@ -79,4 +81,5 @@ export type Payload = {
   Name: string;
   Id: number;
   ListType: number;
+  ShowFilterLandingPage?: boolean;
 };
