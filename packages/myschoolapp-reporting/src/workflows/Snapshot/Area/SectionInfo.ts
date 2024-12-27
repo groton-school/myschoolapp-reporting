@@ -1,15 +1,15 @@
 import cli from '@battis/qui-cli';
 import { api as types } from 'datadirect';
 import { api } from 'datadirect-puppeteer';
-import { Page } from 'puppeteer';
+import * as Base from './Base.js';
 
 export type Data = types.datadirect.SectionInfoView.Item;
 
-export async function capture(
-  page: Page,
-  sectionId: number,
+export const snapshot: Base.Snapshot<Data> = async ({
+  page,
+  groupId: sectionId,
   ignoreErrors = true
-): Promise<Data | undefined> {
+}): Promise<Data | undefined> => {
   cli.log.debug(`Group ${sectionId}: Start capturing section info`);
   try {
     return (
@@ -36,4 +36,4 @@ export async function capture(
       throw new Error(message);
     }
   }
-}
+};

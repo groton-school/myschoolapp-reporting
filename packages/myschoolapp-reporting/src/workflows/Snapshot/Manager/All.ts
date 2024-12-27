@@ -1,12 +1,12 @@
 import cli from '@battis/qui-cli';
 import cliProgress from 'cli-progress';
+import { api } from 'datadirect-puppeteer';
 import crypto from 'node:crypto';
 import { EventEmitter } from 'node:events';
 import fs from 'node:fs/promises';
 import path from 'node:path';
 import { Page } from 'puppeteer';
 import * as common from '../../../common.js';
-import * as Groups from '../Groups.js';
 import * as args from '../args.js';
 import * as Single from './Single.js';
 
@@ -45,7 +45,11 @@ export async function capture(
   return new Promise<Single.Data[]>(async (resolve) => {
     const _assoc = cleanSplit(association);
     const _terms = cleanSplit(termsOffered);
-    const groups = (await Groups.all(parent, year)).filter(
+    const groups = (
+      await api.datadirect.groupFinderByYear(parent, {
+        schoolYearLabel: year
+      })
+    ).filter(
       (group) =>
         (association === undefined || _assoc.includes(group.association)) &&
         (termsOffered === undefined ||

@@ -1,13 +1,17 @@
 import cli from '@battis/qui-cli';
+import { CoerceError } from '@battis/typescript-tricks';
 import { api as types } from 'datadirect';
 import { api } from 'datadirect-puppeteer';
 import { Page } from 'puppeteer';
+import * as Base from './Base.js';
 
 export type Item = types.datadirect.BulletinBoardContentGet.Item & {
-  Content?: types.datadirect.ContentItem.Response | { error: any };
+  Content?: types.datadirect.ContentItem.Response | Base.Error;
   ContentType?: types.datadirect.ContentType.Any;
 };
 export type Data = Item[];
+
+const studentDataContentTypes = ['Roster'];
 
 let possibleContent:
   | types.datadirect.GroupPossibleContentGet.Response
@@ -23,12 +27,13 @@ async function getPossibleContent(page: Page, leadSectionId: number) {
   return possibleContent;
 }
 
-export async function capture(
-  page: Page,
-  Id: number,
-  payload: types.datadirect.common.ContentItem.Payload = { format: 'json' },
-  ignoreErrors = true
-): Promise<Data | undefined> {
+export const snaphot: Base.Snapshot<Data> = async ({
+  page,
+  groupId: Id,
+  payload = { format: 'json' },
+  ignoreErrors = true,
+  studentData
+}): Promise<Data | undefined> => {
   cli.log.debug(`Group ${Id}: Start capturing bulletin board`);
   try {
     const BulletinBoard: Data = [];
@@ -44,6 +49,13 @@ export async function capture(
         (e: types.datadirect.ContentType.Any) => e.ContentId == item.ContentId
       );
       try {
+        if (
+          ContentType &&
+          studentDataContentTypes.includes(ContentType.Content) &&
+          !studentData
+        ) {
+          throw new Error(Base.StudentDataError);
+        }
         BulletinBoard.push({
           ...item,
           ContentType,
@@ -52,15 +64,18 @@ export async function capture(
             possibleContent!
           )(page, { ...payload, contextValue: Id }, { Id })
         });
-      } catch (error) {
+      } catch (e) {
+        const error = CoerceError(e);
         BulletinBoard.push({
           ...item,
           ContentType,
-          Content: { error }
+          Content: { error: error.message }
         });
-        cli.log.error(
-          `Error capturing Bulletin Board content of type ${ContentType?.Content} for group ${Id}: ${cli.colors.error(error)}`
-        );
+        if (error.message !== Base.StudentDataError) {
+          cli.log.error(
+            `Error capturing Bulletin Board content of type ${ContentType?.Content} for group ${Id}: ${cli.colors.error(error)}`
+          );
+        }
       }
     }
 
@@ -75,4 +90,4 @@ export async function capture(
       throw new Error(message);
     }
   }
-}
+};

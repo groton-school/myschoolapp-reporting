@@ -1,18 +1,20 @@
 import cli from '@battis/qui-cli';
+import { CoerceError } from '@battis/typescript-tricks';
 import { api as types } from 'datadirect';
 import { api } from 'datadirect-puppeteer';
 import { Page } from 'puppeteer';
+import * as Base from './Base.js';
 
-type Item = types.datadirect.topiccontentget.Item & {
+export type Item = types.datadirect.topiccontentget.Item & {
   ObjectType?: types.datadirect.TopicContentTypesGet.Item;
-  Content?: types.datadirect.ContentItem.Response | { error: any };
+  Content?: types.datadirect.ContentItem.Response | Base.Error;
 };
 
-type Topic = types.datadirect.sectiontopicsget.Item & {
+export type Topic = types.datadirect.sectiontopicsget.Item & {
   Content?: Item[];
 };
 
-type Data = Topic[];
+export type Data = Topic[];
 
 let possibleContent:
   | types.datadirect.TopicContentTypesGet.Response
@@ -26,12 +28,12 @@ async function getPossibleContent(page: Page) {
   return possibleContent;
 }
 
-export async function capture(
-  page: Page,
-  Id: number,
-  payload: types.datadirect.common.ContentItem.Payload,
+export const snapshot: Base.Snapshot<Data> = async ({
+  page,
+  groupId: Id,
+  payload = { format: 'json' },
   ignoreErrors = true
-): Promise<Data | undefined> {
+}): Promise<Data | undefined> => {
   cli.log.debug(`Group ${Id}: Start capturing topics`);
   try {
     const Topics: Data = [];
@@ -104,7 +106,8 @@ export async function capture(
               { Id }
             )
           });
-        } catch (error) {
+        } catch (e) {
+          const error = CoerceError(e);
           if (
             `${error}`.endsWith('is captured by /api/topiccontentget/:TopicID')
           ) {
@@ -113,13 +116,15 @@ export async function capture(
             Content?.push({
               ...item,
               ObjectType,
-              Content: { error }
+              Content: { error: error.message }
             });
-            cli.log.error(
-              `Error capturing Topic ${TopicID} content of type ${
-                ObjectType?.Name
-              } for group ${Id}: ${cli.colors.error(error)}`
-            );
+            if (error.message !== Base.StudentDataError) {
+              cli.log.error(
+                `Error capturing Topic ${TopicID} content of type ${
+                  ObjectType?.Name
+                } for group ${Id}: ${cli.colors.error(error)}`
+              );
+            }
           }
         }
       }
@@ -136,4 +141,4 @@ export async function capture(
       throw new Error(message);
     }
   }
-}
+};

@@ -2,9 +2,11 @@ import cli from '@battis/qui-cli';
 import { SKY, api as types } from 'datadirect';
 import { api } from 'datadirect-puppeteer';
 import { Page } from 'puppeteer';
-import * as common from '../../common.js';
+import * as common from '../../../common.js';
 
 type Options = common.SkyAPI.args.Parsed['skyApiOptons'];
+
+export type Data = types.Assignment2.UserAssignmentDetailsGetAllData.Response[];
 
 export async function capture(
   page: Page,
@@ -19,8 +21,7 @@ export async function capture(
     `school/v1/academics/sections/${groupId}/assignments`
   )) as SKY.AssignmentList;
 
-  const assignments: types.Assignment2.UserAssignmentDetailsGetAllData.Response[] =
-    [];
+  const assignments: Data = [];
   if (assignmentList.count > 0) {
     for (const assignment of assignmentList.value) {
       assignments.push(

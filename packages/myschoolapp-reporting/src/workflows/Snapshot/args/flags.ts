@@ -45,6 +45,10 @@ export const flags = {
     short: 'g',
     default: true
   },
+  studentData: {
+    description: `Include student data in the course snapshot (default ${cli.colors.value('false')}, i.e. ${cli.colors.value('--no-studentData')} which preempts any other flags that have been set)`,
+    default: false
+  },
   ignoreErrors: {
     description: `Continue collecting snapshots even if errors are encountered (default: ${cli.colors.value('true')}, use ${cli.colors.value('--no-ignoreErrors')} to halt on errors)`,
     default: true

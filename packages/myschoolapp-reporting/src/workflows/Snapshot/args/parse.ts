@@ -39,6 +39,7 @@ export function parse(values: Record<string, any>): Result {
   const assignments = !!values.assignments;
   const gradebook = !!values.gradebook;
   const batchSize = parseInt(values.batchSize);
+  const studentData = !!values.studentData;
   const ignoreErrors = !!values.ignoreErrors;
 
   const commonParsed = common.args.parse(values);
@@ -50,6 +51,7 @@ export function parse(values: Record<string, any>): Result {
       topics,
       assignments,
       gradebook,
+      studentData,
       ignoreErrors
     },
     all,

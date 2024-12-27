@@ -79,8 +79,8 @@ importers:
         specifier: ^0.8.5
         version: 0.8.5
       '@battis/typescript-tricks':
-        specifier: ^0.7.1
-        version: 0.7.1
+        specifier: ^0.7.2
+        version: 0.7.2
       '@oauth2-cli/sky-api':
         specifier: ^0.1.0
         version: 0.1.0(ejs@3.1.10)
@@ -250,8 +250,8 @@ packages:
   '@battis/typescript-tricks@0.6.1':
     resolution: {integrity: sha512-vI87YZ7W1WEUeGxPl3Kwt2l3jigPSx5bb9Kvc/4DihZvN1m1PLYW7U+rG5N9nW9WAXWI/3JVgYANsbUmGAdjLA==}
 
-  '@battis/typescript-tricks@0.7.1':
-    resolution: {integrity: sha512-bbiPwOuZgJSieWFrv8oA5RqLzlh0yHctfHKqfA753RqNkRKW2Qr6kdxGwCgt1kptXVqGZNfJYT73t+DlTJbnUA==}
+  '@battis/typescript-tricks@0.7.2':
+    resolution: {integrity: sha512-YRIEzXV+R+BM7I9lz/E5rqqzVJMqc7xid1RJUySTF0TnNx2XVUKp5IrMInYorVhYnNZJ+RWUW0MNH2tVxoke2A==}
 
   '@changesets/apply-release-plan@7.0.7':
     resolution: {integrity: sha512-qnPOcmmmnD0MfMg9DjU1/onORFyRpDXkMMl2IJg9mECY6RnxL3wN0TCCc92b2sXt1jt8DgjAUUsZYGUGTdYIXA==}
@@ -4375,7 +4375,7 @@ snapshots:
 
   '@battis/typescript-tricks@0.6.1': {}
 
-  '@battis/typescript-tricks@0.7.1': {}
+  '@battis/typescript-tricks@0.7.2': {}
 
   '@changesets/apply-release-plan@7.0.7':
     dependencies:

@@ -2,11 +2,7 @@ import cli from '@battis/qui-cli';
 import { api as types } from 'datadirect';
 import { Page } from 'puppeteer';
 import * as common from '../../../common.js';
-import * as Assignments from '../Assignments.js';
-import * as BulletinBoard from '../BulletinBoard.js';
-import * as Gradebook from '../Gradebook.js';
-import * as SectionInfo from '../SectionInfo.js';
-import * as Topics from '../Topics.js';
+import * as Area from '../Area.js';
 import { TEMPORARY_payloadToURLSearchParams } from './TEMPORARY_payloadToURLSearchParams.js';
 
 export type Metadata = {
@@ -14,16 +10,17 @@ export type Metadata = {
   User: string;
   Start: Date;
   Finish: Date;
+  Elapsed?: TimeString;
 };
 
 export type Data = {
   Metadata: Metadata;
-  SectionInfo: Awaited<ReturnType<typeof SectionInfo.capture>>;
   GroupId: number;
-  BulletinBoard?: Awaited<ReturnType<typeof BulletinBoard.capture>>;
-  Topics?: Awaited<ReturnType<typeof Topics.capture>>;
-  Assignments?: Awaited<ReturnType<typeof Assignments.capture>>;
-  Gradebook?: Awaited<ReturnType<typeof Gradebook.capture>>;
+  SectionInfo?: Area.SectionInfo.Data;
+  BulletinBoard?: Area.BulletinBoard.Data;
+  Topics?: Area.Topics.Data;
+  Assignments?: Area.Assignments.Data;
+  Gradebook?: Area.Gradebook.Data | Area.Base.Error;
 };
 
 export type BaseOptions = {
@@ -31,6 +28,7 @@ export type BaseOptions = {
   topics?: boolean;
   assignments?: boolean;
   gradebook?: boolean;
+  studentData?: boolean;
   payload?: types.datadirect.common.ContentItem.Payload;
   ignoreErrors?: boolean;
 } & common.SkyAPI.args.Parsed['skyApiOptons'];
@@ -49,6 +47,7 @@ export async function capture(
     topics,
     assignments,
     gradebook,
+    studentData,
     payload = { format: 'json' },
     outputPath,
     pretty,
@@ -68,19 +67,36 @@ export async function capture(
       `https://${hostUrl.host}/app/faculty#academicclass/${groupId}/0/bulletinboard`
     );
 
-    const [s, b, t, g] = await Promise.all([
-      SectionInfo.capture(page, groupId, ignoreErrors),
+    const [SectionInfo, BulletinBoard, Topics, Gradebook] = await Promise.all([
+      Area.SectionInfo.snapshot({ page, groupId, ignoreErrors, studentData }),
       bulletinBoard
-        ? BulletinBoard.capture(page, groupId, payload, ignoreErrors)
-        : undefined,
-      topics ? Topics.capture(page, groupId, payload, ignoreErrors) : undefined,
-      gradebook
-        ? Gradebook.capture(
+        ? Area.BulletinBoard.snaphot({
             page,
-            groupId.toString(),
-            TEMPORARY_payloadToURLSearchParams(payload),
-            ignoreErrors
-          )
+            groupId,
+            payload,
+            ignoreErrors,
+            studentData
+          })
+        : undefined,
+      topics
+        ? Area.Topics.snapshot({
+            page,
+            groupId,
+            payload,
+            ignoreErrors,
+            studentData
+          })
+        : undefined,
+      gradebook
+        ? // TODO more granular processing of student data in gradebook
+          studentData
+          ? Area.Gradebook.capture(
+              page,
+              groupId.toString(),
+              TEMPORARY_payloadToURLSearchParams(payload),
+              ignoreErrors
+            )
+          : { error: Area.Base.StudentDataError }
         : undefined
     ]);
 
@@ -96,18 +112,18 @@ export async function capture(
         Finish: new Date()
       },
       GroupId: groupId,
-      SectionInfo: s,
-      BulletinBoard: b,
-      Topics: t,
+      SectionInfo,
+      BulletinBoard,
+      Topics,
       Assignments: assignments
-        ? await Assignments.capture(
+        ? await Area.Assignments.capture(
             page,
             groupId.toString(),
             TEMPORARY_payloadToURLSearchParams(payload),
             oauthOptions
           )
         : undefined,
-      Gradebook: g
+      Gradebook
     };
 
     if (snapshot.SectionInfo && 'Teacher' in snapshot.SectionInfo) {
@@ -118,6 +134,7 @@ export async function capture(
       cli.log.error(`Captured snapshot of section ${groupId} with errors`);
     }
     snapshot.Metadata.Finish = new Date();
+    snapshot.Metadata.Elapsed = `${snapshot.Metadata.Finish.getTime() - snapshot.Metadata.Start.getTime()}ms`;
     await page.close();
     if (outputPath) {
       let basename = 'snapshot';
