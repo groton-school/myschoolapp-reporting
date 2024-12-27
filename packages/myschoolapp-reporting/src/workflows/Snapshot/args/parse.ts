@@ -5,8 +5,7 @@ type Result = {
   snapshotOptions: Manager.Single.Options;
   all: boolean;
   allOptions: Manager.All.Options;
-} & ReturnType<typeof common.args.parse> &
-  ReturnType<typeof common.SkyAPI.args.parse>;
+} & ReturnType<typeof common.args.parse>;
 
 export function parse(values: Record<string, any>): Result {
   const {

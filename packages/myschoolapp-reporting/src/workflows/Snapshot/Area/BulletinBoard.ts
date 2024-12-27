@@ -1,12 +1,11 @@
 import cli from '@battis/qui-cli';
-import { CoerceError } from '@battis/typescript-tricks';
 import { api as types } from 'datadirect';
 import { api } from 'datadirect-puppeteer';
 import { Page } from 'puppeteer';
 import * as Base from './Base.js';
 
 export type Item = types.datadirect.BulletinBoardContentGet.Item & {
-  Content?: types.datadirect.ContentItem.Response | Base.Error;
+  Content?: types.datadirect.ContentItem.Response | { error: string };
   ContentType?: types.datadirect.ContentType.Any;
 };
 export type Data = Item[];
@@ -54,7 +53,7 @@ export const snaphot: Base.Snapshot<Data> = async ({
           studentDataContentTypes.includes(ContentType.Content) &&
           !studentData
         ) {
-          throw new Error(Base.StudentDataError);
+          throw new Base.StudentDataError();
         }
         BulletinBoard.push({
           ...item,
@@ -64,14 +63,13 @@ export const snaphot: Base.Snapshot<Data> = async ({
             possibleContent!
           )(page, { ...payload, contextValue: Id }, { Id })
         });
-      } catch (e) {
-        const error = CoerceError(e);
+      } catch (error) {
         BulletinBoard.push({
           ...item,
           ContentType,
-          Content: { error: error.message }
+          Content: { error: (error as Error).message }
         });
-        if (error.message !== Base.StudentDataError) {
+        if (!(error instanceof Base.StudentDataError)) {
           cli.log.error(
             `Error capturing Bulletin Board content of type ${ContentType?.Content} for group ${Id}: ${cli.colors.error(error)}`
           );

@@ -2,6 +2,7 @@ import * as Endpoint from '../../Endpoint.js';
 import * as ContentItem from './ContentItem.js';
 import { Container } from './ContentItem/Response.js';
 import * as ContentType from './ContentType.js';
+import { NotImplementedError, TopicContentError } from './Errors.js';
 import { assignment } from './prepareContent/assignment.js';
 import { base } from './prepareContent/base.js';
 import { discussionThread } from './prepareContent/discussionThread.js';
@@ -36,12 +37,14 @@ export function prepareContent(
     case 'Cover Brief':
     case 'Cover Image':
     case 'Cover Title':
-      throw new Error(
-        `All content for ${contentType.Content} is captured by /api/topiccontentget/:TopicID`
+      throw new TopicContentError(
+        `${contentType.Content} is captured by /api/datadirect/stopiccontentget/:TopicID`
       );
     case 'Roster':
     case 'Learning Tool':
-      throw new Error(`Capturing ${contentType.Content} is not yet supported`);
+      throw new NotImplementedError(
+        `Capturing ${contentType.Content} is not yet supported`
+      );
     case 'Downloads':
     case 'Expectations':
     case 'Links':
@@ -52,7 +55,7 @@ export function prepareContent(
         return base(contentType);
       } else {
         throw new Error(
-          `Content type not found for container: ${JSON.stringify(container)}`
+          `Unknown content type in container: ${JSON.stringify(container)}`
         );
       }
   }

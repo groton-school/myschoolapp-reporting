@@ -33,11 +33,7 @@ export const flags = {
   },
   assignments: {
     short: 'a',
-    description: `Include the course Assignments in the snapshot (default ${cli.colors.value('true')}, requires ${common.oxfordComma(
-      Object.keys(common.SkyAPI.args.options).map((option) =>
-        cli.colors.value(`--${option}`)
-      )
-    )} options set)`,
+    description: `Include the course Assignments in the snapshot (default ${cli.colors.value('true')})`,
     default: true
   },
   gradebook: {

@@ -1,5 +1,4 @@
 import cli from '@battis/qui-cli';
-import { CoerceError } from '@battis/typescript-tricks';
 import { api as types } from 'datadirect';
 import { api } from 'datadirect-puppeteer';
 import { Page } from 'puppeteer';
@@ -7,7 +6,7 @@ import * as Base from './Base.js';
 
 export type Item = types.datadirect.topiccontentget.Item & {
   ObjectType?: types.datadirect.TopicContentTypesGet.Item;
-  Content?: types.datadirect.ContentItem.Response | Base.Error;
+  Content?: types.datadirect.ContentItem.Response | { error: string };
 };
 
 export type Topic = types.datadirect.sectiontopicsget.Item & {
@@ -52,7 +51,7 @@ export const snapshot: Base.Snapshot<Data> = async ({
     for (const topic of topics) {
       const { TopicID } = topic;
       const Content: Item[] = [];
-      const items = (
+      const items: types.datadirect.topiccontentget.Response = (
         await api.datadirect.topiccontentget(
           page,
           {
@@ -106,19 +105,16 @@ export const snapshot: Base.Snapshot<Data> = async ({
               { Id }
             )
           });
-        } catch (e) {
-          const error = CoerceError(e);
-          if (
-            `${error}`.endsWith('is captured by /api/topiccontentget/:TopicID')
-          ) {
+        } catch (error) {
+          if (error instanceof types.datadirect.common.TopicContentError) {
             Content.push({ ...item, ObjectType });
           } else {
             Content?.push({
               ...item,
               ObjectType,
-              Content: { error: error.message }
+              Content: { error: (error as Error).message }
             });
-            if (error.message !== Base.StudentDataError) {
+            if (!(error instanceof Base.StudentDataError)) {
               cli.log.error(
                 `Error capturing Topic ${TopicID} content of type ${
                   ObjectType?.Name
@@ -131,6 +127,7 @@ export const snapshot: Base.Snapshot<Data> = async ({
       Topics.push({ ...topic, Content: Content.length ? Content : undefined });
     }
     cli.log.debug(`Group ${Id}: Topics captured`);
+    // FIXME filter student data out of topic discussions
     return Topics;
   } catch (error) {
     const message = `Group ${Id}: Error capturing topics: ${cli.colors.error(error || 'unknown')}`;

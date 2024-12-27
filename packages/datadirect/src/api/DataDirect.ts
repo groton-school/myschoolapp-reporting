@@ -3,6 +3,7 @@ export * as common from './datadirect/common.js';
 export * as ContentItem from './datadirect/common/ContentItem.js';
 export * as groupFinderByYear from './datadirect/groupFinderByYear.js';
 export * as GroupPossibleContentGet from './datadirect/GroupPossibleContentGet.js';
+export * as ImportAssignmentsGet from './datadirect/ImportAssignmentsGet.js';
 export * as SectionInfoView from './datadirect/SectionInfoView.js';
 export * as sectiontopicsget from './datadirect/sectiontopicsget.js';
 export * as topiccontentget from './datadirect/topiccontentget.js';

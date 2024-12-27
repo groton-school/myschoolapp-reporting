@@ -1,5 +1,4 @@
 import cli from '@battis/qui-cli';
-import { api as types } from 'datadirect';
 import { Page } from 'puppeteer';
 import * as common from '../../../common.js';
 import * as Area from '../Area.js';
@@ -20,7 +19,7 @@ export type Data = {
   BulletinBoard?: Area.BulletinBoard.Data;
   Topics?: Area.Topics.Data;
   Assignments?: Area.Assignments.Data;
-  Gradebook?: Area.Gradebook.Data | Area.Base.Error;
+  Gradebook?: Area.Gradebook.Data | { error: string };
 };
 
 export type BaseOptions = {
@@ -28,10 +27,7 @@ export type BaseOptions = {
   topics?: boolean;
   assignments?: boolean;
   gradebook?: boolean;
-  studentData?: boolean;
-  payload?: types.datadirect.common.ContentItem.Payload;
-  ignoreErrors?: boolean;
-} & common.SkyAPI.args.Parsed['skyApiOptons'];
+} & Area.Base.Options;
 
 export type Options = BaseOptions & {
   url?: string;
@@ -47,12 +43,9 @@ export async function capture(
     topics,
     assignments,
     gradebook,
-    studentData,
-    payload = { format: 'json' },
     outputPath,
     pretty,
-    ignoreErrors,
-    ...oauthOptions
+    ...options
   }: Options & Partial<common.output.args.Parsed['outputOptions']>
 ) {
   if (url && groupId === undefined) {
@@ -67,38 +60,40 @@ export async function capture(
       `https://${hostUrl.host}/app/faculty#academicclass/${groupId}/0/bulletinboard`
     );
 
-    const [SectionInfo, BulletinBoard, Topics, Gradebook] = await Promise.all([
-      Area.SectionInfo.snapshot({ page, groupId, ignoreErrors, studentData }),
-      bulletinBoard
-        ? Area.BulletinBoard.snaphot({
-            page,
-            groupId,
-            payload,
-            ignoreErrors,
-            studentData
-          })
-        : undefined,
-      topics
-        ? Area.Topics.snapshot({
-            page,
-            groupId,
-            payload,
-            ignoreErrors,
-            studentData
-          })
-        : undefined,
-      gradebook
-        ? // TODO more granular processing of student data in gradebook
-          studentData
-          ? Area.Gradebook.capture(
+    const [SectionInfo, BulletinBoard, Topics, Assignments, Gradebook] =
+      await Promise.all([
+        Area.SectionInfo.snapshot({ page, groupId, ...options }),
+        bulletinBoard
+          ? Area.BulletinBoard.snaphot({
               page,
-              groupId.toString(),
-              TEMPORARY_payloadToURLSearchParams(payload),
-              ignoreErrors
-            )
-          : { error: Area.Base.StudentDataError }
-        : undefined
-    ]);
+              groupId,
+              ...options
+            })
+          : undefined,
+        topics
+          ? Area.Topics.snapshot({
+              page,
+              groupId,
+              ...options
+            })
+          : undefined,
+        assignments
+          ? await Area.Assignments.snapshot({ page, groupId, ...options })
+          : undefined,
+        gradebook
+          ? // TODO more granular processing of student data in gradebook
+            options.studentData
+            ? Area.Gradebook.capture(
+                page,
+                groupId.toString(),
+                TEMPORARY_payloadToURLSearchParams(
+                  options.payload || { format: 'json' }
+                ),
+                options.ignoreErrors
+              )
+            : { error: new Area.Base.StudentDataError().message }
+          : undefined
+      ]);
 
     const snapshot: Data = {
       Metadata: {
@@ -115,14 +110,7 @@ export async function capture(
       SectionInfo,
       BulletinBoard,
       Topics,
-      Assignments: assignments
-        ? await Area.Assignments.capture(
-            page,
-            groupId.toString(),
-            TEMPORARY_payloadToURLSearchParams(payload),
-            oauthOptions
-          )
-        : undefined,
+      Assignments,
       Gradebook
     };
 
@@ -153,7 +141,7 @@ export async function capture(
           topics,
           assignments,
           gradebook,
-          payload
+          options
         },
         { pretty }
       );

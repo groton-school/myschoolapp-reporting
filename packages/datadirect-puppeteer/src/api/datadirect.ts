@@ -4,6 +4,7 @@ import {
   ContentItem,
   ContentType,
   groupFinderByYear as Groups,
+  ImportAssignmentsGet as ImportAssignments,
   SectionInfoView as SectionInfo,
   sectiontopicsget as SectionTopics,
   topiccontentget as TopicContent,
@@ -46,6 +47,11 @@ export function BulletinBoardContent_detail(
     prepare: BulletinBoardContent.prepareContent(item, types)
   });
 }
+
+export const ImportAssignmentsGet = fetchViaPuppeteer<
+  ImportAssignments.Payload,
+  ImportAssignments.Response
+>(ImportAssignments);
 
 export const sectiontopicsget = fetchViaPuppeteer<
   SectionTopics.Payload,

@@ -1,19 +1,21 @@
 import { api as types } from 'datadirect';
 import { Page } from 'puppeteer';
 
-export type Error = { error: string };
-
-export const StudentDataError =
-  'Content containing student data has been excluded from this snapshot';
+export class StudentDataError extends Error {
+  public message = 'Student data is not included in this snapshot';
+}
 
 export type Options = {
-  page: Page;
-  groupId: number;
   payload?: types.datadirect.ContentItem.Payload;
   ignoreErrors?: boolean;
   studentData?: boolean;
 };
 
+type Context = {
+  page: Page;
+  groupId: number;
+};
+
 export type Snapshot<Data = types.Endpoint.Response> = (
-  options: Options
+  options: Options & Context
 ) => Promise<Data | undefined>;

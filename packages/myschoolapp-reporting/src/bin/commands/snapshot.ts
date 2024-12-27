@@ -20,7 +20,6 @@ import * as Snapshot from '../../workflows/Snapshot.js';
   });
 
   const {
-    skyApiOptons,
     puppeteerOptions,
     loginCredentials,
     snapshotOptions,
@@ -40,7 +39,6 @@ import * as Snapshot from '../../workflows/Snapshot.js';
     await Snapshot.captureAll(page, {
       ...snapshotOptions,
       ...allOptions,
-      ...skyApiOptons,
       ...outputOptions
     });
   } else {
@@ -49,7 +47,6 @@ import * as Snapshot from '../../workflows/Snapshot.js';
     const snapshot = await Snapshot.capture(page, {
       url,
       ...snapshotOptions,
-      ...skyApiOptons,
       ...outputOptions
     });
     spinner.succeed(
