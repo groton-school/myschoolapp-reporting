@@ -5,8 +5,8 @@ import { Page } from 'puppeteer';
 import * as Base from './Base.js';
 
 export type Item = types.datadirect.BulletinBoardContentGet.Item & {
-  Content?: types.datadirect.ContentItem.Response | { error: string };
-  ContentType?: types.datadirect.ContentType.Any;
+  Content?: types.datadirect.common.ContentItem.Any.Content | { error: string };
+  ContentType?: types.datadirect.common.ContentType.Any;
 };
 export type Data = Item[];
 

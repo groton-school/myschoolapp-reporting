@@ -6,7 +6,7 @@ import * as Base from './Base.js';
 
 export type Item = types.datadirect.topiccontentget.Item & {
   ObjectType?: types.datadirect.TopicContentTypesGet.Item;
-  Content?: types.datadirect.ContentItem.Response | { error: string };
+  Content?: types.datadirect.common.ContentItem.Any.Content | { error: string };
 };
 
 export type Topic = types.datadirect.sectiontopicsget.Item & {
@@ -31,7 +31,8 @@ export const snapshot: Base.Snapshot<Data> = async ({
   page,
   groupId: Id,
   payload = { format: 'json' },
-  ignoreErrors = true
+  ignoreErrors = true,
+  studentData
 }): Promise<Data | undefined> => {
   cli.log.debug(`Group ${Id}: Start capturing topics`);
   try {
@@ -83,7 +84,7 @@ export const snapshot: Base.Snapshot<Data> = async ({
             t.Id == item.ContentId
         );
         try {
-          Content?.push({
+          const entry: Item = {
             ...item,
             ObjectType,
             Content: await api.datadirect.TopicContent_detail(
@@ -104,7 +105,15 @@ export const snapshot: Base.Snapshot<Data> = async ({
               },
               { Id }
             )
-          });
+          };
+          if (
+            !studentData &&
+            entry.ObjectType?.Name === 'Discussion Thread' &&
+            'Content' in entry
+          ) {
+            entry.Content = { error: new Base.StudentDataError().message };
+          }
+          Content.push(entry);
         } catch (error) {
           if (error instanceof types.datadirect.common.TopicContentError) {
             Content.push({ ...item, ObjectType });

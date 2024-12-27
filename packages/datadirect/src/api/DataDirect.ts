@@ -7,6 +7,7 @@ export * as groupFinderByYear from './datadirect/groupFinderByYear.js';
 export * as GroupPossibleContentGet from './datadirect/GroupPossibleContentGet.js';
 export * as ImportAssignmentsGet from './datadirect/ImportAssignmentsGet.js';
 export * as SectionInfoView from './datadirect/SectionInfoView.js';
+export * as sectionrosterget from './datadirect/sectionrosterget.js';
 export * as sectiontopicsget from './datadirect/sectiontopicsget.js';
 export * as topiccontentget from './datadirect/topiccontentget.js';
 export * as TopicContentTypesGet from './datadirect/TopicContentTypesGet.js';

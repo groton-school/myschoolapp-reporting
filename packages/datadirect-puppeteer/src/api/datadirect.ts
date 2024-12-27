@@ -1,12 +1,12 @@
 import {
   BulletinBoardContentGet as BulletinBoardContent,
   GroupPossibleContentGet as BulletinBoardContentTypes,
-  ContentItem,
-  ContentType,
+  common,
   groupFinderByYear as Groups,
   ImportAssignmentsGet as ImportAssignments,
   GradeBookMarkingPeriodList as MarkingPeriods,
   SectionInfoView as SectionInfo,
+  sectionrosterget as SectionRoster,
   sectiontopicsget as SectionTopics,
   topiccontentget as TopicContent,
   TopicContentTypesGet as TopicContentTypes
@@ -38,13 +38,16 @@ export function BulletinBoardContent_detail(
   types: BulletinBoardContentTypes.Response
 ) {
   if (
-    ContentType.Static.find(
-      (t: ContentType.Base) => t.ContentId === item.ContentId
+    common.ContentType.Static.find(
+      (t: common.ContentType.Base) => t.ContentId === item.ContentId
     )
   ) {
     return () => undefined;
   }
-  return fetchViaPuppeteer<ContentItem.Payload, ContentItem.Response>({
+  return fetchViaPuppeteer<
+    common.ContentItem.Payload,
+    common.ContentItem.Any.Content
+  >({
     prepare: BulletinBoardContent.prepareContent(item, types)
   });
 }
@@ -74,13 +77,16 @@ export function TopicContent_detail(
   types: TopicContentTypes.Response
 ) {
   if (
-    ContentType.Static.find(
-      (t: ContentType.Base) => t.ContentId === item.ContentId
+    common.ContentType.Static.find(
+      (t: common.ContentType.Base) => t.ContentId === item.ContentId
     )
   ) {
     return () => undefined;
   }
-  return fetchViaPuppeteer<ContentItem.Payload, ContentItem.Response>({
+  return fetchViaPuppeteer<
+    common.ContentItem.Payload,
+    common.ContentItem.Any.Content
+  >({
     prepare: TopicContent.prepareContent(item, types)
   });
 }
@@ -89,3 +95,8 @@ export const GradeBookMarkingPeriodList = fetchViaPuppeteer<
   MarkingPeriods.Payload,
   MarkingPeriods.Response
 >(MarkingPeriods);
+
+export const sectionrosterget = fetchViaPuppeteer<
+  SectionRoster.Payload,
+  SectionRoster.Response
+>(SectionRoster);
