@@ -2,7 +2,6 @@ import cli from '@battis/qui-cli';
 import { Page } from 'puppeteer';
 import * as common from '../../../common.js';
 import * as Area from '../Area.js';
-import { TEMPORARY_payloadToURLSearchParams } from './TEMPORARY_payloadToURLSearchParams.js';
 
 export type Metadata = {
   Host: string;
@@ -19,7 +18,7 @@ export type Data = {
   BulletinBoard?: Area.BulletinBoard.Data;
   Topics?: Area.Topics.Data;
   Assignments?: Area.Assignments.Data;
-  Gradebook?: Area.Gradebook.Data | { error: string };
+  Gradebook?: Area.GradeBook.Data;
 };
 
 export type BaseOptions = {
@@ -48,6 +47,7 @@ export async function capture(
     ...options
   }: Options & Partial<common.output.args.Parsed['outputOptions']>
 ) {
+  const Start = new Date();
   if (url && groupId === undefined) {
     groupId = parseInt((url.match(/https:\/\/[^0-9]+(\d+)/) || { 1: '' })[1]);
   }
@@ -64,34 +64,16 @@ export async function capture(
       await Promise.all([
         Area.SectionInfo.snapshot({ page, groupId, ...options }),
         bulletinBoard
-          ? Area.BulletinBoard.snaphot({
-              page,
-              groupId,
-              ...options
-            })
+          ? Area.BulletinBoard.snaphot({ page, groupId, ...options })
           : undefined,
         topics
-          ? Area.Topics.snapshot({
-              page,
-              groupId,
-              ...options
-            })
+          ? Area.Topics.snapshot({ page, groupId, ...options })
           : undefined,
         assignments
           ? await Area.Assignments.snapshot({ page, groupId, ...options })
           : undefined,
         gradebook
-          ? // TODO more granular processing of student data in gradebook
-            options.studentData
-            ? Area.Gradebook.capture(
-                page,
-                groupId.toString(),
-                TEMPORARY_payloadToURLSearchParams(
-                  options.payload || { format: 'json' }
-                ),
-                options.ignoreErrors
-              )
-            : { error: new Area.Base.StudentDataError().message }
+          ? Area.GradeBook.snapshot({ page, groupId, ...options })
           : undefined
       ]);
 
@@ -103,7 +85,7 @@ export async function capture(
         User: await page.evaluate(
           async () => (await BBAuthClient.BBAuth.getDecodedToken(null)).email
         ),
-        Start: new Date(),
+        Start,
         Finish: new Date()
       },
       GroupId: groupId,

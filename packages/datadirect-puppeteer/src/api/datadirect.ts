@@ -5,6 +5,7 @@ import {
   ContentType,
   groupFinderByYear as Groups,
   ImportAssignmentsGet as ImportAssignments,
+  GradeBookMarkingPeriodList as MarkingPeriods,
   SectionInfoView as SectionInfo,
   sectiontopicsget as SectionTopics,
   topiccontentget as TopicContent,
@@ -83,3 +84,8 @@ export function TopicContent_detail(
     prepare: TopicContent.prepareContent(item, types)
   });
 }
+
+export const GradeBookMarkingPeriodList = fetchViaPuppeteer<
+  MarkingPeriods.Payload,
+  MarkingPeriods.Response
+>(MarkingPeriods);

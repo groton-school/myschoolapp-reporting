@@ -1,50 +1,47 @@
 import cli from '@battis/qui-cli';
-import { api } from 'datadirect';
-import { Page } from 'puppeteer';
+import { api as types } from 'datadirect';
+import { api } from 'datadirect-puppeteer';
+import * as Base from './Base.js';
 
-export type Data = {
-  markingPeriods?: {
-    markingPeriod: api.datadirect.MarkingPeriod;
-    gradebook: api.datadirect.Gradebook;
-  }[];
+export type Item = {
+  markingPeriod: types.datadirect.GradeBookMarkingPeriodList.Item;
+  gradebook: Omit<types.gradebook.hydrategradebook.Response, 'Roster'> & {
+    Roster: types.gradebook.hydrategradebook.Roster | { error: string };
+  };
 };
 
-export async function capture(
-  page: Page,
-  groupId: string,
-  params: URLSearchParams,
-  ignoreErrors = true
-): Promise<Data | undefined> {
-  cli.log.debug(`Group ${groupId}: Start capturing gradebook`);
+export type Data = Item[];
+
+export const snapshot: Base.Snapshot<Data> = async ({
+  page,
+  groupId: sectionId,
+  ignoreErrors,
+  studentData
+}) => {
+  cli.log.debug(`Group ${sectionId}: Start capturing gradebook`);
   try {
-    const gradebook = await page.evaluate(
-      async (groupId: string, params: string) => {
-        const host = window.location.host;
-        const markingPeriods: api.datadirect.MarkingPeriod[] = await (
-          await fetch(
-            `https://${host}/api/datadirect/GradeBookMarkingPeriodList?sectionId=${groupId}`
-          )
-        ).json();
-        const gradebook: Data = { markingPeriods: [] };
-        for (const markingPeriod of markingPeriods) {
-          gradebook.markingPeriods?.push({
-            markingPeriod,
-            gradebook: await (
-              await fetch(
-                `https://${host}/api/gradebook/hydrategradebook?sectionId=${groupId}&markingPeriodId=${markingPeriod.MarkingPeriodId}`
-              )
-            ).json()
-          });
-        }
-        return gradebook;
-      },
-      groupId,
-      params.toString()
+    const markingPeriods = await api.datadirect.GradeBookMarkingPeriodList(
+      page,
+      { sectionId }
     );
-    cli.log.debug(`Group ${groupId}: Gradebook captured`);
-    return gradebook;
+    const Gradebook: Data = [];
+    for (const markingPeriod of markingPeriods) {
+      const entry: Item = {
+        markingPeriod,
+        gradebook: await api.gradebook.hydrategradebook(page, {
+          sectionId,
+          markingPeriodId: markingPeriod.MarkingPeriodId
+        })
+      };
+      if (!studentData) {
+        entry.gradebook.Roster = { error: new Base.StudentDataError().message };
+      }
+      Gradebook.push(entry);
+    }
+    cli.log.debug(`Group ${sectionId}: Gradebook captured`);
+    return Gradebook;
   } catch (error) {
-    const message = `Group ${groupId}: Error capturing gradebook: ${cli.colors.error(error || 'unknown')}`;
+    const message = `Group ${sectionId}: Error capturing gradebook: ${cli.colors.error(error || 'unknown')}`;
     if (ignoreErrors) {
       cli.log.error(message);
       return undefined;
@@ -52,4 +49,4 @@ export async function capture(
       throw new Error(message);
     }
   }
-}
+};
