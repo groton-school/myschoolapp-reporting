@@ -38,6 +38,10 @@ export async function capture(
     ...options
   }: Options & common.output.args.Parsed['outputOptions']
 ) {
+  if (!year) {
+    throw new Error(`${cli.colors.value('--year')} must have a value`);
+  }
+
   return new Promise<Single.Data[]>(async (resolve) => {
     const _assoc = cleanSplit(association);
     const _terms = cleanSplit(termsOffered);
