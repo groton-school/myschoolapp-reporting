@@ -1,4 +1,4 @@
-import * as Endpoint from '../Endpoint.js';
+import * as Endpoint from '../../Endpoint.js';
 import { Payload } from './groupFinderByYear/Payload.js';
 
 export * from './groupFinderByYear/Payload.js';

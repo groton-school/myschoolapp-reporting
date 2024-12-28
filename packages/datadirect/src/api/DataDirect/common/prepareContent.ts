@@ -1,4 +1,4 @@
-import * as Endpoint from '../../Endpoint.js';
+import * as Endpoint from '../../../Endpoint.js';
 import * as ContentItem from './ContentItem.js';
 import { Container } from './ContentItem/Response.js';
 import * as ContentType from './ContentType.js';

@@ -1,4 +1,4 @@
-import * as Endpoint from '../Endpoint.js';
+import * as Endpoint from '../../Endpoint.js';
 import { Payload } from './UserAssignmentDetailsGetAllData/Payload.js';
 
 export * from './UserAssignmentDetailsGetAllData/Payload.js';

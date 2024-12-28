@@ -1,4 +1,4 @@
-import * as Endpoint from '../Endpoint.js';
+import * as Endpoint from '../../Endpoint.js';
 import { Payload } from './ProviderList/Payload.js';
 
 export * from './ProviderList/Payload.js';

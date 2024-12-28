@@ -1,4 +1,4 @@
-import * as Endpoint from '../../../Endpoint.js';
+import * as Endpoint from '../../../../Endpoint.js';
 import { Container, Payload } from '../ContentItem.js';
 
 export function media(container: Container) {

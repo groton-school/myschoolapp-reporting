@@ -1,4 +1,4 @@
-import * as Endpoint from '../Endpoint.js';
+import * as Endpoint from '../../Endpoint.js';
 import { Payload } from './sectionrosterget/Payload.js';
 
 export * from './sectionrosterget/Payload.js';

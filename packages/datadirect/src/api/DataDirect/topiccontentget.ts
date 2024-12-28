@@ -1,4 +1,4 @@
-import * as Endpoint from '../Endpoint.js';
+import * as Endpoint from '../../Endpoint.js';
 import * as common from './common.js';
 import { Payload } from './topiccontentget/Payload.js';
 import { Item } from './topiccontentget/Response.js';

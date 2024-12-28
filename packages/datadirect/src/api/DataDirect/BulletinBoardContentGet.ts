@@ -1,4 +1,4 @@
-import * as Endpoint from '../Endpoint.js';
+import * as Endpoint from '../../Endpoint.js';
 import { Payload } from './BulletinBoardContentGet/Payload.js';
 
 export { prepareContent } from './common.js';

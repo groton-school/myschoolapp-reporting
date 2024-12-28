@@ -1,4 +1,4 @@
-import * as Endpoint from '../Endpoint.js';
+import * as Endpoint from '../../Endpoint.js';
 import { Payload } from './GroupPossibleContentGet/Payload.js';
 
 export * from './GroupPossibleContentGet/Payload.js';
