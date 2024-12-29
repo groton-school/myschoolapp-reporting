@@ -2,13 +2,25 @@ import {
   Edit as E,
   ProviderList as Providers
 } from 'datadirect/dist/api/LtiTool.js';
-import { fetchViaPuppeteer } from './fetchViaPuppeteer.js';
+import { Page } from 'puppeteer';
+import * as PuppeteerSession from '../PuppeteerSession.js';
 
-export const ProviderList = fetchViaPuppeteer<
-  Providers.Payload,
-  Providers.Response
->(Providers);
+export class LtiTool extends PuppeteerSession.Fetchable {
+  public ProviderList: PuppeteerSession.BoundEndpoint<
+    Providers.Payload,
+    Providers.Response
+  >;
+  public Edit: PuppeteerSession.BoundEndpoint<E.Payload, E.Response>;
 
-export const Edit = fetchViaPuppeteer<E.Payload, E.Response>(E);
+  // TODO Edit.Delete is not fetched
 
-// TODO Edit.Delete is not fetched
+  public constructor(
+    url: URL | string | Page,
+    options?: PuppeteerSession.Options
+  ) {
+    super(url, options);
+
+    this.ProviderList = this.bindEndpoint(Providers);
+    this.Edit = this.bindEndpoint(E);
+  }
+}
