@@ -1,7 +1,18 @@
+import { JSONValue } from '@battis/typescript-tricks';
 import { EventEmitter } from 'node:events';
 import puppeteer, { Page } from 'puppeteer';
 
 export type Options = Parameters<typeof puppeteer.launch>[0];
+
+export type FetchResponse = {
+  url: string;
+  redirected: boolean;
+  type: string;
+  status: number;
+  statusText: string;
+  headers: Headers;
+  body?: Blob | string | JSONValue | FormData;
+};
 
 export class InitializationError extends Error {
   public constructor() {
@@ -77,5 +88,36 @@ export class Base extends EventEmitter {
     const page = await this.page.browser().newPage();
     await page.goto(new URL(path, this.page.url()).toString());
     return await new Base(page).ready();
+  }
+
+  public async fetch(
+    input: URL | string,
+    init?: RequestInit
+  ): Promise<FetchResponse> {
+    return await this.page.evaluate(
+      async (input, init) => {
+        const response = await fetch(input, init);
+        let body: FetchResponse['body'] = undefined;
+        const contentType = response.headers.get('content-type');
+        if (contentType?.includes('application/json')) {
+          body = (await response.json()) as JSONValue;
+        } else if (contentType?.includes('text/')) {
+          body = await response.text();
+        } else {
+          body = await response.blob();
+        }
+        return {
+          url: response.url,
+          redirected: response.redirected,
+          type: response.type,
+          status: response.status,
+          statusText: response.statusText,
+          headers: response.headers,
+          body
+        };
+      },
+      new URL(input, this.page.url()),
+      init
+    );
   }
 }
