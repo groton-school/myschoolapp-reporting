@@ -87,6 +87,12 @@ export class Authenticated extends Base {
     );
   }
 
+  public async user(): Promise<string> {
+    return await this.page.evaluate(
+      async () => (await BBAuthClient.BBAuth.getDecodedToken(null)).email
+    );
+  }
+
   public async fork(
     path: URL | string,
     timeout = Authenticated.DefaultTimeout
