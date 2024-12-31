@@ -90,6 +90,10 @@ export class Base extends EventEmitter {
     return await new Base(page).ready();
   }
 
+  public url() {
+    return new URL(this.page.url());
+  }
+
   public async fetch(
     input: URL | string,
     init?: RequestInit
