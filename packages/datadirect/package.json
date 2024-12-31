@@ -34,6 +34,7 @@
   },
   "prettier": "@battis/prettier-config",
   "devDependencies": {
+    "@battis/descriptive-types": "^0.1.0",
     "@battis/typescript-tricks": "^0.6.1",
     "@tsconfig/node20": "^20.1.4",
     "@types/node": "^22.10.2",

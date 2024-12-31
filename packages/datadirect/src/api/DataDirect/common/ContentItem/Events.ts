@@ -1,3 +1,12 @@
+import {
+  DateString,
+  DateTimeString,
+  EmailString,
+  HTMLString,
+  NumericString,
+  TimeString
+} from '@battis/descriptive-types';
+
 export type Event = {
   Id: number;
   StartDate: DateTimeString;

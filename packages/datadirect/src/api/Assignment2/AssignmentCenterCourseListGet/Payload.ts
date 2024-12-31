@@ -1,3 +1,5 @@
+import { NumericString } from '@battis/descriptive-types';
+
 type DropDownItem = {
   Value: number;
   Display: string;

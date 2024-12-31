@@ -1,3 +1,9 @@
+import {
+  DateString,
+  NumericBoolean,
+  NumericTimestamp
+} from '@battis/descriptive-types';
+
 export type Item = {
   AllowCopy: boolean;
   AllowEdit: boolean;

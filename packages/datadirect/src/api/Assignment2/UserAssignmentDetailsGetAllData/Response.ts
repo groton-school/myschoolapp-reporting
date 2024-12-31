@@ -1,3 +1,9 @@
+import {
+  DateTimeString,
+  HTMLString,
+  URLString
+} from '@battis/descriptive-types';
+
 type LinkItem = {
   Url: URLString;
   ShortDescription: string;

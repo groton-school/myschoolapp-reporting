@@ -1,3 +1,10 @@
+import {
+  DateString,
+  DateTimeString,
+  HTMLString,
+  URLString
+} from '@battis/descriptive-types';
+
 export type Link = {
   Url: URLString;
   ShortDescription: string;

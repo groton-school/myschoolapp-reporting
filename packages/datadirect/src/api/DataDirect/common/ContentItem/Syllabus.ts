@@ -1,3 +1,5 @@
+import { DateTimeString, HTMLString } from '@battis/descriptive-types';
+
 // TODO DataDirect/common/ContentItem/Expectations identical to Syllabus, GradingRubric
 export type Syllabus = {
   Id: number;

@@ -1,3 +1,5 @@
+import { NumericString, URLString } from '@battis/descriptive-types';
+
 // TODO LtiTool/Edit/Payload types
 export type Payload = {
   ToolTitle: string;

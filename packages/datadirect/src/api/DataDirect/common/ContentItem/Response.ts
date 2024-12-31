@@ -1,3 +1,11 @@
+import {
+  DateString,
+  DateTimeString,
+  HTMLString,
+  NumericBoolean,
+  URLString
+} from '@battis/descriptive-types';
+
 export type Container = {
   ContentId: number;
 };

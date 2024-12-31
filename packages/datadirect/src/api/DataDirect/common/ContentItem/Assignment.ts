@@ -1,3 +1,5 @@
+import { DateTimeString, TimeString } from '@battis/descriptive-types';
+
 export type Assignment = {
   AssignmentId: number;
   AssignmentTypeId: number;

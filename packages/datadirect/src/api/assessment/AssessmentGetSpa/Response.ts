@@ -1,3 +1,9 @@
+import {
+  DateTimeString,
+  HTMLString,
+  URLString
+} from '@battis/descriptive-types';
+
 type MultipleChoiceAnswer = {
   AssessmentQuestionAnswerId: number;
   AssessmentQuestionId: number;

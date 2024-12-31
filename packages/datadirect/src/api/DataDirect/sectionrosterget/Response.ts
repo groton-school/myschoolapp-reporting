@@ -1,3 +1,5 @@
+import { EmailString, NumericString } from '@battis/descriptive-types';
+
 export type Item = {
   Id: number;
   name: string;

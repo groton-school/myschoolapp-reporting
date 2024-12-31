@@ -1,3 +1,10 @@
+import {
+  DateString,
+  DateTimeString,
+  EmailString,
+  NumericString
+} from '@battis/descriptive-types';
+
 // TODO DataDirect/GradeBookMarkingPeriodList.DisplayOptions many probably inaccurate null properties
 export type DisplayOptions = {
   Orderby: string;

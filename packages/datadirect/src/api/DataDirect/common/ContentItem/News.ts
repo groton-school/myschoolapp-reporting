@@ -1,3 +1,9 @@
+import {
+  DateString,
+  DateTimeString,
+  URLString
+} from '@battis/descriptive-types';
+
 export type Group = {
   GroupId: number;
   AssociationId: number;

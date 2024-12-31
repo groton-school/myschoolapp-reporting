@@ -1,3 +1,5 @@
+import { DateTimeString, URLString } from '@battis/descriptive-types';
+
 export type Item = {
   ProviderId: number;
   GalleryId: number;

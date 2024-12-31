@@ -1,3 +1,11 @@
+import {
+  DateTimeString,
+  EmailString,
+  NumericBoolean,
+  NumericString,
+  URLString
+} from '@battis/descriptive-types';
+
 export type Response = {
   SchoolId: number;
   SchoolName: string;

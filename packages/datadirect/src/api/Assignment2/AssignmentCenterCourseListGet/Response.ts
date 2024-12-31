@@ -1,3 +1,9 @@
+import {
+  DateTimeString,
+  HTMLString,
+  NumericString
+} from '@battis/descriptive-types';
+
 type Assignment = {
   AssignmentId: number;
   AssignmentIndexId: number;

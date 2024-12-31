@@ -1,3 +1,5 @@
+import { DateTimeString, HTMLString } from '@battis/descriptive-types';
+
 export type Text = {
   Description: string;
   LongText: HTMLString;

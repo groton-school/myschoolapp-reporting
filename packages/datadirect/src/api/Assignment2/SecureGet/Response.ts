@@ -1,3 +1,12 @@
+import {
+  DateString,
+  DateTimeString,
+  HTMLString,
+  NumericBoolean,
+  TimeString,
+  URLString
+} from '@battis/descriptive-types';
+
 type Duration = {
   DurationId: number;
   SortOrder: number;

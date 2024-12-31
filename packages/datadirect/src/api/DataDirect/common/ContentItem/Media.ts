@@ -1,3 +1,11 @@
+import {
+  DateString,
+  DateTimeString,
+  HTMLString,
+  NumericString,
+  URLString
+} from '@battis/descriptive-types';
+
 export type Media = {
   AlbumId: number;
   AlbumName: string;

@@ -1,3 +1,5 @@
+import { HTMLString } from '@battis/descriptive-types';
+
 export type Widget = {
   WidgetId: number;
   ShortDescription: string;

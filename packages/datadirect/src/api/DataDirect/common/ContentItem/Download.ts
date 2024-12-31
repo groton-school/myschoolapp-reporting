@@ -1,3 +1,10 @@
+import {
+  DateString,
+  DateTimeString,
+  HTMLString,
+  URLString
+} from '@battis/descriptive-types';
+
 export type Download = {
   DownloadID: number;
   ItemID: number;

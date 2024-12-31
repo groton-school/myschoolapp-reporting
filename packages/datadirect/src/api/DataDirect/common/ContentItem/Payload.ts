@@ -1,3 +1,5 @@
+import { DateString } from "@battis/descriptive-types";
+
 export type Payload = {
   id?: number; // Assignment
   leadSectionId?: number; // Assignment

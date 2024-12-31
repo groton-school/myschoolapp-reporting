@@ -1,3 +1,9 @@
+import {
+  DateTimeString,
+  HTMLString,
+  NumericTimestamp
+} from '@battis/descriptive-types';
+
 export type Message = {
   MessageId: number;
   UserId: number;

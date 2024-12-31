@@ -1,3 +1,9 @@
+import {
+  DateString,
+  DateTimeString,
+  HTMLString
+} from '@battis/descriptive-types';
+
 export type Announcement = {
   Name: string;
   Author: string;
