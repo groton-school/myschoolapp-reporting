@@ -1,7 +1,6 @@
 import cli from '@battis/qui-cli';
 import { api as types } from 'datadirect';
 import { api } from 'datadirect-puppeteer';
-import { Page } from 'puppeteer';
 import * as Base from './Base.js';
 
 export type Item = types.datadirect.topiccontentget.Item & {
@@ -19,16 +18,16 @@ let possibleContent:
   | types.datadirect.TopicContentTypesGet.Response
   | undefined = undefined;
 
-async function getPossibleContent(page: Page) {
+async function getPossibleContent(api: api) {
   if (!possibleContent) {
     possibleContent = possibleContent =
-      await api.datadirect.TopicContentTypesGet(page, {});
+      await api.datadirect.TopicContentTypesGet({ payload: {} });
   }
   return possibleContent;
 }
 
 export const snapshot: Base.Snapshot<Data> = async ({
-  page,
+  api,
   groupId: Id,
   payload = { format: 'json' },
   ignoreErrors = true,
@@ -37,33 +36,31 @@ export const snapshot: Base.Snapshot<Data> = async ({
   cli.log.debug(`Group ${Id}: Start capturing topics`);
   try {
     const Topics: Data = [];
-    await getPossibleContent(page);
-    const topics = await api.datadirect.sectiontopicsget(
-      page,
-      {
+    await getPossibleContent(api);
+    const topics = await api.datadirect.sectiontopicsget({
+      payload: {
         format: 'json',
         sharedTopics: true,
         future: !!payload.future,
         expired: !!payload.expired,
         active: !!payload.active
       },
-      { Id }
-    );
+      pathParams: { Id }
+    });
     for (const topic of topics) {
       const { TopicID } = topic;
       const Content: Item[] = [];
       const items: types.datadirect.topiccontentget.Response = (
-        await api.datadirect.topiccontentget(
-          page,
-          {
+        await api.datadirect.topiccontentget({
+          payload: {
             format: 'json',
             index_id: topic.TopicIndexID,
             id: topic.TopicIndexID // TODO should this be topic.TopicID?
           },
-          {
+          pathParams: {
             TopicID
           }
-        )
+        })
       ).reduce((merged, item) => {
         if (
           !merged.find(
@@ -90,9 +87,8 @@ export const snapshot: Base.Snapshot<Data> = async ({
             Content: await api.datadirect.TopicContent_detail(
               item,
               possibleContent!
-            )(
-              page,
-              {
+            )({
+              payload: {
                 ...payload,
                 id: TopicID,
                 leadSectionId: Id,
@@ -103,8 +99,8 @@ export const snapshot: Base.Snapshot<Data> = async ({
                 column: item.ColumnIndex,
                 cell: item.CellIndex
               },
-              { Id }
-            )
+              pathParams: { Id }
+            })
           };
           if (
             !studentData &&

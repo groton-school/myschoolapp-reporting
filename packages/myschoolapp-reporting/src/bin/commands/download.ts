@@ -26,7 +26,7 @@ import * as Snapshot from '../../workflows/Snapshot.js';
   const {
     downloadOptions,
     puppeteerOptions,
-    loginCredentials,
+    credentials,
     outputOptions: { pretty, outputPath: _outputPath },
     quit
   } = Download.args.parse(values);
@@ -65,7 +65,7 @@ import * as Snapshot from '../../workflows/Snapshot.js';
 
   const spider = new Download.Spider({
     outputPath,
-    credentials: loginCredentials,
+    credentials,
     host: snapshots[0].Metadata.Host
   });
   const indices: (string | undefined)[] = [];

@@ -1,22 +1,24 @@
 import cli from '@battis/qui-cli';
 import cliProgress from 'cli-progress';
-import { api } from 'datadirect-puppeteer';
+import * as datadirect from 'datadirect-puppeteer';
 import crypto from 'node:crypto';
 import { EventEmitter } from 'node:events';
 import fs from 'node:fs/promises';
 import path from 'node:path';
-import { Page } from 'puppeteer';
 import * as common from '../../../common.js';
-import * as args from '../args.js';
 import * as Single from './Single.js';
 
-export type Options = Single.BaseOptions & {
+export type AllOptions = {
   association?: string;
   termsOffered?: string;
   year?: string;
-  batchSize?: number;
   groupsPath?: string;
 };
+
+export type Options = Single.SnapshotOptions &
+  AllOptions & {
+    url: URL | string;
+  } & common.args.Parsed;
 
 const TEMP = path.join('/tmp/msar/snapshot', crypto.randomUUID());
 
@@ -24,30 +26,39 @@ function cleanSplit(list?: string) {
   return (list || '').split(',').map((item) => item.trim());
 }
 
-export async function capture(
-  parent: Page,
-  {
-    association,
-    termsOffered,
-    year,
-    groupsPath,
-    outputPath,
-    batchSize = parseInt(args.options.batchSize.default),
-    pretty,
-    ignoreErrors,
-    ...options
-  }: Options & common.output.args.Parsed['outputOptions']
-) {
+export async function snapshot({
+  url,
+  credentials,
+  puppeteerOptions,
+  association,
+  termsOffered,
+  year,
+  groupsPath,
+  batchSize,
+  outputOptions,
+  ignoreErrors,
+  quit,
+  ...options
+}: Options) {
   if (!year) {
     throw new Error(`${cli.colors.value('--year')} must have a value`);
   }
+
+  const { outputPath, pretty } = outputOptions;
+
+  const api = await new datadirect.api(url, {
+    credentials,
+    ...puppeteerOptions
+  }).ready();
 
   return new Promise<Single.Data[]>(async (resolve) => {
     const _assoc = cleanSplit(association);
     const _terms = cleanSplit(termsOffered);
     const groups = (
-      await api.datadirect.groupFinderByYear(parent, {
-        schoolYearLabel: year
+      await api.datadirect.groupFinderByYear({
+        payload: {
+          schoolYearLabel: year
+        }
       })
     ).filter(
       (group) =>
@@ -91,10 +102,14 @@ export async function capture(
       if (i < groups.length) {
         cli.log.debug(`Group ${groups[i].lead_pk}: ${pad(i)}.json`);
         try {
-          const snapshot = await Single.capture(parent, {
+          const snapshot = await Single.snapshot({
+            api,
             groupId: groups[i].lead_pk,
+            outputOptions,
             ignoreErrors,
-            ...options
+            batchSize,
+            ...options,
+            quit: true
           });
           const tempPath = path.join(TEMP, `${pad(i)}.json`);
           await common.output.writeJSON(tempPath, snapshot);
@@ -146,8 +161,7 @@ export async function capture(
           common.output.filePathFromOutputPath(outputPath, 'snapshot.json'),
           common.output.AddTimestamp
         );
-        const { bulletinBoard, topics, assignments, gradebook, payload } =
-          options;
+        const { bulletinBoard, topics, assignments, gradebook } = options;
         common.output.writeJSON(filepath, data, { pretty });
         common.output.writeJSON(filepath.replace(/\.json$/, '.metadata.json'), {
           ...first,
@@ -159,8 +173,7 @@ export async function capture(
           bulletinBoard,
           topics,
           assignments,
-          gradebook,
-          payload
+          gradebook
         });
         if (errors.length) {
           const errorsPath = filepath.replace(/\.json$/, '.errors.json');
@@ -175,6 +188,9 @@ export async function capture(
 
     for (let i = 0; i < batchSize; i++) {
       nextGroup();
+    }
+    if (quit) {
+      api.close();
     }
   });
 }

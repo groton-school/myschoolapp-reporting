@@ -1,13 +1,16 @@
+import { PuppeteerSession } from 'datadirect-puppeteer';
 import * as common from '../../../common.js';
 import * as Manager from '../Manager.js';
 
-type Result = {
-  snapshotOptions: Manager.Single.Options;
-  all: boolean;
-  allOptions: Manager.All.Options;
-} & ReturnType<typeof common.args.parse>;
+export type Parsed = common.args.Parsed & {
+  snapshotOptions?: Manager.Single.SnapshotOptions;
+  all?: boolean;
+  allOptions?: Manager.All.AllOptions;
+  credentials?: PuppeteerSession.Credentials;
+  puppeteerOptions?: PuppeteerSession.Options;
+};
 
-export function parse(values: Record<string, any>): Result {
+export function parse(values: Record<string, any>): Parsed {
   const {
     groupsPath,
     association,
@@ -22,39 +25,32 @@ export function parse(values: Record<string, any>): Result {
     fromDate,
     toDate
   } = values;
-  const payload = {
-    format,
-    contextLabelId,
-    editMode,
-    active,
-    future,
-    expired,
-    fromDate,
-    toDate
-  };
-  const all = !!values.all;
-  const bulletinBoard = !!values.bulletinBoard;
-  const topics = !!values.topics;
-  const assignments = !!values.assignments;
-  const gradebook = !!values.gradebook;
-  const batchSize = parseInt(values.batchSize);
-  const studentData = !!values.studentData;
-  const ignoreErrors = !!values.ignoreErrors;
-
-  const commonParsed = common.args.parse(values);
 
   return {
     snapshotOptions: {
-      payload,
-      bulletinBoard,
-      topics,
-      assignments,
-      gradebook,
-      studentData,
-      ignoreErrors
+      bulletinBoard: !!values.bulletinBoard,
+      topics: !!values.topics,
+      assignments: !!values.assignments,
+      gradebook: !!values.gradebook,
+      studentData: !!values.studentData,
+      payload: {
+        format,
+        contextLabelId,
+        editMode,
+        active,
+        future,
+        expired,
+        fromDate,
+        toDate
+      }
     },
-    all,
-    allOptions: { association, termsOffered, year, groupsPath, batchSize },
-    ...commonParsed
+    all: !!values.all,
+    allOptions: {
+      association,
+      termsOffered,
+      year,
+      groupsPath
+    },
+    ...common.args.parse(values)
   };
 }

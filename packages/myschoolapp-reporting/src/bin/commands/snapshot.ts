@@ -1,5 +1,4 @@
 import cli from '@battis/qui-cli';
-import * as common from '../../common.js';
 import * as Snapshot from '../../workflows/Snapshot.js';
 
 (async () => {
@@ -19,44 +18,32 @@ import * as Snapshot from '../../workflows/Snapshot.js';
     }
   });
 
-  const {
-    puppeteerOptions,
-    loginCredentials,
-    snapshotOptions,
-    all,
-    allOptions,
-    outputOptions,
-    quit
-  } = Snapshot.args.parse(values);
+  if (!url) {
+    throw new Error(
+      `${cli.colors.value('arg0')} must be the URL of an LMS instance`
+    );
+  }
 
-  // TODO page creation should be abstracted away
-  const page = await common.puppeteer.openURL(url!, puppeteerOptions);
-  await common.puppeteer.login(page, loginCredentials);
-  values.username = '';
-  values.password = '';
+  const { all, snapshotOptions, allOptions, ...options } =
+    Snapshot.args.parse(values);
 
   if (all) {
-    await Snapshot.captureAll(page, {
+    await Snapshot.snapshotAll({
+      url,
       ...snapshotOptions,
       ...allOptions,
-      ...outputOptions
+      ...options
     });
   } else {
     const spinner = cli.spinner();
     spinner.start(`Capturing snapshot from ${cli.colors.url(url)}`);
-    const snapshot = await Snapshot.capture(page, {
+    const snapshot = await Snapshot.snapshot({
       url,
       ...snapshotOptions,
-      ...outputOptions
+      ...options
     });
     spinner.succeed(
       `Captured snapshot of ${snapshot?.SectionInfo?.Teacher}'s ${snapshot?.SectionInfo?.SchoolYear} ${snapshot?.SectionInfo?.Duration} ${snapshot?.SectionInfo?.GroupName}`
     );
-  }
-
-  if (quit) {
-    await page.browser().close();
-  } else {
-    cli.log.info('Quit the Chrome Test app to end.');
   }
 })();

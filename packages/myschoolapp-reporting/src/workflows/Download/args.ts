@@ -1,3 +1,3 @@
-export { flags } from './args/flags.js';
-export { options } from './args/options.js';
-export { parse } from './args/parse.js';
+export * from './args/flags.js';
+export * from './args/options.js';
+export * from './args/parse.js';

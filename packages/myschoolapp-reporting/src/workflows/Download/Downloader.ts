@@ -46,6 +46,6 @@ export class Downloader implements Strategy {
   }
 
   public async quit() {
-    await this.auth.quit();
+    await this.auth.close();
   }
 }

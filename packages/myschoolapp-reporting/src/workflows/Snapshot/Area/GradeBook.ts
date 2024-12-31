@@ -1,6 +1,5 @@
 import cli from '@battis/qui-cli';
 import { api as types } from 'datadirect';
-import { api } from 'datadirect-puppeteer';
 import * as Base from './Base.js';
 
 export type Item = {
@@ -13,24 +12,25 @@ export type Item = {
 export type Data = Item[];
 
 export const snapshot: Base.Snapshot<Data> = async ({
-  page,
+  api,
   groupId: sectionId,
   ignoreErrors,
   studentData
 }) => {
   cli.log.debug(`Group ${sectionId}: Start capturing gradebook`);
   try {
-    const markingPeriods = await api.datadirect.GradeBookMarkingPeriodList(
-      page,
-      { sectionId }
-    );
+    const markingPeriods = await api.datadirect.GradeBookMarkingPeriodList({
+      payload: { sectionId }
+    });
     const Gradebook: Data = [];
     for (const markingPeriod of markingPeriods) {
       const entry: Item = {
         markingPeriod,
-        gradebook: await api.gradebook.hydrategradebook(page, {
-          sectionId,
-          markingPeriodId: markingPeriod.MarkingPeriodId
+        gradebook: await api.gradebook.hydrategradebook({
+          payload: {
+            sectionId,
+            markingPeriodId: markingPeriod.MarkingPeriodId
+          }
         })
       };
       if (!studentData) {

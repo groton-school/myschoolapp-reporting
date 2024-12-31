@@ -8,7 +8,7 @@ const defaultOutputPath = path.join(
 );
 
 export const options = {
-  ...common.args.pickOptions({ SkyAPI: false }),
+  ...common.args.options,
   outputPath: {
     ...common.args.options.outputPath,
     description: `${common.args.options.outputPath?.description} (defaults to the name of the snapshot file)`,

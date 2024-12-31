@@ -1,7 +1,6 @@
 import cli from '@battis/qui-cli';
 import { api as types } from 'datadirect';
 import { api } from 'datadirect-puppeteer';
-import { Page } from 'puppeteer';
 import * as Base from './Base.js';
 
 export type Item = types.datadirect.BulletinBoardContentGet.Item & {
@@ -16,18 +15,20 @@ let possibleContent:
   | types.datadirect.GroupPossibleContentGet.Response
   | undefined = undefined;
 
-async function getPossibleContent(page: Page, leadSectionId: number) {
+async function getPossibleContent(api: api, leadSectionId: number) {
   if (!possibleContent) {
-    possibleContent = await api.datadirect.GroupPossibleContentGet(page, {
-      format: 'json',
-      leadSectionId
+    possibleContent = await api.datadirect.GroupPossibleContentGet({
+      payload: {
+        format: 'json',
+        leadSectionId
+      }
     });
   }
   return possibleContent;
 }
 
 export const snaphot: Base.Snapshot<Data> = async ({
-  page,
+  api,
   groupId: Id,
   payload = { format: 'json' },
   ignoreErrors = true,
@@ -36,12 +37,14 @@ export const snaphot: Base.Snapshot<Data> = async ({
   cli.log.debug(`Group ${Id}: Start capturing bulletin board`);
   try {
     const BulletinBoard: Data = [];
-    await getPossibleContent(page, Id);
-    const items = await api.datadirect.BulletinBoardContentGet(page, {
-      format: 'json',
-      sectionId: Id,
-      associationId: 1,
-      pendingInd: false
+    await getPossibleContent(api, Id);
+    const items = await api.datadirect.BulletinBoardContentGet({
+      payload: {
+        format: 'json',
+        sectionId: Id,
+        associationId: 1,
+        pendingInd: false
+      }
     });
     for (const item of items) {
       const ContentType = possibleContent!.find(
@@ -61,7 +64,7 @@ export const snaphot: Base.Snapshot<Data> = async ({
           Content: await api.datadirect.BulletinBoardContent_detail(
             item,
             possibleContent!
-          )(page, { ...payload, contextValue: Id }, { Id })
+          )({ payload: { ...payload, contextValue: Id }, pathParams: { Id } })
         });
       } catch (error) {
         BulletinBoard.push({

@@ -1,10 +1,10 @@
 import cli from '@battis/qui-cli';
 import { Mutex } from 'async-mutex';
-import EventEmitter from 'node:events';
+import { PuppeteerSession } from 'datadirect-puppeteer';
 import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
-import { Page, Protocol } from 'puppeteer';
+import { Protocol } from 'puppeteer';
 import * as common from '../../../common.js';
 import { DownloadData, DownloadError } from '../Cache.js';
 import {
@@ -13,58 +13,35 @@ import {
 } from '../filenameFromDisposition.js';
 import { Strategy } from './Strategy.js';
 
-type PrepareOptions = {
-  host: string;
-  credentials: common.puppeteer.args.Parsed['loginCredentials'];
-};
-
 type FilepathVariantsOptions = {
   url: string;
   filename?: string;
   guid: string;
 };
 
-export type Options = PrepareOptions & {
+export type Options = {
   outputPath: string;
-};
+  host: string;
+} & PuppeteerSession.Options;
 
 const TEMP = path.join('/tmp/msar/download', crypto.randomUUID());
 const DOWNLOADS = path.join(os.homedir(), 'Downloads');
 
-export class AuthenticatedFetch extends EventEmitter implements Strategy {
+export class AuthenticatedFetch
+  extends PuppeteerSession.Fetchable
+  implements Strategy
+{
   private outputPath: string;
-  private _parent?: Page;
   private preparing = new Mutex();
 
-  public constructor({ outputPath, host, credentials }: Options) {
-    super();
+  public constructor({ outputPath, host, ...options }: Options) {
+    super(host, options);
     this.outputPath = outputPath;
-    this.preparing.acquire().then(() => this.prepare({ host, credentials }));
-  }
-
-  private async prepare({ host, credentials }: PrepareOptions) {
-    this.parent = await common.puppeteer.openURL(`https://${host}`);
-    await common.puppeteer.login(this.parent, credentials);
-    this.preparing.release();
-  }
-
-  private get parent() {
-    if (!this._parent) {
-      throw new Error('Authenticated._page not initialized');
-    }
-    return this._parent;
-  }
-  private set parent(parent) {
-    this._parent = parent;
   }
 
   public async download(url: string, filename?: string) {
-    if (this.preparing.isLocked()) {
-      await this.preparing.acquire();
-      this.preparing.release();
-    }
-    const page = await this.parent.browser().newPage();
-    const client = await page.createCDPSession();
+    const session = await (await this.fork('about:blank')).ready();
+    const client = await session.page.createCDPSession();
 
     await client.send('Fetch.enable', {
       patterns: [
@@ -208,11 +185,11 @@ export class AuthenticatedFetch extends EventEmitter implements Strategy {
     return new Promise<DownloadData | DownloadError>((resolve) => {
       const listener = async (downloadData: DownloadData | DownloadError) => {
         this.removeListener(url, listener);
-        await page.close();
+        await session.close();
         resolve(downloadData);
       };
       this.on(url, listener);
-      page.goto(url).catch((error) => cli.log.debug(`Ignored: ${error}`));
+      session.goto(url).catch((error) => cli.log.debug(`Ignored: ${error}`));
     });
   }
 
@@ -271,13 +248,5 @@ export class AuthenticatedFetch extends EventEmitter implements Strategy {
       );
     }
     return dirVariants;
-  }
-
-  public async quit() {
-    if (this.preparing.isLocked()) {
-      await this.preparing.acquire();
-      this.preparing.release();
-    }
-    await this.parent.browser().close();
   }
 }

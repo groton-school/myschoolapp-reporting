@@ -1,6 +1,6 @@
 import * as common from '../../../common.js';
 
-type Result = ReturnType<typeof common.args.parse> & {
+export type Parsed = common.args.Parsed & {
   downloadOptions: {
     include?: RegExp[];
     exclude?: RegExp[];
@@ -14,7 +14,7 @@ function stringToRegExpArray(arg: string): RegExp[] | undefined {
     : undefined;
 }
 
-export function parse(values: Record<string, any>): Result {
+export function parse(values: Record<string, any>): Parsed {
   return {
     ...common.args.parse(values),
     downloadOptions: {

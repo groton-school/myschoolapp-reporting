@@ -1,8 +1,8 @@
-import { openURL } from '../openURL.js';
+import { PuppeteerSession } from 'datadirect-puppeteer';
 
 export type Parsed = {
-  puppeteerOptions: Parameters<typeof openURL>[1];
-  loginCredentials: { username?: string; password?: string; sso?: string };
+  puppeteerOptions: PuppeteerSession.PuppeteerOptions;
+  credentials: PuppeteerSession.Credentials;
   quit: boolean;
 };
 
@@ -16,7 +16,7 @@ export function parse(values: Record<string, string>): Parsed {
       headless: !!(headless && values.username && values.password),
       defaultViewport: { width, height }
     },
-    loginCredentials: {
+    credentials: {
       username: values.username,
       password: values.password,
       sso: values.sso
