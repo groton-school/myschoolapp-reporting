@@ -1,6 +1,6 @@
 import { JSONValue } from '@battis/typescript-tricks';
 import { EventEmitter } from 'node:events';
-import puppeteer, { Page } from 'puppeteer';
+import puppeteer, { GoToOptions, Page } from 'puppeteer';
 
 export type Options = Parameters<typeof puppeteer.launch>[0];
 
@@ -92,6 +92,10 @@ export class Base extends EventEmitter {
 
   public url() {
     return new URL(this.page.url());
+  }
+
+  public async goto(url: URL | string, options: GoToOptions = {}) {
+    return this.page.goto(url.toString(), options);
   }
 
   public async fetch(
