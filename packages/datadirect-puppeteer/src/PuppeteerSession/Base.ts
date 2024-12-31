@@ -130,7 +130,7 @@ export class Base extends EventEmitter {
   }
 
   public async close() {
-    if (this.page.browser().pages.length === 1) {
+    if ((await this.page.browser().pages()).length === 1) {
       await this.page.browser().close();
     } else {
       await this.page.close();
