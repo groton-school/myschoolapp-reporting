@@ -1,3 +1,4 @@
+import { Mutex, MutexInterface } from 'async-mutex';
 import { Page } from 'puppeteer';
 import { Base, Options as BaseOptions } from './Base.js';
 
@@ -14,28 +15,44 @@ export type Options = BaseOptions & {
 
 export class Authenticated extends Base {
   public static readonly DefaultTimeout = 300000;
-  protected static readonly Authenticated = 'authenticated';
-
-  private authenticated = false;
+  private authenticating = new Mutex();
 
   public constructor(
     url: URL | string | Page,
-    { credentials, timeout, ...options }: Options = {}
+    {
+      credentials,
+      timeout = Authenticated.DefaultTimeout,
+      ...options
+    }: Options = {}
   ) {
     super(url, options);
-    this.login({ credentials, timeout });
+    this.authenticating.acquire().then((release) => {
+      if (url instanceof Page) {
+        this.appLoaded(timeout, release);
+      } else {
+        this.login({ credentials, timeout }, release);
+      }
+    });
   }
 
-  async appLoaded(timeout: number) {
+  public async appLoaded(
+    timeout = Authenticated.DefaultTimeout,
+    release?: MutexInterface.Releaser
+  ) {
+    await super.ready();
     await this.page.waitForSelector('div#site-header', { timeout });
-    this.authenticated = true;
-    this.emit(Authenticated.Authenticated);
+    if (release) {
+      release();
+    }
   }
 
-  private async login({
-    credentials: { username, password, sso } = {},
-    timeout = Authenticated.DefaultTimeout
-  }: Options) {
+  private async login(
+    {
+      credentials: { username, password, sso } = {},
+      timeout = Authenticated.DefaultTimeout
+    }: Options,
+    release?: MutexInterface.Releaser
+  ) {
     await super.ready();
     if (username) {
       // Blackbaud username entry
@@ -67,27 +84,17 @@ export class Authenticated extends Base {
       }
     }
 
-    await this.appLoaded(timeout);
+    await this.appLoaded(timeout, release);
   }
 
   public async ready() {
-    return new Promise<Authenticated>(
-      ((resolve: (session: Authenticated) => void) => {
-        if (!this.authenticated) {
-          this.addListener(
-            Authenticated.Authenticated,
-            (() => {
-              resolve(this);
-            }).bind(this)
-          );
-        } else {
-          resolve(this);
-        }
-      }).bind(this)
-    );
+    await super.ready();
+    (await this.authenticating.acquire())();
+    return this;
   }
 
   public async user(): Promise<string> {
+    await this.ready();
     return await this.page.evaluate(
       async () => (await BBAuthClient.BBAuth.getDecodedToken(null)).email
     );
@@ -97,7 +104,9 @@ export class Authenticated extends Base {
     path: URL | string,
     timeout = Authenticated.DefaultTimeout
   ) {
-    const page = (await super.fork(path)).page;
+    await this.ready();
+    const fork = await super.fork(path);
+    const page = fork.page;
     const session = new Authenticated(page);
     await session.appLoaded(timeout);
     return session;

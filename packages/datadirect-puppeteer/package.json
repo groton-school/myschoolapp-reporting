@@ -21,6 +21,9 @@
     "build:clean": "run-s clean",
     "build:compile": "tsc"
   },
+  "dependencies": {
+    "async-mutex": "^0.5.0"
+  },
   "devDependencies": {
     "@battis/typescript-tricks": "^0.7.3",
     "@tsconfig/node20": "^20.1.4",

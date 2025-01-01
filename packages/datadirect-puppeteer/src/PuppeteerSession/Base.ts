@@ -1,5 +1,5 @@
 import { JSONValue } from '@battis/typescript-tricks';
-import { EventEmitter } from 'node:events';
+import { Mutex, MutexInterface } from 'async-mutex';
 import puppeteer, { GoToOptions, Page } from 'puppeteer';
 
 export type Options = Parameters<typeof puppeteer.launch>[0];
@@ -15,33 +15,36 @@ export type FetchResponse = {
 };
 
 export class InitializationError extends Error {
-  public constructor() {
-    super('The session has been accessed before initialization is complete.');
+  public constructor(message?: string) {
+    super(
+      `The session has been accessed before initialization is complete${message ? `: ${message}` : '.'}`
+    );
   }
 }
 
-export class Base extends EventEmitter {
-  protected static readonly Ready = 'ready';
+export class Base {
+  private loading = new Mutex();
 
   private _page?: Page;
   public get page() {
     if (!this._page) {
-      throw new InitializationError();
+      throw new InitializationError('page');
     }
     return this._page;
   }
   private set page(page) {
     this._page = page;
-    this.emit(Base.Ready);
   }
 
   public constructor(url: URL | string | Page, options: Options = {}) {
-    super();
-    if (url instanceof Page) {
-      this.page = url;
-    } else {
-      this.openURL(url, options);
-    }
+    this.loading.acquire().then((release) => {
+      if (url instanceof Page) {
+        this.page = url;
+        release();
+      } else {
+        this.openURL(url, options, release);
+      }
+    });
   }
 
   private async openURL(
@@ -59,38 +62,32 @@ export class Base extends EventEmitter {
        *   }
        *  ```
        */
-    }
+    },
+    release?: MutexInterface.Releaser
   ) {
     const browser = await puppeteer.launch(options);
     const [page] = await browser.pages();
     await page.goto(new URL(url).toString());
     this.page = page;
+    if (release) {
+      release();
+    }
   }
 
   public async ready() {
-    return new Promise<Base>(
-      ((resolve: (session: Base) => void) => {
-        if (!this._page) {
-          this.addListener(
-            Base.Ready,
-            (() => {
-              resolve(this);
-            }).bind(this)
-          );
-        } else {
-          resolve(this);
-        }
-      }).bind(this)
-    );
+    (await this.loading.acquire())();
+    return this;
   }
 
   public async fork(path: URL | string) {
+    await this.ready();
     const page = await this.page.browser().newPage();
     await page.goto(new URL(path, this.page.url()).toString());
-    return await new Base(page).ready();
+    return new Base(page);
   }
 
-  public url() {
+  public async url() {
+    await this.ready();
     return new URL(this.page.url());
   }
 
@@ -102,6 +99,7 @@ export class Base extends EventEmitter {
     input: URL | string,
     init?: RequestInit
   ): Promise<FetchResponse> {
+    await this.ready();
     return await this.page.evaluate(
       async (input, init) => {
         const response = await fetch(input, init);
@@ -130,6 +128,7 @@ export class Base extends EventEmitter {
   }
 
   public async close() {
+    await this.ready();
     if ((await this.page.browser().pages()).length === 1) {
       await this.page.browser().close();
     } else {

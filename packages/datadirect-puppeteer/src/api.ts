@@ -1,3 +1,4 @@
+import { Mutex, MutexInterface } from 'async-mutex';
 import { Page } from 'puppeteer';
 import * as PuppeteerSession from './PuppeteerSession.js';
 import { Assignment2 } from './api/Assignment2.js';
@@ -9,10 +10,13 @@ import { schoolinfo } from './api/schoolinfo.js';
 import { topic } from './api/topic.js';
 
 export class api extends PuppeteerSession.Fetchable {
+  private preparing = new Mutex();
+  private releaseApi?: MutexInterface.Releaser;
+
   private _assessment?: assessment;
   public get assessment() {
     if (!this._assessment) {
-      throw new PuppeteerSession.InitializationError();
+      throw new PuppeteerSession.InitializationError('assessment');
     }
     return this._assessment;
   }
@@ -20,7 +24,7 @@ export class api extends PuppeteerSession.Fetchable {
   private _datadirect?: datadirect;
   public get datadirect() {
     if (!this._datadirect) {
-      throw new PuppeteerSession.InitializationError();
+      throw new PuppeteerSession.InitializationError('datadirect');
     }
     return this._datadirect;
   }
@@ -28,7 +32,7 @@ export class api extends PuppeteerSession.Fetchable {
   private _Assignment2?: Assignment2;
   public get Assignment2() {
     if (!this._Assignment2) {
-      throw new PuppeteerSession.InitializationError();
+      throw new PuppeteerSession.InitializationError('Assignment2');
     }
     return this._Assignment2;
   }
@@ -36,7 +40,7 @@ export class api extends PuppeteerSession.Fetchable {
   private _LtiTool?: LtiTool;
   public get LtiTool() {
     if (!this._LtiTool) {
-      throw new PuppeteerSession.InitializationError();
+      throw new PuppeteerSession.InitializationError('LtiTool');
     }
     return this._LtiTool;
   }
@@ -44,7 +48,7 @@ export class api extends PuppeteerSession.Fetchable {
   private _gradebook?: gradebook;
   public get gradebook() {
     if (!this._gradebook) {
-      throw new PuppeteerSession.InitializationError();
+      throw new PuppeteerSession.InitializationError('gradebook');
     }
     return this._gradebook;
   }
@@ -60,7 +64,7 @@ export class api extends PuppeteerSession.Fetchable {
   private _topic?: topic;
   public get topic() {
     if (!this._topic) {
-      throw new PuppeteerSession.InitializationError();
+      throw new PuppeteerSession.InitializationError('topic');
     }
     return this._topic;
   }
@@ -70,11 +74,14 @@ export class api extends PuppeteerSession.Fetchable {
     options?: PuppeteerSession.Options
   ) {
     super(url, options);
+    this.preparing.acquire().then((release) => {
+      this.releaseApi = release;
+      this.prepare();
+    });
   }
 
-  public async ready() {
+  public async prepare() {
     await super.ready();
-
     this._assessment = new assessment(this.page);
     this._datadirect = new datadirect(this.page);
     this._Assignment2 = new Assignment2(this.page);
@@ -83,11 +90,22 @@ export class api extends PuppeteerSession.Fetchable {
     this._schoolinfo = new schoolinfo(this.page);
     this._topic = new topic(this.page);
 
+    if (this.releaseApi) {
+      this.releaseApi();
+      this.releaseApi = undefined;
+    }
+  }
+
+  public async ready() {
+    await super.ready();
+    (await this.preparing.acquire())();
     return this;
   }
 
   public async fork(path: string | URL, timeout?: number): Promise<api> {
-    const page = (await super.fork(path, timeout)).page;
+    await this.ready();
+    const fork = await super.fork(path, timeout);
+    const page = fork.page;
     return await new api(page).ready();
   }
 }
