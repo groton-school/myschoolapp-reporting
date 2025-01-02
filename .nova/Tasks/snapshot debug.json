@@ -18,6 +18,7 @@
       ]
     }
   },
+  "buildBeforeRunning" : true,
   "extension" : {
     "identifier" : "panic.JavaScript",
     "name" : "JavaScript"
