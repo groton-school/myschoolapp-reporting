@@ -39,7 +39,6 @@ export function bind<P extends Endpoint.Payload, R extends Endpoint.Response>(
     const url = Endpoint.preparePath(input, pathParams);
 
     const response = await session.fetch(url, init);
-    console.log({ url, init, response });
     return response.body as R;
   };
 }
