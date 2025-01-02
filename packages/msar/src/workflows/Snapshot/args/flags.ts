@@ -4,8 +4,8 @@ import * as common from '../../../common.js';
 export const defaults = {
   all: false,
   active: true,
-  future: false,
-  expired: false,
+  future: true,
+  expired: true,
   bulletinBoard: true,
   topics: true,
   assignments: true,
