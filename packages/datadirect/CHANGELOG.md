@@ -4,13 +4,13 @@
 
 ### Patch Changes
 
-- 9606767: Switch repos (again, returning)
+- 04ba39a: Switch repos (again, returning)
 
 ## 0.2.1
 
 ### Patch Changes
 
-- 2197291: Also assignment details
+- Also assignment details
 
   (Had meant to include that in the minor release)
 
@@ -18,10 +18,10 @@
 
 ### Minor Changes
 
-- 2cfad71: add assessments
+- add assessments
 
 ## 0.1.0
 
 ### Minor Changes
 
-- 10a5bf3: Intitial release
+- Initial release
