@@ -21,11 +21,11 @@
     "release:publish": "pnpm publish -r --otp $(op item get npm --otp) --access public"
   },
   "devDependencies": {
-    "@battis/eslint-config": "^2.0.2",
-    "@battis/prettier-config": "^1.5.5",
+    "@battis/eslint-config": "^2.0.3",
+    "@battis/prettier-config": "^1.5.6",
     "@changesets/cli": "^2.27.11",
     "lerna": "^8.1.9",
-    "monorepo-package-paths": "^0.3.7",
+    "monorepo-package-paths": "^0.3.8",
     "myschoolapp-reporting": "workspace:*",
     "npm-run-all": "^4.1.5"
   },
