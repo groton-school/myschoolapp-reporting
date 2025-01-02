@@ -96,7 +96,7 @@ export async function snapshot({
 
   const Start = new Date();
 
-  const endpointParams = { api, groupId, options };
+  const endpointParams = { session, groupId, ...options };
   const [SectionInfo, BulletinBoard, Topics, Assignments, Gradebook] =
     await Promise.all([
       Area.SectionInfo.snapshot(endpointParams),

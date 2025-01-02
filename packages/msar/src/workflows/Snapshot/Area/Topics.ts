@@ -28,7 +28,7 @@ async function getPossibleContent() {
 
 export const snapshot: Base.Snapshot<Data> = async ({
   groupId: Id,
-  payload = { format: 'json' },
+  payload,
   ignoreErrors = true,
   studentData
 }): Promise<Data | undefined> => {
@@ -38,11 +38,13 @@ export const snapshot: Base.Snapshot<Data> = async ({
     await getPossibleContent();
     const topics = await api.datadirect.sectiontopicsget({
       payload: {
-        format: 'json',
-        sharedTopics: true,
-        future: !!payload.future,
-        expired: !!payload.expired,
-        active: !!payload.active
+        // TODO Fix typing to avoid parameter redundancy
+        active: true,
+        future: true,
+        expired: true,
+        ...payload,
+        format: 'json', // TODO Empirically, `format` is often optional
+        sharedTopics: true // TODO sharedTopics should be configurable
       },
       pathParams: { Id }
     });
@@ -83,22 +85,25 @@ export const snapshot: Base.Snapshot<Data> = async ({
           const entry: Item = {
             ...item,
             ObjectType,
-            Content: await (
-              await api.datadirect.TopicContent_detail(item, possibleContent!)
-            )({
-              payload: {
-                ...payload,
-                id: TopicID,
-                leadSectionId: Id,
-                contextValue: Id,
-                topicIndexId: TopicID,
-                contentIndexId: topic.TopicIndexID,
-                row: item.RowIndex,
-                column: item.ColumnIndex,
-                cell: item.CellIndex
-              },
-              pathParams: { Id }
-            })
+            Content: await api.datadirect.TopicContent_detail(
+              item,
+              possibleContent!,
+              {
+                payload: {
+                  format: 'json',
+                  ...payload,
+                  id: TopicID,
+                  leadSectionId: Id,
+                  contextValue: Id,
+                  topicIndexId: TopicID,
+                  contentIndexId: topic.TopicIndexID,
+                  row: item.RowIndex,
+                  column: item.ColumnIndex,
+                  cell: item.CellIndex
+                },
+                pathParams: { Id }
+              }
+            )
           };
           if (
             !studentData &&
