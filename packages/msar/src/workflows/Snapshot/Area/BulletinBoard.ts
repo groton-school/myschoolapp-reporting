@@ -60,12 +60,14 @@ export const snaphot: Base.Snapshot<Data> = async ({
         BulletinBoard.push({
           ...item,
           ContentType,
-          Content: await (
-            await api.datadirect.BulletinBoardContent_detail(
-              item,
-              possibleContent!
-            )
-          )({ payload: { ...payload, contextValue: Id }, pathParams: { Id } })
+          Content: await api.datadirect.BulletinBoardContent_detail(
+            item,
+            possibleContent!,
+            {
+              payload: { ...payload, contextValue: Id, contextLabelId: 2 },
+              pathParams: { Id }
+            }
+          )
         });
       } catch (error) {
         BulletinBoard.push({
