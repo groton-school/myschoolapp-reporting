@@ -3,7 +3,7 @@ import { Endpoint } from 'datadirect';
 import { Authenticated, Options } from './Authenticated.js';
 import { InitializationError } from './InitializationError.js';
 
-type EndpointOptions<P extends Endpoint.Payload> = {
+export type EndpointOptions<P extends Endpoint.Payload> = {
   payload: P;
   pathParams?: Record<string, string | number | boolean>;
   logBodyOnError?: boolean;
@@ -36,7 +36,10 @@ export function bind<P extends Endpoint.Payload, R extends Endpoint.Response>(
       payload,
       (await session.url()).toString()
     );
-    return (await session.fetch(Endpoint.preparePath(input, pathParams), init))
-      .body as R;
+    const url = Endpoint.preparePath(input, pathParams);
+
+    const response = await session.fetch(url, init);
+    console.log({ url, init, response });
+    return response.body as R;
   };
 }

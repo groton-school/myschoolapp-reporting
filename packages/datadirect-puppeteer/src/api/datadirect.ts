@@ -1,3 +1,5 @@
+import { JSONObject } from '@battis/typescript-tricks';
+import { Endpoint } from 'datadirect';
 import {
   BulletinBoardContentGet as BulletinBoardContent,
   GroupPossibleContentGet as BulletinBoardContentTypes,
@@ -63,40 +65,44 @@ export const sectionrosterget: Fetchable.Binding<
   SectionRoster.Response
 > = Fetchable.bind(SectionRoster);
 
-export function BulletinBoardContent_detail(
+export async function BulletinBoardContent_detail(
   item: BulletinBoardContent.Item,
-  types: BulletinBoardContentTypes.Response
+  types: BulletinBoardContentTypes.Response,
+  options: Fetchable.EndpointOptions<common.ContentItem.Payload>
 ) {
   if (
     common.ContentType.Static.find(
       (t: common.ContentType.Base) => t.ContentId === item.ContentId
     )
   ) {
-    return () => undefined;
+    throw new Error('Static content type');
   }
-  return Fetchable.bind<
+  const endpoint = Fetchable.bind<
     common.ContentItem.Payload,
     common.ContentItem.Any.Content
   >({
     prepare: BulletinBoardContent.prepareContent(item, types)
   });
+  return await endpoint(options);
 }
 
-export function TopicContent_detail(
+export async function TopicContent_detail(
   item: TopicContent.Item,
-  types: TopicContentTypes.Response
+  types: TopicContentTypes.Response,
+  options: Fetchable.EndpointOptions<common.ContentItem.Payload>
 ) {
   if (
     common.ContentType.Static.find(
       (t: common.ContentType.Base) => t.ContentId === item.ContentId
     )
   ) {
-    return () => undefined;
+    throw new Error('Static content type');
   }
-  return Fetchable.bind<
+  const endpoint = Fetchable.bind<
     common.ContentItem.Payload,
     common.ContentItem.Any.Content
   >({
     prepare: TopicContent.prepareContent(item, types)
   });
+  return await endpoint(options);
 }
