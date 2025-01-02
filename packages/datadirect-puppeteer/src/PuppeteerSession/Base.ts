@@ -1,6 +1,7 @@
 import { JSONValue } from '@battis/typescript-tricks';
-import { Mutex, MutexInterface } from 'async-mutex';
+import { Mutex, MutexInterface, Semaphore } from 'async-mutex';
 import puppeteer, { GoToOptions, Page } from 'puppeteer';
+import { InitializationError } from './InitializationError.js';
 
 export type Options = Parameters<typeof puppeteer.launch>[0];
 
@@ -14,16 +15,8 @@ export type FetchResponse = {
   body?: Blob | string | JSONValue | FormData;
 };
 
-export class InitializationError extends Error {
-  public constructor(message?: string) {
-    super(
-      `The session has been accessed before initialization is complete${message ? `: ${message}` : '.'}`
-    );
-  }
-}
-
 export class Base {
-  private loading = new Mutex();
+  private initializing = new Mutex();
 
   private _page?: Page;
   public get page() {
@@ -36,15 +29,21 @@ export class Base {
     this._page = page;
   }
 
-  public constructor(url: URL | string | Page, options: Options = {}) {
-    this.loading.acquire().then((release) => {
-      if (url instanceof Page) {
-        this.page = url;
-        release();
-      } else {
-        this.openURL(url, options, release);
-      }
-    });
+  protected constructor(page: Page);
+  protected constructor(url: URL | string, options?: Options);
+  protected constructor(pageOrUrl: Page | URL | string, options?: Options);
+  protected constructor(pageOrUrl: Page | URL | string, options: Options = {}) {
+    if (pageOrUrl instanceof Page) {
+      this.page = pageOrUrl;
+    } else {
+      this.initializing.acquire().then((initialized) => {
+        this.openURL(pageOrUrl, options, initialized);
+      });
+    }
+  }
+
+  public static async getInstance(url: URL | string, options?: Options) {
+    return await new Base(url, options).ready();
   }
 
   private async openURL(
@@ -63,27 +62,39 @@ export class Base {
        *  ```
        */
     },
-    release?: MutexInterface.Releaser
+    initialized?: MutexInterface.Releaser
   ) {
     const browser = await puppeteer.launch(options);
     const [page] = await browser.pages();
     await page.goto(new URL(url).toString());
     this.page = page;
-    if (release) {
-      release();
+    if (initialized) {
+      initialized();
     }
   }
 
-  public async ready() {
-    (await this.loading.acquire())();
+  protected async ready() {
+    if (this.initializing.isLocked()) {
+      const ready = await this.initializing.acquire();
+      ready();
+    }
     return this;
+  }
+
+  public async clone() {
+    await this.ready();
+    return new Base(this.page);
   }
 
   public async fork(path: URL | string) {
     await this.ready();
-    const page = await this.page.browser().newPage();
-    await page.goto(new URL(path, this.page.url()).toString());
-    return new Base(page);
+    const baseUrl = await this.url();
+    const fork = await this.clone();
+    const initialized = await fork.initializing.acquire();
+    fork.page = await fork.page.browser().newPage();
+    await fork.page.goto(new URL(path, baseUrl).toString());
+    initialized();
+    return fork;
   }
 
   public async url() {

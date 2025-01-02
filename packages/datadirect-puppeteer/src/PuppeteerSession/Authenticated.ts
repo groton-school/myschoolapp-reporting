@@ -17,32 +17,38 @@ export class Authenticated extends Base {
   public static readonly DefaultTimeout = 300000;
   private authenticating = new Mutex();
 
-  public constructor(
-    url: URL | string | Page,
+  protected constructor(page: Page);
+  protected constructor(url: URL | string, options?: Options);
+  protected constructor(
+    pageOrUrl: Page | URL | string,
     {
       credentials,
       timeout = Authenticated.DefaultTimeout,
       ...options
     }: Options = {}
   ) {
-    super(url, options);
-    this.authenticating.acquire().then((release) => {
-      if (url instanceof Page) {
-        this.appLoaded(timeout, release);
+    super(pageOrUrl, options);
+    this.authenticating.acquire().then((authenticated) => {
+      if (pageOrUrl instanceof Page) {
+        this.appLoaded(timeout, authenticated);
       } else {
-        this.login({ credentials, timeout }, release);
+        this.login({ credentials, timeout }, authenticated);
       }
     });
   }
 
-  public async appLoaded(
+  public static async getInstance(url: URL | string, options?: Options) {
+    return await new Authenticated(url, options).ready();
+  }
+
+  private async appLoaded(
     timeout = Authenticated.DefaultTimeout,
-    release?: MutexInterface.Releaser
+    authenticated?: MutexInterface.Releaser
   ) {
     await super.ready();
     await this.page.waitForSelector('div#site-header', { timeout });
-    if (release) {
-      release();
+    if (authenticated) {
+      authenticated();
     }
   }
 
@@ -51,7 +57,7 @@ export class Authenticated extends Base {
       credentials: { username, password, sso } = {},
       timeout = Authenticated.DefaultTimeout
     }: Options,
-    release?: MutexInterface.Releaser
+    authenticated?: MutexInterface.Releaser
   ) {
     await super.ready();
     if (username) {
@@ -84,12 +90,14 @@ export class Authenticated extends Base {
       }
     }
 
-    await this.appLoaded(timeout, release);
+    await this.appLoaded(timeout, authenticated);
   }
 
-  public async ready() {
-    await super.ready();
-    (await this.authenticating.acquire())();
+  protected async ready() {
+    if (this.authenticating.isLocked()) {
+      const ready = await this.authenticating.acquire();
+      ready();
+    }
     return this;
   }
 
@@ -100,15 +108,21 @@ export class Authenticated extends Base {
     );
   }
 
+  public async clone() {
+    await this.ready();
+    return await new Authenticated(this.page).ready();
+  }
+
   public async fork(
     path: URL | string,
     timeout = Authenticated.DefaultTimeout
   ) {
     await this.ready();
-    const fork = await super.fork(path);
-    const page = fork.page;
-    const session = new Authenticated(page);
-    await session.appLoaded(timeout);
-    return session;
+    const url = await this.url();
+    const fork = await this.clone();
+    const ready = await fork.authenticating.acquire();
+    await fork.goto(new URL(path, url));
+    await fork.appLoaded(timeout, ready);
+    return fork;
   }
 }

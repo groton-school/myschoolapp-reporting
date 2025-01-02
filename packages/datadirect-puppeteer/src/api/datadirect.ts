@@ -11,104 +11,92 @@ import {
   topiccontentget as TopicContent,
   TopicContentTypesGet as TopicContentTypes
 } from 'datadirect/dist/api/datadirect.js';
-import { Page } from 'puppeteer';
-import * as PuppeteerSession from '../PuppeteerSession.js';
+import { Fetchable } from '../PuppeteerSession.js';
 
-export class datadirect extends PuppeteerSession.Fetchable {
-  public groupFinderByYear: PuppeteerSession.BoundEndpoint<
-    Groups.Payload,
-    Groups.Response
-  >;
-  public SectionInfoView: PuppeteerSession.BoundEndpoint<
-    SectionInfo.Payload,
-    SectionInfo.Response
-  >;
-  public BulletinBoardContentGet: PuppeteerSession.BoundEndpoint<
-    BulletinBoardContent.Payload,
-    BulletinBoardContent.Response
-  >;
-  public GroupPossibleContentGet: PuppeteerSession.BoundEndpoint<
-    BulletinBoardContentTypes.Payload,
-    BulletinBoardContentTypes.Response
-  >;
-  public ImportAssignmentsGet: PuppeteerSession.BoundEndpoint<
-    ImportAssignments.Payload,
-    ImportAssignments.Response
-  >;
-  public sectiontopicsget: PuppeteerSession.BoundEndpoint<
-    SectionTopics.Payload,
-    SectionTopics.Response
-  >;
-  public TopicContentTypesGet: PuppeteerSession.BoundEndpoint<
-    TopicContentTypes.Payload,
-    TopicContentTypes.Response
-  >;
-  public topiccontentget: PuppeteerSession.BoundEndpoint<
-    TopicContent.Payload,
-    TopicContent.Response
-  >;
-  public GradeBookMarkingPeriodList: PuppeteerSession.BoundEndpoint<
-    MarkingPeriods.Payload,
-    MarkingPeriods.Response
-  >;
-  public sectionrosterget: PuppeteerSession.BoundEndpoint<
-    SectionRoster.Payload,
-    SectionRoster.Response
-  >;
+export const groupFinderByYear: Fetchable.Binding<
+  Groups.Payload,
+  Groups.Response
+> = Fetchable.bind(Groups);
 
-  BulletinBoardContent_detail(
-    item: BulletinBoardContent.Item,
-    types: BulletinBoardContentTypes.Response
+export const SectionInfoView: Fetchable.Binding<
+  SectionInfo.Payload,
+  SectionInfo.Response
+> = Fetchable.bind(SectionInfo);
+
+export const BulletinBoardContentGet: Fetchable.Binding<
+  BulletinBoardContent.Payload,
+  BulletinBoardContent.Response
+> = Fetchable.bind(BulletinBoardContent);
+
+export const GroupPossibleContentGet: Fetchable.Binding<
+  BulletinBoardContentTypes.Payload,
+  BulletinBoardContentTypes.Response
+> = Fetchable.bind(BulletinBoardContentTypes);
+
+export const ImportAssignmentsGet: Fetchable.Binding<
+  ImportAssignments.Payload,
+  ImportAssignments.Response
+> = Fetchable.bind(ImportAssignments);
+
+export const sectiontopicsget: Fetchable.Binding<
+  SectionTopics.Payload,
+  SectionTopics.Response
+> = Fetchable.bind(SectionTopics);
+
+export const TopicContentTypesGet: Fetchable.Binding<
+  TopicContentTypes.Payload,
+  TopicContentTypes.Response
+> = Fetchable.bind(TopicContentTypes);
+
+export const topiccontentget: Fetchable.Binding<
+  TopicContent.Payload,
+  TopicContent.Response
+> = Fetchable.bind(TopicContent);
+
+export const GradeBookMarkingPeriodList: Fetchable.Binding<
+  MarkingPeriods.Payload,
+  MarkingPeriods.Response
+> = Fetchable.bind(MarkingPeriods);
+
+export const sectionrosterget: Fetchable.Binding<
+  SectionRoster.Payload,
+  SectionRoster.Response
+> = Fetchable.bind(SectionRoster);
+
+export function BulletinBoardContent_detail(
+  item: BulletinBoardContent.Item,
+  types: BulletinBoardContentTypes.Response
+) {
+  if (
+    common.ContentType.Static.find(
+      (t: common.ContentType.Base) => t.ContentId === item.ContentId
+    )
   ) {
-    if (
-      common.ContentType.Static.find(
-        (t: common.ContentType.Base) => t.ContentId === item.ContentId
-      )
-    ) {
-      return () => undefined;
-    }
-    return this.bindEndpoint<
-      common.ContentItem.Payload,
-      common.ContentItem.Any.Content
-    >({
-      prepare: BulletinBoardContent.prepareContent(item, types)
-    });
+    return () => undefined;
   }
+  return Fetchable.bind<
+    common.ContentItem.Payload,
+    common.ContentItem.Any.Content
+  >({
+    prepare: BulletinBoardContent.prepareContent(item, types)
+  });
+}
 
-  TopicContent_detail(
-    item: TopicContent.Item,
-    types: TopicContentTypes.Response
+export function TopicContent_detail(
+  item: TopicContent.Item,
+  types: TopicContentTypes.Response
+) {
+  if (
+    common.ContentType.Static.find(
+      (t: common.ContentType.Base) => t.ContentId === item.ContentId
+    )
   ) {
-    if (
-      common.ContentType.Static.find(
-        (t: common.ContentType.Base) => t.ContentId === item.ContentId
-      )
-    ) {
-      return () => undefined;
-    }
-    return this.bindEndpoint<
-      common.ContentItem.Payload,
-      common.ContentItem.Any.Content
-    >({
-      prepare: TopicContent.prepareContent(item, types)
-    });
+    return () => undefined;
   }
-
-  public constructor(
-    url: URL | string | Page,
-    options?: PuppeteerSession.Options
-  ) {
-    super(url, options);
-
-    this.groupFinderByYear = this.bindEndpoint(Groups);
-    this.SectionInfoView = this.bindEndpoint(SectionInfo);
-    this.BulletinBoardContentGet = this.bindEndpoint(BulletinBoardContent);
-    this.GroupPossibleContentGet = this.bindEndpoint(BulletinBoardContentTypes);
-    this.ImportAssignmentsGet = this.bindEndpoint(ImportAssignments);
-    this.sectiontopicsget = this.bindEndpoint(SectionTopics);
-    this.TopicContentTypesGet = this.bindEndpoint(TopicContentTypes);
-    this.topiccontentget = this.bindEndpoint(TopicContent);
-    this.GradeBookMarkingPeriodList = this.bindEndpoint(MarkingPeriods);
-    this.sectionrosterget = this.bindEndpoint(SectionRoster);
-  }
+  return Fetchable.bind<
+    common.ContentItem.Payload,
+    common.ContentItem.Any.Content
+  >({
+    prepare: TopicContent.prepareContent(item, types)
+  });
 }

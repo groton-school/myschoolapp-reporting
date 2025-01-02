@@ -3,9 +3,6 @@ export {
   Credentials,
   Options
 } from './PuppeteerSession/Authenticated.js';
-export {
-  Base,
-  InitializationError,
-  Options as PuppeteerOptions
-} from './PuppeteerSession/Base.js';
-export { BoundEndpoint, Fetchable } from './PuppeteerSession/Fetchable.js';
+export { Base, Options as PuppeteerOptions } from './PuppeteerSession/Base.js';
+export * as Fetchable from './PuppeteerSession/Fetchable.js';
+export * from './PuppeteerSession/InitializationError.js';

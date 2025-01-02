@@ -3,28 +3,17 @@ import {
   SecureGet as S,
   UserAssignmentDetailsGetAllData as U
 } from 'datadirect/dist/api/Assignment2.js';
-import { Page } from 'puppeteer';
-import * as PuppeteerSession from '../PuppeteerSession.js';
+import { Fetchable } from '../PuppeteerSession.js';
 
-export class Assignment2 extends PuppeteerSession.Fetchable {
-  public AssignmentCenterCourseListGet: PuppeteerSession.BoundEndpoint<
-    A.Payload,
-    A.Response
-  >;
-  public SecureGet: PuppeteerSession.BoundEndpoint<S.Payload, S.Response>;
-  public UserAssignmentDetailsGetAllData: PuppeteerSession.BoundEndpoint<
-    U.Payload,
-    U.Response
-  >;
+export const AssignmentCenterCourseListGet: Fetchable.Binding<
+  A.Payload,
+  A.Response
+> = Fetchable.bind(A);
 
-  public constructor(
-    url: URL | string | Page,
-    options?: PuppeteerSession.Options
-  ) {
-    super(url, options);
+export const SecureGet: Fetchable.Binding<S.Payload, S.Response> =
+  Fetchable.bind(S);
 
-    this.AssignmentCenterCourseListGet = this.bindEndpoint(A);
-    this.SecureGet = this.bindEndpoint(S);
-    this.UserAssignmentDetailsGetAllData = this.bindEndpoint(U);
-  }
-}
+export const UserAssignmentDetailsGetAllData: Fetchable.Binding<
+  U.Payload,
+  U.Response
+> = Fetchable.bind(U);
