@@ -1,13 +1,11 @@
 import cli from '@battis/qui-cli';
 import { api as types } from 'datadirect';
+import { api } from 'datadirect-puppeteer';
 import * as Base from './Base.js';
 
 export type Data = types.Assignment2.UserAssignmentDetailsGetAllData.Response[];
 
-export const snapshot: Base.Snapshot<Data> = async ({
-  api,
-  groupId: sectionId
-}) => {
+export const snapshot: Base.Snapshot<Data> = async ({ groupId: sectionId }) => {
   cli.log.debug(`Group ${sectionId}: Start capturing assignments`);
 
   const assignmentList = await api.datadirect.ImportAssignmentsGet({

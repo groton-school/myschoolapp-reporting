@@ -1,8 +1,7 @@
 import cli from '@battis/qui-cli';
 import cliProgress from 'cli-progress';
-import * as datadirect from 'datadirect-puppeteer';
+import { api } from 'datadirect-puppeteer';
 import crypto from 'node:crypto';
-import { EventEmitter } from 'node:events';
 import fs from 'node:fs/promises';
 import path from 'node:path';
 import * as common from '../../../common.js';
@@ -41,156 +40,152 @@ export async function snapshot({
   ...options
 }: Options) {
   if (!year) {
-    throw new Error(`${cli.colors.value('--year')} must have a value`);
+    throw new Error(`year must be defined`);
   }
 
   const { outputPath, pretty } = outputOptions;
 
-  const api = await new datadirect.api(url, {
+  const session = await api.init(url, {
     credentials,
     ...puppeteerOptions
-  }).ready();
-
-  return new Promise<Single.Data[]>(async (resolve) => {
-    const _assoc = cleanSplit(association);
-    const _terms = cleanSplit(termsOffered);
-    const groups = (
-      await api.datadirect.groupFinderByYear({
-        payload: {
-          schoolYearLabel: year
-        }
-      })
-    ).filter(
-      (group) =>
-        (association === undefined || _assoc.includes(group.association)) &&
-        (termsOffered === undefined ||
-          _terms.reduce(
-            (match, term) => match && group.terms_offered.includes(term),
-            true
-          ))
-    );
-    cli.log.info(
-      `Snapshot temporary files will be saved to ${cli.colors.url(TEMP)}`
-    );
-    cli.log.info(`${groups.length} groups match filters`);
-    const progressBars = new cliProgress.MultiBar({});
-    const progress = progressBars.create(groups.length, 0);
-    if (groupsPath) {
-      groupsPath = common.output.filePathFromOutputPath(
-        groupsPath,
-        'groups.json'
-      );
-      common.output.writeJSON(groupsPath, groups, {
-        pretty
-      });
-    }
-
-    const zeros = new Array((groups.length + '').length).fill(0).join('');
-    function pad(n: number) {
-      return (zeros + n).slice(-zeros.length);
-    }
-
-    let next = 0;
-    let complete = 0;
-    const errors: typeof groups = [];
-    const queue = new EventEmitter();
-
-    async function nextGroup() {
-      const i = next;
-      next += 1;
-
-      if (i < groups.length) {
-        cli.log.debug(`Group ${groups[i].lead_pk}: ${pad(i)}.json`);
-        try {
-          const snapshot = await Single.snapshot({
-            api,
-            groupId: groups[i].lead_pk,
-            outputOptions,
-            ignoreErrors,
-            batchSize,
-            ...options,
-            quit: true
-          });
-          const tempPath = path.join(TEMP, `${pad(i)}.json`);
-          await common.output.writeJSON(tempPath, snapshot);
-          progressBars.log(
-            `Wrote snapshot ${snapshot?.SectionInfo?.Teacher}'s ${snapshot?.SectionInfo?.SchoolYear} ${snapshot?.SectionInfo?.GroupName} ${snapshot?.SectionInfo?.Block} to ${cli.colors.url(tempPath)}\n`
-          );
-        } catch (error) {
-          if (ignoreErrors) {
-            cli.log.error(cli.colors.error(error));
-            errors.push(groups[i]);
-          } else {
-            throw error;
-          }
-        }
-        progress.increment();
-        queue.emit('ready');
-      }
-    }
-
-    queue.on('ready', async () => {
-      complete += 1;
-      nextGroup();
-    });
-
-    const data: Single.Data[] = [];
-    let Start = new Date();
-    let Finish = new Date('1/1/1970');
-    let first: Single.Metadata | undefined = undefined;
-
-    queue.on('ready', async () => {
-      if (complete === groups.length) {
-        const partials = await fs.readdir(TEMP);
-        for (const partial of partials) {
-          const snapshot = JSON.parse(
-            (await fs.readFile(path.join(TEMP, partial))).toString()
-          ) as Single.Data;
-          data.push(snapshot);
-          if (snapshot.Metadata.Start < Start) {
-            Start = snapshot.Metadata.Start;
-          }
-          if (snapshot.Metadata.Finish > Finish) {
-            Finish = snapshot.Metadata.Finish;
-          }
-          if (!first) {
-            first = snapshot.Metadata;
-          }
-        }
-        const filepath = await common.output.avoidOverwrite(
-          common.output.filePathFromOutputPath(outputPath, 'snapshot.json'),
-          common.output.AddTimestamp
-        );
-        const { bulletinBoard, topics, assignments, gradebook } = options;
-        common.output.writeJSON(filepath, data, { pretty });
-        common.output.writeJSON(filepath.replace(/\.json$/, '.metadata.json'), {
-          ...first,
-          Start,
-          Finish,
-          year,
-          batchSize,
-          groupsPath,
-          bulletinBoard,
-          topics,
-          assignments,
-          gradebook
-        });
-        if (errors.length) {
-          const errorsPath = filepath.replace(/\.json$/, '.errors.json');
-          common.output.writeJSON(errorsPath, errors);
-          cli.log.error(`Errors output to ${cli.colors.url(errorsPath)}`);
-        }
-        await fs.rm(TEMP, { recursive: true });
-        progressBars.stop();
-        resolve(data);
-      }
-    });
-
-    for (let i = 0; i < batchSize; i++) {
-      nextGroup();
-    }
-    if (quit) {
-      api.close();
-    }
   });
+
+  const associations = cleanSplit(association);
+  const terms = cleanSplit(termsOffered);
+  /*
+   * FIXME refactoring broke `msar snapshot --all`
+   *   Filtering is now returning zero matches
+   *   ```sh
+   *   Task Terminated with exit code 1
+   *   Snapshot temporary files will be saved to /tmp/msar/snapshot/0bb0250d-8a4c-4c6a-bb28-da5846eb0e76
+   *   0 groups match filters
+   *   node:internal/fs/promises:948
+   *     const result = await PromisePrototypeThen(
+   *                    ^
+   *   Error: ENOENT: no such file or directory, scandir '/tmp/msar/snapshot/0bb0250d-8a4c-4c6a-bb28-da5846eb0e76'
+   *       at async Object.readdir (node:internal/fs/promises:948:18)
+   *       at async Module.snapshot (file:///path/tp/myschoolapp-reporting/packages/myschoolapp-reporting/dist/workflows/Snapshot/Manager/All.js:80:22)
+   *       at async file:///path/to/myschoolapp-reporting/packages/myschoolapp-reporting/dist/bin/commands/snapshot.js:21:9 {
+   *     errno: -2,
+   *     code: 'ENOENT',
+   *     syscall: 'scandir',
+   *     path: '/tmp/msar/snapshot/0bb0250d-8a4c-4c6a-bb28-da5846eb0e76'
+   *   }
+   *   ```
+   */
+  const groups = (
+    await api.datadirect.groupFinderByYear({
+      payload: {
+        schoolYearLabel: year
+      }
+    })
+  ).filter(
+    (group) =>
+      (association === undefined || associations.includes(group.association)) &&
+      (termsOffered === undefined ||
+        terms.reduce(
+          (match, term) => match && group.terms_offered.includes(term),
+          true
+        ))
+  );
+  cli.log.info(
+    `Snapshot temporary files will be saved to ${cli.colors.url(TEMP)}`
+  );
+  cli.log.info(`${groups.length} groups match filters`);
+  const progressBars = new cliProgress.MultiBar({});
+  const progress = progressBars.create(groups.length, 0);
+  if (groupsPath) {
+    groupsPath = common.output.filePathFromOutputPath(
+      groupsPath,
+      'groups.json'
+    );
+    common.output.writeJSON(groupsPath, groups, {
+      pretty
+    });
+  }
+
+  const zeros = new Array((groups.length + '').length).fill(0).join('');
+  function pad(n: number) {
+    return (zeros + n).slice(-zeros.length);
+  }
+
+  const errors: typeof groups = [];
+
+  for (let i = 0; i < groups.length; i++) {
+    try {
+      const snapshot = await Single.snapshot({
+        session,
+        groupId: groups[i].lead_pk,
+        outputOptions,
+        ignoreErrors,
+        batchSize,
+        ...options,
+        quit: true
+      });
+      const tempPath = path.join(TEMP, `${pad(i)}.json`);
+      await common.output.writeJSON(tempPath, snapshot);
+      progressBars.log(
+        `Wrote snapshot ${snapshot?.SectionInfo?.Teacher}'s ${snapshot?.SectionInfo?.SchoolYear} ${snapshot?.SectionInfo?.GroupName} ${snapshot?.SectionInfo?.Block} to ${cli.colors.url(tempPath)}\n`
+      );
+    } catch (error) {
+      if (ignoreErrors) {
+        cli.log.error(`Group ${groups[i].lead_pk}: ${cli.colors.error(error)}`);
+        errors.push(groups[i]);
+      } else {
+        throw error;
+      }
+    }
+    progress.increment();
+  }
+
+  const data: Single.Data[] = [];
+  let Start = new Date();
+  let Finish = new Date('1/1/1970');
+  let first: Single.Metadata | undefined = undefined;
+
+  const partials = await fs.readdir(TEMP);
+  for (const partial of partials) {
+    const snapshot = JSON.parse(
+      (await fs.readFile(path.join(TEMP, partial))).toString()
+    ) as Single.Data;
+    data.push(snapshot);
+    if (snapshot.Metadata.Start < Start) {
+      Start = snapshot.Metadata.Start;
+    }
+    if (snapshot.Metadata.Finish > Finish) {
+      Finish = snapshot.Metadata.Finish;
+    }
+    if (!first) {
+      first = snapshot.Metadata;
+    }
+  }
+  const filepath = await common.output.avoidOverwrite(
+    common.output.filePathFromOutputPath(outputPath, 'snapshot.json'),
+    common.output.AddTimestamp
+  );
+  const { bulletinBoard, topics, assignments, gradebook } = options;
+  common.output.writeJSON(filepath, data, { pretty });
+  common.output.writeJSON(filepath.replace(/\.json$/, '.metadata.json'), {
+    ...first,
+    Start,
+    Finish,
+    year,
+    batchSize,
+    groupsPath,
+    bulletinBoard,
+    topics,
+    assignments,
+    gradebook
+  });
+  if (errors.length) {
+    const errorsPath = filepath.replace(/\.json$/, '.errors.json');
+    common.output.writeJSON(errorsPath, errors);
+    cli.log.error(`Errors output to ${cli.colors.url(errorsPath)}`);
+  }
+  await fs.rm(TEMP, { recursive: true });
+  progressBars.stop();
+
+  if (quit) {
+    session.close();
+  }
 }

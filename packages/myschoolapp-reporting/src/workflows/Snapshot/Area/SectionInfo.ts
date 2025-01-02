@@ -1,11 +1,11 @@
 import cli from '@battis/qui-cli';
 import { api as types } from 'datadirect';
+import { api } from 'datadirect-puppeteer';
 import * as Base from './Base.js';
 
 export type Data = types.datadirect.SectionInfoView.Item;
 
 export const snapshot: Base.Snapshot<Data> = async ({
-  api,
   groupId: sectionId,
   ignoreErrors = true
 }): Promise<Data | undefined> => {

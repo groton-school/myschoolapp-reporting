@@ -1,7 +1,7 @@
 import { NumericDuration } from '@battis/descriptive-types';
 import cli from '@battis/qui-cli';
 import { api as types } from 'datadirect';
-import * as datadirect from 'datadirect-puppeteer';
+import { api, PuppeteerSession } from 'datadirect-puppeteer';
 import * as common from '../../../common.js';
 import * as Area from '../Area.js';
 
@@ -35,27 +35,13 @@ export type SnapshotOptions = {
 /*
  * FIXME Context typing
  *   Short version: I'm right and TypeScript is wrong.
-export type Context =
-  | {
-      api: datadirect.api;
-      groupId: number;
-      url: never;
-      credentials: never;
-      puppeteerOptions: never;
-      quit?: boolean;
-    }
-  | ({
-      api: never;
-      groupId: never;
-      url: URL | string;
-    } & common.PuppeteerSession.args.Parsed);
-*/
+ */
 export type Context = {
-  api?: datadirect.api;
+  session?: PuppeteerSession.Authenticated;
   groupId?: number;
   url?: URL | string;
-  credentials?: datadirect.PuppeteerSession.Credentials;
-  puppeteerOptions?: datadirect.PuppeteerSession.Options;
+  credentials?: PuppeteerSession.Credentials;
+  puppeteerOptions?: PuppeteerSession.Options;
   quit?: boolean;
 };
 
@@ -65,7 +51,7 @@ export type Options = SnapshotOptions &
   common.workflow.args.Parsed;
 
 export async function snapshot({
-  api,
+  session,
   url,
   credentials,
   puppeteerOptions,
@@ -78,34 +64,38 @@ export async function snapshot({
   quit,
   ...options
 }: Options) {
-  if (!api) {
+  if (url && groupId === undefined) {
+    groupId = parseInt(
+      (url.toString().match(/https:\/\/[^0-9]+(\d+)/) || { 1: '' })[1]
+    );
+  }
+  if (!groupId) {
+    throw new Error('Group ID cannot be determined');
+  }
+  cli.log.debug(`Group ${groupId}: Start`);
+
+  if (!session) {
     if (url) {
-      api = await new datadirect.api(url, {
+      cli.log.debug(`Group ${groupId}: Creating API`);
+      session = await PuppeteerSession.Fetchable.init(url, {
         credentials,
         ...puppeteerOptions
-      }).ready();
+      });
     } else {
       throw new Error(
         'An LMS URL is required to open a new datadirect session'
       );
     }
   } else {
-    api = await (
-      await api.fork(`/app/faculty#academicclass/${groupId}/0/bulletinboard`)
-    ).ready();
-  }
-  const Start = new Date();
-  if (url && groupId === undefined) {
-    groupId = parseInt(
-      (url.toString().match(/https:\/\/[^0-9]+(\d+)/) || { 1: '' })[1]
+    cli.log.debug(`Group ${groupId}: Forking API`);
+    session = await session.fork(
+      `/app/faculty#academicclass/${groupId}/0/bulletinboard`
     );
   }
+  cli.log.debug(`Group ${groupId}: API ready`);
 
-  if (!groupId) {
-    throw new Error('Group ID cannot be determined');
-  }
+  const Start = new Date();
 
-  cli.log.debug(`Capturing section ID ${groupId}`);
   const endpointParams = { api, groupId, options };
   const [SectionInfo, BulletinBoard, Topics, Assignments, Gradebook] =
     await Promise.all([
@@ -118,8 +108,8 @@ export async function snapshot({
 
   const snapshot: Data = {
     Metadata: {
-      Host: api.url().host,
-      User: await api.user(),
+      Host: (await session.url()).host,
+      User: await session.user(),
       Start,
       Finish: new Date()
     },
@@ -167,7 +157,7 @@ export async function snapshot({
   }
 
   if (quit) {
-    await api.close();
+    await session.close();
   }
 
   return snapshot;

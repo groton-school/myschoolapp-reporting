@@ -15,7 +15,7 @@ let possibleContent:
   | types.datadirect.GroupPossibleContentGet.Response
   | undefined = undefined;
 
-async function getPossibleContent(api: api, leadSectionId: number) {
+async function getPossibleContent(leadSectionId: number) {
   if (!possibleContent) {
     possibleContent = await api.datadirect.GroupPossibleContentGet({
       payload: {
@@ -28,7 +28,6 @@ async function getPossibleContent(api: api, leadSectionId: number) {
 }
 
 export const snaphot: Base.Snapshot<Data> = async ({
-  api,
   groupId: Id,
   payload = { format: 'json' },
   ignoreErrors = true,
@@ -37,7 +36,7 @@ export const snaphot: Base.Snapshot<Data> = async ({
   cli.log.debug(`Group ${Id}: Start capturing bulletin board`);
   try {
     const BulletinBoard: Data = [];
-    await getPossibleContent(api, Id);
+    await getPossibleContent(Id);
     const items = await api.datadirect.BulletinBoardContentGet({
       payload: {
         format: 'json',
@@ -61,9 +60,11 @@ export const snaphot: Base.Snapshot<Data> = async ({
         BulletinBoard.push({
           ...item,
           ContentType,
-          Content: await api.datadirect.BulletinBoardContent_detail(
-            item,
-            possibleContent!
+          Content: await (
+            await api.datadirect.BulletinBoardContent_detail(
+              item,
+              possibleContent!
+            )
           )({ payload: { ...payload, contextValue: Id }, pathParams: { Id } })
         });
       } catch (error) {

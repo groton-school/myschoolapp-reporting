@@ -1,6 +1,7 @@
 import cli from '@battis/qui-cli';
 import { Mutex } from 'async-mutex';
 import { PuppeteerSession } from 'datadirect-puppeteer';
+import { EventEmitter } from 'node:events';
 import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
@@ -28,11 +29,12 @@ const TEMP = path.join('/tmp/msar/download', crypto.randomUUID());
 const DOWNLOADS = path.join(os.homedir(), 'Downloads');
 
 export class AuthenticatedFetch
-  extends PuppeteerSession.Fetchable
+  extends PuppeteerSession.Authenticated
   implements Strategy
 {
   private outputPath: string;
   private preparing = new Mutex();
+  private emitter = new EventEmitter();
 
   public constructor({ outputPath, host, ...options }: Options) {
     super(host, options);
@@ -40,7 +42,27 @@ export class AuthenticatedFetch
   }
 
   public async download(url: string, filename?: string) {
-    const session = await (await this.fork('about:blank')).ready();
+    /*
+     * FIXME refactoring broke `msar download`
+     *   ```sh
+     *   - Connecting to /path/to/myschoolapp-reporting/var/download.log
+     *   ✔ Logging level all to /path/to/myschoolapp-reporting/var/download.log
+     *   - Reading snaphot file
+     *   ✔ Read 1 snapshots from /path/to/myschoolapp-reporting/var/2024 - 2025 - Horace Bixby - Sandbox (Y) - 97551579.json
+     *   Group 97551579: Downloading supporting files
+     *   Task Terminated with exit code 1
+     *   node:internal/url:806
+     *       const href = bindingUrl.parse(input, base, raiseException);
+     *                               ^
+     *   TypeError: Invalid URL
+     *       at new URL (node:internal/url:806:29)
+     *       at AuthenticatedFetch.openURL (file:///path/to/myschoolapp-reporting/packages/datadirect-puppeteer/dist/PuppeteerSession/Base.js:45:25) {
+     *     code: 'ERR_INVALID_URL',
+     *     input: 'example.myschoolapp.com'
+     *   }
+     *   ```
+     */
+    const session = await this.fork('about:blank');
     const client = await session.page.createCDPSession();
 
     await client.send('Fetch.enable', {
@@ -105,7 +127,7 @@ export class AuthenticatedFetch
                 cli.log.debug(
                   `Moved ${key} file to ${cli.colors.url(localPath)}`
                 );
-                this.emit(url, { localPath, filename });
+                this.emitter.emit(url, { localPath, filename });
                 return;
               }
             }
@@ -133,7 +155,7 @@ export class AuthenticatedFetch
                   .basename(localPath)
                   .replace(/( \(\d+\))(\.[^.]+)$/, '$2');
               }
-              this.emit(url, { localPath, filename });
+              this.emitter.emit(url, { localPath, filename });
             } else {
               // TODO reduce copy-pasta in favor of reusable functions
               setTimeout(
@@ -154,12 +176,12 @@ export class AuthenticatedFetch
                         .basename(localPath)
                         .replace(/( \(\d+\))(\.[^.]+)$/, '$2');
                     }
-                    this.emit(url, { localPath, filename });
+                    this.emitter.emit(url, { localPath, filename });
                   } else {
                     cli.log.error(
                       `Could not identify ${cli.colors.url(url)} download: ${lastResort.map((p) => cli.colors.value(p)).join(', ')}`
                     );
-                    this.emit(url, { error: lastResort });
+                    this.emitter.emit(url, { error: lastResort });
                   }
                 }).bind(this),
                 1000
@@ -169,7 +191,7 @@ export class AuthenticatedFetch
             cli.log.error(
               `Download ${cli.colors.url(url)} failed: ${cli.colors.error(error)}`
             );
-            this.emit(url, { error });
+            this.emitter.emit(url, { error });
           }
         }
       }).bind(this)
@@ -184,11 +206,11 @@ export class AuthenticatedFetch
     const before = fs.readdirSync(DOWNLOADS);
     return new Promise<DownloadData | DownloadError>((resolve) => {
       const listener = async (downloadData: DownloadData | DownloadError) => {
-        this.removeListener(url, listener);
+        this.emitter.removeListener(url, listener);
         await session.close();
         resolve(downloadData);
       };
-      this.on(url, listener);
+      this.emitter.on(url, listener);
       session.goto(url).catch((error) => cli.log.debug(`Ignored: ${error}`));
     });
   }

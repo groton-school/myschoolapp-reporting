@@ -1,5 +1,4 @@
 import { Endpoint, api as types } from 'datadirect';
-import { api } from 'datadirect-puppeteer';
 
 export class StudentDataError extends Error {
   public message = 'Student data is not included in this snapshot';
@@ -12,7 +11,6 @@ export type Options = {
 };
 
 type Context = {
-  api: api;
   groupId: number;
 };
 

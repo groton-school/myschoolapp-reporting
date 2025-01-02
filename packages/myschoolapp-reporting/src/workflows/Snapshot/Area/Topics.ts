@@ -18,7 +18,7 @@ let possibleContent:
   | types.datadirect.TopicContentTypesGet.Response
   | undefined = undefined;
 
-async function getPossibleContent(api: api) {
+async function getPossibleContent() {
   if (!possibleContent) {
     possibleContent = possibleContent =
       await api.datadirect.TopicContentTypesGet({ payload: {} });
@@ -27,7 +27,6 @@ async function getPossibleContent(api: api) {
 }
 
 export const snapshot: Base.Snapshot<Data> = async ({
-  api,
   groupId: Id,
   payload = { format: 'json' },
   ignoreErrors = true,
@@ -36,7 +35,7 @@ export const snapshot: Base.Snapshot<Data> = async ({
   cli.log.debug(`Group ${Id}: Start capturing topics`);
   try {
     const Topics: Data = [];
-    await getPossibleContent(api);
+    await getPossibleContent();
     const topics = await api.datadirect.sectiontopicsget({
       payload: {
         format: 'json',
@@ -84,9 +83,8 @@ export const snapshot: Base.Snapshot<Data> = async ({
           const entry: Item = {
             ...item,
             ObjectType,
-            Content: await api.datadirect.TopicContent_detail(
-              item,
-              possibleContent!
+            Content: await (
+              await api.datadirect.TopicContent_detail(item, possibleContent!)
             )({
               payload: {
                 ...payload,

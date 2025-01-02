@@ -1,5 +1,6 @@
 import cli from '@battis/qui-cli';
 import { api as types } from 'datadirect';
+import { api } from 'datadirect-puppeteer';
 import * as Base from './Base.js';
 
 export type Item = {
@@ -12,7 +13,6 @@ export type Item = {
 export type Data = Item[];
 
 export const snapshot: Base.Snapshot<Data> = async ({
-  api,
   groupId: sectionId,
   ignoreErrors,
   studentData
