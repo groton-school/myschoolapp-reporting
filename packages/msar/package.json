@@ -34,7 +34,7 @@
   "prettier": "@battis/prettier-config",
   "dependencies": {
     "@battis/qui-cli": "^0.8.5",
-    "@battis/typescript-tricks": "^0.7.3",
+    "@battis/typescript-tricks": "^0.7.4",
     "@oauth2-cli/sky-api": "^0.1.0",
     "async-mutex": "^0.5.0",
     "cli-progress": "^3.12.0",
