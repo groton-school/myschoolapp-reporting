@@ -1,5 +1,3 @@
-import { JSONObject } from '@battis/typescript-tricks';
-import { Endpoint } from 'datadirect';
 import {
   BulletinBoardContentGet as BulletinBoardContent,
   GroupPossibleContentGet as BulletinBoardContentTypes,
@@ -75,7 +73,7 @@ export async function BulletinBoardContent_detail(
       (t: common.ContentType.Base) => t.ContentId === item.ContentId
     )
   ) {
-    throw new Error('Static content type');
+    return undefined;
   }
   const endpoint = Fetchable.bind<
     common.ContentItem.Payload,
@@ -96,7 +94,7 @@ export async function TopicContent_detail(
       (t: common.ContentType.Base) => t.ContentId === item.ContentId
     )
   ) {
-    throw new Error('Static content type');
+    return undefined;
   }
   const endpoint = Fetchable.bind<
     common.ContentItem.Payload,
