@@ -31,8 +31,9 @@ export class Spider {
       throw new common.output.OutputError('Spider requires outputPath');
     }
     if (snapshot) {
-      cli.log.debug(
-        `Group ${snapshot.SectionInfo?.Id || cli.colors.error('unknown')}: Downloading supporting files`
+      common.Debug.withGroupId(
+        snapshot.SectionInfo?.Id || cli.colors.error('unknown'),
+        'Downloading supporting files'
       );
       await this.traverse(snapshot, {
         host: snapshot.Metadata.Host,
@@ -48,8 +49,9 @@ export class Spider {
           pretty
         }
       );
-      cli.log.debug(
-        `Group ${snapshot.SectionInfo?.Id || cli.colors.error('unknown')}: Supporting files exported to ${cli.colors.url(outputPath)}/${cli.colors.value(indexName)}`
+      common.Debug.withGroupId(
+        snapshot.SectionInfo?.Id || cli.colors.error('unknown'),
+        `Supporting files exported to ${cli.colors.url(outputPath)}/${cli.colors.value(indexName)}`
       );
       return indexName;
     } else {

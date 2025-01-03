@@ -1,7 +1,6 @@
-import cli from '@battis/qui-cli';
 import { api as types } from 'datadirect';
 import { api } from 'datadirect-puppeteer';
-import { AreaError } from './AreaError.js';
+import * as common from '../../../common.js';
 import * as Base from './Base.js';
 
 export type Item = {
@@ -19,7 +18,7 @@ export const snapshot: Base.Snapshot<Data> = async ({
   studentData,
   ...options
 }) => {
-  cli.log.debug(`Group ${sectionId}: Start capturing gradebook`);
+  common.Debug.withGroupId(sectionId, 'Start capturing gradebook');
   try {
     const markingPeriods = await api.datadirect.GradeBookMarkingPeriodList({
       ...options,
@@ -42,15 +41,18 @@ export const snapshot: Base.Snapshot<Data> = async ({
       }
       Gradebook.push(entry);
     }
-    cli.log.debug(`Group ${sectionId}: Gradebook captured`);
+    common.Debug.withGroupId(sectionId, 'Gradebook captured');
     return Gradebook;
   } catch (error) {
-    const message = `Group ${sectionId}: Error capturing gradebook: ${cli.colors.error(error || 'unknown')}`;
     if (ignoreErrors) {
-      cli.log.error(message);
+      common.Debug.errorWithGroupId(
+        sectionId,
+        'Error capturing gradebook',
+        error as string
+      );
       return undefined;
     } else {
-      throw new AreaError(`GradeBook error: ${message}`);
+      throw error;
     }
   }
 };

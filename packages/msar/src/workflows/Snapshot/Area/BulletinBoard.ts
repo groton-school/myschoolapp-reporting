@@ -1,7 +1,6 @@
-import cli from '@battis/qui-cli';
 import { api as types } from 'datadirect';
 import { api } from 'datadirect-puppeteer';
-import { AreaError } from './AreaError.js';
+import * as common from '../../../common.js';
 import * as Base from './Base.js';
 
 export type Item = types.datadirect.BulletinBoardContentGet.Item & {
@@ -36,7 +35,7 @@ export const snaphot: Base.Snapshot<Data> = async ({
   studentData,
   logRequests
 }): Promise<Data | undefined> => {
-  cli.log.debug(`Group ${Id}: Start capturing bulletin board`);
+  common.Debug.withGroupId(Id, 'Start capturing bulletin board');
   try {
     const BulletinBoard: Data = [];
     await getPossibleContent(Id);
@@ -83,22 +82,29 @@ export const snaphot: Base.Snapshot<Data> = async ({
           Content: { error: (error as Error).message }
         });
         if (!(error instanceof Base.StudentDataError)) {
-          cli.log.error(
-            `Error capturing Bulletin Board content of type ${ContentType?.Content} for group ${Id}: ${cli.colors.error(error)}`
+          common.Debug.errorWithGroupId(
+            Id,
+            `Error capturing Bulletin Board ContentId ${item.ContentId} of type ${ContentType?.Content}`,
+            error as string
           );
+        } else {
+          throw error;
         }
       }
     }
 
-    cli.log.debug(`Group ${Id}: Bulletin board captured`);
+    common.Debug.withGroupId(Id, 'Bulletin board captured');
     return BulletinBoard;
   } catch (error) {
-    const message = `Group ${Id}: Error capturing bulletin board: ${cli.colors.error(error || 'unknown')}`;
     if (ignoreErrors) {
-      cli.log.error(message);
+      common.Debug.errorWithGroupId(
+        Id,
+        'Error capturing bulletin board',
+        error as string
+      );
       return undefined;
     } else {
-      throw new AreaError(`BulletinBoard Error: ${message}`);
+      throw error;
     }
   }
 };

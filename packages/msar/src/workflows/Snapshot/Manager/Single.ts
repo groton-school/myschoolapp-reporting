@@ -1,5 +1,4 @@
 import { NumericDuration } from '@battis/descriptive-types';
-import cli from '@battis/qui-cli';
 import { api as types } from 'datadirect';
 import { PuppeteerSession } from 'datadirect-puppeteer';
 import * as common from '../../../common.js';
@@ -72,11 +71,11 @@ export async function snapshot({
   if (!groupId) {
     throw new Error('Group ID cannot be determined');
   }
-  cli.log.debug(`Group ${groupId}: Start`);
+  common.Debug.withGroupId(groupId, 'Start');
 
   if (!session) {
     if (url) {
-      cli.log.debug(`Group ${groupId}: Creating session`);
+      common.Debug.withGroupId(groupId, 'Creating session');
       session = await PuppeteerSession.Fetchable.init(url, {
         credentials,
         ...puppeteerOptions
@@ -87,12 +86,11 @@ export async function snapshot({
       );
     }
   } else {
-    cli.log.debug(`Group ${groupId}: Forking session in new window`);
+    common.Debug.withGroupId(groupId, 'Forking session in new window');
     session = await session.fork(
       `/app/faculty#academicclass/${groupId}/0/bulletinboard`
     );
   }
-  cli.log.debug(`Group ${groupId}: Session ready`);
 
   const Start = new Date();
 
@@ -122,11 +120,17 @@ export async function snapshot({
   };
 
   if (snapshot.SectionInfo && 'Teacher' in snapshot.SectionInfo) {
-    cli.log.debug(
-      `Group ${groupId}: Captured snapshot (${snapshot.SectionInfo.Teacher}'s ${snapshot.SectionInfo.SchoolYear} ${snapshot.SectionInfo.Duration} ${snapshot.SectionInfo.GroupName})`
+    common.Debug.withGroupId(
+      groupId,
+      'Captured snapshot',
+      `${snapshot.SectionInfo.Teacher}'s ${snapshot.SectionInfo.SchoolYear} ${snapshot.SectionInfo.Duration} ${snapshot.SectionInfo.GroupName})`
     );
   } else {
-    cli.log.error(`Group ${groupId}: Captured snapshot with errors`);
+    common.Debug.errorWithGroupId(
+      groupId,
+      'Captured snapshot with errors',
+      'Missing SectionInfo'
+    );
   }
   snapshot.Metadata.Finish = new Date();
   snapshot.Metadata.Elapsed =

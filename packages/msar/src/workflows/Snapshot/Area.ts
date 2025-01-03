@@ -1,4 +1,3 @@
-export * from './Area/AreaError.js';
 export * as Assignments from './Area/Assignments.js';
 export * as Base from './Area/Base.js';
 export * as BulletinBoard from './Area/BulletinBoard.js';

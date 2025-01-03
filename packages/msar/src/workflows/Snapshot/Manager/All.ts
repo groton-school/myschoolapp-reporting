@@ -111,7 +111,11 @@ export async function snapshot({
       );
     } catch (error) {
       if (ignoreErrors) {
-        cli.log.error(`Group ${groups[i].lead_pk}: ${cli.colors.error(error)}`);
+        common.Debug.errorWithGroupId(
+          groups[i].lead_pk,
+          'Error',
+          error as string
+        );
         errors.push(groups[i]);
       } else {
         throw error;

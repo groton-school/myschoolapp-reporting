@@ -1,6 +1,6 @@
-import cli from '@battis/qui-cli';
 import { api as types } from 'datadirect';
 import { api } from 'datadirect-puppeteer';
+import * as common from '../../../common.js';
 import * as Base from './Base.js';
 
 export type Data = types.Assignment2.UserAssignmentDetailsGetAllData.Response[];
@@ -8,9 +8,10 @@ export type Data = types.Assignment2.UserAssignmentDetailsGetAllData.Response[];
 export const snapshot: Base.Snapshot<Data> = async ({
   session,
   groupId: sectionId,
+  ignoreErrors,
   logRequests
 }) => {
-  cli.log.debug(`Group ${sectionId}: Start capturing assignments`);
+  common.Debug.withGroupId(sectionId, 'Start capturing assignments');
 
   const assignmentList = await api.datadirect.ImportAssignmentsGet({
     payload: {
@@ -20,19 +21,30 @@ export const snapshot: Base.Snapshot<Data> = async ({
 
   const assignments: Data = [];
   for (const assignment of assignmentList) {
-    // FIXME Assignments need to process ignoreError
-    assignments.push(
-      await api.Assignment2.UserAssignmentDetailsGetAllData({
-        session,
-        payload: {
-          assignmentIndexId: assignment.assignment_index_id,
-          studentUserId: -1,
-          personaId: 3
-        },
-        logRequests
-      })
-    );
+    try {
+      assignments.push(
+        await api.Assignment2.UserAssignmentDetailsGetAllData({
+          session,
+          payload: {
+            assignmentIndexId: assignment.assignment_index_id,
+            studentUserId: -1,
+            personaId: 3
+          },
+          logRequests
+        })
+      );
+    } catch (error) {
+      if (ignoreErrors) {
+        common.Debug.errorWithGroupId(
+          sectionId,
+          `Error capturing assignment_index_id ${assignment.assignment_index_id}`,
+          error as string
+        );
+      } else {
+        throw error;
+      }
+    }
   }
-  cli.log.debug(`Group ${sectionId}: Assignments captured`);
+  common.Debug.withGroupId(sectionId, 'Assignments captured');
   return assignments;
 };

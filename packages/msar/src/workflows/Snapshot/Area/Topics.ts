@@ -1,7 +1,6 @@
-import cli from '@battis/qui-cli';
 import { api as types } from 'datadirect';
 import { api } from 'datadirect-puppeteer';
-import { AreaError } from './AreaError.js';
+import * as common from '../../../common.js';
 import * as Base from './Base.js';
 
 export type Item = types.datadirect.topiccontentget.Item & {
@@ -34,7 +33,7 @@ export const snapshot: Base.Snapshot<Data> = async ({
   studentData,
   ...options
 }): Promise<Data | undefined> => {
-  cli.log.debug(`Group ${Id}: Start capturing topics`);
+  common.Debug.withGroupId(Id, 'Start capturing topics');
   try {
     const Topics: Data = [];
     await getPossibleContent();
@@ -128,10 +127,12 @@ export const snapshot: Base.Snapshot<Data> = async ({
               Content: { error: (error as Error).message }
             });
             if (!(error instanceof Base.StudentDataError)) {
-              cli.log.error(
+              common.Debug.errorWithGroupId(
+                Id,
                 `Error capturing Topic ${TopicID} content of type ${
                   ObjectType?.Name
-                } for group ${Id}: ${cli.colors.error(error)}`
+                }`,
+                error as string
               );
             }
           }
@@ -139,16 +140,19 @@ export const snapshot: Base.Snapshot<Data> = async ({
       }
       Topics.push({ ...topic, Content: Content.length ? Content : undefined });
     }
-    cli.log.debug(`Group ${Id}: Topics captured`);
+    common.Debug.withGroupId(Id, 'Topics captured');
     // FIXME filter student data out of topic discussions
     return Topics;
   } catch (error) {
-    const message = `Group ${Id}: Error capturing topics: ${cli.colors.error(error || 'unknown')}`;
     if (ignoreErrors) {
-      cli.log.error(message);
+      common.Debug.errorWithGroupId(
+        Id,
+        'Error capturing topics',
+        error as string
+      );
       return undefined;
     } else {
-      throw new AreaError(`Topics error: ${message}`);
+      throw error;
     }
   }
 };

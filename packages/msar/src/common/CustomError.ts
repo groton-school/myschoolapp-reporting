@@ -1,5 +1,7 @@
+import * as Debug from './Debug.js';
+
 export class CustomError extends Error {
   public constructor(base: string, message?: string) {
-    super(`${base}${message ? `: ${message}` : '.'}`);
+    super(Debug.format(base, message));
   }
 }

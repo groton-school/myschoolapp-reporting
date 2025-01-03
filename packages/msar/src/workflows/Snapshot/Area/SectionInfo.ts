@@ -1,7 +1,6 @@
-import cli from '@battis/qui-cli';
 import { api as types } from 'datadirect';
 import { api } from 'datadirect-puppeteer';
-import { AreaError } from './AreaError.js';
+import * as common from '../../../common.js';
 import * as Base from './Base.js';
 
 export type Data = types.datadirect.SectionInfoView.Item;
@@ -11,7 +10,7 @@ export const snapshot: Base.Snapshot<Data> = async ({
   ignoreErrors = true,
   ...options
 }): Promise<Data | undefined> => {
-  cli.log.debug(`Group ${sectionId}: Start capturing section info`);
+  common.Debug.withGroupId(sectionId, 'Start capturing section info');
   try {
     return (
       await api.datadirect.SectionInfoView({
@@ -32,12 +31,15 @@ export const snapshot: Base.Snapshot<Data> = async ({
       undefined
     );
   } catch (error) {
-    const message = `Group ${sectionId}: Error capturing section info: ${cli.colors.error(error || 'unknown')}`;
     if (ignoreErrors) {
-      cli.log.error(message);
+      common.Debug.errorWithGroupId(
+        sectionId,
+        'Error capturing section info',
+        error as string
+      );
       return undefined;
     } else {
-      throw new AreaError(`SectionInfo error: ${message}`);
+      throw error;
     }
   }
 };
