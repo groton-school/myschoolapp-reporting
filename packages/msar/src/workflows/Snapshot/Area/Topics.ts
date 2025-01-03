@@ -1,3 +1,4 @@
+import cli from '@battis/qui-cli';
 import { api as types } from 'datadirect';
 import { api } from 'datadirect-puppeteer';
 import * as common from '../../../common.js';
@@ -129,9 +130,7 @@ export const snapshot: Base.Snapshot<Data> = async ({
             if (!(error instanceof Base.StudentDataError)) {
               common.Debug.errorWithGroupId(
                 Id,
-                `Error capturing Topic ${TopicID} content of type ${
-                  ObjectType?.Name
-                }`,
+                `Error capturing topic ID ${cli.colors.value(TopicID)} content ID ${cli.colors.value(item.ContentItemId)} type ${cli.colors.value(ObjectType?.Name)}`,
                 error as string
               );
             }
