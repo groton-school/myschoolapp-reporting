@@ -50,6 +50,7 @@ import * as Snapshot from '../../workflows/Snapshot.js';
     }
   }
 
+  const Start = new Date();
   let snapshots: Snapshot.Data[];
   const data = JSON.parse(fs.readFileSync(snapshotPath).toString());
   if (Array.isArray(data)) {
@@ -95,6 +96,7 @@ import * as Snapshot from '../../workflows/Snapshot.js';
     bar.increment();
   }
   bar.stop();
+  const Finish = new Date();
 
   const index = [];
   for (const fileName of indices) {
@@ -118,7 +120,18 @@ import * as Snapshot from '../../workflows/Snapshot.js';
     'index.json'
   );
   await common.output.writeJSON(indexPath, index, { pretty });
-  // TODO output metadata.json of CLI arguments for downloads too
+  await common.output.writeJSON(
+    path.resolve(indexPath, '../metadata.json'),
+    {
+      snapshotPath,
+      Start,
+      Finish,
+      Elapsed: Finish.getTime() - Start.getTime(),
+      ...options,
+      credentials: undefined
+    },
+    { pretty }
+  );
 
   if (quit) {
     await spider.quit();
