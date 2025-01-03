@@ -7,18 +7,34 @@ import {
 } from '../filenameFromDisposition.js';
 import { Strategy } from './Strategy.js';
 
-export type Options = { outputPath: string };
+export type Options = { outputPath: string } & common.workflow.args.Parsed;
 
-export class HTTPFetch implements Strategy {
+export class Downloader implements Strategy {
   private outputPath: string;
+  private logRequests: boolean;
 
-  public constructor({ outputPath }: Options) {
+  public constructor({ outputPath, logRequests }: Options) {
     this.outputPath = outputPath;
+    this.logRequests = logRequests;
   }
 
   public async download(url: string, filename?: string) {
-    cli.log.debug(`Directly fetching ${cli.colors.url(url)}`);
+    cli.log.debug(`HTTPFetch: ${cli.colors.url(url)}`);
     const response = await fetch(url);
+    if (this.logRequests) {
+      cli.log.debug({
+        url,
+        response: {
+          url: response.url,
+          redirected: response.redirected,
+          type: response.type,
+          ok: response.ok,
+          status: response.status,
+          statusText: response.statusText,
+          headers: response.headers
+        }
+      });
+    }
     if (response.ok && response.body) {
       return {
         localPath: await common.output.writeFetchedFile({

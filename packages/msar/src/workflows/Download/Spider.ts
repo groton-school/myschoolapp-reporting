@@ -3,43 +3,40 @@ import path from 'node:path';
 import * as common from '../../common.js';
 import * as Snapshot from '../Snapshot.js';
 import * as Cache from './Cache.js';
-import { Downloader, Options as DownloaderOptions } from './Downloader.js';
+import * as Downloader from './Downloader.js';
 
-export type BaseOptions = {
+export type Options = {
   include?: RegExp[];
   exclude?: RegExp[];
-  haltOnError?: boolean;
-};
+} & common.args.Parsed;
 
-type TraverseOptions = BaseOptions & {
+type TraverseOptions = Options & {
   host: string;
   pathToComponent: string;
 };
 
-type DownloadOptions = BaseOptions & {
-  pretty?: boolean;
-  outputPath: string;
-};
-
-export type Options = DownloaderOptions;
-
 export class Spider {
-  private downloader: Downloader;
+  private downloader: Downloader.Downloader;
 
-  public constructor(options: Options) {
-    this.downloader = new Downloader(options);
+  public constructor(options: Downloader.Options) {
+    this.downloader = new Downloader.Downloader(options);
   }
 
   public async download(
     snapshot: Snapshot.Data,
-    { pretty = false, outputPath, ...options }: DownloadOptions
+    { outputOptions, ...options }: Options
   ) {
+    const { outputPath, pretty } = outputOptions;
+    if (!outputPath) {
+      throw new common.output.OutputError('Spider requires outputPath');
+    }
     if (snapshot) {
       cli.log.debug(
         `Group ${snapshot.SectionInfo?.Id || cli.colors.error('unknown')}: Downloading supporting files`
       );
       await this.traverse(snapshot, {
         host: snapshot.Metadata.Host,
+        outputOptions,
         ...options,
         pathToComponent: path.basename(outputPath)
       });
@@ -63,17 +60,15 @@ export class Spider {
 
   private async traverse(
     snapshotComponent: object,
-    { host, pathToComponent, include, exclude, haltOnError }: TraverseOptions
+    { pathToComponent, ...options }: TraverseOptions
   ) {
+    const { include, exclude, ignoreErrors } = options;
     if (Array.isArray(snapshotComponent)) {
       await Promise.allSettled(
         snapshotComponent.map(async (elt, i) => {
           await this.traverse(elt, {
-            host,
             pathToComponent: `${pathToComponent}[${i}]`,
-            include,
-            exclude,
-            haltOnError
+            ...options
           });
         })
       );
@@ -87,11 +82,8 @@ export class Spider {
             return;
           } else if (typeof snapshotComponent[key] === 'object') {
             await this.traverse(snapshotComponent[key], {
-              host,
               pathToComponent: `${pathToComponent}.${key}`,
-              include,
-              exclude,
-              haltOnError
+              ...options
             });
             /*
              * FIXME FileName files in topics are at /ftpimages/:SchoolId/topics/:FileName
@@ -130,9 +122,7 @@ export class Spider {
                   `${pathToComponent}[${key}]: ${item.localPath || item.error}`
                 );
               } catch (error) {
-                if (haltOnError) {
-                  throw error;
-                } else {
+                if (ignoreErrors) {
                   const message = `Download ${cli.colors.value(key)} ${cli.colors.url(
                     snapshotComponent[key]
                   )} failed: ${error}`;
@@ -142,6 +132,8 @@ export class Spider {
                     accessed: new Date(),
                     error: message
                   };
+                } else {
+                  throw error;
                 }
               }
             }

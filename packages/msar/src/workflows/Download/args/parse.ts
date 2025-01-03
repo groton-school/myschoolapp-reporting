@@ -1,11 +1,8 @@
 import * as common from '../../../common.js';
 
 export type Parsed = common.args.Parsed & {
-  downloadOptions: {
-    include?: RegExp[];
-    exclude?: RegExp[];
-    haltOnError?: boolean;
-  };
+  include?: RegExp[];
+  exclude?: RegExp[];
 };
 
 function stringToRegExpArray(arg: string): RegExp[] | undefined {
@@ -17,10 +14,7 @@ function stringToRegExpArray(arg: string): RegExp[] | undefined {
 export function parse(values: Record<string, any>): Parsed {
   return {
     ...common.args.parse(values),
-    downloadOptions: {
-      include: stringToRegExpArray(values.include),
-      exclude: stringToRegExpArray(values.exclude),
-      haltOnError: !!values.haltOnError
-    }
+    include: stringToRegExpArray(values.include),
+    exclude: stringToRegExpArray(values.exclude)
   };
 }

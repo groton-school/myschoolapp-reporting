@@ -13,8 +13,7 @@ import * as Snapshot from '../../workflows/Snapshot.js';
   } = cli.init({
     args: {
       requirePositionals: 1,
-      options: Download.args.options,
-      flags: Download.args.flags,
+      ...Download.args,
       man: [
         {
           text: 'Download the supporting files for an existing snapshot JSON file.. This command expects either 1 or 2 arguments: at least a path to an existing snapshot file, and optionally also the desired path to the output folder of supporting files.'
@@ -23,32 +22,26 @@ import * as Snapshot from '../../workflows/Snapshot.js';
     }
   });
 
-  const {
-    downloadOptions,
-    puppeteerOptions,
-    credentials,
-    outputOptions: { pretty, outputPath: _outputPath },
-    quit
-  } = Download.args.parse(values);
+  const { outputOptions, ...options } = Download.args.parse(values);
+  const { quit } = options;
+  const { pretty } = outputOptions;
+  let { outputPath } = outputOptions;
 
   const spinner = cli.spinner();
   spinner.start('Reading snaphot file');
 
   const snapshotPath = path.resolve(process.cwd(), snapshotPathArg!);
 
-  let outputPath: string;
-  if (!_outputPath) {
+  if (!outputPath) {
     outputPath = path.join(
       path.dirname(snapshotPath!),
       path.basename(snapshotPath!, '.json')
     );
   } else {
-    if (fs.existsSync(_outputPath)) {
+    if (fs.existsSync(outputPath)) {
       outputPath = await common.output.avoidOverwrite(
-        path.join(_outputPath, path.basename(snapshotPath!, '.json'))
+        path.join(outputPath, path.basename(snapshotPath!, '.json'))
       );
-    } else {
-      outputPath = _outputPath;
     }
   }
 
@@ -63,10 +56,22 @@ import * as Snapshot from '../../workflows/Snapshot.js';
     `Read ${snapshots.length} snapshots from ${cli.colors.url(snapshotPath)}`
   );
 
+  const host = snapshots
+    .map((snapshot) => snapshot.Metadata.Host)
+    .reduce((host: string | undefined, other: string) => {
+      if (!host) {
+        return other;
+      } else if (host !== other) {
+        throw new Error('Multiple hosts present in snapshot file.');
+      }
+    }, undefined);
+  if (!host) {
+    throw new Error('No host present in snapshot file.');
+  }
   const spider = new Download.Spider({
-    outputPath,
-    credentials,
-    host: snapshots[0].Metadata.Host
+    host,
+    outputOptions: { ...outputOptions, outputPath },
+    ...options
   });
   const indices: (string | undefined)[] = [];
 
@@ -78,10 +83,8 @@ import * as Snapshot from '../../workflows/Snapshot.js';
     );
     indices.push(
       await spider.download(snapshot, {
-        ...downloadOptions,
-        outputPath,
-        ...puppeteerOptions,
-        pretty
+        ...options,
+        outputOptions: { ...outputOptions, outputPath }
       })
     );
     bar.increment();

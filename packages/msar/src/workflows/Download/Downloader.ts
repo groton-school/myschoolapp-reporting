@@ -1,22 +1,33 @@
+import * as common from '../../common.js';
 import * as Cache from './Cache.js';
-import {
-  AuthenticatedFetch,
-  Options as AuthOptions
-} from './Downloader/AuthenticatedFetch.js';
-import { HTTPFetch, Options as HTTPOptions } from './Downloader/HTTPFetch.js';
+import * as AuthenticatedFetch from './Downloader/AuthenticatedFetch.js';
+import * as HTTPFetch from './Downloader/HTTPFetch.js';
 import { Strategy } from './Downloader/Strategy.js';
 
-export type Options = AuthOptions & HTTPOptions;
+export type Options = {
+  host: string;
+} & common.output.args.Parsed &
+  common.PuppeteerSession.args.Parsed &
+  common.workflow.args.Parsed;
 
+// TODO Downloader needs to honor --concurrentThreads
 export class Downloader implements Strategy {
-  private auth: AuthenticatedFetch;
-  private http: HTTPFetch;
+  private auth: AuthenticatedFetch.Downloader;
+  private http: HTTPFetch.Downloader;
   private host: string;
 
-  public constructor({ outputPath, host, ...options }: Options) {
+  public constructor({ host, outputOptions, ...options }: Options) {
+    const { outputPath } = outputOptions;
+    if (!outputPath) {
+      throw new common.output.OutputError('Downloader requires outputPath');
+    }
     this.host = host;
-    this.auth = new AuthenticatedFetch({ outputPath, host, ...options });
-    this.http = new HTTPFetch({ outputPath });
+    this.auth = new AuthenticatedFetch.Downloader({
+      host,
+      outputOptions,
+      ...options
+    });
+    this.http = new HTTPFetch.Downloader({ outputPath, ...options });
   }
 
   public async download(original: string, filename?: string) {
