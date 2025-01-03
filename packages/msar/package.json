@@ -43,6 +43,7 @@
     "datadirect-puppeteer": "workspace:*",
     "dotenv": "^16.4.7",
     "ejs": "^3.1.10",
+    "p-queue": "^8.0.1",
     "puppeteer": "^23.11.1"
   },
   "devDependencies": {

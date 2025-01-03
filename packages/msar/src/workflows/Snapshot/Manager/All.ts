@@ -2,8 +2,10 @@ import cli from '@battis/qui-cli';
 import cliProgress from 'cli-progress';
 import { api, PuppeteerSession } from 'datadirect-puppeteer';
 import crypto from 'node:crypto';
+import { EventEmitter } from 'node:events';
 import fs from 'node:fs/promises';
 import path from 'node:path';
+import PQueue from 'p-queue';
 import * as common from '../../../common.js';
 import * as Single from './Single.js';
 
@@ -18,6 +20,9 @@ export type Options = Single.SnapshotOptions &
   AllOptions & {
     url: URL | string;
   } & common.args.Parsed;
+
+export type Item = Single.Data;
+export type Data = Item[];
 
 const TEMP = path.join('/tmp/msar/snapshot', crypto.randomUUID());
 
@@ -40,7 +45,7 @@ export async function snapshot({
   if (!year) {
     throw new Error(`year must be defined`);
   }
-  const { ignoreErrors, batchSize } = options;
+  const { ignoreErrors, concurrentThreads } = options;
   const { outputPath, pretty } = outputOptions;
 
   const session = await PuppeteerSession.Fetchable.init(url, {
@@ -54,7 +59,6 @@ export async function snapshot({
   const terms = cleanSplit(termsOffered);
   const groups = (
     await api.datadirect.groupFinderByYear({
-      session,
       ...options,
       payload: {
         schoolYearLabel: year
@@ -88,17 +92,20 @@ export async function snapshot({
   }
 
   const errors: typeof groups = [];
+  const data: Data = [];
 
-  // FIXME msar snapshot --all needs to return to batched snapshots
-  for (let i = 0; i < groups.length; i++) {
+  async function snapshotGroup(i: number) {
+    const tempPath = path.join(TEMP, `${pad(i)}.json`);
     try {
-      const tempPath = path.join(TEMP, `${pad(i)}.json`);
       const snapshot = await Single.snapshot({
         session,
         ...options,
         groupId: groups[i].lead_pk,
         quit: true
       });
+      data[i] = snapshot;
+      // TODO Configurable snapshot --all temp directory
+      // TODO Optional snapshot --all temp files
       common.output.writeJSON(tempPath, snapshot);
       progressBars.log(
         `Wrote snapshot ${snapshot?.SectionInfo?.Teacher}'s ${snapshot?.SectionInfo?.SchoolYear} ${snapshot?.SectionInfo?.GroupName} ${snapshot?.SectionInfo?.Block} to ${cli.colors.url(outputPath)}\n`
@@ -114,20 +121,18 @@ export async function snapshot({
     progress.increment();
   }
 
-  const data: Single.Data[] = [];
+  const queue = new PQueue({ concurrency: concurrentThreads });
+  await queue.addAll(groups.map((group, i) => snapshotGroup.bind(null, i)));
+
   let Start = new Date();
   let Finish = new Date('1/1/1970');
   let first: Single.Metadata | undefined = undefined;
 
-  const partials = await fs.readdir(TEMP);
-  for (const partial of partials) {
-    const snapshot = JSON.parse(
-      (await fs.readFile(path.join(TEMP, partial))).toString()
-    ) as Single.Data;
-    data.push(snapshot);
+  for (const snapshot of data) {
     if (snapshot.Metadata.Start < Start) {
       Start = snapshot.Metadata.Start;
     }
+    // FIXME snapshot --all Finish is not being calculated correctly
     if (snapshot.Metadata.Finish > Finish) {
       Finish = snapshot.Metadata.Finish;
     }
@@ -146,7 +151,7 @@ export async function snapshot({
     Start,
     Finish,
     year,
-    batchSize,
+    concurrentThreads,
     groupsPath,
     bulletinBoard,
     topics,
