@@ -130,7 +130,7 @@ export const snapshot: Base.Snapshot<Data> = async ({
             if (!(error instanceof Base.StudentDataError)) {
               common.Debug.errorWithGroupId(
                 Id,
-                `Error capturing topic ID ${cli.colors.value(TopicID)} content ID ${cli.colors.value(item.ContentItemId)} type ${cli.colors.value(ObjectType?.Name)}`,
+                `Error capturing topic {TopicID: ${cli.colors.value(TopicID)}, ContentItemId: ${cli.colors.value(item.ContentItemId)}, ObjectType: ${cli.colors.quotedValue(`"${ObjectType?.Name}"`)}}`,
                 error as string
               );
             }

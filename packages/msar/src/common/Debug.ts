@@ -9,7 +9,7 @@ export function formatWithGroupId(
   base: string,
   message?: string
 ) {
-  return `🐞 Group ${groupId}: ${format(base, message)}`;
+  return `Group ${groupId}: ${format(base, message)}`;
 }
 
 export function withGroupId(
@@ -17,7 +17,7 @@ export function withGroupId(
   base: string,
   message?: string
 ) {
-  cli.log.debug(formatWithGroupId(groupId, base, message));
+  cli.log.debug('🐞 ' + formatWithGroupId(groupId, base, message));
 }
 
 export function errorWithGroupId(
@@ -25,5 +25,7 @@ export function errorWithGroupId(
   base: string,
   message?: string
 ) {
-  cli.log.error(formatWithGroupId(groupId, base, cli.colors.error(message)));
+  cli.log.error(
+    '🚨 ' + formatWithGroupId(groupId, base, cli.colors.error(message))
+  );
 }

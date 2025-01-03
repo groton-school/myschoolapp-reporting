@@ -1,3 +1,4 @@
+import cli from '@battis/qui-cli';
 import { api as types } from 'datadirect';
 import { api } from 'datadirect-puppeteer';
 import * as common from '../../../common.js';
@@ -82,13 +83,15 @@ export const snaphot: Base.Snapshot<Data> = async ({
           Content: { error: (error as Error).message }
         });
         if (!(error instanceof Base.StudentDataError)) {
-          common.Debug.errorWithGroupId(
-            Id,
-            `Error capturing Bulletin Board ContentId ${item.ContentId} of type ${ContentType?.Content}`,
-            error as string
-          );
-        } else {
-          throw error;
+          if (ignoreErrors) {
+            common.Debug.errorWithGroupId(
+              Id,
+              `Error capturing bulletin board {ContentId: ${cli.colors.value(item.ContentId)}, ContentType: ${cli.colors.quotedValue(`"${ContentType?.Content}"`)}`,
+              error as string
+            );
+          } else {
+            throw error;
+          }
         }
       }
     }
