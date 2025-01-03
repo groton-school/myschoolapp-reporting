@@ -2,7 +2,6 @@ import cli from '@battis/qui-cli';
 import cliProgress from 'cli-progress';
 import { api, PuppeteerSession } from 'datadirect-puppeteer';
 import crypto from 'node:crypto';
-import { EventEmitter } from 'node:events';
 import fs from 'node:fs/promises';
 import path from 'node:path';
 import PQueue from 'p-queue';
