@@ -20,6 +20,7 @@ export const snapshot: Base.Snapshot<Data> = async ({
 
   const assignments: Data = [];
   for (const assignment of assignmentList) {
+    // FIXME Assignments need to process ignoreError
     assignments.push(
       await api.Assignment2.UserAssignmentDetailsGetAllData({
         session,

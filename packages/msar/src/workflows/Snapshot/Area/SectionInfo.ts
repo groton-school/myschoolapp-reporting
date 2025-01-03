@@ -1,6 +1,7 @@
 import cli from '@battis/qui-cli';
 import { api as types } from 'datadirect';
 import { api } from 'datadirect-puppeteer';
+import { AreaError } from './AreaError.js';
 import * as Base from './Base.js';
 
 export type Data = types.datadirect.SectionInfoView.Item;
@@ -36,7 +37,7 @@ export const snapshot: Base.Snapshot<Data> = async ({
       cli.log.error(message);
       return undefined;
     } else {
-      throw new Error(message);
+      throw new AreaError(`SectionInfo error: ${message}`);
     }
   }
 };
