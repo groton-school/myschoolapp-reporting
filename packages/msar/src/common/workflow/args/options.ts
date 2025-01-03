@@ -6,7 +6,7 @@ export const defaults = {
 
 export const options = {
   concurrentThreads: {
-    description: `Number of simultaneous requests to batch together (default: ${cli.colors.value(defaults.concurrentThreads)})`,
+    description: `Maximum number of concurrent threads (default: ${cli.colors.value(defaults.concurrentThreads)})`,
     default: defaults.concurrentThreads.toString()
   }
 };
