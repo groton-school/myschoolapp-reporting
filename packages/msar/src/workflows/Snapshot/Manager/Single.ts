@@ -76,7 +76,7 @@ export async function snapshot({
 
   if (!session) {
     if (url) {
-      cli.log.debug(`Group ${groupId}: Creating API`);
+      cli.log.debug(`Group ${groupId}: Creating session`);
       session = await PuppeteerSession.Fetchable.init(url, {
         credentials,
         ...puppeteerOptions
@@ -87,12 +87,12 @@ export async function snapshot({
       );
     }
   } else {
-    cli.log.debug(`Group ${groupId}: Forking API`);
+    cli.log.debug(`Group ${groupId}: Forking session in new window`);
     session = await session.fork(
       `/app/faculty#academicclass/${groupId}/0/bulletinboard`
     );
   }
-  cli.log.debug(`Group ${groupId}: API ready`);
+  cli.log.debug(`Group ${groupId}: Session ready`);
 
   const Start = new Date();
 
@@ -123,10 +123,10 @@ export async function snapshot({
 
   if (snapshot.SectionInfo && 'Teacher' in snapshot.SectionInfo) {
     cli.log.debug(
-      `Group ${snapshot.SectionInfo.Id}: Snapshot captured (${snapshot.SectionInfo.Teacher}'s ${snapshot.SectionInfo.SchoolYear} ${snapshot.SectionInfo.Duration} ${snapshot.SectionInfo.GroupName})`
+      `Group ${groupId}: Captured snapshot (${snapshot.SectionInfo.Teacher}'s ${snapshot.SectionInfo.SchoolYear} ${snapshot.SectionInfo.Duration} ${snapshot.SectionInfo.GroupName})`
     );
   } else {
-    cli.log.error(`Captured snapshot of section ${groupId} with errors`);
+    cli.log.error(`Group ${groupId}: Captured snapshot with errors`);
   }
   snapshot.Metadata.Finish = new Date();
   snapshot.Metadata.Elapsed =
