@@ -7,7 +7,7 @@ import {
 } from '../filenameFromDisposition.js';
 import { Strategy } from './Strategy.js';
 
-export type Options = { outputPath: string } & common.workflow.args.Parsed;
+export type Options = { outputPath: string } & common.Workflow.args.Parsed;
 
 export class Downloader implements Strategy {
   private outputPath: string;
@@ -37,7 +37,7 @@ export class Downloader implements Strategy {
     }
     if (response.ok && response.body) {
       return {
-        localPath: await common.output.writeFetchedFile({
+        localPath: await common.Output.writeFetchedFile({
           url,
           stream: response.body as ReadableStream,
           outputPath: this.outputPath

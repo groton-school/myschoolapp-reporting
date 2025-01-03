@@ -1,8 +1,8 @@
-export * as args from './output/args.js';
-export * from './output/avoidOverwrite.js';
-export { filePathFromOutputPath } from './output/filePathFromOutputPath.js';
-export * from './output/OutputError.js';
-export { pathsafeTimestamp } from './output/pathsafeTimestamp.js';
-export { writeFetchedFile } from './output/writeFetchedFile.js';
-export { writeJSON } from './output/writeJSON.js';
-export { writeRecursive } from './output/writeRecursive.js';
+export * as args from './Output/args.js';
+export * from './Output/avoidOverwrite.js';
+export { filePathFromOutputPath } from './Output/filePathFromOutputPath.js';
+export * from './Output/OutputError.js';
+export { pathsafeTimestamp } from './Output/pathsafeTimestamp.js';
+export { writeFetchedFile } from './Output/writeFetchedFile.js';
+export { writeJSON } from './Output/writeJSON.js';
+export { writeRecursive } from './Output/writeRecursive.js';

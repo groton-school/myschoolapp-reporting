@@ -44,7 +44,7 @@ import * as Snapshot from '../../workflows/Snapshot.js';
     );
   } else {
     if (fs.existsSync(outputPath)) {
-      outputPath = await common.output.avoidOverwrite(
+      outputPath = await common.Output.avoidOverwrite(
         path.join(outputPath, path.basename(snapshotPath!, '.json'))
       );
     }
@@ -105,22 +105,22 @@ import * as Snapshot from '../../workflows/Snapshot.js';
         JSON.parse(
           fs
             .readFileSync(
-              common.output.filePathFromOutputPath(outputPath, fileName)!
+              common.Output.filePathFromOutputPath(outputPath, fileName)!
             )
             .toString()
         )
       );
       fs.unlinkSync(
-        common.output.filePathFromOutputPath(outputPath, fileName)!
+        common.Output.filePathFromOutputPath(outputPath, fileName)!
       );
     }
   }
-  const indexPath = common.output.filePathFromOutputPath(
+  const indexPath = common.Output.filePathFromOutputPath(
     outputPath,
     'index.json'
   );
-  await common.output.writeJSON(indexPath, index, { pretty });
-  await common.output.writeJSON(
+  await common.Output.writeJSON(indexPath, index, { pretty });
+  await common.Output.writeJSON(
     path.resolve(indexPath, '../metadata.json'),
     {
       snapshotPath,

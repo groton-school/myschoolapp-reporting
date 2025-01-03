@@ -76,11 +76,11 @@ export async function snapshot({
   const progressBars = new cliProgress.MultiBar({});
   const progress = progressBars.create(groups.length, 0);
   if (groupsPath) {
-    groupsPath = common.output.filePathFromOutputPath(
+    groupsPath = common.Output.filePathFromOutputPath(
       groupsPath,
       'groups.json'
     );
-    common.output.writeJSON(groupsPath, groups, {
+    common.Output.writeJSON(groupsPath, groups, {
       pretty
     });
   }
@@ -105,7 +105,7 @@ export async function snapshot({
       data[i] = snapshot;
       // TODO Configurable snapshot --all temp directory
       // TODO Optional snapshot --all temp files
-      common.output.writeJSON(tempPath, snapshot);
+      common.Output.writeJSON(tempPath, snapshot);
       progressBars.log(
         `Wrote snapshot ${snapshot?.SectionInfo?.Teacher}'s ${snapshot?.SectionInfo?.SchoolYear} ${snapshot?.SectionInfo?.GroupName} ${snapshot?.SectionInfo?.Block} to ${cli.colors.url(outputPath)}\n`
       );
@@ -142,13 +142,13 @@ export async function snapshot({
       first = snapshot.Metadata;
     }
   }
-  const filepath = await common.output.avoidOverwrite(
-    common.output.filePathFromOutputPath(outputPath, 'snapshot.json'),
-    common.output.AddTimestamp
+  const filepath = await common.Output.avoidOverwrite(
+    common.Output.filePathFromOutputPath(outputPath, 'snapshot.json'),
+    common.Output.AddTimestamp
   );
   const { bulletinBoard, topics, assignments, gradebook } = options;
-  common.output.writeJSON(filepath, data, { pretty });
-  common.output.writeJSON(filepath.replace(/\.json$/, '.metadata.json'), {
+  common.Output.writeJSON(filepath, data, { pretty });
+  common.Output.writeJSON(filepath.replace(/\.json$/, '.metadata.json'), {
     ...first,
     Start,
     Finish,
@@ -163,7 +163,7 @@ export async function snapshot({
   });
   if (errors.length) {
     const errorsPath = filepath.replace(/\.json$/, '.errors.json');
-    common.output.writeJSON(errorsPath, errors);
+    common.Output.writeJSON(errorsPath, errors);
     cli.log.error(`Errors output to ${cli.colors.url(errorsPath)}`);
   }
   await fs.rm(TEMP, { recursive: true });

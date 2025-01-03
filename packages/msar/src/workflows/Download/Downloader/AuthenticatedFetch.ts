@@ -21,7 +21,7 @@ type FilepathVariantsOptions = {
 
 export type Options = {
   host: URL | string;
-} & common.output.args.Parsed &
+} & common.Output.args.Parsed &
   common.PuppeteerSession.args.Parsed;
 
 const TEMP = path.join('/tmp/msar/download', crypto.randomUUID());
@@ -42,7 +42,7 @@ export class Downloader
   }: Options) {
     super(`https://${host}`, { ...options, ...puppeteerOptions });
     if (!outputPath) {
-      throw new common.output.OutputError(
+      throw new common.Output.OutputError(
         'AuthenticatedFetch requires outputPath'
       );
     }
@@ -103,7 +103,7 @@ export class Downloader
           const localPath = new URL(url).pathname;
           const destFilepath = path.resolve(
             process.cwd(),
-            common.output.filePathFromOutputPath(this.outputPath, localPath)!
+            common.Output.filePathFromOutputPath(this.outputPath, localPath)!
           );
           const dir = path.dirname(destFilepath);
           if (!fs.existsSync(dir)) {

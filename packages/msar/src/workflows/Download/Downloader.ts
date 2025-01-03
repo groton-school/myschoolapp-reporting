@@ -6,9 +6,9 @@ import { Strategy } from './Downloader/Strategy.js';
 
 export type Options = {
   host: string;
-} & common.output.args.Parsed &
+} & common.Output.args.Parsed &
   common.PuppeteerSession.args.Parsed &
-  common.workflow.args.Parsed;
+  common.Workflow.args.Parsed;
 
 // TODO Downloader needs to honor --concurrentThreads
 export class Downloader implements Strategy {
@@ -19,7 +19,7 @@ export class Downloader implements Strategy {
   public constructor({ host, outputOptions, ...options }: Options) {
     const { outputPath } = outputOptions;
     if (!outputPath) {
-      throw new common.output.OutputError('Downloader requires outputPath');
+      throw new common.Output.OutputError('Downloader requires outputPath');
     }
     this.host = host;
     this.auth = new AuthenticatedFetch.Downloader({

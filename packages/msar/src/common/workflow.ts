@@ -1,1 +1,1 @@
-export * as args from './workflow/args.js';
+export * as args from './Workflow/args.js';

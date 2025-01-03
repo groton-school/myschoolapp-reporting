@@ -46,8 +46,8 @@ export type Context = {
 
 export type Options = SnapshotOptions &
   Context &
-  Partial<common.output.args.Parsed> &
-  common.workflow.args.Parsed;
+  Partial<common.Output.args.Parsed> &
+  common.Workflow.args.Parsed;
 
 export async function snapshot({
   session,
@@ -142,11 +142,11 @@ export async function snapshot({
     if (snapshot.SectionInfo) {
       basename = `${snapshot.SectionInfo.SchoolYear} - ${snapshot.SectionInfo.Teacher} - ${snapshot.SectionInfo.GroupName} - ${snapshot.SectionInfo.Id}`;
     }
-    const filepath = await common.output.avoidOverwrite(
-      common.output.filePathFromOutputPath(outputPath, `${basename}.json`)
+    const filepath = await common.Output.avoidOverwrite(
+      common.Output.filePathFromOutputPath(outputPath, `${basename}.json`)
     );
-    common.output.writeJSON(filepath, snapshot, { pretty });
-    common.output.writeJSON(
+    common.Output.writeJSON(filepath, snapshot, { pretty });
+    common.Output.writeJSON(
       filepath.replace(/\.json$/, '.metadata.json'),
       {
         ...snapshot.Metadata,

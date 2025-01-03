@@ -28,7 +28,7 @@ export class Spider {
   ) {
     const { outputPath, pretty } = outputOptions;
     if (!outputPath) {
-      throw new common.output.OutputError('Spider requires outputPath');
+      throw new common.Output.OutputError('Spider requires outputPath');
     }
     if (snapshot) {
       common.Debug.withGroupId(
@@ -42,8 +42,8 @@ export class Spider {
         pathToComponent: path.basename(outputPath)
       });
       const indexName = `${snapshot.SectionInfo?.Id || 'index'}.json`;
-      await common.output.writeJSON(
-        await common.output.avoidOverwrite(path.join(outputPath, indexName)),
+      await common.Output.writeJSON(
+        await common.Output.avoidOverwrite(path.join(outputPath, indexName)),
         snapshot,
         {
           pretty
