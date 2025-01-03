@@ -22,7 +22,7 @@ type FilepathVariantsOptions = {
 export type Options = {
   host: URL | string;
 } & common.output.args.Parsed &
-  PuppeteerSession.Options;
+  common.PuppeteerSession.args.Parsed;
 
 const TEMP = path.join('/tmp/msar/download', crypto.randomUUID());
 const DOWNLOADS = path.join(os.homedir(), 'Downloads');
@@ -37,10 +37,10 @@ export class Downloader
   public constructor({
     host,
     outputOptions: { outputPath },
+    puppeteerOptions,
     ...options
   }: Options) {
-    // FIXME AuthenticatedFetch is instantiating headless
-    super(`https://${host}`, options);
+    super(`https://${host}`, { ...options, ...puppeteerOptions });
     if (!outputPath) {
       throw new common.output.OutputError(
         'AuthenticatedFetch requires outputPath'
