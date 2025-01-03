@@ -8,8 +8,7 @@ import * as Snapshot from '../../workflows/Snapshot.js';
   } = cli.init({
     args: {
       requirePositionals: 1,
-      options: Snapshot.args.options,
-      flags: Snapshot.args.flags,
+      ...Snapshot.args,
       man: [
         {
           text: `Capture a JSON snapshot of an individual course or of a collection of courses (using the ${cli.colors.value('all')} flag). In addition to relevant flags and options, the only argument expected is a URL to a page within the target course (or target LMS instance, if snapshotting more than one course).`
