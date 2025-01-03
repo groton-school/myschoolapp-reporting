@@ -39,6 +39,7 @@ export class Downloader
     outputOptions: { outputPath },
     ...options
   }: Options) {
+    // FIXME AuthenticatedFetch is instantiating headless
     super(`https://${host}`, options);
     if (!outputPath) {
       throw new common.output.OutputError(
