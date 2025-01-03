@@ -118,4 +118,9 @@ export class Authenticated extends Base {
     const base = await super.fork(path);
     return await new Authenticated(base.page).ready();
   }
+
+  public async baseFork(path: URL | string) {
+    await this.ready();
+    return await super.fork(path);
+  }
 }
