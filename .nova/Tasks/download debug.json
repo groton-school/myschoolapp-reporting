@@ -11,7 +11,7 @@
     },
     "run" : {
       "enabled" : true,
-      "script" : "source .env\n# node --inspect-wait .\/packages\/msar\/dist\/bin\/msar.js ...\ntsx .\/packages\/msar\/src\/bin\/msar.ts download --stdoutLevel all -u --logFilePath .\/var\/download.log --logRequests \"$(op item get $OP_ITEM --fields username)\" -p \"$(op item get $OP_ITEM --fields password --reveal)\" --sso $SSO --outputPath \"$OUT\" --pretty \"$DOWNLOAD\""
+      "script" : "source .env\n# node --inspect-wait .\/packages\/msar\/dist\/bin\/msar.js ...\ntsx .\/packages\/msar\/src\/bin\/msar.ts download --stdoutLevel all --logFilePath .\/var\/download.log --logRequests -u \"$(op item get $OP_ITEM --fields username)\" -p \"$(op item get $OP_ITEM --fields password --reveal)\" --sso $SSO --outputPath \"$OUT\" --pretty \"$DOWNLOAD\""
     }
   },
   "buildBeforeRunning" : true,
