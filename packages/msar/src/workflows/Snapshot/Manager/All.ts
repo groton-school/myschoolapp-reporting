@@ -131,7 +131,6 @@ export async function snapshot({
     if (snapshot.Metadata.Start < Start) {
       Start = snapshot.Metadata.Start;
     }
-    // FIXME snapshot --all Finish is not being calculated correctly
     if (snapshot.Metadata.Finish > Finish) {
       Finish = snapshot.Metadata.Finish;
     }
@@ -149,6 +148,7 @@ export async function snapshot({
     ...first,
     Start,
     Finish,
+    Elapsed: Finish.getTime() - Start.getTime(),
     year,
     concurrentThreads,
     groupsPath,
