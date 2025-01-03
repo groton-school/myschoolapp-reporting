@@ -10,22 +10,10 @@
       ]
     },
     "run" : {
-      "preActions" : [
-        {
-          "script" : "source .env\nnode --inspect-wait .\/packages\/myschoolapp-reporting\/dist\/bin\/msar.js download --stdoutLevel all -u \"$(op item get $OP_ITEM --fields username)\" -p \"$(op item get $OP_ITEM --fields password --reveal)\" --sso $SSO --outputPath \"$OUT\" --pretty \"$DOWNLOAD\"",
-          "type" : "runScript"
-        }
-      ]
+      "enabled" : true,
+      "script" : "source .env\n# node --inspect-wait .\/packages\/msar\/dist\/bin\/msar.js ...\nmsar download --stdoutLevel all -u --logFilePath .\/var\/download.log --logRequests \"$(op item get $OP_ITEM --fields username)\" -p \"$(op item get $OP_ITEM --fields password --reveal)\" --sso $SSO --outputPath \"$OUT\" --pretty \"$DOWNLOAD\""
     }
   },
   "buildBeforeRunning" : true,
-  "extension" : {
-    "identifier" : "panic.JavaScript",
-    "name" : "JavaScript"
-  },
-  "extensionTemplate" : "chromeDebug",
-  "extensionValues" : {
-    "request" : "attach"
-  },
   "openLogOnRun" : "start"
 }

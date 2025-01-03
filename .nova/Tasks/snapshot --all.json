@@ -11,7 +11,7 @@
     },
     "run" : {
       "enabled" : true,
-      "script" : "source .env\nmsar summarize --stdoutLevel all \"$SUMMARY\""
+      "script" : "source .env\nmsar snapshot -u \"$(op item get $OP_ITEM --fields username)\" -p \"$(op item get $OP_ITEM --fields password --reveal)\" --sso $SSO --outputPath \"$OUT\" --all --association \"Classes\" --batchSize 12 --pretty \"$URL\"\n"
     }
   },
   "buildBeforeRunning" : true,
