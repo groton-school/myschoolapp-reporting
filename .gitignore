@@ -1,5 +1,6 @@
 .env
 .env.*
+/.nx/
 **/dist/
 **/node_modules/
 **/var/
