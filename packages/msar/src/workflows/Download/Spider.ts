@@ -8,7 +8,7 @@ import { Downloader, Options as DownloaderOptions } from './Downloader.js';
 export type BaseOptions = {
   include?: RegExp[];
   exclude?: RegExp[];
-  haltOnError: boolean;
+  haltOnError?: boolean;
 };
 
 type TraverseOptions = BaseOptions & {

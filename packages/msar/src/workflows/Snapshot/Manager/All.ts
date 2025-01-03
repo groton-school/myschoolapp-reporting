@@ -1,6 +1,6 @@
 import cli from '@battis/qui-cli';
 import cliProgress from 'cli-progress';
-import { api } from 'datadirect-puppeteer';
+import { api, PuppeteerSession } from 'datadirect-puppeteer';
 import crypto from 'node:crypto';
 import fs from 'node:fs/promises';
 import path from 'node:path';
@@ -33,48 +33,29 @@ export async function snapshot({
   termsOffered,
   year,
   groupsPath,
-  batchSize,
   outputOptions,
-  ignoreErrors,
   quit,
   ...options
 }: Options) {
   if (!year) {
     throw new Error(`year must be defined`);
   }
-
+  const { ignoreErrors, batchSize } = options;
   const { outputPath, pretty } = outputOptions;
 
-  const session = await api.init(url, {
+  const session = await PuppeteerSession.Fetchable.init(url, {
     credentials,
     ...puppeteerOptions
   });
-
+  cli.log.info(
+    `Snapshot temporary files will be saved to ${cli.colors.url(TEMP)}`
+  );
   const associations = cleanSplit(association);
   const terms = cleanSplit(termsOffered);
-  /*
-   * FIXME refactoring broke `msar snapshot --all`
-   *   Filtering is now returning zero matches
-   *   ```sh
-   *   Task Terminated with exit code 1
-   *   Snapshot temporary files will be saved to /tmp/msar/snapshot/0bb0250d-8a4c-4c6a-bb28-da5846eb0e76
-   *   0 groups match filters
-   *   node:internal/fs/promises:948
-   *     const result = await PromisePrototypeThen(
-   *                    ^
-   *   Error: ENOENT: no such file or directory, scandir '/tmp/msar/snapshot/0bb0250d-8a4c-4c6a-bb28-da5846eb0e76'
-   *       at async Object.readdir (node:internal/fs/promises:948:18)
-   *       at async Module.snapshot (file:///path/tp/myschoolapp-reporting/packages/myschoolapp-reporting/dist/workflows/Snapshot/Manager/All.js:80:22)
-   *       at async file:///path/to/myschoolapp-reporting/packages/myschoolapp-reporting/dist/bin/commands/snapshot.js:21:9 {
-   *     errno: -2,
-   *     code: 'ENOENT',
-   *     syscall: 'scandir',
-   *     path: '/tmp/msar/snapshot/0bb0250d-8a4c-4c6a-bb28-da5846eb0e76'
-   *   }
-   *   ```
-   */
   const groups = (
     await api.datadirect.groupFinderByYear({
+      session,
+      ...options,
       payload: {
         schoolYearLabel: year
       }
@@ -87,9 +68,6 @@ export async function snapshot({
           (match, term) => match && group.terms_offered.includes(term),
           true
         ))
-  );
-  cli.log.info(
-    `Snapshot temporary files will be saved to ${cli.colors.url(TEMP)}`
   );
   cli.log.info(`${groups.length} groups match filters`);
   const progressBars = new cliProgress.MultiBar({});
@@ -111,21 +89,19 @@ export async function snapshot({
 
   const errors: typeof groups = [];
 
+  // FIXME msar snapshot --all needs to return to batched snapshots
   for (let i = 0; i < groups.length; i++) {
     try {
+      const tempPath = path.join(TEMP, `${pad(i)}.json`);
       const snapshot = await Single.snapshot({
         session,
-        groupId: groups[i].lead_pk,
-        outputOptions,
-        ignoreErrors,
-        batchSize,
         ...options,
+        groupId: groups[i].lead_pk,
         quit: true
       });
-      const tempPath = path.join(TEMP, `${pad(i)}.json`);
-      await common.output.writeJSON(tempPath, snapshot);
+      common.output.writeJSON(tempPath, snapshot);
       progressBars.log(
-        `Wrote snapshot ${snapshot?.SectionInfo?.Teacher}'s ${snapshot?.SectionInfo?.SchoolYear} ${snapshot?.SectionInfo?.GroupName} ${snapshot?.SectionInfo?.Block} to ${cli.colors.url(tempPath)}\n`
+        `Wrote snapshot ${snapshot?.SectionInfo?.Teacher}'s ${snapshot?.SectionInfo?.SchoolYear} ${snapshot?.SectionInfo?.GroupName} ${snapshot?.SectionInfo?.Block} to ${cli.colors.url(outputPath)}\n`
       );
     } catch (error) {
       if (ignoreErrors) {

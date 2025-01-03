@@ -4,7 +4,7 @@ export type Parsed = common.args.Parsed & {
   downloadOptions: {
     include?: RegExp[];
     exclude?: RegExp[];
-    haltOnError: boolean;
+    haltOnError?: boolean;
   };
 };
 

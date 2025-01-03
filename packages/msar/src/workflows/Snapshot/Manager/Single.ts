@@ -47,7 +47,7 @@ export type Context = {
 
 export type Options = SnapshotOptions &
   Context &
-  common.output.args.Parsed &
+  Partial<common.output.args.Parsed> &
   common.workflow.args.Parsed;
 
 export async function snapshot({
@@ -132,7 +132,7 @@ export async function snapshot({
   snapshot.Metadata.Elapsed =
     snapshot.Metadata.Finish.getTime() - snapshot.Metadata.Start.getTime();
 
-  if (outputOptions.outputPath) {
+  if (outputOptions?.outputPath) {
     const { outputPath, pretty } = outputOptions;
     let basename = 'snapshot';
     if (snapshot.SectionInfo) {

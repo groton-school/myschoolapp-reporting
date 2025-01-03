@@ -3,7 +3,7 @@ import * as common from '../../../common.js';
 
 let defaultYear = `${new Date().getFullYear()} - ${new Date().getFullYear() + 1}`;
 if (new Date().getMonth() <= 6) {
-  defaultYear = `${new Date().getFullYear() - 1} -  ${new Date().getFullYear()}`;
+  defaultYear = `${new Date().getFullYear() - 1} - ${new Date().getFullYear()}`;
 }
 
 export const defaults = {

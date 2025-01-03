@@ -1,5 +1,5 @@
 export type Parsed = {
-  outputOptions: { outputPath?: string; pretty: boolean };
+  outputOptions: { outputPath?: string; pretty?: boolean };
 };
 
 export function parse(values: Record<string, string>): Parsed {
