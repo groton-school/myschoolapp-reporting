@@ -1,5 +1,6 @@
+import cli from '@battis/qui-cli';
 import { JSONValue } from '@battis/typescript-tricks';
-import { Mutex, MutexInterface, Semaphore } from 'async-mutex';
+import { Mutex, MutexInterface } from 'async-mutex';
 import puppeteer, { GoToOptions, Page } from 'puppeteer';
 import { InitializationError } from './InitializationError.js';
 
@@ -108,10 +109,12 @@ export class Base {
 
   public async fetch(
     input: URL | string,
-    init?: RequestInit
+    init?: RequestInit,
+    logRequest = false
   ): Promise<FetchResponse> {
     await this.ready();
-    return await this.page.evaluate(
+    const url = new URL(input, this.page.url());
+    const response = await this.page.evaluate(
       async (input, init) => {
         const response = await fetch(input, init);
         let body: FetchResponse['body'] = undefined;
@@ -133,9 +136,13 @@ export class Base {
           body
         };
       },
-      new URL(input, this.page.url()),
+      url,
       init
     );
+    if (logRequest) {
+      cli.log.debug({ url, init, response });
+    }
+    return response;
   }
 
   public async close() {

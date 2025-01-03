@@ -6,7 +6,8 @@ import { InitializationError } from './InitializationError.js';
 export type EndpointOptions<P extends Endpoint.Payload> = {
   payload: P;
   pathParams?: Record<string, string | number | boolean>;
-  logBodyOnError?: boolean;
+  session?: Authenticated;
+  logRequests?: boolean;
 };
 
 export type Binding<P extends Endpoint.Payload, R extends Endpoint.Response> = (
@@ -24,10 +25,14 @@ export async function init(url: URL | string, options?: Options) {
 }
 
 export function bind<P extends Endpoint.Payload, R extends Endpoint.Response>(
-  module: Endpoint.Module<P>,
-  session?: Authenticated
+  module: Endpoint.Module<P>
 ): Binding<P, R> {
-  return async ({ payload, pathParams = {} }: EndpointOptions<P>) => {
+  return async ({
+    payload,
+    pathParams = {},
+    session,
+    logRequests
+  }: EndpointOptions<P>) => {
     session = session || root;
     if (!session) {
       throw new InitializationError('bind requires initialized session');
@@ -36,9 +41,12 @@ export function bind<P extends Endpoint.Payload, R extends Endpoint.Response>(
       payload,
       (await session.url()).toString()
     );
-    const url = Endpoint.preparePath(input, pathParams);
-
-    const response = await session.fetch(url, init);
-    return response.body as R;
+    return (
+      await session.fetch(
+        Endpoint.preparePath(input, pathParams),
+        init,
+        logRequests
+      )
+    ).body as R;
   };
 }
