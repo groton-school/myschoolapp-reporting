@@ -15,11 +15,13 @@ export type Data = Item[];
 export const snapshot: Base.Snapshot<Data> = async ({
   groupId: sectionId,
   ignoreErrors,
-  studentData
+  studentData,
+  ...options
 }) => {
   cli.log.debug(`Group ${sectionId}: Start capturing gradebook`);
   try {
     const markingPeriods = await api.datadirect.GradeBookMarkingPeriodList({
+      ...options,
       payload: { sectionId }
     });
     const Gradebook: Data = [];
@@ -27,6 +29,7 @@ export const snapshot: Base.Snapshot<Data> = async ({
       const entry: Item = {
         markingPeriod,
         gradebook: await api.gradebook.hydrategradebook({
+          ...options,
           payload: {
             sectionId,
             markingPeriodId: markingPeriod.MarkingPeriodId

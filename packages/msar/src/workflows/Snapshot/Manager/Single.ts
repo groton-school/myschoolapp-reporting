@@ -1,7 +1,7 @@
 import { NumericDuration } from '@battis/descriptive-types';
 import cli from '@battis/qui-cli';
 import { api as types } from 'datadirect';
-import { api, PuppeteerSession } from 'datadirect-puppeteer';
+import { PuppeteerSession } from 'datadirect-puppeteer';
 import * as common from '../../../common.js';
 import * as Area from '../Area.js';
 

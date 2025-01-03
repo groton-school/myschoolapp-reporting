@@ -30,13 +30,15 @@ export const snapshot: Base.Snapshot<Data> = async ({
   groupId: Id,
   payload,
   ignoreErrors = true,
-  studentData
+  studentData,
+  ...options
 }): Promise<Data | undefined> => {
   cli.log.debug(`Group ${Id}: Start capturing topics`);
   try {
     const Topics: Data = [];
     await getPossibleContent();
     const topics = await api.datadirect.sectiontopicsget({
+      ...options,
       payload: {
         // TODO Fix typing to avoid parameter redundancy
         active: true,
@@ -53,6 +55,7 @@ export const snapshot: Base.Snapshot<Data> = async ({
       const Content: Item[] = [];
       const items: types.datadirect.topiccontentget.Response = (
         await api.datadirect.topiccontentget({
+          ...options,
           payload: {
             format: 'json',
             index_id: topic.TopicIndexID,
@@ -89,6 +92,7 @@ export const snapshot: Base.Snapshot<Data> = async ({
               item,
               possibleContent!,
               {
+                ...options,
                 payload: {
                   format: 'json',
                   ...payload,

@@ -28,22 +28,26 @@ async function getPossibleContent(leadSectionId: number) {
 }
 
 export const snaphot: Base.Snapshot<Data> = async ({
+  session,
   groupId: Id,
   payload = { format: 'json' },
   ignoreErrors = true,
-  studentData
+  studentData,
+  logRequests
 }): Promise<Data | undefined> => {
   cli.log.debug(`Group ${Id}: Start capturing bulletin board`);
   try {
     const BulletinBoard: Data = [];
     await getPossibleContent(Id);
     const items = await api.datadirect.BulletinBoardContentGet({
+      session,
       payload: {
         format: 'json',
         sectionId: Id,
         associationId: 1,
         pendingInd: false
-      }
+      },
+      logRequests
     });
     for (const item of items) {
       const ContentType = possibleContent!.find(
@@ -64,8 +68,10 @@ export const snaphot: Base.Snapshot<Data> = async ({
             item,
             possibleContent!,
             {
+              session,
               payload: { ...payload, contextValue: Id, contextLabelId: 2 },
-              pathParams: { Id }
+              pathParams: { Id },
+              logRequests
             }
           )
         });

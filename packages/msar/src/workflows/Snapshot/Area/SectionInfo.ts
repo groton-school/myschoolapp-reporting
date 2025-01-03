@@ -7,12 +7,14 @@ export type Data = types.datadirect.SectionInfoView.Item;
 
 export const snapshot: Base.Snapshot<Data> = async ({
   groupId: sectionId,
-  ignoreErrors = true
+  ignoreErrors = true,
+  ...options
 }): Promise<Data | undefined> => {
   cli.log.debug(`Group ${sectionId}: Start capturing section info`);
   try {
     return (
       await api.datadirect.SectionInfoView({
+        ...options,
         payload: {
           format: 'json',
           sectionId,
