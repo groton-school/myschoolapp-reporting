@@ -84,7 +84,7 @@ export class Base {
 
   public async clone() {
     await this.ready();
-    return new Base(this.page);
+    return await new Base(this.page).ready();
   }
 
   public async fork(path: URL | string) {

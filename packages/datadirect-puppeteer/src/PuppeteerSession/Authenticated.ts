@@ -113,16 +113,9 @@ export class Authenticated extends Base {
     return await new Authenticated(this.page).ready();
   }
 
-  public async fork(
-    path: URL | string,
-    timeout = Authenticated.DefaultTimeout
-  ) {
+  public async fork(path: URL | string) {
     await this.ready();
-    const url = await this.url();
-    const fork = await this.clone();
-    const ready = await fork.authenticating.acquire();
-    await fork.goto(new URL(path, url));
-    await fork.appLoaded(timeout, ready);
-    return fork;
+    const base = await super.fork(path);
+    return await new Authenticated(base.page).ready();
   }
 }
