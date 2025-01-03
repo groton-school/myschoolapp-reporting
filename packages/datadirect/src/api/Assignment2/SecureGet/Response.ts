@@ -23,7 +23,7 @@ type Duration = {
   Current: boolean;
   dd_id: number;
   SelectedInd: number;
-  SchoolLevelIds: any[]; // FIXME (probably number[])
+  SchoolLevelIds: any[]; // TODO Assignment2/SecureGet.Duration.SchoolLevelIds type (probably number[])
 };
 
 type Section = {
