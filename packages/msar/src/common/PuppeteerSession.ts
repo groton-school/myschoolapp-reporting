@@ -1,1 +1,1 @@
-export * as args from './PuppeteerSession/args.js';
+export * as Args from './PuppeteerSession/Args.js';

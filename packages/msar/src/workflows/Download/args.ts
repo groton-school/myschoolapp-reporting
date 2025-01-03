@@ -1,8 +1,8 @@
-import { defaults as flagDefaults } from './args/flags.js';
-import { defaults as optionsDefaults } from './args/options.js';
+import { defaults as flagDefaults } from './Args/flags.js';
+import { defaults as optionsDefaults } from './Args/options.js';
 
-export { flags } from './args/flags.js';
-export { options } from './args/options.js';
-export * from './args/parse.js';
+export { flags } from './Args/flags.js';
+export { options } from './Args/options.js';
+export * from './Args/parse.js';
 
 export const defaults = { ...flagDefaults, ...optionsDefaults };

@@ -13,7 +13,7 @@ export const defaults = {
 };
 
 export const options = {
-  ...common.args.options,
+  ...common.Args.options,
   fromDate: {
     description: `Starting date for date-based filter where relevant (default is today's date: ${cli.colors.quotedValue(`"${defaults.fromDate}"`)})`,
     default: defaults.fromDate

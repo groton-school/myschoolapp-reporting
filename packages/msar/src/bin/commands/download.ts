@@ -13,7 +13,7 @@ import * as Snapshot from '../../workflows/Snapshot.js';
   } = cli.init({
     args: {
       requirePositionals: 1,
-      ...Download.args,
+      ...Download.Args,
       man: [
         {
           text: 'Download the supporting files for an existing snapshot JSON file.. This command expects either 1 or 2 arguments: at least a path to an existing snapshot file, and optionally also the desired path to the output folder of supporting files.'
@@ -22,7 +22,7 @@ import * as Snapshot from '../../workflows/Snapshot.js';
     }
   });
 
-  const { outputOptions, ...options } = Download.args.parse(values);
+  const { outputOptions, ...options } = Download.Args.parse(values);
   const { quit } = options;
   const { pretty } = outputOptions;
   let { outputPath } = outputOptions;

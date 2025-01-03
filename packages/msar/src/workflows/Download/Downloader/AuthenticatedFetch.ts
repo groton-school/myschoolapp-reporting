@@ -21,8 +21,8 @@ type FilepathVariantsOptions = {
 
 export type Options = {
   host: URL | string;
-} & common.Output.args.Parsed &
-  common.PuppeteerSession.args.Parsed;
+} & common.Output.Args.Parsed &
+  common.PuppeteerSession.Args.Parsed;
 
 const TEMP = path.join('/tmp/msar/download', crypto.randomUUID());
 const DOWNLOADS = path.join(os.homedir(), 'Downloads');

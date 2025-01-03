@@ -2,7 +2,7 @@ import { PuppeteerSession } from 'datadirect-puppeteer';
 import * as common from '../../../common.js';
 import * as Manager from '../Manager.js';
 
-export type Parsed = common.args.Parsed & {
+export type Parsed = common.Args.Parsed & {
   snapshotOptions?: Manager.Single.SnapshotOptions;
   all?: boolean;
   allOptions?: Manager.All.AllOptions;
@@ -51,6 +51,6 @@ export function parse(values: Record<string, any>): Parsed {
       year,
       groupsPath
     },
-    ...common.args.parse(values)
+    ...common.Args.parse(values)
   };
 }

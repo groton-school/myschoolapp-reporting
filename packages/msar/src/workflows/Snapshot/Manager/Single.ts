@@ -46,8 +46,8 @@ export type Context = {
 
 export type Options = SnapshotOptions &
   Context &
-  Partial<common.Output.args.Parsed> &
-  common.Workflow.args.Parsed;
+  Partial<common.Output.Args.Parsed> &
+  common.Workflow.Args.Parsed;
 
 export async function snapshot({
   session,

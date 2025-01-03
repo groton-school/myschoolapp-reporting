@@ -18,7 +18,7 @@ export type AllOptions = {
 export type Options = Single.SnapshotOptions &
   AllOptions & {
     url: URL | string;
-  } & common.args.Parsed;
+  } & common.Args.Parsed;
 
 export type Item = Single.Data;
 export type Data = Item[];

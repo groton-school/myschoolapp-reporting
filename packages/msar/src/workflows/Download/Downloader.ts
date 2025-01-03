@@ -6,9 +6,9 @@ import { Strategy } from './Downloader/Strategy.js';
 
 export type Options = {
   host: string;
-} & common.Output.args.Parsed &
-  common.PuppeteerSession.args.Parsed &
-  common.Workflow.args.Parsed;
+} & common.Output.Args.Parsed &
+  common.PuppeteerSession.Args.Parsed &
+  common.Workflow.Args.Parsed;
 
 // TODO Downloader needs to honor --concurrentThreads
 export class Downloader implements Strategy {

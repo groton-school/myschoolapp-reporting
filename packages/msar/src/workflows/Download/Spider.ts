@@ -8,7 +8,7 @@ import * as Downloader from './Downloader.js';
 export type Options = {
   include?: RegExp[];
   exclude?: RegExp[];
-} & common.args.Parsed;
+} & common.Args.Parsed;
 
 type TraverseOptions = Options & {
   host: string;

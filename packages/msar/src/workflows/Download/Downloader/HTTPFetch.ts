@@ -7,7 +7,7 @@ import {
 } from '../filenameFromDisposition.js';
 import { Strategy } from './Strategy.js';
 
-export type Options = { outputPath: string } & common.Workflow.args.Parsed;
+export type Options = { outputPath: string } & common.Workflow.Args.Parsed;
 
 export class Downloader implements Strategy {
   private outputPath: string;

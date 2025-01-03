@@ -11,10 +11,10 @@ export const defaults = {
 };
 
 export const options = {
-  ...common.args.options,
+  ...common.Args.options,
   outputPath: {
-    ...common.args.options.outputPath,
-    description: `${common.args.options.outputPath?.description} (defaults to the name of the snapshot file)`,
+    ...common.Args.options.outputPath,
+    description: `${common.Args.options.outputPath?.description} (defaults to the name of the snapshot file)`,
     default: defaults.outputPath
   },
   include: {

@@ -1,2 +1,2 @@
-export * as args from './Download/args.js';
+export * as Args from './Download/Args.js';
 export { Spider } from './Download/Spider.js';

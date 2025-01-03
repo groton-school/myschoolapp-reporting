@@ -8,9 +8,9 @@ export type Options = {
   puppeteerSession?: boolean;
 };
 
-export type Parsed = Workflow.args.Parsed &
-  Output.args.Parsed &
-  PuppeteerSession.args.Parsed;
+export type Parsed = Workflow.Args.Parsed &
+  Output.Args.Parsed &
+  PuppeteerSession.Args.Parsed;
 
 export function pickFlags({
   workflow = true,
@@ -18,9 +18,9 @@ export function pickFlags({
   puppeteerSession = true
 }: Options = {}) {
   return {
-    ...(workflow ? Workflow.args.flags : {}),
-    ...(output ? Output.args.flags : {}),
-    ...(puppeteerSession ? PuppeteerSession.args.flags : {})
+    ...(workflow ? Workflow.Args.flags : {}),
+    ...(output ? Output.Args.flags : {}),
+    ...(puppeteerSession ? PuppeteerSession.Args.flags : {})
   };
 }
 
@@ -32,9 +32,9 @@ export function pickOptions({
   puppeteerSession = true
 }: Options = {}) {
   return {
-    ...(workflow ? Workflow.args.options : {}),
-    ...(output ? Output.args.options : {}),
-    ...(puppeteerSession ? PuppeteerSession.args.options : {})
+    ...(workflow ? Workflow.Args.options : {}),
+    ...(output ? Output.Args.options : {}),
+    ...(puppeteerSession ? PuppeteerSession.Args.options : {})
   };
 }
 
@@ -42,14 +42,14 @@ export const options = pickOptions();
 
 export function parse(values: Record<string, string>) {
   return {
-    ...Workflow.args.parse(values),
-    ...Output.args.parse(values),
-    ...PuppeteerSession.args.parse(values)
+    ...Workflow.Args.parse(values),
+    ...Output.Args.parse(values),
+    ...PuppeteerSession.Args.parse(values)
   };
 }
 
 export const defaults = {
-  ...Workflow.args.defaults,
-  ...Output.args.defaults,
-  ...PuppeteerSession.args.defaults
+  ...Workflow.Args.defaults,
+  ...Output.Args.defaults,
+  ...PuppeteerSession.Args.defaults
 };

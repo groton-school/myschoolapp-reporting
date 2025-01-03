@@ -1,4 +1,4 @@
-export * as args from './Output/args.js';
+export * as Args from './Output/Args.js';
 export * from './Output/avoidOverwrite.js';
 export { filePathFromOutputPath } from './Output/filePathFromOutputPath.js';
 export * from './Output/OutputError.js';

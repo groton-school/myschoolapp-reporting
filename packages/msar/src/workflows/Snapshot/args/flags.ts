@@ -14,7 +14,7 @@ export const defaults = {
 };
 
 export const flags = {
-  ...common.args.flags,
+  ...common.Args.flags,
   all: {
     short: 'A',
     description: `Capture all sections (default: ${cli.colors.value(defaults.all)}, positional argument ${cli.colors.value(`arg0`)} is used to identify MySchoolApp instance)`,
