@@ -130,6 +130,7 @@ export class Base {
           url: response.url,
           redirected: response.redirected,
           type: response.type,
+          ok: response.ok,
           status: response.status,
           statusText: response.statusText,
           headers: response.headers,
