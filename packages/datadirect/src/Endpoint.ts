@@ -6,6 +6,10 @@ import {
 
 export type Response = JSONValue;
 
+/*
+ * TODO Redefine Endpoint to avoid Payload ambiguity
+ *   Needs separate body and searchParams, along with multiple methods at the same endpoint (cf. #63)
+ */
 export type Method = 'GET' | 'POST' | 'DELETE';
 
 export type Payload = Record<string, JSONPrimitiveTypes> | JSONObject;
