@@ -61,7 +61,6 @@ export class Authenticated extends Base {
   ) {
     await super.ready();
     if (username) {
-      // Blackbaud username entry
       const userField = await this.page.waitForSelector('input#Username', {
         timeout
       });
