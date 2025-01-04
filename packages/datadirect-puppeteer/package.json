@@ -1,7 +1,7 @@
 {
   "name": "datadirect-puppeteer",
   "version": "0.0.0",
-  "description": "An implementation of scraping Blackbaud's front-end APIs using Puppeteer",
+  "description": "A library for calling the Blackbaud LMS's front-end APIs using Puppeteer",
   "homepage": "https://github.com/battis/myschoolapp-reporting/tree/main/packages/datadirect-puppeteer#readme",
   "repository": {
     "type": "git",
