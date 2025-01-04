@@ -1,6 +1,7 @@
 {
   "name": "myschoolapp-reporting",
   "version": "0.4.3",
+  "description": "A CLI Tool for collecting reporting data from the Blackbaud LMS",
   "keywords": [
     "Blackbaud",
     "Podium",
