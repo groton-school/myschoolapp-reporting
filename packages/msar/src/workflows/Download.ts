@@ -23,11 +23,6 @@ export async function download(
 
   const snapshotPath = path.resolve(process.cwd(), snapshotPathArg!);
 
-  /*
-   * TODO abstract as much of bin/download into workflow/Download as possible
-   *   The basic design is that the bin scripts are just UI wrappers around
-   *   real objects, not _part_ of the objects
-   */
   if (!outputPath) {
     outputPath = path.join(
       path.dirname(snapshotPath!),
