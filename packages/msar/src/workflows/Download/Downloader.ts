@@ -1,3 +1,4 @@
+import PQueue from 'p-queue';
 import * as common from '../../common.js';
 import * as Cache from './Cache.js';
 import * as AuthenticatedFetch from './Downloader/AuthenticatedFetch.js';
@@ -15,22 +16,30 @@ export class Downloader implements Strategy {
   private auth: AuthenticatedFetch.Downloader;
   private http: HTTPFetch.Downloader;
   private host: string;
+  private queue: PQueue;
 
   public constructor({ host, outputOptions, ...options }: Options) {
     const { outputPath } = outputOptions;
+    const { concurrentThreads } = options;
     if (!outputPath) {
       throw new common.Output.OutputError('Downloader requires outputPath');
     }
     this.host = host;
+    this.queue = new PQueue({ concurrency: concurrentThreads });
     this.auth = new AuthenticatedFetch.Downloader({
       host,
       outputOptions,
       ...options
     });
-    this.http = new HTTPFetch.Downloader({ outputPath, ...options });
+    this.http = new HTTPFetch.Downloader({
+      outputPath,
+      ...options
+    });
   }
 
   public async download(original: string, filename?: string) {
+    // TODO Cache.Item typing
+    // @ts-expect-error 2346 conflict between DownloadItem and DownloadError
     return await Cache.get(original, async () => {
       let fetchUrl = original;
       if (fetchUrl.slice(0, 2) == '//') {
@@ -51,7 +60,7 @@ export class Downloader implements Strategy {
       return {
         original,
         accessed: new Date(),
-        ...(await strategy.download(fetchUrl, filename))
+        ...(await this.queue.add(() => strategy.download(fetchUrl, filename)))
       };
     });
   }
