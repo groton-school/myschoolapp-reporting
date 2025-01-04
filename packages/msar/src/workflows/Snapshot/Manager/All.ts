@@ -100,6 +100,8 @@ export async function snapshot({
     try {
       const snapshot = await Single.snapshot({
         session,
+        credentials,
+        puppeteerOptions,
         ...options,
         groupId: groups[i].lead_pk,
         quit: true

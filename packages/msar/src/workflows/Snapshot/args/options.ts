@@ -7,23 +7,29 @@ if (new Date().getMonth() <= 6) {
 }
 
 export const defaults = {
-  fromDate: new Date().toLocaleDateString('en-US'),
-  contextLabelId: 2,
-  year: defaultYear
+  snapshotOptions: {
+    payload: {
+      fromDate: new Date().toLocaleDateString('en-US'),
+      contextLabelId: 2
+    }
+  },
+  allOptions: {
+    year: defaultYear
+  }
 };
 
 export const options = {
   ...common.Args.options,
   fromDate: {
-    description: `Starting date for date-based filter where relevant (default is today's date: ${cli.colors.quotedValue(`"${defaults.fromDate}"`)})`,
-    default: defaults.fromDate
+    description: `Starting date for date-based filter where relevant (default is today's date: ${cli.colors.quotedValue(`"${defaults.snapshotOptions.payload.fromDate}"`)})`,
+    default: defaults.snapshotOptions.payload.fromDate
   },
   toDate: {
     description: `ending date for data-based filter where relevant`
   },
   contextLabelId: {
-    description: `(default: ${cli.colors.value(defaults.contextLabelId)})`,
-    default: defaults.contextLabelId.toString()
+    description: `(default: ${cli.colors.value(defaults.snapshotOptions.payload.contextLabelId)})`,
+    default: defaults.snapshotOptions.payload.contextLabelId.toString()
   },
   association: {
     description: `Comma-separated list of group associations to include if ${cli.colors.value('--all')} flag is used. Possible values: ${common.oxfordComma(
@@ -44,7 +50,7 @@ export const options = {
     description: `Path to output directory or file to save filtered groups listing (include placeholder ${cli.colors.quotedValue('"%TIMESTAMP%"')} to specify its location, otherwise it is added automatically when needed to avoid overwriting existing files)`
   },
   year: {
-    description: `If ${cli.colors.value(`--all`)} flag is used, which year to download. (Default: ${cli.colors.quotedValue(`"${defaults.year}"`)})`,
-    default: defaults.year
+    description: `If ${cli.colors.value(`--all`)} flag is used, which year to download. (Default: ${cli.colors.quotedValue(`"${defaults.allOptions.year}"`)})`,
+    default: defaults.allOptions.year
   }
 };

@@ -39,15 +39,13 @@ export type Context = {
   session?: PuppeteerSession.Authenticated;
   groupId?: number;
   url?: URL | string;
-  credentials?: PuppeteerSession.Credentials;
-  puppeteerOptions?: PuppeteerSession.Options;
-  quit?: boolean;
 };
 
 export type Options = SnapshotOptions &
   Context &
   Partial<common.Output.Args.Parsed> &
-  common.Workflow.Args.Parsed;
+  common.Workflow.Args.Parsed &
+  common.PuppeteerSession.Args.Parsed;
 
 export async function snapshot({
   session,

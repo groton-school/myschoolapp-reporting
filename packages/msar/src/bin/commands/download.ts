@@ -51,7 +51,7 @@ import * as Snapshot from '../../workflows/Snapshot.js';
   }
 
   const Start = new Date();
-  let snapshots: Snapshot.Data[];
+  let snapshots: Snapshot.All.Data;
   const data = JSON.parse(fs.readFileSync(snapshotPath).toString());
   if (Array.isArray(data)) {
     snapshots = data;

@@ -1,3 +1,39 @@
-export * as Args from './Snapshot/Args.js';
-export { snapshot as snapshotAll } from './Snapshot/Manager/All.js';
-export * from './Snapshot/Manager/Single.js';
+import cli from '@battis/qui-cli';
+import * as Args from './Snapshot/Args.js';
+import * as All from './Snapshot/Manager/All.js';
+import * as Single from './Snapshot/Manager/Single.js';
+
+export { All, Args, Single };
+
+export async function snapshot(
+  url?: URL | string,
+  args: Args.Parsed = Args.defaults
+) {
+  const { all, snapshotOptions, allOptions, ...options } = args;
+
+  if (!url) {
+    throw new Error(
+      `${cli.colors.value('arg0')} must be the URL of an LMS instance`
+    );
+  }
+
+  if (all) {
+    await All.snapshot({
+      url,
+      ...snapshotOptions,
+      ...allOptions,
+      ...options
+    });
+  } else {
+    const spinner = cli.spinner();
+    spinner.start(`Capturing snapshot from ${cli.colors.url(url)}`);
+    const snapshot = await Single.snapshot({
+      url,
+      ...snapshotOptions,
+      ...options
+    });
+    spinner.succeed(
+      `Captured snapshot of ${snapshot?.SectionInfo?.Teacher}'s ${snapshot?.SectionInfo?.SchoolYear} ${snapshot?.SectionInfo?.Duration} ${snapshot?.SectionInfo?.GroupName}`
+    );
+  }
+}

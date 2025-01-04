@@ -17,32 +17,5 @@ import * as Snapshot from '../../workflows/Snapshot.js';
     }
   });
 
-  if (!url) {
-    throw new Error(
-      `${cli.colors.value('arg0')} must be the URL of an LMS instance`
-    );
-  }
-
-  const { all, snapshotOptions, allOptions, ...options } =
-    Snapshot.Args.parse(values);
-
-  if (all) {
-    await Snapshot.snapshotAll({
-      url,
-      ...snapshotOptions,
-      ...allOptions,
-      ...options
-    });
-  } else {
-    const spinner = cli.spinner();
-    spinner.start(`Capturing snapshot from ${cli.colors.url(url)}`);
-    const snapshot = await Snapshot.snapshot({
-      url,
-      ...snapshotOptions,
-      ...options
-    });
-    spinner.succeed(
-      `Captured snapshot of ${snapshot?.SectionInfo?.Teacher}'s ${snapshot?.SectionInfo?.SchoolYear} ${snapshot?.SectionInfo?.Duration} ${snapshot?.SectionInfo?.GroupName}`
-    );
-  }
+  await Snapshot.snapshot(url, Snapshot.Args.parse(values));
 })();

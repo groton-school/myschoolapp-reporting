@@ -23,7 +23,7 @@ export class Spider {
   }
 
   public async download(
-    snapshot: Snapshot.Data,
+    snapshot: Snapshot.Single.Data,
     { outputOptions, ...options }: Options
   ) {
     const { outputPath, pretty } = outputOptions;
