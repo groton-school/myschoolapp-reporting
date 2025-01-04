@@ -7,7 +7,7 @@ export const defaults = {
     process.cwd(),
     `${new Date().toISOString().replace(/[:/.]/g, '-')}-export`
   ),
-  include: '^\\/'
+  include: [/^\//]
 };
 
 export const options = {
@@ -18,8 +18,8 @@ export const options = {
     default: defaults.outputPath
   },
   include: {
-    description: `Comma-separated list of regular expressions to match URLs to be included in download (e.g. ${cli.colors.quotedValue('"^\\/,example\\.com"')}, default ${cli.colors.quotedValue('"^\\/"')} to include only URLs on Blackbaud's servers)`,
-    default: defaults.include
+    description: `Comma-separated list of regular expressions to match URLs to be included in download (e.g. ${cli.colors.quotedValue('"^\\/,example\\.com"')}, default: ${cli.colors.quotedValue('"^\\/"')} to include only URLs that are paths on the LMS's servers)`,
+    default: defaults.include.join(',').slice(1, -1)
   },
   exclude: {
     description: `Comma-separated list of regular expressions to match URLs to exclude from download (e.g. ${cli.colors.quotedValue('"example\\.com,foo\\..+\\.com"')}`

@@ -8,6 +8,7 @@ export const flags = Flags.flags;
 export const options = Options.options;
 
 export const defaults: Parsed = {
+  credentials: {},
   ...common.Args.defaults,
   snapshotOptions: {
     ...Flags.defaults.snapshotOptions,
@@ -18,7 +19,6 @@ export const defaults: Parsed = {
       ...Options.defaults.snapshotOptions.payload
     }
   },
-  credentials: {},
   all: Flags.defaults.all,
   allOptions: Options.defaults.allOptions
 };
