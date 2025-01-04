@@ -37,6 +37,7 @@
     "@battis/typescript-tricks": "^0.7.4",
     "@oauth2-cli/sky-api": "^0.1.0",
     "async-mutex": "^0.5.0",
+    "chalk": "^5.4.1",
     "cli-progress": "^3.12.0",
     "content-disposition": "^0.5.4",
     "datadirect": "workspace:*",

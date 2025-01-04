@@ -1,5 +1,4 @@
 import cli from '@battis/qui-cli';
-import cliProgress from 'cli-progress';
 import { api, PuppeteerSession } from 'datadirect-puppeteer';
 import crypto from 'node:crypto';
 import fs from 'node:fs/promises';
@@ -47,10 +46,13 @@ export async function snapshot({
   const { ignoreErrors, concurrentThreads } = options;
   const { outputPath, pretty } = outputOptions;
 
+  const spinner = cli.spinner();
+  spinner.start('Waiting for authentication…');
   const session = await PuppeteerSession.Fetchable.init(url, {
     credentials,
     ...puppeteerOptions
   });
+  spinner.succeed('Authentication complete.');
   cli.log.info(
     `Snapshot temporary files will be saved to ${cli.colors.url(TEMP)}`
   );
@@ -73,8 +75,8 @@ export async function snapshot({
         ))
   );
   cli.log.info(`${groups.length} groups match filters`);
-  const progressBars = new cliProgress.MultiBar({});
-  const progress = progressBars.create(groups.length, 0);
+
+  const progress = new common.ProgressBar({ max: groups.length });
   if (groupsPath) {
     groupsPath = common.Output.filePathFromOutputPath(
       groupsPath,
@@ -106,9 +108,7 @@ export async function snapshot({
       // TODO Configurable snapshot --all temp directory
       // TODO Optional snapshot --all temp files
       common.Output.writeJSON(tempPath, snapshot);
-      progressBars.log(
-        `Wrote snapshot ${snapshot?.SectionInfo?.Teacher}'s ${snapshot?.SectionInfo?.SchoolYear} ${snapshot?.SectionInfo?.GroupName} ${snapshot?.SectionInfo?.Block} to ${cli.colors.url(outputPath)}\n`
-      );
+      progress.caption(snapshot?.SectionInfo?.GroupName || '');
     } catch (error) {
       if (ignoreErrors) {
         common.Debug.errorWithGroupId(
@@ -167,7 +167,7 @@ export async function snapshot({
     cli.log.error(`Errors output to ${cli.colors.url(errorsPath)}`);
   }
   await fs.rm(TEMP, { recursive: true });
-  progressBars.stop();
+  progress.stop();
 
   if (quit) {
     session.close();
