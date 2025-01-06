@@ -1,6 +1,11 @@
 import * as Endpoint from '../../Endpoint.js';
 import { Payload } from './ImpersonateStart/Payload.js';
 
+/*
+ * TODO Handle endpoints that do not return responses
+ *   Another piquant flavor for #178 and #61
+ */
+
 export * from './ImpersonateStart/Payload.js';
 // There is no returned response from this call
 
