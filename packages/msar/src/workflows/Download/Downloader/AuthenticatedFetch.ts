@@ -1,5 +1,5 @@
 import cli from '@battis/qui-cli';
-import { PuppeteerSession } from 'datadirect-puppeteer';
+import { api, PuppeteerSession } from 'datadirect-puppeteer';
 import { EventEmitter } from 'node:events';
 import fs from 'node:fs';
 import os from 'node:os';
@@ -33,6 +33,7 @@ export class Downloader
 {
   private outputPath: string;
   private emitter = new EventEmitter();
+  private SchoolId?: number;
 
   public constructor({
     host,
@@ -54,6 +55,19 @@ export class Downloader
     await this.ready();
     const session = await this.baseFork('about:blank');
     const client = await session.page.createCDPSession();
+
+    if (/:SchoolId/.test(url)) {
+      if (!this.SchoolId) {
+        this.SchoolId = (
+          await api.schoolinfo.schoolparams({
+            session: this,
+            payload: { all: true },
+            logRequests: true
+          })
+        ).SchoolId;
+      }
+      url = url.replace(':SchoolId', `${this.SchoolId}`);
+    }
 
     await client.send('Fetch.enable', {
       patterns: [

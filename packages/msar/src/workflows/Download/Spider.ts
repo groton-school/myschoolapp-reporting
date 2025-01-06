@@ -93,6 +93,7 @@ export class Spider {
              */
           } else if (
             /Url$/i.test(key) ||
+            (/FileName$/i.test(key) && key !== 'FriendlyFileName') ||
             (/FilePath$/i.test(key) &&
               !(snapshotComponent[key] as string).endsWith('/'))
           ) {
@@ -111,9 +112,17 @@ export class Spider {
                   true
                 ))
             ) {
+              const url: string = snapshotComponent[key];
+              if (/FileName$/i.test(key)) {
+                cli.log.debug({
+                  pathToComponent,
+                  key,
+                  url
+                });
+              }
               try {
                 const item = await this.downloader.download(
-                  snapshotComponent[key],
+                  url,
                   'FriendlyFileName' in snapshotComponent &&
                     typeof snapshotComponent['FriendlyFileName'] === 'string'
                     ? snapshotComponent['FriendlyFileName']
