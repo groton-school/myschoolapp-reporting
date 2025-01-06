@@ -1,7 +1,7 @@
 import * as Endpoint from '../../Endpoint.js';
 import { Payload } from './ImpersonateStart/Payload.js';
 
-export * from './schoolparams/Payload.js';
+export * from './ImpersonateStart/Payload.js';
 // There is no returned response from this call
 
 export const prepare: Endpoint.Prepare<Payload> = (payload, base?: string) =>
