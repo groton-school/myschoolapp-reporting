@@ -4,4 +4,5 @@ export * as datadirect from './api/datadirect.js';
 export * as gradebook from './api/gradebook.js';
 export * as LtiTool from './api/LtiTool.js';
 export * as schoolinfo from './api/schoolinfo.js';
+export * as Security from './api/Security.js';
 export * as topic from './api/topic.js';
