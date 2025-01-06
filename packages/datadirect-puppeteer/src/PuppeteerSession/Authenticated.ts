@@ -19,6 +19,7 @@ export class Authenticated extends Base {
 
   protected constructor(page: Page);
   protected constructor(url: URL | string, options?: Options);
+  protected constructor(pageOrUrl: Page | URL | string, options?: Options);
   protected constructor(
     pageOrUrl: Page | URL | string,
     {
