@@ -74,4 +74,6 @@ export class Impersonation extends Authenticated.Authenticated {
     }
     return this;
   }
+
+  // TODO Does it make sense for Impersonation to stop, or just to close?
 }
