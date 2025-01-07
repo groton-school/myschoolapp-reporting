@@ -40,7 +40,7 @@ export function pickOptions({
 
 export const options = pickOptions();
 
-export function parse(values: Record<string, string>) {
+export function parse(values: Record<string, any>) {
   return {
     ...Workflow.Args.parse(values),
     ...Output.Args.parse(values),
@@ -53,3 +53,23 @@ export const defaults = {
   ...Output.Args.defaults,
   ...PuppeteerSession.Args.defaults
 };
+
+export function hydrate<T extends Record<string, any>>(
+  proposal: T | undefined | null,
+  defaults: T
+): T {
+  const result = { ...proposal };
+  for (const prop in defaults) {
+    if (prop in result) {
+      if (
+        typeof defaults[prop] === 'object' &&
+        !Array.isArray(defaults[prop])
+      ) {
+        result[prop] = hydrate(result[prop], defaults[prop]);
+      }
+    } else {
+      result[prop] = defaults[prop];
+    }
+  }
+  return result as T;
+}
