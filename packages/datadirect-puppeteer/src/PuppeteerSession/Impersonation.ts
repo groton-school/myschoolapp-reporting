@@ -1,53 +1,100 @@
 import { Mutex, MutexInterface } from 'async-mutex';
+import { api as types } from 'datadirect';
 import { Page } from 'puppeteer';
 import * as Authenticated from './Authenticated.js';
 
+export const SearchIn = {
+  LastName: 'lastname',
+  FirstName: 'firstname',
+  Email: 'email',
+  MaidenName: 'maidenname',
+  PreferredName: 'nickname',
+  BusinessName: 'business_name',
+  UserID: 'pk',
+  HostID: 'conversion_string'
+};
+
 export type ImpersonateOptions = {
-  searchType: string;
-  query: string;
+  searchIn: string;
+  val: string;
 };
 
 export type Options = Authenticated.Options & ImpersonateOptions;
 
 export class Impersonation extends Authenticated.Authenticated {
-  public static readonly LastName = 'lastname';
-  public static readonly FirstName = 'firstname';
-  public static readonly Email = 'email';
-  public static readonly MaidenName = 'maidenname';
-  public static readonly PreferredName = 'nickname';
-  public static readonly BusinessName = 'business_name';
-  public static readonly UserID = 'pk';
-  public static readonly HostID = 'conversion_string';
-
   private impersonating = new Mutex();
+  private isSelf = false;
+
+  private _userInfo?: types.webapp.context.Response['UserInfo'];
+  public get userInfo() {
+    return this._userInfo;
+  }
+  private set userInfo(userInfo) {
+    this._userInfo = userInfo;
+  }
 
   protected constructor(url: URL | string, options: Options);
   protected constructor(pageOrUrl: Page | URL | string, options: Options);
   protected constructor(
     pageOrUrl: Page | URL | string,
-    { searchType, query, ...options }: Options
+    { searchIn, val, ...options }: Options
   ) {
     super(pageOrUrl, options);
     this.impersonating.acquire().then((impersonated) => {
-      this.impersonate({ searchType, query }, impersonated);
+      this.impersonate({ searchIn, val }, impersonated);
     });
   }
 
-  public static async getInstance(url: URL | string, options: Options) {
-    return await new Impersonation(url, options).ready();
+  public static async getInstance(
+    authenticated: Authenticated.Authenticated,
+    options: Options
+  ): Promise<Impersonation>;
+  public static async getInstance(
+    url: URL | string,
+    options: Options
+  ): Promise<Impersonation>;
+  public static async getInstance(
+    sessionOrURL: Authenticated.Authenticated | URL | string,
+    options: Options
+  ) {
+    if (sessionOrURL instanceof Authenticated.Authenticated) {
+      const impersonation = new Impersonation(
+        (
+          await sessionOrURL.fork(
+            `https://${(await sessionOrURL.url()).host}/app/faculty#impersonate`
+          )
+        ).page,
+        options
+      );
+      return await impersonation.ready();
+    } else {
+      return await new Impersonation(sessionOrURL, options).ready();
+    }
   }
 
   public async impersonate(
-    { searchType, query }: ImpersonateOptions,
+    { searchIn, val }: ImpersonateOptions,
     impersonated?: MutexInterface.Releaser
   ) {
+    if (!Object.values(SearchIn).includes(searchIn)) {
+      if (searchIn in SearchIn) {
+        searchIn = SearchIn[searchIn as keyof typeof SearchIn];
+      } else {
+        throw new Error('Invalid searchIn value');
+      }
+    }
+
     await super.ready();
-    await this.page.goto(
-      `https://${new URL(this.page.url()).host}/app/faculty#impersonate`
-    );
+    if (new URL(this.page.url()).pathname !== '/app/faculty#impersonate') {
+      await this.page.goto(
+        `https://${new URL(this.page.url()).host}/app/faculty#impersonate`
+      );
+    }
+    const impersonationContext = new Mutex();
+    const contextReady = await impersonationContext.acquire();
     await this.page.waitForSelector('#SelectSearchIn');
-    await this.page.select('#SelectSearchIn', searchType);
-    await this.page.type('#SearchVal', query);
+    await this.page.select('#SelectSearchIn', searchIn);
+    await this.page.type('#SearchVal', val);
     await this.page.click('#searchForm .btn[value="Search"]');
     await this.page.waitForSelector('#searchResults .SearchResultRow');
     if (
@@ -56,14 +103,26 @@ export class Impersonation extends Authenticated.Authenticated {
           .length;
       })) === 1
     ) {
+      this.page.on('response', async (response) => {
+        if (response.url().match(/\/api\/webapp\/context/)) {
+          const context: types.webapp.context.Response = await response.json();
+          if (!context.IsImpersonating || !context.MasterUserInfo) {
+            this.isSelf = true;
+          }
+          this.userInfo = context.UserInfo;
+          contextReady();
+        }
+      });
       await this.page.click('#searchResults .SearchResultRow');
-
-      await this.page.waitForSelector('#impersonate-banner');
-      if (impersonated) {
-        impersonated();
-      }
     } else {
-      // more than one result!
+      // FIXME Handle interactive response to multiple impersonation results
+    }
+    await impersonationContext.acquire();
+    if (!this.isSelf) {
+      await this.page.waitForSelector('#impersonate-banner');
+    }
+    if (impersonated) {
+      impersonated();
     }
   }
 
@@ -75,5 +134,13 @@ export class Impersonation extends Authenticated.Authenticated {
     return this;
   }
 
-  // TODO Does it make sense for Impersonation to stop, or just to close?
+  public async close() {
+    if (!this.isSelf) {
+      await this.page.click('#end-impersonation');
+      await this.page.waitForNavigation({
+        waitUntil: 'domcontentloaded'
+      });
+    }
+    await super.close();
+  }
 }
