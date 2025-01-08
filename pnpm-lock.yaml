@@ -111,6 +111,9 @@ importers:
       content-disposition:
         specifier: ^0.5.4
         version: 0.5.4
+      csv:
+        specifier: ^6.3.11
+        version: 6.3.11
       datadirect:
         specifier: workspace:*
         version: link:../datadirect
@@ -123,6 +126,9 @@ importers:
       ejs:
         specifier: ^3.1.10
         version: 3.1.10
+      moment:
+        specifier: ^2.30.1
+        version: 2.30.1
       p-queue:
         specifier: ^8.0.1
         version: 8.0.1
@@ -1537,6 +1543,19 @@ packages:
     resolution: {integrity: sha512-/Tb/JcjK111nNScGob5MNtsntNM1aCNUDipB/TkwZFhyDrrE47SOx/18wF2bbjgc3ZzCSKW1T5nt5EbFoAz/Vg==}
     engines: {node: '>=4'}
     hasBin: true
+
+  csv-generate@4.4.2:
+    resolution: {integrity: sha512-W6nVsf+rz0J3yo9FOjeer7tmzBJKaTTxf7K0uw6GZgRocZYPVpuSWWa5/aoWWrjQZj4/oNIKTYapOM7hiNjVMA==}
+
+  csv-parse@5.6.0:
+    resolution: {integrity: sha512-l3nz3euub2QMg5ouu5U09Ew9Wf6/wQ8I++ch1loQ0ljmzhmfZYrH9fflS22i/PQEvsPvxCwxgz5q7UB8K1JO4Q==}
+
+  csv-stringify@6.5.2:
+    resolution: {integrity: sha512-RFPahj0sXcmUyjrObAK+DOWtMvMIFV328n4qZJhgX3x2RqkQgOTU2mCUmiFR0CzM6AzChlRSUErjiJeEt8BaQA==}
+
+  csv@6.3.11:
+    resolution: {integrity: sha512-a8bhT76Q546jOElHcTrkzWY7Py925mfLO/jqquseH61ThOebYwOjLbWHBqdRB4K1VpU36sTyIei6Jwj7QdEZ7g==}
+    engines: {node: '>= 0.1.90'}
 
   dargs@7.0.0:
     resolution: {integrity: sha512-2iy1EkLdlBzQGvbweYRFxmFath8+K7+AKB0TlhHWkNuH+TmovaMH/Wp7V7R4u7f4SnX3OgLsU9t1NI9ioDnUpg==}
@@ -2996,6 +3015,9 @@ packages:
     resolution: {integrity: sha512-xV2bxeN6F7oYjZWTe/YPAy6MN2M+sL4u/Rlm2AHCIVGfo2p1yGmBHQ6vHehl4bRTZBdHu3TSkWdYgkwpYzAGSw==}
     engines: {node: '>=0.10.0'}
 
+  moment@2.30.1:
+    resolution: {integrity: sha512-uEmtNhbDOrWPFS+hdjFCBfy9f2YoyzRpwcl+DqpC6taX21FzsTLQVbMV/W7PzNSX6x/bhC1zA3c2UQ5NzH6how==}
+
   monorepo-package-paths@0.3.8:
     resolution: {integrity: sha512-pXxpBYPBwP43R0+bM9QC9LyBgMnwBIF8HIxVSxHEnlotm+KsJehm8fqzWqjBKynUgl1Iy5iY5BsKgqoB3IPENw==}
     hasBin: true
@@ -3935,6 +3957,9 @@ packages:
   stdin-discarder@0.1.0:
     resolution: {integrity: sha512-xhV7w8S+bUwlPTb4bAOUQhv8/cSS5offJuX8GQGq32ONF0ZtDWKfkdomM3HMRA+LhX6um/FZ0COqlwsjD53LeQ==}
     engines: {node: ^12.20.0 || ^14.13.1 || >=16.0.0}
+
+  stream-transform@3.3.3:
+    resolution: {integrity: sha512-dALXrXe+uq4aO5oStdHKlfCM/b3NBdouigvxVPxCdrMRAU6oHh3KNss20VbTPQNQmjAHzZGKGe66vgwegFEIog==}
 
   streamx@2.21.1:
     resolution: {integrity: sha512-PhP9wUnFLa+91CPy3N6tiQsK+gnYyUNuk15S3YG/zjYE7RuPeCjJngqnzpC31ow0lzBHQ+QGO4cNJnd0djYUsw==}
@@ -6189,6 +6214,19 @@ snapshots:
 
   cssesc@3.0.0: {}
 
+  csv-generate@4.4.2: {}
+
+  csv-parse@5.6.0: {}
+
+  csv-stringify@6.5.2: {}
+
+  csv@6.3.11:
+    dependencies:
+      csv-generate: 4.4.2
+      csv-parse: 5.6.0
+      csv-stringify: 6.5.2
+      stream-transform: 3.3.3
+
   dargs@7.0.0: {}
 
   data-uri-to-buffer@4.0.1: {}
@@ -7831,6 +7869,8 @@ snapshots:
 
   modify-values@1.0.1: {}
 
+  moment@2.30.1: {}
+
   monorepo-package-paths@0.3.8(prettier@3.4.2):
     dependencies:
       '@battis/import-package-json': 0.1.7
@@ -8910,6 +8950,8 @@ snapshots:
   stdin-discarder@0.1.0:
     dependencies:
       bl: 5.1.0
+
+  stream-transform@3.3.3: {}
 
   streamx@2.21.1:
     dependencies:

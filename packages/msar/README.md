@@ -39,6 +39,7 @@ At present the following verbs are implemented:
 
 - `snapshot` the course data for one or more classes from the LMS to a JSON data file.
 - `download` the supporting files for an existing JSON snapshot file.
+- `inbox` analytics
 
 For each command, the `--help` (or `-h`) flag provides usage instructions:
 

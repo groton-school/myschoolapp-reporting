@@ -1,0 +1,19 @@
+{
+  "actions" : {
+    "build" : {
+      "postActions" : [
+        {
+          "action" : "build",
+          "taskName" : "build",
+          "type" : "runTask"
+        }
+      ]
+    },
+    "run" : {
+      "enabled" : true,
+      "script" : "source .env\nrm .\/var\/inbox.log\n# node --inspect-wait .\/packages\/msar\/dist\/bin\/msar.js ...\ntsx .\/packages\/msar\/src\/bin\/msar.ts inbox --stdoutLevel all --logFilePath .\/var\/inbox.log --logRequests -u \"$(op item get $OP_ITEM --fields username)\" -p \"$(op item get $OP_ITEM --fields password --reveal)\" --sso $SSO --outputPath \"$OUT\" --val \"$INBOX_USER\" --searchIn email \"$URL\"\n"
+    }
+  },
+  "buildBeforeRunning" : true,
+  "openLogOnRun" : "start"
+}

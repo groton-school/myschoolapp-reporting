@@ -1,0 +1,19 @@
+{
+  "actions" : {
+    "build" : {
+      "postActions" : [
+        {
+          "action" : "build",
+          "taskName" : "build",
+          "type" : "runTask"
+        }
+      ]
+    },
+    "run" : {
+      "enabled" : true,
+      "script" : "source .env\nmsar inbox -u \"$(op item get $OP_ITEM --fields username)\" -p \"$(op item get $OP_ITEM --fields password --reveal)\" --sso $SSO --outputPath \"$OUT\" \"$URL\" \"$INBOX_LIST\""
+    }
+  },
+  "buildBeforeRunning" : true,
+  "openLogOnRun" : "start"
+}

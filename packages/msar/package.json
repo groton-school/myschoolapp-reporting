@@ -41,10 +41,12 @@
     "chalk": "^5.4.1",
     "cli-progress": "^3.12.0",
     "content-disposition": "^0.5.4",
+    "csv": "^6.3.11",
     "datadirect": "workspace:*",
     "datadirect-puppeteer": "workspace:*",
     "dotenv": "^16.4.7",
     "ejs": "^3.1.10",
+    "moment": "^2.30.1",
     "p-queue": "^8.0.1",
     "puppeteer": "^23.11.1"
   },
