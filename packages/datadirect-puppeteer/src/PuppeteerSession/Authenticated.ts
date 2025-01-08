@@ -42,7 +42,7 @@ export class Authenticated extends Base {
     return await new Authenticated(url, options).ready();
   }
 
-  private async appLoaded(
+  protected async appLoaded(
     timeout = Authenticated.DefaultTimeout,
     authenticated?: MutexInterface.Releaser
   ) {
@@ -101,11 +101,16 @@ export class Authenticated extends Base {
     return this;
   }
 
-  public async user(): Promise<string> {
+  public async decodedToken(): Promise<DecodedToken> {
     await this.ready();
     return await this.page.evaluate(
-      async () => (await BBAuthClient.BBAuth.getDecodedToken(null)).email
+      async () => await BBAuthClient.BBAuth.getDecodedToken(null)
     );
+  }
+
+  /** Deprecated: use Authenticated.decodedToken().email */
+  public async user(): Promise<string> {
+    return (await this.decodedToken()).email;
   }
 
   public async clone() {
