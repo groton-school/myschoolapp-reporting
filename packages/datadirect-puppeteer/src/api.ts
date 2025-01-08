@@ -6,4 +6,5 @@ export * as LtiTool from './api/LtiTool.js';
 export * as message from './api/message.js';
 export * as schoolinfo from './api/schoolinfo.js';
 export * as topic from './api/topic.js';
+export * as webapp from './api/webapp.js';
 export { init } from './PuppeteerSession/Fetchable.js';
