@@ -87,13 +87,10 @@ export class Spider {
               pathToComponent: `${pathToComponent}.${key}`,
               ...options
             });
-            /*
-             * FIXME FileName files in topics are at /ftpimages/:SchoolId/topics/:FileName
-             *   :SchoolId can be determined by calling `/api/schoolinfo/schoolparams`
-             */
           } else if (
+            key === 'PhotoFilename' ||
+            key === 'ThumbFilename' ||
             /Url$/i.test(key) ||
-            (/FileName$/i.test(key) && key !== 'FriendlyFileName') ||
             (/FilePath$/i.test(key) &&
               !(snapshotComponent[key] as string).endsWith('/'))
           ) {
@@ -112,14 +109,20 @@ export class Spider {
                   true
                 ))
             ) {
-              const url: string = snapshotComponent[key];
-              if (/FileName$/i.test(key)) {
-                cli.log.debug({
-                  pathToComponent,
-                  key,
-                  url
-                });
+              let url: string = snapshotComponent[key];
+              if (
+                key === 'ThumbFilename' &&
+                /^thumb_topic_[a-z0-9_.]/i.test(url)
+              ) {
+                url = `/ftpimages/:SchoolId/topics/${url}`;
+              } else if (
+                key === 'PhotoFilename' &&
+                /^thumb_user_[a-z0-9_.]/i.test(url)
+              ) {
+                url = `/ftpimages/:SchoolId/user/${url}`;
               }
+              cli.log.debug({ pathToComponent, key, url });
+
               try {
                 const item = await this.downloader.download(
                   url,
