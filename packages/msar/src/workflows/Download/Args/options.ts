@@ -3,10 +3,6 @@ import path from 'node:path';
 import * as common from '../../../common.js';
 
 export const defaults = {
-  outputPath: path.join(
-    process.cwd(),
-    `${new Date().toISOString().replace(/[:/.]/g, '-')}-export`
-  ),
   include: [/^\//]
 };
 
@@ -14,8 +10,19 @@ export const options = {
   ...common.Args.options,
   outputPath: {
     ...common.Args.options.outputPath,
-    description: `${common.Args.options.outputPath?.description} (defaults to the name of the snapshot file)`,
-    default: defaults.outputPath
+    description: common.Args.options.outputPath?.description
+      .replace(
+        common.Args.defaults.outputOptions.outputPath,
+        path.resolve(
+          process.cwd(),
+          common.Args.defaults.outputOptions.outputPath,
+          ':SnapshotFile/'
+        )
+      )
+      .replace(
+        /\)$/,
+        ` where ${cli.colors.value(':SnapshotFile')} is the basename (without file extension) of ${cli.colors.value('arg0')}.)`
+      )
   },
   include: {
     description: `Comma-separated list of regular expressions to match URLs to be included in download (e.g. ${cli.colors.quotedValue('"^\\/,example\\.com"')}, default: ${cli.colors.quotedValue('"^\\/"')} to include only URLs that are paths on the LMS's servers)`,

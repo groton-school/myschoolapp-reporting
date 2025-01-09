@@ -1,5 +1,6 @@
 import cli from '@battis/qui-cli';
 import { PuppeteerSession } from 'datadirect-puppeteer';
+import path from 'node:path';
 import * as common from '../../../common.js';
 
 export const defaults = {
@@ -8,7 +9,10 @@ export const defaults = {
   searchIn: 'UserID',
   outputOptions: {
     ...common.Args.defaults.outputOptions,
-    outputPath: 'inboxAnalysis.csv'
+    outputPath: path.join(
+      common.Args.defaults.outputOptions.outputPath,
+      'inboxAnalysis.csv'
+    )
   }
 };
 
@@ -18,7 +22,7 @@ export const options = {
     ...common.Args.options.outputPath,
     description: common.Args.options.outputPath?.description.replace(
       common.Args.defaults.outputOptions.outputPath,
-      defaults.outputOptions.outputPath
+      path.resolve(process.cwd(), defaults.outputOptions.outputPath)
     ),
     default: defaults.outputOptions.outputPath
   },

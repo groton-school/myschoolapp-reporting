@@ -11,7 +11,7 @@ import * as Download from '../../workflows/Download.js';
       ...Download.Args,
       man: [
         {
-          text: 'Download the supporting files for an existing snapshot JSON file.. This command expects either 1 or 2 arguments: at least a path to an existing snapshot file, and optionally also the desired path to the output folder of supporting files.'
+          text: `Download the supporting files for an existing snapshot JSON file.. This command expects either 1 or 2 arguments: at least a path to an existing snapshot file (${cli.colors.value('arg0')}), and optionally also the desired path to the output folder of supporting files (${cli.colors.value('arg1')}).`
         }
       ]
     }

@@ -11,7 +11,7 @@ import * as Snapshot from '../../workflows/Snapshot.js';
       ...Snapshot.Args,
       man: [
         {
-          text: `Capture a JSON snapshot of an individual course or of a collection of courses (using the ${cli.colors.value('all')} flag). In addition to relevant flags and options, the only argument expected is a URL to a page within the target course (or target LMS instance, if snapshotting more than one course).`
+          text: `Capture a JSON snapshot of an individual course or of a collection of courses (using the ${cli.colors.value('--all')} flag). In addition to relevant flags and options, the only argument expected is a URL (${cli.colors.value('arg0')}) to a page within the target course (or target LMS instance, if snapshotting more than one course).`
         }
       ]
     }

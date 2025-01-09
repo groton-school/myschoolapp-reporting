@@ -1,4 +1,5 @@
 import cli from '@battis/qui-cli';
+import path from 'node:path';
 import * as common from '../../../common.js';
 
 let defaultYear = `${new Date().getFullYear()} - ${new Date().getFullYear() + 1}`;
@@ -20,6 +21,22 @@ export const defaults = {
 
 export const options = {
   ...common.Args.options,
+  outputPath: {
+    ...common.Args.options.outputPath,
+    description: common.Args.options.outputPath?.description
+      .replace(
+        common.Args.defaults.outputOptions.outputPath,
+        path.resolve(
+          process.cwd(),
+          common.Args.defaults.outputOptions.outputPath,
+          ':SnapshotName.json'
+        )
+      )
+      .replace(
+        /\)$/,
+        ` where ${cli.colors.value(':SnapshotName')} is either the name of the course in ${cli.colors.quotedValue(`":Year - :Teacher - :CourseTitle - :SectionId"`)} format for a single section or group or ${cli.colors.quotedValue(`"snapshot"`)} if the ${cli.colors.value('--all')} flag is set. ${cli.colors.url(':SnapshotName.metadata.json')} is also output, recording the parameters of the snapshot command.)`
+      )
+  },
   fromDate: {
     description: `Starting date for date-based filter where relevant (default is today's date: ${cli.colors.quotedValue(`"${defaults.snapshotOptions.payload.fromDate}"`)})`,
     default: defaults.snapshotOptions.payload.fromDate
