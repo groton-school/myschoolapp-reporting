@@ -2,6 +2,36 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [0.5.0](https://github.com/battis/myschoolapp-reporting/compare/msar/0.4.3...msar/0.5.0) (2025-01-10)
+
+### Features
+
+- **datadirect-puppeteer:** Add api.Security ([67d0372](https://github.com/battis/myschoolapp-reporting/commit/67d037291536a622f74cf733e53f61eda7262a67))
+- **msar:** —logRequests, session-based api calls ([b41bc90](https://github.com/battis/myschoolapp-reporting/commit/b41bc90a41225f0019d33d93633256c5e442e6dc))
+- **msar:** AreaError ([9b2fc04](https://github.com/battis/myschoolapp-reporting/commit/9b2fc04864857c1ebc4a9fa254f58a5292d929b4))
+- **msar:** common.Args.hydrate() ([167609c](https://github.com/battis/myschoolapp-reporting/commit/167609c641d2acb3212941e03af9aaa0fafdb9f7))
+- **msar:** Content flags default to false ([baaf6cd](https://github.com/battis/myschoolapp-reporting/commit/baaf6cd2d1aaf6604a460337460550af73faaa2e))
+- **msar:** CustomError ([154dc26](https://github.com/battis/myschoolapp-reporting/commit/154dc2617e2453ab4e4f8f153e44600647130b8e))
+- **msar:** download metadata.json ([1acf21e](https://github.com/battis/myschoolapp-reporting/commit/1acf21ef0d859e25baead3097ab2b9a565fcb4d4)), closes [#181](https://github.com/battis/myschoolapp-reporting/issues/181)
+- **msar:** Improved progress bar ([44ffeca](https://github.com/battis/myschoolapp-reporting/commit/44ffeca74adf2a691bd671cfac6ddf6673d7d39f))
+- **msar:** msar inbox ([7159912](https://github.com/battis/myschoolapp-reporting/commit/715991241383424b6465b2fbce11fd8d1221cb30))
+- **msar:** OutputError ([80a09b7](https://github.com/battis/myschoolapp-reporting/commit/80a09b7caed704ebc7c86a569345551e846b4137))
+
+### Bug Fixes
+
+- **msar:** Accidental bulletin board regression ([d6aee1d](https://github.com/battis/myschoolapp-reporting/commit/d6aee1d7d0226b251365360ead0294fe6870697d))
+- **msar:** download —concurrentThreads ([a879c8a](https://github.com/battis/myschoolapp-reporting/commit/a879c8a4560f166da56f6a4039e20d4bfdfdebc0)), closes [#180](https://github.com/battis/myschoolapp-reporting/issues/180)
+- **msar:** download is back to status quo ([3c782c4](https://github.com/battis/myschoolapp-reporting/commit/3c782c4e170c38ec1dc738df7ca2b48f5b39e33a))
+- **msar:** Download thumb\_\* files ([2ed9aed](https://github.com/battis/myschoolapp-reporting/commit/2ed9aed9caa55f166ef6a6ed029d7817dea88364)), closes [#68](https://github.com/battis/myschoolapp-reporting/issues/68)
+- **msar:** Elapsed, Finish working for —all ([9a58711](https://github.com/battis/myschoolapp-reporting/commit/9a58711f623c4b2e6925d769f86ee21741691955)), closes [#175](https://github.com/battis/myschoolapp-reporting/issues/175) [#175](https://github.com/battis/myschoolapp-reporting/issues/175)
+- **msar:** Include contextLabelId for Bulletin Board content ([6178b99](https://github.com/battis/myschoolapp-reporting/commit/6178b99c9241df905ed192801c1d3fc0fb2bf396))
+- **msar:** More readable errors ([c59e7ea](https://github.com/battis/myschoolapp-reporting/commit/c59e7ea603c47d2bd45a38f30cffcc2b220da27c))
+- **msar:** pass puppeteerOptions to AuthenticatedFetch ([0c786c5](https://github.com/battis/myschoolapp-reporting/commit/0c786c59ffc383f68fdbc263267599b37a4823e4)), closes [#183](https://github.com/battis/myschoolapp-reporting/issues/183)
+- **msar:** Remove extraneous import ([90f7e7b](https://github.com/battis/myschoolapp-reporting/commit/90f7e7bc5c00d592a9afc946227621cc65006b34))
+- **msar:** snapshot --all pooled queue ([a256536](https://github.com/battis/myschoolapp-reporting/commit/a2565365aa6e2c32318f7e2f7b358a95ea8534f1)), closes [#174](https://github.com/battis/myschoolapp-reporting/issues/174)
+- **msar:** snapshot —all working after simplified api bindings ([697852a](https://github.com/battis/myschoolapp-reporting/commit/697852a1857452661e6dd8e2c2f9eac428cfcc91)), closes [#167](https://github.com/battis/myschoolapp-reporting/issues/167)
+- **msar:** Standardize debugging output ([5a0a17a](https://github.com/battis/myschoolapp-reporting/commit/5a0a17a5ef77905030f6717963e8882365268b68)), closes [#179](https://github.com/battis/myschoolapp-reporting/issues/179)
+
 ## 0.4.3
 
 ### Patch Changes
