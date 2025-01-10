@@ -1,4 +1,5 @@
 {
   "path": ".",
-  "tag-prefix": "datadirect/"
+  "tag-prefix": "datadirect/",
+  "releaseCommitMessageFormat": "chore(datadirect): datadirect@{{currentTag}}"
 }
