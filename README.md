@@ -2,7 +2,7 @@
 
 A collection of packages for working with the Blackbaud LMS's front-end APIs
 
-## [`msar`](./packages/msar) ![NPM Version](https://img.shields.io/npm/v/myschoolapp-reporting)
+## [`msar`](./packages/msar) ![NPM Version](https://img.shields.io/npm/v/msar)
 
 A CLI Tool for collecting reporting data from the Blackbaud LMS
 

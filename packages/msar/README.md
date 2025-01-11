@@ -1,6 +1,8 @@
-# myschoolapp-reporting
+# msar
 
-![NPM Version](https://img.shields.io/npm/v/myschoolapp-reporting)
+![NPM Version](https://img.shields.io/npm/v/msar)
+
+(Formerly `myschoolapp-reporting`)
 
 Snapshot course data in Blackbaud's MySchoolApp LMS
 
@@ -15,7 +17,7 @@ The result of taking a "snapshot" of a course or LMS instance is a JSON file of 
 You likely want to install this globally:
 
 ```sh
-npm i -g myschoolapp-reporting
+npm i -g msar
 ```
 
 However, you could also sandbox it (and its dependencies) in a directory:
@@ -24,7 +26,7 @@ However, you could also sandbox it (and its dependencies) in a directory:
 mkdir path/to/workspace
 cd path/to/workspace
 echo "{}" > package.json
-npm i myschoolapp-reporting
+npm i msar
 ```
 
 ## Usage
