@@ -1,5 +1,5 @@
 {
   "path": ".",
   "tag-prefix": "msar/",
-  "releaseCommitMessageFormat": "chore(msar): myschoolapp-reporting@{{currentTag}}"
+  "releaseCommitMessageFormat": "chore(msar): msar@{{currentTag}}"
 }
