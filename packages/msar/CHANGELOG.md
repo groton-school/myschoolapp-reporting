@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [0.5.1](https://github.com/battis/myschoolapp-reporting/compare/msar/0.5.0...msar/0.5.1) (2025-01-11)
+
+
+### ⚠ BREAKING CHANGES
+
+* **msar:** rename package
+
+* **msar:** rename package ([67a814e](https://github.com/battis/myschoolapp-reporting/commit/67a814ebfb5f0f322cf3e002945b0f6432b253aa))
+
 ## [0.5.0](https://github.com/battis/myschoolapp-reporting/compare/msar/0.4.3...msar/0.5.0) (2025-01-10)
 
 ### Features
