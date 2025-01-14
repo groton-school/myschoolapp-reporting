@@ -1,11 +1,13 @@
+import cli from '@battis/qui-cli';
 import { Mutex, MutexInterface } from 'async-mutex';
-import { Page } from 'puppeteer';
+import { HTTPResponse, Page } from 'puppeteer';
 import { Base, Options as BaseOptions } from './Base.js';
 
 export type Credentials = {
   username?: string;
   password?: string;
   sso?: string;
+  mfa?: string;
 };
 
 export type Options = BaseOptions & {
@@ -55,13 +57,17 @@ export class Authenticated extends Base {
 
   private async login(
     {
-      credentials: { username, password, sso } = {},
+      credentials: { username, password, sso, mfa } = {},
       timeout = Authenticated.DefaultTimeout
     }: Options,
     authenticated?: MutexInterface.Releaser
   ) {
     await super.ready();
+    const spinner = cli.spinner();
+    spinner.start(`Awaiting interactive login…`);
+
     if (username) {
+      spinner.start('Entering pre-configured username');
       const userField = await this.page.waitForSelector('input#Username', {
         timeout
       });
@@ -74,6 +80,7 @@ export class Authenticated extends Base {
 
     if (password) {
       if (sso == 'entra-id') {
+        spinner.start('Entering pre-configured password');
         const passwordField = await this.page.waitForSelector(
           'input[name="passwd"]',
           {
@@ -87,10 +94,29 @@ export class Authenticated extends Base {
           await passwordField.type(password);
           await submitButton?.click();
         }
+
+        if (mfa === 'authenticator') {
+          const complete = async (response: HTTPResponse) => {
+            if (new URL(response.url()).hostname === 'sts.sky.blackbaud.com') {
+              this.page.off('response', complete);
+              spinner.start('MFA complete');
+            }
+          };
+          this.page.on('response', complete);
+          const message =
+            (await (
+              await this.page.waitForSelector('#idDiv_SAOTCAS_Description')
+            )?.evaluate((elt) => elt.textContent)) || 'Awaiting MFA';
+          const displaySign = await (
+            await this.page.waitForSelector('.displaySign')
+          )?.evaluate((elt) => elt.textContent);
+          spinner.start(`${message} ${cli.colors.value(displaySign)}`);
+        }
       }
     }
 
     await this.appLoaded(timeout, authenticated);
+    spinner.succeed('Authenticated');
   }
 
   protected async ready() {
