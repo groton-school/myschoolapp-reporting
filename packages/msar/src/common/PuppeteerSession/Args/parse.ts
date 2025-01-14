@@ -19,7 +19,8 @@ export function parse(values: Record<string, string>): Parsed {
     credentials: {
       username: values.username,
       password: values.password,
-      sso: values.sso
+      sso: values.sso,
+      mfa: values.mfa
     },
     quit
   };

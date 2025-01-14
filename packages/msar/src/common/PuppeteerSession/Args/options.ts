@@ -12,6 +12,7 @@ export const options = {
   sso: {
     description: `MySchoolApp SSO configuration (currently only accepts ${cli.colors.quotedValue('"entra-id"')})`
   },
+  mfa: {},
   viewportWidth: {
     default: '0'
   },
