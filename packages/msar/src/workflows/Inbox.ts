@@ -1,5 +1,6 @@
 import cli from '@battis/qui-cli';
 import { parse as parseCSV, stringify } from 'csv/sync';
+import { api as types } from 'datadirect';
 import { api, PuppeteerSession } from 'datadirect-puppeteer';
 import moment from 'moment';
 import fs from 'node:fs/promises';
@@ -119,15 +120,21 @@ export async function analytics(
        * FIXME Inbox pagination
        *   As noted in #193, pagination is not yet dealt with, so only the most recent 20 conversations are included.
        */
-      const conversations = await api.message.inbox({
-        session,
-        payload: {
-          format: 'json',
-          pageNumber: 1,
-          toDate: moment().format('MM/DD/YYYY')
-        },
-        logRequests
-      });
+      const conversations: types.message.inbox.Item[] = [];
+      let complete = false;
+      for (let pageNumber = 1; !complete; pageNumber++) {
+        const response = await api.message.inbox({
+          session,
+          payload: {
+            format: 'json',
+            pageNumber,
+            toDate: moment().format('MM/DD/YYYY')
+          },
+          logRequests
+        });
+        conversations.push(...response);
+        complete = !response || response.length < 20;
+      }
 
       row[AnalyticsColumns.Conversations] = conversations.length;
 
