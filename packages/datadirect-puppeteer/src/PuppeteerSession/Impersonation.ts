@@ -1,3 +1,4 @@
+import cli from '@battis/qui-cli';
 import { Mutex, MutexInterface } from 'async-mutex';
 import { api as types } from 'datadirect';
 import { Page } from 'puppeteer';
@@ -24,6 +25,7 @@ export type Options = Authenticated.Options & ImpersonateOptions;
 export class Impersonation extends Authenticated.Authenticated {
   private impersonating = new Mutex();
   private isSelf = false;
+  private isHeadless: boolean;
 
   private _userInfo?: types.webapp.context.Response['UserInfo'];
   public get userInfo() {
@@ -40,6 +42,7 @@ export class Impersonation extends Authenticated.Authenticated {
     { searchIn, val, ...options }: Options
   ) {
     super(pageOrUrl, options);
+    this.isHeadless = !!options.headless;
     this.impersonating.acquire().then((impersonated) => {
       this.impersonate({ searchIn, val }, impersonated);
     });
@@ -91,33 +94,48 @@ export class Impersonation extends Authenticated.Authenticated {
       );
     }
     const impersonationContext = new Mutex();
+    const spinner = cli.spinner();
     const contextReady = await impersonationContext.acquire();
     await this.page.waitForSelector('#SelectSearchIn');
     await this.page.select('#SelectSearchIn', searchIn);
     await this.page.type('#SearchVal', val);
     await this.page.click('#searchForm .btn[value="Search"]');
     await this.page.waitForSelector('#searchResults .SearchResultRow');
+    this.page.on('response', async (response) => {
+      if (response.url().match(/\/api\/webapp\/context/)) {
+        const context: types.webapp.context.Response = await response.json();
+        if (!context.IsImpersonating || !context.MasterUserInfo) {
+          this.isSelf = true;
+        }
+        this.userInfo = context.UserInfo;
+        contextReady();
+      }
+    });
     if (
       (await this.page.evaluate(() => {
         return document.querySelectorAll('#searchResults .SearchResultRow')
           .length;
       })) === 1
     ) {
-      this.page.on('response', async (response) => {
-        if (response.url().match(/\/api\/webapp\/context/)) {
-          const context: types.webapp.context.Response = await response.json();
-          if (!context.IsImpersonating || !context.MasterUserInfo) {
-            this.isSelf = true;
-          }
-          this.userInfo = context.UserInfo;
-          contextReady();
-        }
-      });
       await this.page.click('#searchResults .SearchResultRow');
     } else {
-      // FIXME Handle interactive response to multiple impersonation results
+      if (this.isHeadless) {
+        throw new Error(
+          `Multiple search results for impersonation query ${cli.colors.quotedValue(`"${val}"`)} in ${cli.colors.value(searchIn)}. Cannot interactively choose in headless mode.`
+        );
+      }
+      spinner.start(
+        'More than one user matched your impersonation search. Please select the desired user in your browser.'
+      );
     }
+    cli.log.debug('waiting for context');
     await impersonationContext.acquire();
+    cli.log.debug('spinner shoutld stop');
+    if (spinner.isSpinning) {
+      spinner.succeed(
+        `Impersonating ${cli.colors.value(this.userInfo?.UserNameFormatted)}`
+      );
+    }
     if (!this.isSelf) {
       await this.page.waitForSelector('#impersonate-banner');
     }
