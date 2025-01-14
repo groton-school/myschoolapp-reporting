@@ -96,13 +96,13 @@ export class Authenticated extends Base {
         }
 
         if (mfa === 'authenticator') {
-          const complete = async (response: HTTPResponse) => {
+          const redirectWatcher = async (response: HTTPResponse) => {
             if (new URL(response.url()).hostname === 'sts.sky.blackbaud.com') {
-              this.page.off('response', complete);
+              this.page.off('response', redirectWatcher);
               spinner.start('MFA complete');
             }
           };
-          this.page.on('response', complete);
+          this.page.on('response', redirectWatcher.bind(this));
           const message =
             (await (
               await this.page.waitForSelector('#idDiv_SAOTCAS_Description')

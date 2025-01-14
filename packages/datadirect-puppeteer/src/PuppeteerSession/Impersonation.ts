@@ -1,7 +1,7 @@
 import cli from '@battis/qui-cli';
 import { Mutex, MutexInterface } from 'async-mutex';
 import { api as types } from 'datadirect';
-import { Page } from 'puppeteer';
+import { HTTPResponse, Page } from 'puppeteer';
 import * as Authenticated from './Authenticated.js';
 
 export const SearchIn = {
@@ -101,7 +101,8 @@ export class Impersonation extends Authenticated.Authenticated {
     await this.page.type('#SearchVal', val);
     await this.page.click('#searchForm .btn[value="Search"]');
     await this.page.waitForSelector('#searchResults .SearchResultRow');
-    this.page.on('response', async (response) => {
+
+    const contextWatcher = async (response: HTTPResponse) => {
       if (response.url().match(/\/api\/webapp\/context/)) {
         const context: types.webapp.context.Response = await response.json();
         if (!context.IsImpersonating || !context.MasterUserInfo) {
@@ -109,8 +110,10 @@ export class Impersonation extends Authenticated.Authenticated {
         }
         this.userInfo = context.UserInfo;
         contextReady();
+        this.page.off('response', contextWatcher);
       }
-    });
+    };
+    this.page.on('response', contextWatcher.bind(this));
     if (
       (await this.page.evaluate(() => {
         return document.querySelectorAll('#searchResults .SearchResultRow')
