@@ -11,7 +11,7 @@
     },
     "run" : {
       "enabled" : true,
-      "script" : "source .env\nmsar inbox -u \"$(op item get $OP_ITEM --fields username)\" -p \"$(op item get $OP_ITEM --fields password --reveal)\" --sso $SSO --outputPath \"$OUT\" \"$URL\" \"$INBOX_LIST\""
+      "script" : "source .env\nmsar inbox -u \"$(op item get $OP_ITEM --fields username)\" -p \"$(op item get $OP_ITEM --fields password --reveal)\" --sso $SSO --mfa $MFA --headless --outputPath \"$OUT\" \"$URL\" \"$INBOX_LIST\""
     }
   },
   "buildBeforeRunning" : true,
