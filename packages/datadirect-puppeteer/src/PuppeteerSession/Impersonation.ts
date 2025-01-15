@@ -131,9 +131,7 @@ export class Impersonation extends Authenticated.Authenticated {
         'More than one user matched your impersonation search. Please select the desired user in your browser.'
       );
     }
-    cli.log.debug('waiting for context');
     await impersonationContext.acquire();
-    cli.log.debug('spinner shoutld stop');
     if (spinner.isSpinning) {
       spinner.succeed(
         `Impersonating ${cli.colors.value(this.userInfo?.UserNameFormatted)}`
