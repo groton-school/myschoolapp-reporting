@@ -102,7 +102,7 @@ export class Impersonation extends Authenticated.Authenticated {
     await this.page.click('#searchForm .btn[value="Search"]');
     await this.page.waitForSelector('#searchResults .SearchResultRow');
 
-    const contextWatcher = async (response: HTTPResponse) => {
+    const contextWatcher = (async (response: HTTPResponse) => {
       if (response.url().match(/\/api\/webapp\/context/)) {
         const context: types.webapp.context.Response = await response.json();
         if (!context.IsImpersonating || !context.MasterUserInfo) {
@@ -112,8 +112,8 @@ export class Impersonation extends Authenticated.Authenticated {
         contextReady();
         this.page.off('response', contextWatcher);
       }
-    };
-    this.page.on('response', contextWatcher.bind(this));
+    }).bind(this);
+    this.page.on('response', contextWatcher);
     if (
       (await this.page.evaluate(() => {
         return document.querySelectorAll('#searchResults .SearchResultRow')
