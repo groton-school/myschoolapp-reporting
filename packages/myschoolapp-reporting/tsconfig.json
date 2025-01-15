@@ -2,7 +2,8 @@
   "extends": "@tsconfig/node20/tsconfig.json",
   "compilerOptions": {
     "outDir": "./dist",
-    "declaration": true
+    "declaration": true,
+    "lib": ["dom", "ES5"]
   },
   "include": ["./src"]
 }

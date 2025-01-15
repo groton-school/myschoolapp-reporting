@@ -17,7 +17,7 @@
     "msar": "./dist/index.js"
   },
   "dependencies": {
-    "@battis/qui-cli": "^0.8.5"
+    "chalk": "^5.4.1"
   },
   "devDependencies": {
     "@tsconfig/node20": "^20.1.4",

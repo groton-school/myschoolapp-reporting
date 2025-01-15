@@ -1,6 +1,5 @@
-import cli from '@battis/qui-cli';
+import chalk from 'chalk';
 
-cli.init();
-cli.log.error(
-  `${cli.colors.value('myschoolapp-reporting')} has been renamed ${cli.colors.value('msar')} at version 0.5.0. Please remove ${cli.colors.value('myschoolapp-reporting')} and install ${cli.colors.value('msar')} instead.\n${cli.colors.url('https://www.npmjs.com/package/msar')}`
-);
+console.log(chalk.cyan.bold('myschoolapp-reporting has been deprecated'));
+console.log(`Please use ${chalk.yellow.bold('msar')} instead.`);
+console.log('https://npmjs.com/package/msar');
