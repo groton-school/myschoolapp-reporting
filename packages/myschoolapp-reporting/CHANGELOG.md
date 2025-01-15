@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [0.6.1](https://github.com/battis/myschoolapp-reporting/compare/myschoolapp-reporting/0.6.0...myschoolapp-reporting/0.6.1) (2025-01-15)
+
+
+### Bug Fixes
+
+* **myschoolapp-reporting:** more effective deprecation ([4c81a3f](https://github.com/battis/myschoolapp-reporting/commit/4c81a3f7ccd0b574d71647992442cc5728e3c4a5))
+
 ## [0.6.0](<](https://github.com/battis/myschoolapp-reporting/compare/msar/0.5.0...myschoolapp-reporting/0.6.0)>) (2025-01-11)
 
 ### ⚠ BREAKING CHANGES
