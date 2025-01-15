@@ -2,6 +2,7 @@ import cli from '@battis/qui-cli';
 import cliProgress from 'cli-progress';
 import fs from 'node:fs';
 import path from 'node:path';
+import ora from 'ora';
 import * as common from '../common.js';
 import * as Args from './Download/Args.js';
 import { Spider } from './Download/Spider.js';
@@ -18,7 +19,7 @@ export async function download(
   const { pretty } = outputOptions;
   let { outputPath } = outputOptions;
 
-  const spinner = cli.spinner();
+  const spinner = ora();
   spinner.start('Reading snaphot file');
 
   const snapshotPath = path.resolve(process.cwd(), snapshotPathArg!);

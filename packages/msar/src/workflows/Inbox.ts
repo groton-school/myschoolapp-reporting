@@ -92,7 +92,7 @@ export async function analytics(
     ..._options
   });
 
-  const progress = new common.ProgressBar({ max: data.length });
+  const progress = cli.progress({ max: data.length });
   outputPath = await common.Output.avoidOverwrite(
     path.resolve(
       process.cwd(),

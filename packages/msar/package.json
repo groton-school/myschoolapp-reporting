@@ -35,7 +35,7 @@
   },
   "prettier": "@battis/prettier-config",
   "dependencies": {
-    "@battis/qui-cli": "^0.8.5",
+    "@battis/qui-cli": "^0.9.1",
     "@battis/typescript-tricks": "^0.7.4",
     "@oauth2-cli/sky-api": "^0.1.0",
     "async-mutex": "^0.5.0",
@@ -48,6 +48,7 @@
     "dotenv": "^16.4.7",
     "ejs": "^3.1.10",
     "moment": "^2.30.1",
+    "ora": "^8.1.1",
     "p-queue": "^8.0.1",
     "puppeteer": "^23.11.1"
   },

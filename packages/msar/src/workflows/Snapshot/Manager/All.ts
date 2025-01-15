@@ -3,6 +3,7 @@ import { api, PuppeteerSession } from 'datadirect-puppeteer';
 import crypto from 'node:crypto';
 import fs from 'node:fs/promises';
 import path from 'node:path';
+import ora from 'ora';
 import PQueue from 'p-queue';
 import * as common from '../../../common.js';
 import * as Single from './Single.js';
@@ -46,7 +47,7 @@ export async function snapshot({
   const { ignoreErrors, concurrentThreads } = options;
   const { outputPath, pretty } = outputOptions;
 
-  const spinner = cli.spinner();
+  const spinner = ora();
   spinner.start('Waiting for authentication…');
   const session = await PuppeteerSession.Fetchable.init(url, {
     credentials,
@@ -76,7 +77,7 @@ export async function snapshot({
   );
   cli.log.info(`${groups.length} groups match filters`);
 
-  const progress = new common.ProgressBar({ max: groups.length });
+  const progress = cli.progress({ max: groups.length });
   if (groupsPath) {
     groupsPath = common.Output.filePathFromOutputPath(
       groupsPath,

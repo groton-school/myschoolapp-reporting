@@ -1,4 +1,5 @@
 import cli from '@battis/qui-cli';
+import ora from 'ora';
 import * as Args from './Snapshot/Args.js';
 import * as All from './Snapshot/Manager/All.js';
 import * as Single from './Snapshot/Manager/Single.js';
@@ -25,7 +26,7 @@ export async function snapshot(
       ...options
     });
   } else {
-    const spinner = cli.spinner();
+    const spinner = ora();
     spinner.start(`Capturing snapshot from ${cli.colors.url(url)}`);
     const snapshot = await Single.snapshot({
       url,
