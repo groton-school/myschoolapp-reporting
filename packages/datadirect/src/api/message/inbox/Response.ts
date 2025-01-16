@@ -88,7 +88,7 @@ export type Item = {
   ReplyToAll: boolean;
   Subject: string;
   Participants: Participant[];
-  Messages: Message[];
+  Messages?: Message[];
 };
 
 export type Response = Item[];
