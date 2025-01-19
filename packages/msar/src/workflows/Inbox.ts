@@ -116,10 +116,6 @@ export async function analytics(
       });
       progress.caption(session.userInfo?.UserNameFormatted || val);
 
-      /*
-       * FIXME Inbox pagination
-       *   As noted in #193, pagination is not yet dealt with, so only the most recent 20 conversations are included.
-       */
       const conversations: types.message.inbox.Item[] = [];
       let complete = false;
       for (let pageNumber = 1; !complete; pageNumber++) {
@@ -139,7 +135,7 @@ export async function analytics(
       row[AnalyticsColumns.Conversations] = conversations.length;
 
       const recent = conversations.reduce((recent: Date | undefined, c) => {
-        const received = c.Messages.map((m) => new Date(m.SendDate)).reduce(
+        const received = c.Messages?.map((m) => new Date(m.SendDate)).reduce(
           (max: Date | undefined, m) => (max && max > m ? max : m),
           undefined
         );
@@ -155,14 +151,14 @@ export async function analytics(
       row[AnalyticsColumns.Sent] = conversations.reduce(
         (sum, c) =>
           sum +
-          c.Messages.filter(
+          (c.Messages?.filter(
             (m) => m.FromUser.UserId === session.userInfo?.UserId
-          ).length,
+          ).length || 0),
         0
       );
 
       const recentSent = conversations.reduce((recent: Date | undefined, c) => {
-        const sent = c.Messages.filter(
+        const sent = c.Messages?.filter(
           (m) => m.FromUser.UserId === session.userInfo?.UserId
         )
           .map((m) => new Date(m.SendDate))
@@ -180,7 +176,9 @@ export async function analytics(
       }
       await session.close();
     } catch (error) {
-      cli.log.error(`Error impersonating ${val}: ${cli.colors.error(error)}`);
+      cli.log.error(
+        `Error impersonating ${cli.colors.value(searchIn)}=${cli.colors.quotedValue(`"${val}"`)}: ${cli.colors.error(error)}`
+      );
     }
     await writing;
     writing = fs.writeFile(
