@@ -80,6 +80,16 @@ type AssignmentUser = {
   LockedInd: boolean;
 };
 
+type DownloadItem = {
+  DownloadID: number;
+  Description: string;
+  FileDescription: string[];
+  FileName: string;
+  FriendlyFileName: string;
+  FileTypeID: number;
+  UploadedFile: string;
+};
+
 export type Payload = {
   LongDescription: HTMLString;
   SendNotification: boolean;
@@ -114,7 +124,7 @@ export type Payload = {
   AssignmentUsers: AssignmentUser[];
   notifBodyControl_ShortDescription: HTMLString;
   notifBodyControl_LongDescription: HTMLString;
-  DownloadItems: [];
+  DownloadItems: DownloadItem[];
   LinkItems: LinkItem[];
   Notifications: number[];
 };
