@@ -90,6 +90,15 @@ type DownloadItem = {
   UploadedFile: string;
 };
 
+type Recurrence = {
+  /** c */
+  dateDue: DateTimeString;
+  timeDue: TimeString;
+  /** c */
+  dateAssigned: DateTimeString;
+  timeAssigned: TimeString;
+};
+
 export type Payload = {
   LongDescription: HTMLString;
   SendNotification: boolean;
@@ -116,8 +125,8 @@ export type Payload = {
   OnPaperSubmission: boolean | { value: boolean };
   DropboxInd: boolean | { value: boolean };
   'assignment-instance': boolean | { value: boolean };
-  RecurrenceNum: null;
-  'recurrence-list': [];
+  RecurrenceNum: number | null;
+  'recurrence-list': Recurrence[];
   /** h:i:s A */
   DropboxTimeLate: TimeString;
   SectionLinks: SectionLink[];
