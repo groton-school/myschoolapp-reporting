@@ -92,7 +92,7 @@ export type Response = {
   PartialInd: boolean;
   LtiProviderId: number;
   LtiProviderName: string;
-  Skills: [];
+  Skills: any[]; // TODO Assignment2/UserAssignmentDetailsGetAllData.Response.Skills type
   Discussion: {
     TeacherFirstname: string;
     TeacherLastname: string;

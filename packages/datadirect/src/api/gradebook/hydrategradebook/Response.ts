@@ -144,7 +144,7 @@ export type DisplayOptions = {
   DisplayDroppedIndicator: boolean;
   ShowAssignmentTypePercent: boolean;
   ShowGradePercent: boolean;
-  AssignmentTypesFilterList: [];
+  AssignmentTypesFilterList: any[]; // TODO DataDirect/GradeBookMarkingPeriodList.DusplayOptions.AssignmentTypesFilterList type
 };
 
 export type AssignmentGrade = {

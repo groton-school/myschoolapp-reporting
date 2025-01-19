@@ -24,9 +24,9 @@ export type Assignment = {
   LateInd: number;
   DropboxTimeLate: TimeString;
   SchoolId: number;
-  SectionLinks: [];
-  DownloadItems: [];
-  LinkItems: [];
+  SectionLinks: any[]; // TODO DataDirect/common/ContentItem/Assignment.SectionLinks type
+  DownloadItems: any[]; // TODO DataDirect/common/ContentItem/Assignment.DownloadItems type
+  LinkItems: any[]; // TODO DataDirect/common/ContentItem/Assignment.LinkItems type
   HasGrades: boolean;
   AssessmentInd: boolean;
   MaxScore: number;

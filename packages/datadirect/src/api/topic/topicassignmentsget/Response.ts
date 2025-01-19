@@ -28,9 +28,9 @@ export type Item = {
   LateInd: number;
   DropboxTimeLate: TimeString;
   SchoolId: number;
-  SectionLinks: [];
-  DownloadItems: [];
-  LinkItems: [];
+  SectionLinks: any[]; // TODO DataDirect/topicassignmentsget.Response.SectionLinks type
+  DownloadItems: any[]; // TODO DataDirect/topicassignmentsget.Response.DownloadItems type
+  LinkItems: any[]; // TODO DataDirect/topicassignmentsget.Response.LinkItems type
   HasGrades: boolean;
   AssessmentInd: boolean;
   MaxScore: number;

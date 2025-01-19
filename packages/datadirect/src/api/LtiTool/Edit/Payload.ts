@@ -23,6 +23,6 @@ export type Payload = {
   Gradeable: boolean;
   LtiVersionId: null | any;
   CredentialsTypeId: number;
-  Parameters: [];
+  Parameters: any[];
   FieldsToNull: ['LtiVersionId'];
 };

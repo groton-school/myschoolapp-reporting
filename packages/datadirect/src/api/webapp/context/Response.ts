@@ -82,8 +82,8 @@ type UserInfo = {
   MiscBio: HTMLString;
   ResidentCounty: string;
   BirthPlace: string;
-  SpokenLanguages: [];
-  RaceSelections: [];
+  SpokenLanguages: any[]; // webapp/context.Response.SpokenLanguages type
+  RaceSelections: any[]; // webapp/context.Response.RaceSelections type
   VisaNumber: string;
   PassportNumber: string;
   StudentId: string;

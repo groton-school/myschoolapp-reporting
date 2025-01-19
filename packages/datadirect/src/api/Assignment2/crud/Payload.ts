@@ -78,7 +78,7 @@ type SectionLink = {
   DropBoxSubmitted: boolean;
   PartialInd: boolean;
   PartialCount: number;
-  UsersList: [];
+  UsersList: any[]; // TODO Assignment2/crud.Payload.SectionLink.UsersList type
 };
 
 type LinkItem = {
@@ -106,8 +106,8 @@ type Assignment = {
   Factor: number;
   RubricId: number;
   EvaluationMethod: number;
-  AssignmentSkills: [];
-  AssignmentCourses: [];
+  AssignmentSkills: any[]; // TODO Assignment2/crud.Payload.AssignmentSkills type
+  AssignmentCourses: any[]; // TODO Assignment2/crud.Payload.AssignmentCourses type
   'inc-rubric': boolean;
   IncRubric: boolean;
   gradebook_ind: boolean;
@@ -119,8 +119,8 @@ type Assignment = {
   /** h:i:s A */
   DropboxTimeLate: TimeString;
   SectionLinks: SectionLink[];
-  AssignmentUsers: [];
-  DownloadItems: [];
+  AssignmentUsers: any[]; // TODO Assignment2/crud.Payload.AssignmentUsers type
+  DownloadItems: any[]; // TODO Assignment2/crud.Payload.DownloadItems type
   LinkItems: LinkItem[];
   notifBodyControl_ShortDescription: HTMLString;
   notifBodyControl_LongDescription: HTMLString;

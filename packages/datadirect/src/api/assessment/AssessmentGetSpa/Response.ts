@@ -4,6 +4,8 @@ import {
   URLString
 } from '@battis/descriptive-types';
 
+// TODO assessment/AssessmentGetSpa types
+
 type MultipleChoiceAnswer = {
   AssessmentQuestionAnswerId: number;
   AssessmentQuestionId: number;
@@ -40,7 +42,7 @@ type MultipleChoice = {
   AssessmentId: number;
   RandomizeAnswers: boolean;
   PartialCredit: boolean;
-  MatchingAnswers: [];
+  MatchingAnswers: any[];
   AssessmentQuestionSubBankId: number;
   AssessmentQuestionBankId: number;
   ModifiedDate: DateTimeString;
@@ -84,7 +86,7 @@ type FillInTheBlank = {
   AssessmentId: number;
   RandomizeAnswers: boolean;
   PartialCredit: boolean;
-  MatchingAnswers: [];
+  MatchingAnswers: any[];
   AssessmentQuestionSubBankId: number;
   AssessmentQuestionBankId: number;
   ModifiedDate: DateTimeString;
@@ -98,7 +100,7 @@ type Essay = {
   SortOrder: number;
   Points: number;
   Description: HTMLString;
-  Answers: [];
+  Answers: any[];
   QuestionType: 'Essay';
   PossibleAnswers: string;
   CharacterLimit: number;
@@ -115,7 +117,7 @@ type Essay = {
   AssessmentId: number;
   RandomizeAnswers: boolean;
   PartialCredit: boolean;
-  MatchingAnswers: [];
+  MatchingAnswers: any[];
   AssessmentQuestionSubBankId: number;
   AssessmentQuestionBankId: number;
   ModifiedDate: DateTimeString;
@@ -159,7 +161,7 @@ type TrueFalse = {
   AssessmentId: number;
   RandomizeAnswers: boolean;
   PartialCredit: boolean;
-  MatchingAnswers: [];
+  MatchingAnswers: any[];
   AssessmentQuestionSubBankId: number;
   AssessmentQuestionBankId: number;
   ModifiedDate: DateTimeString;
@@ -250,11 +252,11 @@ type Photo = {
   photo_alttext: string;
   hover_alttext: string;
   LongDescription: HTMLString; // TODO verify Assessment/AssessmentGetSpa/Response.Photo.LongDescription type (may just be string)
-  TagList: [];
+  TagList: any[];
   FileEdited: boolean;
   IsHoverPhoto: boolean;
   PhotoEapEnabled: boolean;
-  ImageOps: [];
+  ImageOps: any[];
   OriginalFilenameEditedUrl: URLString;
   LargeFilenameEditedUrl: URLString;
   ZoomFilenameEditedUrl: URLString;

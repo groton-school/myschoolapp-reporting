@@ -59,7 +59,7 @@ type SectionLink = {
   DropBoxSubmitted: boolean | null;
   PartialInd: boolean | null;
   PartialCount: number | null;
-  UsersList: [];
+  UsersList: any[]; // TODO Assignment2/List.Payload.SectionLink.UsersList type
 };
 
 type LinkItem = {
@@ -114,8 +114,8 @@ export type Payload = {
   Factor: number | NumericString;
   RubricId: number;
   EvaluationMethod: number;
-  AssignmentSkills: [];
-  AssignmentCourses: [];
+  AssignmentSkills: any[]; // TODO Assignment2/List.Payload.AssignmentSkills type
+  AssignmentCourses: any[]; // TODO Assignment2/List.Payload.AssignmentCourses type
   'inc-rubric': boolean;
   IncRubric: boolean;
   gradebook_ind: boolean;
