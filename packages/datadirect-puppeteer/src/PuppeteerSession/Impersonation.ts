@@ -100,7 +100,9 @@ export class Impersonation extends Authenticated.Authenticated {
     await this.page.select('#SelectSearchIn', searchIn);
     await this.page.type('#SearchVal', val);
     await this.page.click('#searchForm .btn[value="Search"]');
-    await this.page.waitForSelector('#searchResults .SearchResultRow');
+
+    const searchResultsSelector = '#searchResults .SearchResultRow';
+    await this.page.waitForSelector(searchResultsSelector);
 
     const contextWatcher = (async (response: HTTPResponse) => {
       if (response.url().match(/\/api\/webapp\/context/)) {
@@ -114,13 +116,13 @@ export class Impersonation extends Authenticated.Authenticated {
       }
     }).bind(this);
     this.page.on('response', contextWatcher);
+
     if (
-      (await this.page.evaluate(() => {
-        return document.querySelectorAll('#searchResults .SearchResultRow')
-          .length;
-      })) === 1
+      (await this.page.evaluate((searchResultsSelector) => {
+        return document.querySelectorAll(searchResultsSelector).length;
+      }, searchResultsSelector)) === 1
     ) {
-      await this.page.click('#searchResults .SearchResultRow');
+      await this.page.click(searchResultsSelector);
     } else {
       if (this.isHeadless) {
         throw new Error(
@@ -134,7 +136,7 @@ export class Impersonation extends Authenticated.Authenticated {
     await impersonationContext.acquire();
     if (spinner.isSpinning) {
       spinner.succeed(
-        `Impersonating ${cli.colors.value(this.userInfo?.UserNameFormatted)}`
+        `Impersonating ${cli.colors.value(this.userInfo?.UserNameFormatted)} (manual selection)`
       );
     }
     if (!this.isSelf) {
