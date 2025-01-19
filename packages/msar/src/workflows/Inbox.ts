@@ -129,7 +129,7 @@ export async function analytics(
           logRequests
         });
         conversations.push(...response);
-        complete = !response || response.length < 20;
+        complete = !response || response.length < types.message.inbox.pageSize;
       }
 
       row[AnalyticsColumns.Conversations] = conversations.length;
@@ -157,6 +157,7 @@ export async function analytics(
         0
       );
 
+      // FIXME No most recent sent date even when multiple sent messages
       const recentSent = conversations.reduce((recent: Date | undefined, c) => {
         const sent = c.Messages?.filter(
           (m) => m.FromUser.UserId === session.userInfo?.UserId
