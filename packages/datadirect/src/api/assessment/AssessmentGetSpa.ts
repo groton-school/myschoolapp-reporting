@@ -1,5 +1,5 @@
 import * as Endpoint from '../../Endpoint.js';
-import { Payload } from './AssessmentGetSpa.js';
+import { Payload } from './AssessmentGetSpa/Payload.js';
 
 export * from './AssessmentGetSpa/Payload.js';
 export * from './AssessmentGetSpa/Response.js';
