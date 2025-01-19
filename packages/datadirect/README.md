@@ -46,9 +46,9 @@ input = api.Endpoint.preparePath(input, {Id: 12345678})
 
 ## Known Issues
 
-- There are a fair number of as-yet undocumented [typing issues](/battis/myschoolapp-reporting/issues?q=is%3Aissue%20state%3Aopen%20label%3Adatadirect%20label%3Atypes) that don't prevent compilation and execution, but it would be _better_ if they were resolved.
-- Actual error-generating issues are tagged [bug](/battis/myschoolapp-reporting/issues?q=is%3Aissue%20state%3Aopen%20label%3Adatadirect%20label%3Abug).
-- All [other issues](/battis/myschoolapp-reporting/issues?q=is%3Aissue%20state%3Aopen%20label%3Adatadirect%20-label%3Abug%20%20-label%3Atypes) are improvements and questions.
+- There are a fair number of as-yet undocumented [typing issues](https://github.com/battis/myschoolapp-reporting/issues?q=is%3Aissue%20state%3Aopen%20label%3Adatadirect%20label%3Atypes) that don't prevent compilation and execution, but it would be _better_ if they were resolved.
+- Actual error-generating issues are tagged [bug](https://github.com/battis/myschoolapp-reporting/issues?q=is%3Aissue%20state%3Aopen%20label%3Adatadirect%20label%3Abug).
+- All [other issues](https://github.com/battis/myschoolapp-reporting/issues?q=is%3Aissue%20state%3Aopen%20label%3Adatadirect%20-label%3Abug%20%20-label%3Atypes) are improvements and questions.
 
 ## Notes
 
