@@ -1,7 +1,10 @@
+export * as AssignmentMarkingPeriods from './datadirect/AssignmentMarkingPeriods.js';
+export * as AssignmentSectionsForTeacher from './datadirect/AssignmentSectionsForTeacher.js';
 export * as BulletinBoardContentGet from './datadirect/BulletinBoardContentGet.js';
 export * as common from './datadirect/common.js';
 export * as ContentItem from './datadirect/common/ContentItem.js';
 export * as ContentType from './datadirect/common/ContentType.js';
+export * as GetValidFileTypes from './datadirect/GetValidFileTypes.js';
 export * as GradeBookMarkingPeriodList from './datadirect/GradeBookMarkingPeriodList.js';
 export * as groupFinderByYear from './datadirect/groupFinderByYear.js';
 export * as GroupPossibleContentGet from './datadirect/GroupPossibleContentGet.js';

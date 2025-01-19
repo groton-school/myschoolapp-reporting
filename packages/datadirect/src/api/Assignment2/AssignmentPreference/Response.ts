@@ -1,0 +1,30 @@
+import { DateString } from '@battis/descriptive-types';
+
+export type Response = {
+  GradebookDefaultInd: boolean;
+  CumulativeGradeDefaultInd: boolean;
+  PublishGradeDefaultInd: boolean;
+  CollapseAssignmentInstances: boolean;
+  CollapseAssignmentAttach: boolean;
+  CollapseAssignmentLti: boolean;
+  CollapseAssignmentSubmission: boolean;
+  CollapseDiscussionAttach: boolean;
+  ImportOption: number;
+  AssignmentCenterDueDefault: number;
+  AssignmentCenterPublishStatusDefault: number;
+  AssignmentCenterSortDefault: number;
+  AssignmentCenterNumOfDays: number;
+  AssignmentCenterNextNumOfDays: number;
+  AssignmentCenterFromDateDefault: DateString | null;
+  AssignmentCenterToDateDefault: DateString | null;
+  SectionDueDefault: number;
+  SectionPublishStatusDefault: number;
+  SectionSortDefault: number;
+  SectionNumOfDays: number;
+  SectionNextNumOfDays: number;
+  SectionFromDateDefault: DateString | null;
+  SectionToDateDefault: DateString | null;
+  ReceiveGoogleDriveNotification: boolean;
+  RemoveIncompleteStatus: boolean;
+  RemoveMissingStatus: boolean;
+};
