@@ -2,6 +2,29 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [0.2.0](https://github.com/battis/myschoolapp-reporting/compare/datadirect-puppeteer/0.1.0...datadirect-puppeteer/0.2.0) (2025-01-19)
+
+
+### ⚠ BREAKING CHANGES
+
+* **msar:** rename package
+
+* **msar:** rename package ([67a814e](https://github.com/battis/myschoolapp-reporting/commit/67a814ebfb5f0f322cf3e002945b0f6432b253aa))
+
+
+### Features
+
+* **datadirect-puppeteer:** Add headless MFA support ([6beda69](https://github.com/battis/myschoolapp-reporting/commit/6beda699ce7763c643a7713f6f00c1f561523bf0))
+* **datadirect-puppeteer:** assignment creation endpoints ([4c14ed7](https://github.com/battis/myschoolapp-reporting/commit/4c14ed70b081293bd5760f9a23fe44af64f200b9))
+
+
+### Bug Fixes
+
+* **datadirect-puppeteer:** disable one-time event listeners ([278733b](https://github.com/battis/myschoolapp-reporting/commit/278733b33a13a708aff4c6f6cee8c2cef7aa8783))
+* **datadirect-puppeteer:** handle multiple impersonation search results ([0525bc3](https://github.com/battis/myschoolapp-reporting/commit/0525bc342db499b9f26536e894742b58727aa710)), closes [#194](https://github.com/battis/myschoolapp-reporting/issues/194)
+* **datadirect-puppeteer:** improve handling of multiple matches for impersonation ([fc522e2](https://github.com/battis/myschoolapp-reporting/commit/fc522e2c24e5036d7edb0eb254a54e849556b68b))
+* **datadirect-puppeteer:** release event listeners ([c07035d](https://github.com/battis/myschoolapp-reporting/commit/c07035ddf533df8c87a503c266f3ab89685ba7a9))
+
 ## 0.1.0 (2025-01-10)
 
 ### Features
