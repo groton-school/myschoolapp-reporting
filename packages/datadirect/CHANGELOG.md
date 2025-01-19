@@ -2,6 +2,32 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [0.4.0](https://github.com/battis/myschoolapp-reporting/compare/datadirect/0.3.0...datadirect/0.4.0) (2025-01-19)
+
+
+### ⚠ BREAKING CHANGES
+
+* **msar:** rename package
+
+* **msar:** rename package ([67a814e](https://github.com/battis/myschoolapp-reporting/commit/67a814ebfb5f0f322cf3e002945b0f6432b253aa))
+
+
+### Features
+
+* **datadirect:** add downloads to assignment creation ([64d0941](https://github.com/battis/myschoolapp-reporting/commit/64d09413769e9b86b1a2121dbe401aedfcb515db))
+* **datadirect:** Add optional pageSize prop to endpoint ([e5aed05](https://github.com/battis/myschoolapp-reporting/commit/e5aed051f06f5d68da483888324cf968d7fb3816))
+* **datadirect:** add recurring assignments to assignment creation ([16fc8fc](https://github.com/battis/myschoolapp-reporting/commit/16fc8fc03432261c8fe274c1f2a8f8fc88b46a5a))
+* **datadirect:** assignment creation endpoints ([183feec](https://github.com/battis/myschoolapp-reporting/commit/183feecd4fcce1e6acb3a44f24553aed5bff1739))
+* **datadirect:** create assignment for specific users ([4d67f79](https://github.com/battis/myschoolapp-reporting/commit/4d67f79eda680c3e8fd5234d61889c5e8fe87c29))
+* **datadirect:** Endpoint method PUT ([09f5afe](https://github.com/battis/myschoolapp-reporting/commit/09f5afe8e67f78a12163dac8b96b29a1257854c2))
+
+
+### Bug Fixes
+
+* **datadirect:** assessment/AssessmentGetSpa import ([4903538](https://github.com/battis/myschoolapp-reporting/commit/490353851936aade7bbc1ee8647ad4d5e245f131))
+* **datadirect:** Conversation.Messages possibly undefined ([f1b7a63](https://github.com/battis/myschoolapp-reporting/commit/f1b7a635305f39a1e6a8c67223bccf8e6260594f)), closes [#196](https://github.com/battis/myschoolapp-reporting/issues/196)
+* **datadirect:** document pageSize ([93c00cd](https://github.com/battis/myschoolapp-reporting/commit/93c00cd6f30f20836cb3b8d4285ac51ea21bb49d)), closes [#193](https://github.com/battis/myschoolapp-reporting/issues/193)
+
 ## [0.3.0](https://github.com/battis/myschoolapp-reporting/compare/datadirect/0.2.2...datadirect/0.3.0) (2025-01-10)
 
 
