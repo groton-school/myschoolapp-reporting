@@ -17,6 +17,7 @@ export type Payload = Record<string, JSONPrimitiveTypes> | JSONObject;
 export type FetchParams = {
   input: URL | string;
   init: { method: Method; body?: string };
+  pageSize?: number;
 };
 
 // TODO handle DELETE (no Payload) schema as well
@@ -38,6 +39,7 @@ export type RequestParams = {
   base?: URL | string;
   payload: Payload;
   method?: Method;
+  pageSize?: number;
 };
 
 export function preparePath(
@@ -63,7 +65,7 @@ export function preparePath(
 }
 
 export function prepare(req: RequestParams): FetchParams {
-  const { path, base, method = 'GET', payload } = req;
+  const { path, base, method = 'GET', payload, pageSize } = req;
   const input = new URL(path, base);
   let body: string | undefined = undefined;
   switch (method) {
@@ -77,6 +79,7 @@ export function prepare(req: RequestParams): FetchParams {
   }
   return {
     input,
-    init: { method, body }
+    init: { method, body },
+    pageSize
   };
 }
