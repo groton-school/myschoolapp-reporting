@@ -69,6 +69,17 @@ type LinkItem = {
   Delete: boolean;
 };
 
+type AssignmentUser = {
+  selected: boolean;
+  StudentUserId: number;
+  SectionId: number;
+  Firstname: string | null;
+  Lastname: string | null;
+  GradYear: NumericString;
+  FullName: string;
+  LockedInd: boolean;
+};
+
 export type Payload = {
   LongDescription: HTMLString;
   SendNotification: boolean;
@@ -100,7 +111,7 @@ export type Payload = {
   /** h:i:s A */
   DropboxTimeLate: TimeString;
   SectionLinks: SectionLink[];
-  AssignmentUsers: [];
+  AssignmentUsers: AssignmentUser[];
   notifBodyControl_ShortDescription: HTMLString;
   notifBodyControl_LongDescription: HTMLString;
   DownloadItems: [];
