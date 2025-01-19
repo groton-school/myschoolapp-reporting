@@ -34,3 +34,7 @@ const topics = await api.datadirect.sectiontopicsget(page, {
     sharedTopics: true;
   }, { Id: 12345678 });
 ```
+
+## Known Issues
+
+Actual error-generating issues are tagged [bug](/battis/myschoolapp-reporting/issues?q=is%3Aissue%20state%3Aopen%20label%3Adatadirect-puppeteer%20label%3Abug%20), [all others](/battis/myschoolapp-reporting/issues?q=is%3Aissue%20state%3Aopen%20label%3Adatadirect-puppeteer%20label%3Abug%20) are improvements or documentation issues.
