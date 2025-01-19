@@ -1,4 +1,6 @@
 import {
+  AssignmentMarkingPeriods as AssMarkingPeriods,
+  AssignmentSectionsForTeacher as AssSectionsForTeacher,
   BulletinBoardContentGet as BulletinBoardContent,
   GroupPossibleContentGet as BulletinBoardContentTypes,
   common,
@@ -9,7 +11,8 @@ import {
   sectionrosterget as SectionRoster,
   sectiontopicsget as SectionTopics,
   topiccontentget as TopicContent,
-  TopicContentTypesGet as TopicContentTypes
+  TopicContentTypesGet as TopicContentTypes,
+  GetValidFileTypes as ValidFileTypes
 } from 'datadirect/dist/api/datadirect.js';
 import { Fetchable } from '../PuppeteerSession.js';
 
@@ -62,6 +65,21 @@ export const sectionrosterget: Fetchable.Binding<
   SectionRoster.Payload,
   SectionRoster.Response
 > = Fetchable.bind(SectionRoster);
+
+export const AssignmentMarkingPeriods: Fetchable.Binding<
+  AssMarkingPeriods.Payload,
+  AssMarkingPeriods.Response
+> = Fetchable.bind(AssMarkingPeriods);
+
+export const AssignmentSectionsForTeacher: Fetchable.Binding<
+  AssSectionsForTeacher.Payload,
+  AssSectionsForTeacher.Response
+> = Fetchable.bind(AssSectionsForTeacher);
+
+export const GetValidFileTypes: Fetchable.Binding<
+  ValidFileTypes.Payload,
+  ValidFileTypes.Response
+> = Fetchable.bind(ValidFileTypes);
 
 export async function BulletinBoardContent_detail(
   item: BulletinBoardContent.Item,
