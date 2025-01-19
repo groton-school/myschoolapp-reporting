@@ -59,3 +59,9 @@ npx msar snapshot https://example.myschoolapp.com/app/faculty#academicclass/1234
 
 - [Snapshot Format](./docs/format.md)
 - [Cookbook](./docs/cookbook/README.md) of useful data manipulation tricks
+
+## Known Issues
+
+- Actual error-generating issues are tagged [bug](https://github.com/battis/myschoolapp-reporting/issues?q=is%3Aissue%20state%3Aopen%20label%3Amsar%20label%3Abug)
+- [All other issues](https://github.com/battis/myschoolapp-reporting/issues?q=is%3Aissue%20state%3Aopen%20label%3Amsar%20-label%3Abug) are questions or improvements
+- Issues are tagged by command: [snapshot](https://github.com/battis/myschoolapp-reporting/issues?q=is%3Aissue%20state%3Aopen%20label%3Amsar%20label%3Asnapshot), [download](https://github.com/battis/myschoolapp-reporting/issues?q=is%3Aissue%20state%3Aopen%20label%3Amsar%20label%3Adownload), [inbox](https://github.com/battis/myschoolapp-reporting/issues?q=is%3Aissue%20state%3Aopen%20label%3Amsar%20label%3Ainbox)
