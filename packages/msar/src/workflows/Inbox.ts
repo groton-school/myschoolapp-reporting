@@ -153,6 +153,10 @@ export async function analytics(
           )
         )?.SendDate || '';
 
+      /*
+       * FIXME Initiated and sent counts and dates are identical
+       *   I need to do some spot checking to figure out if one or both are being calculated incorrectly.
+       */
       row[AnalyticsColumns.Initiated] = conversations
         .map((c) => (isSender(oldestMessage(c.Messages), session) ? 1 : 0))
         .reduce((sum: number, i) => sum + i, 0);
