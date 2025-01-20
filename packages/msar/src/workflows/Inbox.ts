@@ -16,7 +16,9 @@ const AnalyticsColumns = {
   Conversations: 'Conversations',
   MostRecentConversation: 'Most Recent Conversation',
   Sent: 'Sent',
-  MostRecentSent: 'Most Recent Sent'
+  MostRecentSent: 'Most Recent Sent',
+  Initiated: 'Initiated',
+  MostRecentInitiated: 'Most Recent Initiated'
 };
 
 export async function analytics(
@@ -133,53 +135,40 @@ export async function analytics(
       }
 
       row[AnalyticsColumns.Conversations] = conversations.length;
-
-      const recent = conversations.reduce((recent: Date | undefined, c) => {
-        const received = c.Messages?.map((m) => new Date(m.SendDate)).reduce(
-          (max: Date | undefined, m) => (max && max > m ? max : m),
-          undefined
-        );
-        if (received) {
-          if (recent && recent > received) {
-            return recent;
-          }
-          return received;
-        }
-        return recent;
-      }, undefined);
-      if (recent) {
-        row[AnalyticsColumns.MostRecentConversation] = recent.toLocaleString();
-      }
+      row[AnalyticsColumns.MostRecentConversation] =
+        newestMessage(
+          excludeUndefined(conversations.map((c) => newestMessage(c.Messages)))
+        )?.SendDate || '';
 
       row[AnalyticsColumns.Sent] = conversations.reduce(
-        (sum, c) =>
-          sum +
-          (c.Messages?.filter(
-            (m) => m.FromUser.UserId === session.userInfo?.UserId
-          ).length || 0),
+        (sum, c) => sum + (sentMessages(c.Messages, session)?.length || 0),
         0
       );
+      row[AnalyticsColumns.MostRecentSent] =
+        newestMessage(
+          excludeUndefined(
+            conversations.map((c) =>
+              newestMessage(sentMessages(c.Messages, session))
+            )
+          )
+        )?.SendDate || '';
 
-      const recentSent = conversations.reduce((recent: Date | undefined, c) => {
-        const sent = c.Messages?.filter(
-          (m) => m.FromUser.UserId === session.userInfo?.UserId
-        )
-          .map((m) => new Date(m.SendDate))
-          .reduce(
-            (max: Date | undefined, m) => (max && max > m ? max : m),
-            undefined
-          );
-        if (sent) {
-          if (recent && recent > sent) {
-            return recent;
-          }
-          return sent;
-        }
-        return recent;
-      }, undefined);
-      if (recentSent) {
-        row[AnalyticsColumns.MostRecentSent] = recentSent.toLocaleString();
-      }
+      row[AnalyticsColumns.Initiated] = conversations
+        .map((c) => (isSender(oldestMessage(c.Messages), session) ? 1 : 0))
+        .reduce((sum: number, i) => sum + i, 0);
+      row[AnalyticsColumns.MostRecentInitiated] =
+        newestMessage(
+          excludeUndefined(
+            conversations.map((c) => {
+              const oldest = oldestMessage(c.Messages);
+              if (isSender(oldest, session)) {
+                return oldest;
+              }
+              return undefined;
+            })
+          )
+        )?.SendDate || '';
+
       await session.close();
     } catch (error) {
       cli.log.error(
@@ -202,4 +191,50 @@ export async function analytics(
   progress.stop();
 
   cli.log.info(`Analytics written to ${cli.colors.url(outputPath)}`);
+}
+
+function oldestMessage(messages: types.message.inbox.Message[] = []) {
+  return messages?.reduce(
+    (oldest: types.message.inbox.Message | undefined, message) => {
+      if (oldest && new Date(oldest.SendDate) < new Date(message.SendDate)) {
+        return oldest;
+      }
+      return message;
+    },
+    undefined
+  );
+}
+
+function newestMessage(messages: types.message.inbox.Message[] = []) {
+  return messages?.reduce(
+    (newest: types.message.inbox.Message | undefined, message) => {
+      if (newest && new Date(newest.SendDate) > new Date(message.SendDate)) {
+        return newest;
+      }
+      return message;
+    },
+    undefined
+  );
+}
+
+function isSender(
+  message: types.message.inbox.Message | undefined,
+  session: PuppeteerSession.Impersonation
+) {
+  return message && message.FromUser.UserId === session.userInfo?.UserId;
+}
+
+function sentMessages(
+  messages: types.message.inbox.Message[] = [],
+  session: PuppeteerSession.Impersonation
+) {
+  return messages?.filter((message) => isSender(message, session));
+}
+
+function excludeUndefined(
+  messages: (types.message.inbox.Message | undefined)[]
+) {
+  return messages.filter(
+    (message) => message !== undefined
+  ) as types.message.inbox.Message[];
 }
