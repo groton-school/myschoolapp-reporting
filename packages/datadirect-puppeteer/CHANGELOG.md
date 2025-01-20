@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [0.2.1](https://github.com/battis/myschoolapp-reporting/compare/datadirect-puppeteer/0.2.0...datadirect-puppeteer/0.2.1) (2025-01-20)
+
+
+### Features
+
+* **datadirect-puppeteer:** api.message.conversation() ([e0298d5](https://github.com/battis/myschoolapp-reporting/commit/e0298d565416645207a57c0d0132ae4200a43d6c))
+
 ## [0.2.0](https://github.com/battis/myschoolapp-reporting/compare/datadirect-puppeteer/0.1.0...datadirect-puppeteer/0.2.0) (2025-01-19)
 
 ### Features
