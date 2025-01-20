@@ -16,6 +16,7 @@ export const defaults = {
   }
 };
 
+// TODO include date window for inbox analytics
 export const options = {
   ...common.Args.options,
   outputPath: {

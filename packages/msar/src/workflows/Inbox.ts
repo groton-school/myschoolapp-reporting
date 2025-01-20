@@ -15,10 +15,10 @@ export type Options = Args.Parsed;
 const AnalyticsColumns = {
   Conversations: 'Conversations',
   MostRecentConversation: 'Most Recent Conversation',
-  Sent: 'Sent',
-  MostRecentSent: 'Most Recent Sent',
-  Initiated: 'Initiated',
-  MostRecentInitiated: 'Most Recent Initiated'
+  Sent: 'Sent Messages',
+  MostRecentSent: 'Most Recent Sent Message',
+  Initiated: 'Initiated Conversations',
+  MostRecentInitiated: 'Most Recent Initiated Conversation'
 };
 
 export async function analytics(
@@ -130,7 +130,16 @@ export async function analytics(
           },
           logRequests
         });
-        conversations.push(...response);
+        for (const preview of response) {
+          const { ConversationId } = preview;
+          conversations.push(
+            await api.message.conversation({
+              session,
+              payload: { format: 'json', markAsRead: false },
+              pathParams: { ConversationId }
+            })
+          );
+        }
         complete = !response || response.length < types.message.inbox.pageSize;
       }
 
@@ -197,9 +206,9 @@ export async function analytics(
   cli.log.info(`Analytics written to ${cli.colors.url(outputPath)}`);
 }
 
-function oldestMessage(messages: types.message.inbox.Message[] = []) {
+function oldestMessage(messages: types.message.Types.Message[] = []) {
   return messages?.reduce(
-    (oldest: types.message.inbox.Message | undefined, message) => {
+    (oldest: types.message.Types.Message | undefined, message) => {
       if (oldest && new Date(oldest.SendDate) < new Date(message.SendDate)) {
         return oldest;
       }
@@ -209,9 +218,9 @@ function oldestMessage(messages: types.message.inbox.Message[] = []) {
   );
 }
 
-function newestMessage(messages: types.message.inbox.Message[] = []) {
+function newestMessage(messages: types.message.Types.Message[] = []) {
   return messages?.reduce(
-    (newest: types.message.inbox.Message | undefined, message) => {
+    (newest: types.message.Types.Message | undefined, message) => {
       if (newest && new Date(newest.SendDate) > new Date(message.SendDate)) {
         return newest;
       }
@@ -222,23 +231,23 @@ function newestMessage(messages: types.message.inbox.Message[] = []) {
 }
 
 function isSender(
-  message: types.message.inbox.Message | undefined,
+  message: types.message.Types.Message | undefined,
   session: PuppeteerSession.Impersonation
 ) {
   return message && message.FromUser.UserId === session.userInfo?.UserId;
 }
 
 function sentMessages(
-  messages: types.message.inbox.Message[] = [],
+  messages: types.message.Types.Message[] = [],
   session: PuppeteerSession.Impersonation
 ) {
   return messages?.filter((message) => isSender(message, session));
 }
 
 function excludeUndefined(
-  messages: (types.message.inbox.Message | undefined)[]
+  messages: (types.message.Types.Message | undefined)[]
 ) {
   return messages.filter(
     (message) => message !== undefined
-  ) as types.message.inbox.Message[];
+  ) as types.message.Types.Message[];
 }
