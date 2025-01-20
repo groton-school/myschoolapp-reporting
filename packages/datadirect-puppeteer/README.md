@@ -15,24 +15,37 @@ Realistically, you'll want access to the `datadirect` types and will need to con
 ## Usage
 
 ```ts
-import { api } from 'datadirect-puppeteer';
 import { api as types } from 'datadirect';
-import { Page } from 'puppeteer';
+import { api, PuppeteerSession } from 'datadirect-puppeteer';
 
-let page: Page;
-// create an authorized Blackbaud LMS web session (https://example.myschoolapp.com) that page refers to
+const session = await PuppeteerSession.Authenticated.getInstance(
+  'https://example.myschoolapp.com',
+  {
+    username: 'admin@example.com',
+    password: 's00p3rS3kre7'
+  }
+);
 
 // optional to explicitly type `groups`, as the `datadirect-puppeteer` method maps types correctly!
-const groups: types.datadirect.groupFinderByYear.Response = await api.datadirect.groupFinderByYear(page, {
-  schoolYearLabel: '2024 - 2025'
+const groups: types.datadirect.groupFinderByYear.Response =
+  await api.datadirect.groupFinderByYear({
+    session,
+    payload: {
+      schoolYearLabel: '2024 - 2025'
+    }
+  });
+
+const topics = await api.datadirect.sectiontopicsget({
+  session,
+  payload: {
+    format: 'json',
+    active: true,
+    future: false,
+    expired: false,
+    sharedTopics: true
+  },
+  pathParams: { Id: 12345678 }
 });
-const topics = await api.datadirect.sectiontopicsget(page, {
-    format: 'json';
-    active: true;
-    future: false;
-    expired: false;
-    sharedTopics: true;
-  }, { Id: 12345678 });
 ```
 
 ## Headless Impersonation
