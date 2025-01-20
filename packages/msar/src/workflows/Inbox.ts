@@ -139,10 +139,13 @@ export async function analytics(
           (max: Date | undefined, m) => (max && max > m ? max : m),
           undefined
         );
-        if (recent && received && recent > received) {
-          return recent;
+        if (received) {
+          if (recent && recent > received) {
+            return recent;
+          }
+          return received;
         }
-        return received;
+        return recent;
       }, undefined);
       if (recent) {
         row[AnalyticsColumns.MostRecentConversation] = recent.toLocaleString();
@@ -157,7 +160,6 @@ export async function analytics(
         0
       );
 
-      // FIXME No most recent sent date even when multiple sent messages
       const recentSent = conversations.reduce((recent: Date | undefined, c) => {
         const sent = c.Messages?.filter(
           (m) => m.FromUser.UserId === session.userInfo?.UserId
@@ -167,10 +169,13 @@ export async function analytics(
             (max: Date | undefined, m) => (max && max > m ? max : m),
             undefined
           );
-        if (recent && sent && recent > sent) {
-          return recent;
+        if (sent) {
+          if (recent && recent > sent) {
+            return recent;
+          }
+          return sent;
         }
-        return sent;
+        return recent;
       }, undefined);
       if (recentSent) {
         row[AnalyticsColumns.MostRecentSent] = recentSent.toLocaleString();
