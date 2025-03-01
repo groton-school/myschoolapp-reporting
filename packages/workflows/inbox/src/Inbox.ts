@@ -1,5 +1,6 @@
 import { Colors } from '@battis/qui-cli.colors';
 import { Log } from '@battis/qui-cli.log';
+import * as Plugin from '@battis/qui-cli.plugin';
 import { Progress } from '@battis/qui-cli.progress';
 import { Output } from '@msar/output';
 import { PuppeteerSession } from '@msar/puppeteer-session';
@@ -26,6 +27,16 @@ const AnalyticsColumns = {
   Initiated: 'Initiated Conversations',
   MostRecentInitiated: 'Most Recent Initiated Conversation'
 };
+
+export function options(): Plugin.Options {
+  return {
+    man: [
+      {
+        text: `Analyze inbox contents for a user or users. Include the URL of the LMS instance as ${Colors.value('arg0')} (required) and path to a CSV file of user identifiers to analyze as ${Colors.value('arg1')} (optional if ${Colors.value('--val')} is set). Intended to receive a generic ${Colors.url('UserWorkList.csv')} export from the LMS as input, outputting the same CSV file to ${Colors.value('--outputPath')} with analysis columns appended.`
+      }
+    ]
+  };
+}
 
 export async function analytics(
   url?: URL | string,
