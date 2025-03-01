@@ -24,7 +24,7 @@
   },
   "type": "module",
   "bin": {
-    "msar": "./dist/bin/msar.js"
+    "msar": "./dist/index.js"
   },
   "scripts": {
     "clean": "del ./dist",
@@ -35,32 +35,18 @@
   },
   "prettier": "@battis/prettier-config",
   "dependencies": {
-    "@battis/qui-cli": "^0.9.1",
-    "@battis/typescript-tricks": "^0.7.4",
-    "@oauth2-cli/sky-api": "^0.1.0",
-    "async-mutex": "^0.5.0",
-    "chalk": "^5.4.1",
-    "cli-progress": "^3.12.0",
-    "content-disposition": "^0.5.4",
-    "csv": "^6.3.11",
-    "datadirect": "workspace:*",
-    "datadirect-puppeteer": "workspace:*",
-    "dotenv": "^16.4.7",
-    "ejs": "^3.1.10",
-    "moment": "^2.30.1",
-    "ora": "^8.1.1",
-    "p-queue": "^8.0.1",
-    "puppeteer": "^23.11.1"
+    "@battis/qui-cli.colors": "^2.0.1",
+    "@battis/qui-cli.core": "^2.1.0",
+    "@battis/qui-cli.log": "^2.0.1",
+    "@msar/download": "workspace:*",
+    "@msar/inbox": "workspace:*",
+    "@msar/snapshot": "workspace:*"
   },
   "devDependencies": {
-    "@battis/descriptive-types": "^0.1.0",
     "@tsconfig/node20": "^20.1.4",
-    "@types/cli-progress": "^3.11.6",
-    "@types/content-disposition": "^0.5.8",
-    "@types/express": "^5.0.0",
     "commit-and-tag-version": "^12.5.0",
     "del-cli": "^6.0.0",
-    "globals": "^15.14.0",
+    "globals": "^15.15.0",
     "npm-run-all": "^4.1.5",
     "typescript": "^5.7.3"
   },

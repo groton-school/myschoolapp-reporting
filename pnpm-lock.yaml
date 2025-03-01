@@ -245,9 +245,15 @@ importers:
 
   packages/msar:
     dependencies:
+      '@battis/qui-cli.colors':
+        specifier: ^2.0.1
+        version: 2.0.1(@battis/qui-cli.plugin@2.2.0)
       '@battis/qui-cli.core':
         specifier: ^2.1.0
         version: 2.1.0(@battis/qui-cli.plugin@2.2.0)
+      '@battis/qui-cli.log':
+        specifier: ^2.0.1
+        version: 2.0.1(@battis/qui-cli.colors@2.0.1(@battis/qui-cli.plugin@2.2.0))(@battis/qui-cli.plugin@2.2.0)(@battis/qui-cli.root@2.0.2(@battis/qui-cli.plugin@2.2.0))
       '@msar/download':
         specifier: workspace:*
         version: link:../workflows/download
