@@ -11,6 +11,7 @@
     "@battis/qui-cli.colors": "^2.0.1",
     "@battis/qui-cli.plugin": "^2.2.0",
     "@battis/qui-cli.progress": "^2.0.1",
+    "@msar/snapshot": "workspace:*",
     "@tsconfig/node20": "^20.1.4",
     "commit-and-tag-version": "^12.5.0",
     "del-cli": "^6.0.0",
@@ -20,6 +21,8 @@
   "peerDependencies": {
     "@battis/qui-cli.colors": "^2.0",
     "@battis/qui-cli.plugin": "^2.2",
-    "@battis/qui-cli.progress": "^2.0"
+    "@battis/qui-cli.progress": "^2.0",
+    "@msar/output": "workspace:*",
+    "@msar/snapshot": "workspace:*"
   }
 }
