@@ -1,0 +1,45 @@
+{
+  "name": "@msar/snapshot",
+  "version": "0.0.0",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "clean": "del ./dist",
+    "build": "run-s build:*",
+    "build:clean": "run-s clean",
+    "build:compile": "tsc",
+    "release": "commit-and-tag-version"
+  },
+  "dependencies": {
+    "datadirect": "workspace:*",
+    "ora": "^8.2.0",
+    "p-queue": "^8.1.0"
+  },
+  "devDependencies": {
+    "@battis/descriptive-types": "^0.1.0",
+    "@battis/qui-cli.colors": "^2.0.1",
+    "@battis/qui-cli.log": "^2.0.1",
+    "@battis/qui-cli.plugin": "^2.2.0",
+    "@battis/qui-cli.progress": "^2.0.1",
+    "@msar/debug": "workspace:*",
+    "@msar/output": "workspace:*",
+    "@msar/puppeteer-session": "workspace:*",
+    "@tsconfig/node20": "^20.1.4",
+    "commit-and-tag-version": "^12.5.0",
+    "datadirect-puppeteer": "workspace:*",
+    "del-cli": "^6.0.0",
+    "npm-run-all": "^4.1.5",
+    "typescript": "^5.7.3"
+  },
+  "peerDependencies": {
+    "@battis/qui-cli.colors": "^2.0",
+    "@battis/qui-cli.log": "^2.0",
+    "@battis/qui-cli.plugin": "^2.2",
+    "@battis/qui-cli.progress": "^2.0",
+    "@msar/debug": "workspace:*",
+    "@msar/output": "workspace:*",
+    "@msar/puppeteer-session": "workspace:*",
+    "datadirect-puppeteer": "workspace:*"
+  }
+}
