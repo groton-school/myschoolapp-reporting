@@ -23,11 +23,15 @@
     "release": "commit-and-tag-version"
   },
   "dependencies": {
-    "@battis/qui-cli": "^0.8.5",
-    "async-mutex": "^0.5.0"
+    "async-mutex": "^0.5.0",
+    "ora": "^8.2.0"
   },
   "devDependencies": {
+    "@battis/qui-cli.colors": "^2.0.1",
+    "@battis/qui-cli.log": "^2.0.1",
+    "@battis/qui-cli.plugin": "^2.2.0",
     "@battis/typescript-tricks": "^0.7.4",
+    "@msar/puppeteer-session": "workspace:*",
     "@tsconfig/node20": "^20.1.4",
     "commit-and-tag-version": "^12.5.0",
     "del-cli": "^6.0.0",
@@ -35,6 +39,10 @@
     "typescript": "^5.7.3"
   },
   "peerDependencies": {
+    "@battis/qui-cli.colors": "^2.0",
+    "@battis/qui-cli.log": "^2.0",
+    "@battis/qui-cli.plugin": "^2.2",
+    "@msar/puppeteer-session": "workspace:*",
     "datadirect": "workspace:*",
     "puppeteer": "*"
   }

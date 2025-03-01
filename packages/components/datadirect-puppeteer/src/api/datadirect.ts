@@ -1,3 +1,4 @@
+import { PuppeteerSession } from '@msar/puppeteer-session';
 import {
   AssignmentMarkingPeriods as AssMarkingPeriods,
   AssignmentSectionsForTeacher as AssSectionsForTeacher,
@@ -14,77 +15,76 @@ import {
   TopicContentTypesGet as TopicContentTypes,
   GetValidFileTypes as ValidFileTypes
 } from 'datadirect/dist/api/datadirect.js';
-import { Fetchable } from '../PuppeteerSession.js';
 
-export const groupFinderByYear: Fetchable.Binding<
+export const groupFinderByYear: PuppeteerSession.Fetchable.Binding<
   Groups.Payload,
   Groups.Response
-> = Fetchable.bind(Groups);
+> = PuppeteerSession.Fetchable.bind(Groups);
 
-export const SectionInfoView: Fetchable.Binding<
+export const SectionInfoView: PuppeteerSession.Fetchable.Binding<
   SectionInfo.Payload,
   SectionInfo.Response
-> = Fetchable.bind(SectionInfo);
+> = PuppeteerSession.Fetchable.bind(SectionInfo);
 
-export const BulletinBoardContentGet: Fetchable.Binding<
+export const BulletinBoardContentGet: PuppeteerSession.Fetchable.Binding<
   BulletinBoardContent.Payload,
   BulletinBoardContent.Response
-> = Fetchable.bind(BulletinBoardContent);
+> = PuppeteerSession.Fetchable.bind(BulletinBoardContent);
 
-export const GroupPossibleContentGet: Fetchable.Binding<
+export const GroupPossibleContentGet: PuppeteerSession.Fetchable.Binding<
   BulletinBoardContentTypes.Payload,
   BulletinBoardContentTypes.Response
-> = Fetchable.bind(BulletinBoardContentTypes);
+> = PuppeteerSession.Fetchable.bind(BulletinBoardContentTypes);
 
-export const ImportAssignmentsGet: Fetchable.Binding<
+export const ImportAssignmentsGet: PuppeteerSession.Fetchable.Binding<
   ImportAssignments.Payload,
   ImportAssignments.Response
-> = Fetchable.bind(ImportAssignments);
+> = PuppeteerSession.Fetchable.bind(ImportAssignments);
 
-export const sectiontopicsget: Fetchable.Binding<
+export const sectiontopicsget: PuppeteerSession.Fetchable.Binding<
   SectionTopics.Payload,
   SectionTopics.Response
-> = Fetchable.bind(SectionTopics);
+> = PuppeteerSession.Fetchable.bind(SectionTopics);
 
-export const TopicContentTypesGet: Fetchable.Binding<
+export const TopicContentTypesGet: PuppeteerSession.Fetchable.Binding<
   TopicContentTypes.Payload,
   TopicContentTypes.Response
-> = Fetchable.bind(TopicContentTypes);
+> = PuppeteerSession.Fetchable.bind(TopicContentTypes);
 
-export const topiccontentget: Fetchable.Binding<
+export const topiccontentget: PuppeteerSession.Fetchable.Binding<
   TopicContent.Payload,
   TopicContent.Response
-> = Fetchable.bind(TopicContent);
+> = PuppeteerSession.Fetchable.bind(TopicContent);
 
-export const GradeBookMarkingPeriodList: Fetchable.Binding<
+export const GradeBookMarkingPeriodList: PuppeteerSession.Fetchable.Binding<
   MarkingPeriods.Payload,
   MarkingPeriods.Response
-> = Fetchable.bind(MarkingPeriods);
+> = PuppeteerSession.Fetchable.bind(MarkingPeriods);
 
-export const sectionrosterget: Fetchable.Binding<
+export const sectionrosterget: PuppeteerSession.Fetchable.Binding<
   SectionRoster.Payload,
   SectionRoster.Response
-> = Fetchable.bind(SectionRoster);
+> = PuppeteerSession.Fetchable.bind(SectionRoster);
 
-export const AssignmentMarkingPeriods: Fetchable.Binding<
+export const AssignmentMarkingPeriods: PuppeteerSession.Fetchable.Binding<
   AssMarkingPeriods.Payload,
   AssMarkingPeriods.Response
-> = Fetchable.bind(AssMarkingPeriods);
+> = PuppeteerSession.Fetchable.bind(AssMarkingPeriods);
 
-export const AssignmentSectionsForTeacher: Fetchable.Binding<
+export const AssignmentSectionsForTeacher: PuppeteerSession.Fetchable.Binding<
   AssSectionsForTeacher.Payload,
   AssSectionsForTeacher.Response
-> = Fetchable.bind(AssSectionsForTeacher);
+> = PuppeteerSession.Fetchable.bind(AssSectionsForTeacher);
 
-export const GetValidFileTypes: Fetchable.Binding<
+export const GetValidFileTypes: PuppeteerSession.Fetchable.Binding<
   ValidFileTypes.Payload,
   ValidFileTypes.Response
-> = Fetchable.bind(ValidFileTypes);
+> = PuppeteerSession.Fetchable.bind(ValidFileTypes);
 
 export async function BulletinBoardContent_detail(
   item: BulletinBoardContent.Item,
   types: BulletinBoardContentTypes.Response,
-  options: Fetchable.EndpointOptions<common.ContentItem.Payload>
+  options: PuppeteerSession.Fetchable.EndpointOptions<common.ContentItem.Payload>
 ) {
   if (
     common.ContentType.Static.find(
@@ -93,7 +93,7 @@ export async function BulletinBoardContent_detail(
   ) {
     return undefined;
   }
-  const endpoint = Fetchable.bind<
+  const endpoint = PuppeteerSession.Fetchable.bind<
     common.ContentItem.Payload,
     common.ContentItem.Any.Content
   >({
@@ -105,7 +105,7 @@ export async function BulletinBoardContent_detail(
 export async function TopicContent_detail(
   item: TopicContent.Item,
   types: TopicContentTypes.Response,
-  options: Fetchable.EndpointOptions<common.ContentItem.Payload>
+  options: PuppeteerSession.Fetchable.EndpointOptions<common.ContentItem.Payload>
 ) {
   if (
     common.ContentType.Static.find(
@@ -114,7 +114,7 @@ export async function TopicContent_detail(
   ) {
     return undefined;
   }
-  const endpoint = Fetchable.bind<
+  const endpoint = PuppeteerSession.Fetchable.bind<
     common.ContentItem.Payload,
     common.ContentItem.Any.Content
   >({

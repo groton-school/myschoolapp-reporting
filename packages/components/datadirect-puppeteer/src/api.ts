@@ -1,3 +1,5 @@
+import { PuppeteerSession } from '@msar/puppeteer-session';
+
 export * as assessment from './api/assessment.js';
 export * as assignment from './api/assignment.js';
 export * as Assignment2 from './api/Assignment2.js';
@@ -12,4 +14,5 @@ export * as Rubric from './api/Rubric.js';
 export * as schoolinfo from './api/schoolinfo.js';
 export * as topic from './api/topic.js';
 export * as webapp from './api/webapp.js';
-export { init } from './PuppeteerSession/Fetchable.js';
+
+export const init = PuppeteerSession.Fetchable.init;
