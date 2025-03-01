@@ -125,7 +125,12 @@ export function options(): Plugin.Options {
         description: `(default: ${Colors.value(contextLabelId)})`,
         default: contextLabelId
       }
-    }
+    },
+    man: [
+      {
+        text: `Capture a JSON snapshot of an individual course or of a collection of courses (using the ${Colors.value('--all')} flag). In addition to relevant flags and options, the only argument expected is a URL (${Colors.value('arg0')}) to a page within the target course (or target LMS instance, if snapshotting more than one course).`
+      }
+    ]
   };
 }
 
