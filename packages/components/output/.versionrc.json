@@ -1,0 +1,5 @@
+{
+  "path": ".",
+  "tag-prefix": "output/",
+  "releaseCommitMessageFormat": "chore(qui-cli.log): @msar/output@{{currentTag}}"
+}
