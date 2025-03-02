@@ -1,12 +1,16 @@
 import { Colors } from '@battis/qui-cli.colors';
 import * as Plugin from '@battis/qui-cli.plugin';
-import { Base } from './Base.js';
+import { Base } from './PuppeteerSession/Base.js';
 
-export { Authenticated, Credentials, Options } from './Authenticated.js';
-export { Base, Options as PuppeteerOptions } from './Base.js';
-export * as Fetchable from './Fetchable.js';
-export * from './Impersonation.js';
-export * from './InitializationError.js';
+export {
+  Authenticated,
+  Credentials,
+  Options
+} from './PuppeteerSession/Authenticated.js';
+export { Base, Options as PuppeteerOptions } from './PuppeteerSession/Base.js';
+export * as Fetchable from './PuppeteerSession/Fetchable.js';
+export * from './PuppeteerSession/Impersonation.js';
+export * from './PuppeteerSession/InitializationError.js';
 
 export type Configuration = Plugin.Configuration & {
   headless?: boolean;
