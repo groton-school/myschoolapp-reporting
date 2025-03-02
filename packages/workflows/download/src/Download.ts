@@ -2,7 +2,7 @@ import { Colors } from '@battis/qui-cli.colors';
 import * as Plugin from '@battis/qui-cli.plugin';
 import { Progress } from '@battis/qui-cli.progress';
 import { Output } from '@msar/output';
-import { Snapshot } from '@msar/snapshot';
+import * as Snapshot from '@msar/snapshot/dist/Snapshot'; // import with registering plug-in
 import fs from 'node:fs';
 import path from 'node:path';
 import ora from 'ora';
