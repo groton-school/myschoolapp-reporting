@@ -30,6 +30,7 @@ export type SnapshotOptions = {
   gradebook?: boolean;
   studentData?: boolean;
   payload?: types.datadirect.common.ContentItem.Payload;
+  quit?: boolean;
 };
 
 /*
@@ -42,24 +43,17 @@ export type Context = {
   url?: URL | string;
 };
 
-export type Options = SnapshotOptions &
-  Context &
-  Partial<common.Output.Args.Parsed> &
-  common.Workflow.Args.Parsed &
-  common.PuppeteerSession.Args.Parsed;
+export type Options = SnapshotOptions & Context;
 
 export async function snapshot({
   session,
   url,
-  credentials,
-  puppeteerOptions,
   groupId,
   bulletinBoard,
   topics,
   assignments,
   gradebook,
-  outputOptions,
-  quit,
+  quit = PuppeteerSession.quit(),
   ...options
 }: Options) {
   if (url && groupId === undefined) {
@@ -75,10 +69,7 @@ export async function snapshot({
   if (!session) {
     if (url) {
       Debug.withGroupId(groupId, 'Creating session');
-      session = await PuppeteerSession.Fetchable.init(url, {
-        credentials,
-        ...puppeteerOptions
-      });
+      session = await PuppeteerSession.Fetchable.init(url);
     } else {
       throw new Error(
         'An LMS URL is required to open a new datadirect session'
@@ -135,28 +126,23 @@ export async function snapshot({
   snapshot.Metadata.Elapsed =
     snapshot.Metadata.Finish.getTime() - snapshot.Metadata.Start.getTime();
 
-  if (outputOptions?.outputPath) {
-    const { outputPath, pretty } = outputOptions;
+  if (Output.outputPath()) {
     let basename = 'snapshot';
     if (snapshot.SectionInfo) {
       basename = `${snapshot.SectionInfo.SchoolYear} - ${snapshot.SectionInfo.Teacher} - ${snapshot.SectionInfo.GroupName} - ${snapshot.SectionInfo.Id}`;
     }
     const filepath = await Output.avoidOverwrite(
-      Output.filePathFromOutputPath(outputPath, `${basename}.json`)
+      Output.filePathFromOutputPath(Output.outputPath(), `${basename}.json`)
     );
-    Output.writeJSON(filepath, snapshot, { pretty });
-    Output.writeJSON(
-      filepath.replace(/\.json$/, '.metadata.json'),
-      {
-        ...snapshot.Metadata,
-        bulletinBoard,
-        topics,
-        assignments,
-        gradebook,
-        options
-      },
-      { pretty }
-    );
+    Output.writeJSON(filepath, snapshot);
+    Output.writeJSON(filepath.replace(/\.json$/, '.metadata.json'), {
+      ...snapshot.Metadata,
+      bulletinBoard,
+      topics,
+      assignments,
+      gradebook,
+      options
+    });
   }
 
   if (quit) {

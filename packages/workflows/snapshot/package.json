@@ -19,12 +19,14 @@
   "devDependencies": {
     "@battis/descriptive-types": "^0.1.0",
     "@battis/qui-cli.colors": "^2.0.1",
+    "@battis/qui-cli.core": "^2.1.0",
     "@battis/qui-cli.log": "^2.0.1",
     "@battis/qui-cli.plugin": "^2.2.0",
     "@battis/qui-cli.progress": "^2.0.1",
     "@msar/debug": "workspace:*",
     "@msar/output": "workspace:*",
     "@msar/puppeteer-session": "workspace:*",
+    "@msar/workflow": "workspace:*",
     "@tsconfig/node20": "^20.1.4",
     "commit-and-tag-version": "^12.5.0",
     "datadirect-puppeteer": "workspace:*",
@@ -34,12 +36,14 @@
   },
   "peerDependencies": {
     "@battis/qui-cli.colors": "^2.0",
+    "@battis/qui-cli.core": "^2.1",
     "@battis/qui-cli.log": "^2.0",
     "@battis/qui-cli.plugin": "^2.2",
     "@battis/qui-cli.progress": "^2.0",
     "@msar/debug": "workspace:*",
     "@msar/output": "workspace:*",
     "@msar/puppeteer-session": "workspace:*",
+    "@msar/workflow": "workspace:*",
     "datadirect-puppeteer": "workspace:*"
   }
 }

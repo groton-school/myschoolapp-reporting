@@ -1,34 +1,97 @@
 import { Colors } from '@battis/qui-cli.colors';
+import { Core } from '@battis/qui-cli.core';
 import * as Plugin from '@battis/qui-cli.plugin';
 import { Output } from '@msar/output';
+import { api } from 'datadirect';
 import path from 'node:path';
 import ora from 'ora';
-import * as Args from './Args.js';
 import * as All from './Manager/All.js';
 import * as Single from './Manager/Single.js';
 
-export { All, Args, Single };
+export { All, Single };
+
+export type Configuration = Plugin.Configuration &
+  Single.SnapshotOptions &
+  All.AllOptions;
+
+Core.configure({ core: { requirePositionals: true } });
 
 export const name = '@msar/snapshot';
 export const src = import.meta.dirname;
 
-let bulletinBoard = true;
-let topics = true;
-let assignments = true;
-let gradebook = true;
-let studentData = false;
-let active = true;
-let future = true;
-let expired = true;
+const snapshotOptions: Single.SnapshotOptions = {
+  bulletinBoard: true,
+  topics: true,
+  assignments: true,
+  gradebook: true,
+  studentData: true,
+  payload: {
+    format: 'json',
+    active: true,
+    future: true,
+    expired: true
+  }
+};
+
+const allOptions: All.AllOptions = {
+  association: undefined,
+  termsOffered: undefined,
+  year: `${new Date().getFullYear()} - ${new Date().getFullYear() + 1}`,
+  groupsPath: undefined
+};
+if (new Date().getMonth() <= 6) {
+  allOptions.year = `${new Date().getFullYear() - 1} - ${new Date().getFullYear()}`;
+}
+
+let url: string | URL | undefined = undefined;
+
 let all = false;
 let fromDate = new Date().toLocaleDateString('en-US');
 let contextLabelId = 2;
-let year = `${new Date().getFullYear()} - ${new Date().getFullYear() + 1}`;
-if (new Date().getMonth() <= 6) {
-  year = `${new Date().getFullYear() - 1} - ${new Date().getFullYear()}`;
+
+function hydrate<T extends Record<string, any>>(
+  proposal: T,
+  fallback: T,
+  keys: (keyof T)[],
+  base: T
+) {
+  const result: T = { ...base };
+  for (const key of keys) {
+    result[key] = Plugin.hydrate(proposal[key], fallback[key]);
+  }
+  return result;
+}
+
+export function configure(config: Configuration = {}) {
+  hydrate(
+    config,
+    snapshotOptions,
+    ['bulletinBoard', 'topics', 'assignments', 'gradebook', 'studentData'],
+    {}
+  );
+
+  const payload: api.datadirect.ContentItem.Payload = { format: 'json' };
+  hydrate(
+    config.payload || payload,
+    snapshotOptions.payload || payload,
+    ['active', 'future', 'expired'],
+    payload
+  );
+
+  hydrate(
+    config,
+    allOptions,
+    ['association', 'termsOffered', 'year', 'groupsPath'],
+    {}
+  );
+
+  all = Plugin.hydrate(config.all, all);
+  fromDate = Plugin.hydrate(config.fromDate, fromDate);
+  contextLabelId = Plugin.hydrate(config.contextLabelId, contextLabelId);
 }
 
 export function options(): Plugin.Options {
+  const outputOptions = Output.options();
   return {
     flag: {
       all: {
@@ -37,51 +100,51 @@ export function options(): Plugin.Options {
         default: all
       },
       active: {
-        description: `Show currently active items (default: ${Colors.value(active)})`,
-        default: active
+        description: `Show currently active items (default: ${Colors.value(snapshotOptions.payload?.active)})`,
+        default: snapshotOptions.payload?.active
       },
       future: {
-        description: `Show future items (default: ${Colors.value(future)})`,
-        default: future
+        description: `Show future items (default: ${Colors.value(snapshotOptions.payload?.future)})`,
+        default: snapshotOptions.payload?.future
       },
       expired: {
-        description: `Show expired items (default: ${Colors.value(expired)})`,
-        default: expired
+        description: `Show expired items (default: ${Colors.value(snapshotOptions.payload?.expired)})`,
+        default: snapshotOptions.payload?.expired
       },
       bulletinBoard: {
-        description: `Include the course Bulletin Board in the snapshot (default ${Colors.value(bulletinBoard)})`,
+        description: `Include the course Bulletin Board in the snapshot (default ${Colors.value(snapshotOptions.bulletinBoard)})`,
         short: 'b',
-        default: bulletinBoard
+        default: snapshotOptions.bulletinBoard
       },
       topics: {
-        description: `Include the course Topics in the snapshot (default ${Colors.value(topics)})`,
+        description: `Include the course Topics in the snapshot (default ${Colors.value(snapshotOptions.topics)})`,
         short: 't',
-        default: topics
+        default: snapshotOptions.topics
       },
       assignments: {
         short: 'a',
-        description: `Include the course Assignments in the snapshot (default ${Colors.value(assignments)})`,
-        default: assignments
+        description: `Include the course Assignments in the snapshot (default ${Colors.value(snapshotOptions.assignments)})`,
+        default: snapshotOptions.assignments
       },
       gradebook: {
-        description: `Include the course Gradebook in the snapshot (default ${Colors.value(gradebook)})`,
+        description: `Include the course Gradebook in the snapshot (default ${Colors.value(snapshotOptions.gradebook)})`,
         short: 'g',
-        default: gradebook
+        default: snapshotOptions.gradebook
       },
       studentData: {
-        description: `Include student data in the course snapshot (default ${Colors.value(studentData)}, i.e. ${Colors.value('--no-studentData')} which preempts any other flags that have been set)`,
-        default: studentData
+        description: `Include student data in the course snapshot (default ${Colors.value(snapshotOptions.studentData)}, i.e. ${Colors.value('--no-studentData')} which preempts any other flags that have been set)`,
+        default: snapshotOptions.studentData
       }
     },
     opt: {
       outputPath: {
-        ...common.Args.options.outputPath,
-        description: common.Args.options.outputPath?.description
-          .replace(
-            common.Args.defaults.outputOptions.outputPath,
+        ...outputOptions.opt?.outputPath,
+        description: outputOptions.opt?.outputPath.description
+          ?.replace(
+            outputOptions.opt?.outputPath.description,
             path.resolve(
               process.cwd(),
-              common.Args.defaults.outputOptions.outputPath,
+              outputOptions.opt?.outputPath.description,
               ':SnapshotName.json'
             )
           )
@@ -116,8 +179,8 @@ export function options(): Plugin.Options {
         description: `Path to output directory or file to save filtered groups listing (include placeholder ${Colors.quotedValue('"%TIMESTAMP%"')} to specify its location, otherwise it is added automatically when needed to avoid overwriting existing files)`
       },
       year: {
-        description: `If ${Colors.value(`--all`)} flag is used, which year to download. (Default: ${Colors.quotedValue(`"${year}"`)})`,
-        default: year
+        description: `If ${Colors.value(`--all`)} flag is used, which year to download. (Default: ${Colors.quotedValue(`"${allOptions.year}"`)})`,
+        default: allOptions.year
       }
     },
     num: {
@@ -134,12 +197,18 @@ export function options(): Plugin.Options {
   };
 }
 
-export async function run(
-  url?: URL | string,
-  args: Args.Parsed = Args.defaults
-) {
-  const { all, snapshotOptions, allOptions, ...options } = args;
+export function init(args: Plugin.ExpectedArguments<typeof options>) {
+  const {
+    positionals: [_url]
+  } = args;
+  if (!_url) {
+    throw new Error(`Expected arg0 (URL) not defined`);
+  }
+  url = new URL(_url);
+  configure(args.values);
+}
 
+export async function run() {
   if (!url) {
     throw new Error(
       `${Colors.value('arg0')} must be the URL of an LMS instance`

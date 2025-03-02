@@ -4,6 +4,7 @@ import { Progress } from '@battis/qui-cli.progress';
 import { Debug } from '@msar/debug';
 import { Output } from '@msar/output';
 import { PuppeteerSession } from '@msar/puppeteer-session';
+import { Workflow } from '@msar/workflow';
 import { DatadirectPuppeteer } from 'datadirect-puppeteer';
 import crypto from 'node:crypto';
 import fs from 'node:fs/promises';
@@ -22,7 +23,7 @@ export type AllOptions = {
 export type Options = Single.SnapshotOptions &
   AllOptions & {
     url: URL | string;
-  } & common.Args.Parsed;
+  };
 
 export type Item = Single.Data;
 export type Data = Item[];
@@ -35,28 +36,19 @@ function cleanSplit(list?: string) {
 
 export async function snapshot({
   url,
-  credentials,
-  puppeteerOptions,
   association,
   termsOffered,
   year,
   groupsPath,
-  outputOptions,
-  quit,
   ...options
 }: Options) {
   if (!year) {
     throw new Error(`year must be defined`);
   }
-  const { ignoreErrors, concurrentThreads } = options;
-  const { outputPath, pretty } = outputOptions;
 
   const spinner = ora();
   spinner.start('Waiting for authentication…');
-  const session = await PuppeteerSession.Fetchable.init(url, {
-    credentials,
-    ...puppeteerOptions
-  });
+  const session = await PuppeteerSession.Fetchable.init(url);
   spinner.succeed('Authentication complete.');
   Log.info(`Snapshot temporary files will be saved to ${Colors.url(TEMP)}`);
   const associations = cleanSplit(association);
@@ -82,9 +74,7 @@ export async function snapshot({
   Progress.start({ max: groups.length });
   if (groupsPath) {
     groupsPath = Output.filePathFromOutputPath(groupsPath, 'groups.json');
-    Output.writeJSON(groupsPath, groups, {
-      pretty
-    });
+    Output.writeJSON(groupsPath, groups);
   }
 
   const zeros = new Array((groups.length + '').length).fill(0).join('');
@@ -100,9 +90,6 @@ export async function snapshot({
     try {
       const snapshot = await Single.snapshot({
         session,
-        credentials,
-        puppeteerOptions,
-        ...options,
         groupId: groups[i].lead_pk,
         quit: true
       });
@@ -112,7 +99,7 @@ export async function snapshot({
       Output.writeJSON(tempPath, snapshot);
       Progress.caption(snapshot?.SectionInfo?.GroupName || '');
     } catch (error) {
-      if (ignoreErrors) {
+      if (Workflow.ignoreErrors()) {
         Debug.errorWithGroupId(groups[i].lead_pk, 'Error', error as string);
         errors.push(groups[i]);
       } else {
@@ -122,7 +109,7 @@ export async function snapshot({
     Progress.increment();
   }
 
-  const queue = new PQueue({ concurrency: concurrentThreads });
+  const queue = new PQueue({ concurrency: Workflow.concurrentThreads() });
   await queue.addAll(groups.map((group, i) => snapshotGroup.bind(null, i)));
 
   let Start = new Date();
@@ -141,18 +128,17 @@ export async function snapshot({
     }
   }
   const filepath = await Output.avoidOverwrite(
-    Output.filePathFromOutputPath(outputPath, 'snapshot.json'),
+    Output.filePathFromOutputPath(Output.outputPath(), 'snapshot.json'),
     Output.AddTimestamp
   );
   const { bulletinBoard, topics, assignments, gradebook } = options;
-  Output.writeJSON(filepath, data, { pretty });
+  Output.writeJSON(filepath, data);
   Output.writeJSON(filepath.replace(/\.json$/, '.metadata.json'), {
     ...first,
     Start,
     Finish,
     Elapsed: Finish.getTime() - Start.getTime(),
     year,
-    concurrentThreads,
     groupsPath,
     bulletinBoard,
     topics,
@@ -167,7 +153,7 @@ export async function snapshot({
   await fs.rm(TEMP, { recursive: true });
   Progress.stop();
 
-  if (quit) {
+  if (PuppeteerSession.quit()) {
     session.close();
   }
 }
