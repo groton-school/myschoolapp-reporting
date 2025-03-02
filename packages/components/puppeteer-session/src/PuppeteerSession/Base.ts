@@ -1,8 +1,10 @@
 import { Log } from '@battis/qui-cli.log';
+import * as Plugin from '@battis/qui-cli.plugin';
 import { JSONValue } from '@battis/typescript-tricks';
 import { Mutex, MutexInterface } from 'async-mutex';
 import puppeteer, { GoToOptions, Page } from 'puppeteer';
 import { InitializationError } from './InitializationError.js';
+import * as Storage from './Storage.js';
 
 export type Options = Parameters<typeof puppeteer.launch>[0];
 
@@ -49,23 +51,25 @@ export class Base {
 
   private async openURL(
     url: URL | string,
-    options: Options = {
-      headless: false,
-      defaultViewport: { height: 0, width: 0 }
-      /*
-       * TODO Why doesn't Chrome consistently receive CDP directives?
-       *   Theoretically this should work, but it seems to have zero impact on actual behavior
-       *   ```ts
-       *   downloadBehavior: {
-       *     policy: 'allowAndName',
-       *     downloadPath: '/desired/path/to/downloads'
-       *   }
-       *  ```
-       */
-    },
+    { headless, defaultViewport }: Options = {},
+    /*
+     * TODO Why doesn't Chrome consistently receive CDP directives?
+     *   Theoretically this should work, but it seems to have zero impact on actual behavior
+     *   ```ts
+     *   downloadBehavior: {
+     *     policy: 'allowAndName',
+     *     downloadPath: '/desired/path/to/downloads'
+     *   }
+     *  ```
+     */
     initialized?: MutexInterface.Releaser
   ) {
-    const browser = await puppeteer.launch(options);
+    headless = Plugin.hydrate(headless, Storage.headless());
+    defaultViewport = Plugin.hydrate(defaultViewport, {
+      height: Storage.viewportHeight(),
+      width: Storage.viewportWidth()
+    });
+    const browser = await puppeteer.launch({ headless, defaultViewport });
     const [page] = await browser.pages();
     await page.goto(new URL(url).toString());
     this.page = page;

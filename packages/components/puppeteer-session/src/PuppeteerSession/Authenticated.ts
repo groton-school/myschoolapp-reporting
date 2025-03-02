@@ -1,8 +1,10 @@
 import { Colors } from '@battis/qui-cli.colors';
+import * as Plugin from '@battis/qui-cli.plugin';
 import { Mutex, MutexInterface } from 'async-mutex';
 import ora from 'ora';
 import { HTTPResponse, Page } from 'puppeteer';
 import { Base, Options as BaseOptions } from './Base.js';
+import * as Storage from './Storage.js';
 
 export type Credentials = {
   username?: string;
@@ -32,6 +34,12 @@ export class Authenticated extends Base {
     }: Options = {}
   ) {
     super(pageOrUrl, options);
+    credentials = {
+      username: Plugin.hydrate(credentials?.username, Storage.username()),
+      password: Plugin.hydrate(credentials?.password, Storage.password()),
+      sso: Plugin.hydrate(credentials?.sso, Storage.sso()),
+      mfa: Plugin.hydrate(credentials?.mfa, Storage.mfa())
+    };
     this.authenticating.acquire().then((authenticated) => {
       if (pageOrUrl instanceof Page) {
         this.appLoaded(timeout, authenticated);
