@@ -1,8 +1,18 @@
 {
   "name": "@msar/inbox",
   "version": "0.0.0",
+  "homepage": "https://github.com/battis/myschoolapp-reporting/tree/main/packages/workflows/inbox#readme",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/battis/myschoolapp-reporting.git",
+    "directory": "packages/workflows/inbox"
+  },
+  "author": {
+    "name": "Seth Battis",
+    "url": "https://github.com/battis"
+  },
   "type": "module",
-  "main": "./dist/index,js",
+  "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "scripts": {
     "clean": "del ./dist",

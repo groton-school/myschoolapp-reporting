@@ -1,6 +1,16 @@
 {
   "name": "@msar/debug",
   "version": "0.0.0",
+  "homepage": "https://github.com/battis/myschoolapp-reporting/tree/main/packages/components/debug#readme",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/battis/myschoolapp-reporting.git",
+    "directory": "packages/components/debug"
+  },
+  "author": {
+    "name": "Seth Battis",
+    "url": "https://github.com/battis"
+  },
   "type": "module",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
