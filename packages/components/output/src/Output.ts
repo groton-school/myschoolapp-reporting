@@ -1,34 +1,27 @@
 import { Colors } from '@battis/qui-cli.colors';
 import * as Plugin from '@battis/qui-cli.plugin';
-import { Root } from '@battis/qui-cli.root';
+import * as Storage from './Output/Storage.js';
 
 export * from './Output/avoidOverwrite.js';
 export { filePathFromOutputPath } from './Output/filePathFromOutputPath.js';
 export * from './Output/OutputError.js';
 export { oxfordComma } from './Output/oxfordComma.js';
 export { pathsafeTimestamp } from './Output/pathsafeTimestamp.js';
+export { Configuration } from './Output/Storage.js';
 export { writeFetchedFile } from './Output/writeFetchedFile.js';
 export { writeJSON } from './Output/writeJSON.js';
 export { writeRecursive } from './Output/writeRecursive.js';
 
-export type Configuration = Plugin.Configuration & {
-  outputPath?: string;
-  pretty?: boolean;
-};
-
 export const name = '@msar/output';
 export const src = import.meta.dirname;
-
-let _outputPath = Root.path();
-let _pretty = true;
 
 export function options(): Plugin.Options {
   return {
     opt: {
       outputPath: {
         short: 'o',
-        description: `Path to output directory or file to save command output (default: ${Colors.quotedValue(`"${_outputPath}"`)})`,
-        default: _outputPath
+        description: `Path to output directory or file to save command output (default: ${Colors.quotedValue(`"${Storage.outputPath()}"`)})`,
+        default: Storage.outputPath()
       }
     },
     flag: {
@@ -39,9 +32,9 @@ export function options(): Plugin.Options {
   };
 }
 
-export function configure(config: Configuration = {}) {
-  _outputPath = Plugin.hydrate(config.outputPath, _outputPath);
-  _pretty = Plugin.hydrate(config.pretty, _pretty);
+export function configure(config: Storage.Configuration = {}) {
+  Storage.outputPath(Plugin.hydrate(config.outputPath, Storage.outputPath()));
+  Storage.pretty(Plugin.hydrate(config.pretty, Storage.pretty()));
 }
 
 export function init(args: Plugin.ExpectedArguments<typeof options>) {
@@ -49,9 +42,9 @@ export function init(args: Plugin.ExpectedArguments<typeof options>) {
 }
 
 export function outputPath() {
-  return _outputPath;
+  return Storage.outputPath();
 }
 
 export function pretty() {
-  return _pretty;
+  return Storage.pretty();
 }

@@ -17,6 +17,7 @@
     "@battis/qui-cli.plugin": "^2.2.0",
     "@battis/qui-cli.root": "^2.0.2",
     "@msar/debug": "workspace:*",
+    "@msar/workflow": "workspace:*",
     "@tsconfig/node20": "^20.1.4",
     "commit-and-tag-version": "^12.5.0",
     "del-cli": "^6.0.0",
@@ -28,6 +29,7 @@
     "@battis/qui-cli.log": "^2.0",
     "@battis/qui-cli.plugin": "^2.2",
     "@battis/qui-cli.root": "^2.0",
-    "@msar/output": "workspace:*"
+    "@msar/debug": "workspace:*",
+    "@msar/workflow": "workspace:*"
   }
 }
