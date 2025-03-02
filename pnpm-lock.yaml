@@ -367,6 +367,9 @@ importers:
       '@battis/qui-cli.colors':
         specifier: ^2.0.1
         version: 2.0.1(@battis/qui-cli.plugin@2.2.0)
+      '@battis/qui-cli.core':
+        specifier: ^2.1.0
+        version: 2.1.0(@battis/qui-cli.plugin@2.2.0)
       '@battis/qui-cli.log':
         specifier: ^2.0.1
         version: 2.0.1(@battis/qui-cli.colors@2.0.1(@battis/qui-cli.plugin@2.2.0))(@battis/qui-cli.plugin@2.2.0)(@battis/qui-cli.root@2.0.2(@battis/qui-cli.plugin@2.2.0))
@@ -376,12 +379,18 @@ importers:
       '@battis/qui-cli.progress':
         specifier: ^2.0.1
         version: 2.0.1(@battis/qui-cli.colors@2.0.1(@battis/qui-cli.plugin@2.2.0))(@battis/qui-cli.plugin@2.2.0)
+      '@battis/qui-cli.root':
+        specifier: ^2.0.2
+        version: 2.0.2(@battis/qui-cli.plugin@2.2.0)
       '@msar/output':
         specifier: workspace:*
         version: link:../../components/output
       '@msar/puppeteer-session':
         specifier: workspace:*
         version: link:../../components/puppeteer-session
+      '@msar/workflow':
+        specifier: workspace:*
+        version: link:../../components/workflow
       '@tsconfig/node20':
         specifier: ^20.1.4
         version: 20.1.4

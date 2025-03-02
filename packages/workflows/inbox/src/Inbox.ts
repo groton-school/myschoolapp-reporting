@@ -1,23 +1,35 @@
 import { Colors } from '@battis/qui-cli.colors';
+import { Core } from '@battis/qui-cli.core';
 import { Log } from '@battis/qui-cli.log';
 import * as Plugin from '@battis/qui-cli.plugin';
 import { Progress } from '@battis/qui-cli.progress';
+import { Root } from '@battis/qui-cli.root';
 import { Output } from '@msar/output';
 import { PuppeteerSession } from '@msar/puppeteer-session';
+import { Workflow } from '@msar/workflow';
 import { parse as parseCSV, stringify } from 'csv/sync';
 import { api as types } from 'datadirect';
 import { DatadirectPuppeteer } from 'datadirect-puppeteer';
 import moment from 'moment';
 import fs from 'node:fs/promises';
 import path from 'node:path';
-import * as Args from './Args.js';
 
-export { Args };
+await Core.configure({ core: { requirePositionals: true } });
 
-export type Options = Args.Parsed;
+export type Configuration = {
+  vals?: string[];
+  column?: string;
+  searchIn?: string;
+};
 
 export const name = '@msar/inbox';
 export const src = import.meta.dirname;
+
+let url: string | undefined = undefined;
+let pathToUserListCsv: string | undefined = undefined;
+let vals: string[] = [];
+let column = 'User ID';
+let searchIn = 'UserID';
 
 const AnalyticsColumns = {
   Conversations: 'Conversations',
@@ -28,8 +40,61 @@ const AnalyticsColumns = {
   MostRecentInitiated: 'Most Recent Initiated Conversation'
 };
 
+export function configure(config: Configuration = {}) {
+  vals = Plugin.hydrate(config.vals, vals);
+  column = Plugin.hydrate(config.column, column);
+  searchIn = Plugin.hydrate(config.searchIn, searchIn);
+}
+
 export function options(): Plugin.Options {
+  const puppeteerOptions = PuppeteerSession.options();
+  const outputOptions = Output.options();
+  const outputPath = path.join(Output.outputPath(), 'inboxAnalysis.csv');
   return {
+    flag: {
+      headless: {
+        ...puppeteerOptions.flag?.headless,
+        description: puppeteerOptions.flag?.headless?.description?.replace(
+          /\(default: .*\)/,
+          `default: ${Colors.value('false')}, use ${Colors.value('--no-headless')} to not run headless. Due to the number of impersonated clicks necessary for this workflow, running headless reduces the likelihood of stray user actions interfering with the script.`
+        ),
+        default: false
+      }
+    },
+    opt: {
+      outputPath: {
+        ...outputOptions.opt?.outputPath,
+        description: outputOptions.opt?.outputPath?.description?.replace(
+          Output.outputPath(),
+          path.resolve(Root.path(), outputPath)
+        ),
+        default: outputPath
+      },
+      column: {
+        description: `Column label for CSV input (${Colors.value('arg1')}) column containing user identifier for inboxes to analyze. Required if opening a CSV of user identifiers. (default: ${Colors.quotedValue(`"${column}"`)})`,
+        default: column
+      },
+      searchIn: {
+        description: `Field to search for user identifier. Required for all uses. One of ${[
+          ...Object.keys(PuppeteerSession.SearchIn),
+          ...Object.values(PuppeteerSession.SearchIn)
+        ]
+          .map((key) => Colors.quotedValue(`"${key}"`))
+          .join(', ')
+          .replace(
+            /, ([^,]+)$/,
+            ' or $1'
+          )} (default: ${Colors.quotedValue(`"${searchIn}"`)})`,
+        default: searchIn
+      }
+    },
+    optList: {
+      val: {
+        description: `A user identifier to query. Requires corresponding ${Colors.value('--searchIn')}. If set, ${Colors.value('arg1')} path to CSV file is not required.`,
+        short: 'v',
+        default: vals
+      }
+    },
     man: [
       {
         text: `Analyze inbox contents for a user or users. Include the URL of the LMS instance as ${Colors.value('arg0')} (required) and path to a CSV file of user identifiers to analyze as ${Colors.value('arg1')} (optional if ${Colors.value('--val')} is set). Intended to receive a generic ${Colors.url('UserWorkList.csv')} export from the LMS as input, outputting the same CSV file to ${Colors.value('--outputPath')} with analysis columns appended.`
@@ -38,19 +103,29 @@ export function options(): Plugin.Options {
   };
 }
 
+export function init(args: Plugin.ExpectedArguments<typeof options>) {
+  const {
+    values,
+    positionals: [_url, _pathToUserListCsv]
+  } = args;
+  url = Plugin.hydrate(_url, url);
+  pathToUserListCsv = Plugin.hydrate(_pathToUserListCsv, pathToUserListCsv);
+  configure(values);
+}
+
 export async function analytics(
   url?: URL | string,
   pathToUserListCsv?: string,
-  options?: Args.Parsed
+  options?: Configuration
 ): Promise<void>;
 export async function analytics(
   url?: URL | string,
-  options?: Args.Parsed
+  options?: Configuration
 ): Promise<void>;
 export async function analytics(
   url?: URL | string,
-  pathToUserListCsvOrOptions?: string | Args.Parsed,
-  options?: Args.Parsed
+  pathToUserListCsvOrOptions?: string | Configuration,
+  options?: Configuration
 ): Promise<void> {
   if (!url) {
     throw new Error(`Instance URL must be defined`);
@@ -64,18 +139,6 @@ export async function analytics(
   } else if (!options) {
     options = pathToUserListCsvOrOptions;
   }
-  options = common.Args.hydrate<Args.Parsed>(options, Args.defaults);
-  const {
-    puppeteerOptions,
-    logRequests,
-    vals,
-    column,
-    searchIn,
-    outputOptions,
-    quit,
-    ..._options
-  } = options;
-  let { outputPath } = outputOptions;
 
   let columns = [column];
   let data: Record<string, string | number>[] = [];
@@ -106,18 +169,15 @@ export async function analytics(
     );
   }
 
-  const root = await PuppeteerSession.Authenticated.getInstance(url, {
-    ...puppeteerOptions,
-    ..._options
-  });
+  const root = await PuppeteerSession.Authenticated.getInstance(url);
 
   Progress.start({ max: data.length });
-  outputPath = await Output.avoidOverwrite(
+  const outputPath = await Output.avoidOverwrite(
     path.resolve(
       process.cwd(),
       Output.filePathFromOutputPath(
-        outputPath,
-        path.basename(Args.defaults.outputOptions.outputPath)
+        Output.outputPath(),
+        path.basename(Output.outputPath())
       )
     )
   );
@@ -129,9 +189,7 @@ export async function analytics(
     try {
       const session = await PuppeteerSession.Impersonation.getInstance(root, {
         searchIn,
-        val,
-        ...puppeteerOptions,
-        ..._options
+        val
       });
       Progress.caption(session.userInfo?.UserNameFormatted || val);
 
@@ -145,7 +203,7 @@ export async function analytics(
             pageNumber,
             toDate: moment().format('MM/DD/YYYY')
           },
-          logRequests
+          logRequests: Workflow.logRequests()
         });
         for (const preview of response) {
           const { ConversationId } = preview;
@@ -214,7 +272,7 @@ export async function analytics(
   }
   await writing;
 
-  if (quit) {
+  if (PuppeteerSession.quit()) {
     await root.close();
   }
 
