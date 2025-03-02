@@ -10,16 +10,30 @@ export type Configuration = Plugin.Configuration & {
 export const name = '@msar/workflow';
 export const src = import.meta.dirname;
 
-let _ignoreErrors = true;
-let _logRequests = false;
-let _concurrentThreads = 10;
+const props = {
+  ignoreErrors: true,
+  logRequests: false,
+  concurrentThreads: 10
+};
+
+export function ignoreErrors() {
+  return props.ignoreErrors;
+}
+
+export function logRequests() {
+  return props.logRequests;
+}
+
+export function concurrentThreads() {
+  return props.concurrentThreads;
+}
 
 export function configure(config: Configuration = {}) {
-  _ignoreErrors = Plugin.hydrate(config.ignoreErrors, _ignoreErrors);
-  _logRequests = Plugin.hydrate(config.logRequests, _logRequests);
-  _concurrentThreads = Plugin.hydrate(
+  props.ignoreErrors = Plugin.hydrate(config.ignoreErrors, props.ignoreErrors);
+  props.logRequests = Plugin.hydrate(config.logRequests, props.logRequests);
+  props.concurrentThreads = Plugin.hydrate(
     config.concurrentThreads,
-    _concurrentThreads
+    props.concurrentThreads
   );
 }
 
@@ -27,18 +41,18 @@ export function options(): Plugin.Options {
   return {
     flag: {
       ignoreErrors: {
-        description: `Continue collecting snapshots even if errors are encountered (default: ${Colors.value(_ignoreErrors)}${_ignoreErrors ? `, use ${Colors.value('--no-_ignoreErrors')} to halt on errors` : ''})`,
-        default: _ignoreErrors
+        description: `Continue collecting snapshots even if errors are encountered (default: ${Colors.value(props.ignoreErrors)}${props.ignoreErrors ? `, use ${Colors.value('--no-_ignoreErrors')} to halt on errors` : ''})`,
+        default: props.ignoreErrors
       },
       logRequests: {
-        description: `Log fetch requests and responses for analysis and debugging (default: ${Colors.value(_logRequests)})`,
-        default: _logRequests
+        description: `Log fetch requests and responses for analysis and debugging (default: ${Colors.value(props.logRequests)})`,
+        default: props.logRequests
       }
     },
     num: {
       concurrentThreads: {
-        description: `Maximum number of concurrent threads (default: ${Colors.value(_concurrentThreads)})`,
-        default: _concurrentThreads,
+        description: `Maximum number of concurrent threads (default: ${Colors.value(props.concurrentThreads)})`,
+        default: props.concurrentThreads,
         validate: (value?) => value && value > 0
       }
     }
@@ -47,16 +61,4 @@ export function options(): Plugin.Options {
 
 export function init(args: Plugin.ExpectedArguments<typeof options>) {
   configure(args.values);
-}
-
-export function ignoreErrors() {
-  return _ignoreErrors;
-}
-
-export function logRequests() {
-  return _logRequests;
-}
-
-export function concurrentThreads() {
-  return _concurrentThreads;
 }
