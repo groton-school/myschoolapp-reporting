@@ -10,9 +10,7 @@ const commands = fs
   .filter((f) => !/\.map$/.test(f))
   .map((command) => command.replace(/\.[jt]s$/, ''));
 const ext =
-  path.basename(path.resolve(import.meta.dirname, '..')) === 'dist'
-    ? 'js'
-    : 'ts';
+  path.basename(path.resolve(import.meta.dirname)) === 'dist' ? 'js' : 'ts';
 const filename = `${command}.${ext}`;
 if (commands.includes(command)) {
   process.argv[1] = path.join(import.meta.dirname, 'commands', filename);
