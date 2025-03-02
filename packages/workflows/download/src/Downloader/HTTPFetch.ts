@@ -1,28 +1,30 @@
-import cli from '@battis/qui-cli';
+import { Colors } from '@battis/qui-cli.colors';
+import { Log } from '@battis/qui-cli.log';
+import { Output } from '@msar/output';
+import { Workflow } from '@msar/workflow';
 import { ReadableStream } from 'node:stream/web';
-import * as common from '../../../common.js';
 import {
   ContentDisposition,
   filenameFromDisposition
 } from '../filenameFromDisposition.js';
 import { Strategy } from './Strategy.js';
 
-export type Options = { outputPath: string } & common.Workflow.Args.Parsed;
+export type Options = { outputPath?: string };
 
 export class Downloader implements Strategy {
   private outputPath: string;
   private logRequests: boolean;
 
-  public constructor({ outputPath, logRequests }: Options) {
+  public constructor({ outputPath = Output.outputPath() }: Options = {}) {
     this.outputPath = outputPath;
-    this.logRequests = logRequests;
+    this.logRequests = Workflow.logRequests();
   }
 
   public async download(url: string, filename?: string) {
-    cli.log.debug(`HTTPFetch: ${cli.colors.url(url)}`);
+    Log.debug(`HTTPFetch: ${Colors.url(url)}`);
     const response = await fetch(url);
     if (this.logRequests) {
-      cli.log.debug({
+      Log.debug({
         url,
         response: {
           url: response.url,
@@ -37,7 +39,7 @@ export class Downloader implements Strategy {
     }
     if (response.ok && response.body) {
       return {
-        localPath: await common.Output.writeFetchedFile({
+        localPath: await Output.writeFetchedFile({
           url,
           stream: response.body as ReadableStream,
           outputPath: this.outputPath

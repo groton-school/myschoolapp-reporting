@@ -1,11 +1,13 @@
-import cli from '@battis/qui-cli';
-import { api, PuppeteerSession } from 'datadirect-puppeteer';
+import { Colors } from '@battis/qui-cli.colors';
+import { Log } from '@battis/qui-cli.log';
+import { Output } from '@msar/output';
+import { PuppeteerSession } from '@msar/puppeteer-session';
+import { DatadirectPuppeteer } from 'datadirect-puppeteer';
 import { EventEmitter } from 'node:events';
 import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 import { Protocol } from 'puppeteer';
-import * as common from '../../../common.js';
 import { DownloadData, DownloadError } from '../Cache.js';
 import {
   ContentDisposition,
@@ -21,8 +23,7 @@ type FilepathVariantsOptions = {
 
 export type Options = {
   host: URL | string;
-} & common.Output.Args.Parsed &
-  common.PuppeteerSession.Args.Parsed;
+};
 
 const TEMP = path.join('/tmp/msar/download', crypto.randomUUID());
 const DOWNLOADS = path.join(os.homedir(), 'Downloads');
@@ -35,23 +36,16 @@ export class Downloader
   private emitter = new EventEmitter();
   private SchoolId?: number;
 
-  public constructor({
-    host,
-    outputOptions: { outputPath },
-    puppeteerOptions,
-    ...options
-  }: Options) {
-    super(`https://${host}`, { ...options, ...puppeteerOptions });
-    if (!outputPath) {
-      throw new common.Output.OutputError(
-        'AuthenticatedFetch requires outputPath'
-      );
+  public constructor({ host }: Options) {
+    super(`https://${host}`);
+    if (!Output.outputPath()) {
+      throw new Output.OutputError('AuthenticatedFetch requires outputPath');
     }
-    this.outputPath = outputPath;
+    this.outputPath = Output.outputPath();
   }
 
   public async download(url: string, filename?: string) {
-    cli.log.debug(`AuthenticatedFetch: ${url}`);
+    Log.debug(`AuthenticatedFetch: ${url}`);
     await this.ready();
     const session = await this.baseFork('about:blank');
     const client = await session.page.createCDPSession();
@@ -59,7 +53,7 @@ export class Downloader
     if (/:SchoolId/.test(url)) {
       if (!this.SchoolId) {
         this.SchoolId = (
-          await api.schoolinfo.schoolparams({
+          await DatadirectPuppeteer.api.schoolinfo.schoolparams({
             session: this,
             payload: { all: true },
             logRequests: true
@@ -117,7 +111,7 @@ export class Downloader
           const localPath = new URL(url).pathname;
           const destFilepath = path.resolve(
             process.cwd(),
-            common.Output.filePathFromOutputPath(this.outputPath, localPath)!
+            Output.filePathFromOutputPath(this.outputPath, localPath)!
           );
           const dir = path.dirname(destFilepath);
           if (!fs.existsSync(dir)) {
@@ -128,8 +122,8 @@ export class Downloader
             for (key in possiblePaths) {
               if (fs.existsSync(possiblePaths[key])) {
                 fs.renameSync(possiblePaths[key], destFilepath);
-                cli.log.debug(
-                  `Moved ${key} file ${cli.colors.url(possiblePaths[key])} to ${cli.colors.url(localPath)}`
+                Log.debug(
+                  `Moved ${key} file ${Colors.url(possiblePaths[key])} to ${Colors.url(localPath)}`
                 );
                 this.emitter.emit(url, { localPath, filename });
                 return;
@@ -182,8 +176,8 @@ export class Downloader
                     }
                     this.emitter.emit(url, { localPath, filename });
                   } else {
-                    cli.log.error(
-                      `Could not identify ${cli.colors.url(url)} download: ${lastResort.map((p) => cli.colors.value(p)).join(', ')}`
+                    Log.error(
+                      `Could not identify ${Colors.url(url)} download: ${lastResort.map((p) => Colors.value(p)).join(', ')}`
                     );
                     this.emitter.emit(url, { error: lastResort });
                   }
@@ -192,8 +186,8 @@ export class Downloader
               );
             }
           } catch (error) {
-            cli.log.error(
-              `Download ${cli.colors.url(url)} failed: ${cli.colors.error(error)}`
+            Log.error(
+              `Download ${Colors.url(url)} failed: ${Colors.error(error)}`
             );
             this.emitter.emit(url, { error });
           }
@@ -215,7 +209,7 @@ export class Downloader
         resolve(downloadData);
       };
       this.emitter.on(url, listener);
-      session.goto(url).catch((error) => cli.log.debug(`Ignored: ${error}`));
+      session.goto(url).catch((error) => Log.debug(`Ignored: ${error}`));
     });
   }
 

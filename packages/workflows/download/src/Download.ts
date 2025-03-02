@@ -1,12 +1,13 @@
 import { Colors } from '@battis/qui-cli.colors';
+import { Core } from '@battis/qui-cli.core';
 import * as Plugin from '@battis/qui-cli.plugin';
 import { Progress } from '@battis/qui-cli.progress';
 import { Output } from '@msar/output';
-import * as Snapshot from '@msar/snapshot/dist/Snapshot'; // import with registering plug-in
+import { PuppeteerSession } from '@msar/puppeteer-session';
+import * as Snapshot from '@msar/snapshot/dist/Snapshot.js'; // import without registering plug-in
 import fs from 'node:fs';
 import path from 'node:path';
 import ora from 'ora';
-import * as Args from './Args.js';
 import { Spider } from './Spider.js';
 
 export type Configuration = Plugin.Configuration & {
@@ -14,11 +15,14 @@ export type Configuration = Plugin.Configuration & {
   exclude?: RegExp | RegExp[];
 };
 
+await Core.configure({ core: { requirePositionals: 1 } });
+
 export const name = '@msar/download';
 export const src = import.meta.dirname;
 
 let include = [/.*/];
 let exclude = [/^https?:/];
+let snapshotPathArg: string | undefined = undefined;
 
 export function configure(config: Configuration = {}) {
   const _include = Plugin.hydrate(config.include, include);
@@ -63,35 +67,39 @@ function stringToRegExpArray(arg?: string): RegExp[] | undefined {
     : undefined;
 }
 
-export function init({ values }: Plugin.ExpectedArguments<typeof options>) {
+export function init({
+  values,
+  positionals
+}: Plugin.ExpectedArguments<typeof options>) {
+  const [_snapshotPathArg] = positionals;
+  if (!_snapshotPathArg) {
+    throw new Error('Required arg0 snapshot path not defined');
+  }
+  snapshotPathArg = _snapshotPathArg;
   include = Plugin.hydrate(stringToRegExpArray(values.include), include);
   exclude = Plugin.hydrate(stringToRegExpArray(values.exclude), exclude);
 }
 
-export async function download(
-  snapshotPathArg?: string,
-  args: Args.Parsed = Args.defaults
-) {
-  const { outputOptions, ...options } = args;
-  const { quit } = options;
-  const { pretty } = outputOptions;
-  let { outputPath } = outputOptions;
-
+export async function run() {
   const spinner = ora();
   spinner.start('Reading snaphot file');
 
   const snapshotPath = path.resolve(process.cwd(), snapshotPathArg!);
 
-  if (!outputPath) {
-    outputPath = path.join(
-      path.dirname(snapshotPath!),
-      path.basename(snapshotPath!, '.json')
-    );
+  if (!Output.outputPath()) {
+    Output.configure({
+      outputPath: path.join(
+        path.dirname(snapshotPath!),
+        path.basename(snapshotPath!, '.json')
+      )
+    });
   } else {
-    if (fs.existsSync(outputPath)) {
-      outputPath = await Output.avoidOverwrite(
-        path.join(outputPath, path.basename(snapshotPath!, '.json'))
-      );
+    if (fs.existsSync(Output.outputPath())) {
+      Output.configure({
+        outputPath: await Output.avoidOverwrite(
+          path.join(Output.outputPath(), path.basename(snapshotPath!, '.json'))
+        )
+      });
     }
   }
 
@@ -121,7 +129,6 @@ export async function download(
   }
   const spider = new Spider({
     host,
-    outputOptions: { ...outputOptions, outputPath },
     ...options
   });
   const indices: (string | undefined)[] = [];
@@ -133,8 +140,7 @@ export async function download(
     );
     indices.push(
       await spider.download(snapshot, {
-        ...options,
-        outputOptions: { ...outputOptions, outputPath }
+        ...options
       })
     );
     Progress.increment();
@@ -142,35 +148,38 @@ export async function download(
   Progress.stop();
   const Finish = new Date();
 
-  const index = [];
+  const index: any[] = [];
   for (const fileName of indices) {
     if (fileName) {
       index.push(
         JSON.parse(
           fs
-            .readFileSync(Output.filePathFromOutputPath(outputPath, fileName)!)
+            .readFileSync(
+              Output.filePathFromOutputPath(Output.outputPath(), fileName)!
+            )
             .toString()
         )
       );
-      fs.unlinkSync(Output.filePathFromOutputPath(outputPath, fileName)!);
+      fs.unlinkSync(
+        Output.filePathFromOutputPath(Output.outputPath(), fileName)!
+      );
     }
   }
-  const indexPath = Output.filePathFromOutputPath(outputPath, 'index.json');
-  await Output.writeJSON(indexPath, index, { pretty });
-  await Output.writeJSON(
-    path.resolve(indexPath, '../metadata.json'),
-    {
-      snapshotPath,
-      Start,
-      Finish,
-      Elapsed: Finish.getTime() - Start.getTime(),
-      ...options,
-      credentials: undefined
-    },
-    { pretty }
+  const indexPath = Output.filePathFromOutputPath(
+    Output.outputPath(),
+    'index.json'
   );
+  await Output.writeJSON(indexPath, index);
+  await Output.writeJSON(path.resolve(indexPath, '../metadata.json'), {
+    snapshotPath,
+    Start,
+    Finish,
+    Elapsed: Finish.getTime() - Start.getTime(),
+    ...options,
+    credentials: undefined
+  });
 
-  if (quit) {
+  if (PuppeteerSession.quit()) {
     await spider.quit();
   }
   spinner.succeed(

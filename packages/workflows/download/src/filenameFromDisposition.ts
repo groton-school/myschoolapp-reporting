@@ -1,4 +1,5 @@
-import cli from '@battis/qui-cli';
+import { Colors } from '@battis/qui-cli.colors';
+import { Log } from '@battis/qui-cli.log';
 import contentDisposition from 'content-disposition';
 import path from 'node:path';
 
@@ -18,10 +19,10 @@ export function filenameFromDisposition({ url, value }: Options): string {
   if (value) {
     try {
       filename = contentDisposition.parse(value || '').parameters?.filename;
-      cli.log.debug(`${url}: ${filename}`);
+      Log.debug(`${url}: ${filename}`);
     } catch (error) {
-      cli.log.warning(
-        `Error parsing ${cli.colors.url(url)} {${ContentDisposition}: ${cli.colors.quotedValue(`"${value}"`)}}: ${cli.colors.error(error)}`
+      Log.warning(
+        `Error parsing ${Colors.url(url)} {${ContentDisposition}: ${Colors.quotedValue(`"${value}"`)}}: ${Colors.error(error)}`
       );
     }
   }

@@ -1,5 +1,6 @@
+import { Output } from '@msar/output';
+import { Workflow } from '@msar/workflow';
 import PQueue from 'p-queue';
-import * as common from '../../common.js';
 import * as Cache from './Cache.js';
 import * as AuthenticatedFetch from './Downloader/AuthenticatedFetch.js';
 import * as HTTPFetch from './Downloader/HTTPFetch.js';
@@ -7,9 +8,7 @@ import { Strategy } from './Downloader/Strategy.js';
 
 export type Options = {
   host: string;
-} & common.Output.Args.Parsed &
-  common.PuppeteerSession.Args.Parsed &
-  common.Workflow.Args.Parsed;
+};
 
 // TODO Downloader needs to honor --concurrentThreads
 export class Downloader implements Strategy {
@@ -18,23 +17,16 @@ export class Downloader implements Strategy {
   private host: string;
   private queue: PQueue;
 
-  public constructor({ host, outputOptions, ...options }: Options) {
-    const { outputPath } = outputOptions;
-    const { concurrentThreads } = options;
-    if (!outputPath) {
-      throw new common.Output.OutputError('Downloader requires outputPath');
+  public constructor({ host }: Options) {
+    if (!Output.outputPath()) {
+      throw new Output.OutputError('Downloader requires outputPath');
     }
     this.host = host;
-    this.queue = new PQueue({ concurrency: concurrentThreads });
+    this.queue = new PQueue({ concurrency: Workflow.concurrentThreads() });
     this.auth = new AuthenticatedFetch.Downloader({
-      host,
-      outputOptions,
-      ...options
+      host
     });
-    this.http = new HTTPFetch.Downloader({
-      outputPath,
-      ...options
-    });
+    this.http = new HTTPFetch.Downloader();
   }
 
   public async download(original: string, filename?: string) {

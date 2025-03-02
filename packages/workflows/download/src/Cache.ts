@@ -1,4 +1,5 @@
-import cli from '@battis/qui-cli';
+import { Colors } from '@battis/qui-cli.colors';
+import { Log } from '@battis/qui-cli.log';
 import { EventEmitter } from 'node:events';
 
 export type DownloadData = {
@@ -46,9 +47,7 @@ function normalizeURL(url: string) {
     .replace(/^(\/.+\?.*)(w|h)=\dpx&?(.*)$/, '$1$3')
     .replace(/\?$/, '');
   if (normalized !== url) {
-    cli.log.debug(
-      `${cli.colors.url(url)} normalized to ${cli.colors.url(normalized)}`
-    );
+    Log.debug(`${Colors.url(url)} normalized to ${Colors.url(normalized)}`);
   }
   return normalized;
 }

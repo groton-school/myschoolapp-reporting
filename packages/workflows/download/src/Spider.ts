@@ -1,14 +1,17 @@
-import cli from '@battis/qui-cli';
+import { Colors } from '@battis/qui-cli.colors';
+import { Log } from '@battis/qui-cli.log';
+import { Debug } from '@msar/debug';
+import { Output } from '@msar/output';
+import * as Snapshot from '@msar/snapshot/dist/Snapshot.js';
+import { Workflow } from '@msar/workflow';
 import path from 'node:path';
-import * as common from '../../common.js';
-import * as Snapshot from '../Snapshot.js';
 import * as Cache from './Cache.js';
 import * as Downloader from './Downloader.js';
 
 export type Options = {
   include?: RegExp[];
   exclude?: RegExp[];
-} & common.Args.Parsed;
+};
 
 type TraverseOptions = Options & {
   host: string;
@@ -24,38 +27,33 @@ export class Spider {
 
   public async download(
     snapshot: Snapshot.Single.Data,
-    { outputOptions, ...options }: Options
+    { ...options }: Options
   ) {
-    const { outputPath, pretty } = outputOptions;
-    if (!outputPath) {
-      throw new common.Output.OutputError('Spider requires outputPath');
+    if (!Output.outputPath()) {
+      throw new Output.OutputError('Spider requires outputPath');
     }
     if (snapshot) {
-      common.Debug.withGroupId(
-        snapshot.SectionInfo?.Id || cli.colors.error('unknown'),
+      Debug.withGroupId(
+        snapshot.SectionInfo?.Id || Colors.error('unknown'),
         'Downloading supporting files'
       );
       await this.traverse(snapshot, {
         host: snapshot.Metadata.Host,
-        outputOptions,
         ...options,
-        pathToComponent: path.basename(outputPath)
+        pathToComponent: path.basename(Output.outputPath())
       });
       const indexName = `${snapshot.SectionInfo?.Id || 'index'}.json`;
-      await common.Output.writeJSON(
-        await common.Output.avoidOverwrite(path.join(outputPath, indexName)),
-        snapshot,
-        {
-          pretty
-        }
+      await Output.writeJSON(
+        await Output.avoidOverwrite(path.join(Output.outputPath(), indexName)),
+        snapshot
       );
-      common.Debug.withGroupId(
-        snapshot.SectionInfo?.Id || cli.colors.error('unknown'),
-        `Supporting files exported to ${cli.colors.url(outputPath)}/${cli.colors.value(indexName)}`
+      Debug.withGroupId(
+        snapshot.SectionInfo?.Id || Colors.error('unknown'),
+        `Supporting files exported to ${Colors.url(Output.outputPath())}/${Colors.value(indexName)}`
       );
       return indexName;
     } else {
-      cli.log.warning('Could not downlod course content (no index available)');
+      Log.warning('Could not downlod course content (no index available)');
       return undefined;
     }
   }
@@ -64,7 +62,7 @@ export class Spider {
     snapshotComponent: object,
     { pathToComponent, ...options }: TraverseOptions
   ) {
-    const { include, exclude, ignoreErrors } = options;
+    const { include, exclude } = options;
     if (Array.isArray(snapshotComponent)) {
       await Promise.allSettled(
         snapshotComponent.map(async (elt, i) => {
@@ -121,7 +119,7 @@ export class Spider {
               ) {
                 url = `/ftpimages/:SchoolId/user/${url}`;
               }
-              cli.log.debug({ pathToComponent, key, url });
+              Log.debug({ pathToComponent, key, url });
 
               try {
                 const item = await this.downloader.download(
@@ -132,15 +130,15 @@ export class Spider {
                     : undefined
                 );
                 (snapshotComponent[key] as Cache.Item) = item;
-                cli.log.debug(
+                Log.debug(
                   `${pathToComponent}[${key}]: ${item.localPath || item.error}`
                 );
               } catch (error) {
-                if (ignoreErrors) {
-                  const message = `Download ${cli.colors.value(key)} ${cli.colors.url(
+                if (Workflow.ignoreErrors()) {
+                  const message = `Download ${Colors.value(key)} ${Colors.url(
                     snapshotComponent[key]
                   )} failed: ${error}`;
-                  cli.log.error(message);
+                  Log.error(message);
                   (snapshotComponent[key] as Cache.Item) = {
                     original: snapshotComponent[key],
                     accessed: new Date(),
