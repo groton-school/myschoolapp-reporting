@@ -113,10 +113,6 @@ importers:
         version: 5.7.3
 
   packages/components/output:
-    dependencies:
-      '@msar/output':
-        specifier: workspace:*
-        version: 'link:'
     devDependencies:
       '@battis/qui-cli.colors':
         specifier: ^2.0.1
@@ -133,6 +129,9 @@ importers:
       '@msar/debug':
         specifier: workspace:*
         version: link:../debug
+      '@msar/workflow':
+        specifier: workspace:*
+        version: link:../workflow
       '@tsconfig/node20':
         specifier: ^20.1.4
         version: 20.1.4
@@ -288,28 +287,58 @@ importers:
       '@msar/output':
         specifier: workspace:*
         version: link:../../components/output
+      content-disposition:
+        specifier: ^0.5.4
+        version: 0.5.4
       ora:
         specifier: ^8.2.0
         version: 8.2.0
+      p-queue:
+        specifier: ^8.1.0
+        version: 8.1.0
+      puppeteer:
+        specifier: ^23.11.1
+        version: 23.11.1(typescript@5.7.3)
     devDependencies:
       '@battis/qui-cli.colors':
         specifier: ^2.0.1
         version: 2.0.1(@battis/qui-cli.plugin@2.2.0)
+      '@battis/qui-cli.core':
+        specifier: ^2.1.0
+        version: 2.1.0(@battis/qui-cli.plugin@2.2.0)
+      '@battis/qui-cli.log':
+        specifier: ^2.0.1
+        version: 2.0.1(@battis/qui-cli.colors@2.0.1(@battis/qui-cli.plugin@2.2.0))(@battis/qui-cli.plugin@2.2.0)(@battis/qui-cli.root@2.0.2(@battis/qui-cli.plugin@2.2.0))
       '@battis/qui-cli.plugin':
         specifier: ^2.2.0
         version: 2.2.0
       '@battis/qui-cli.progress':
         specifier: ^2.0.1
         version: 2.0.1(@battis/qui-cli.colors@2.0.1(@battis/qui-cli.plugin@2.2.0))(@battis/qui-cli.plugin@2.2.0)
+      '@msar/debug':
+        specifier: workspace:*
+        version: link:../../components/debug
+      '@msar/puppeteer-session':
+        specifier: workspace:*
+        version: link:../../components/puppeteer-session
       '@msar/snapshot':
         specifier: workspace:*
         version: link:../snapshot
+      '@msar/workflow':
+        specifier: workspace:*
+        version: link:../../components/workflow
       '@tsconfig/node20':
         specifier: ^20.1.4
         version: 20.1.4
+      '@types/content-disposition':
+        specifier: ^0.5.8
+        version: 0.5.8
       commit-and-tag-version:
         specifier: ^12.5.0
         version: 12.5.0
+      datadirect-puppeteer:
+        specifier: workspace:*
+        version: link:../../components/datadirect-puppeteer
       del-cli:
         specifier: ^6.0.0
         version: 6.0.0
@@ -387,6 +416,9 @@ importers:
       '@battis/qui-cli.colors':
         specifier: ^2.0.1
         version: 2.0.1(@battis/qui-cli.plugin@2.2.0)
+      '@battis/qui-cli.core':
+        specifier: ^2.1.0
+        version: 2.1.0(@battis/qui-cli.plugin@2.2.0)
       '@battis/qui-cli.log':
         specifier: ^2.0.1
         version: 2.0.1(@battis/qui-cli.colors@2.0.1(@battis/qui-cli.plugin@2.2.0))(@battis/qui-cli.plugin@2.2.0)(@battis/qui-cli.root@2.0.2(@battis/qui-cli.plugin@2.2.0))
@@ -405,6 +437,9 @@ importers:
       '@msar/puppeteer-session':
         specifier: workspace:*
         version: link:../../components/puppeteer-session
+      '@msar/workflow':
+        specifier: workspace:*
+        version: link:../../components/workflow
       '@tsconfig/node20':
         specifier: ^20.1.4
         version: 20.1.4
@@ -1319,6 +1354,9 @@ packages:
   '@tybys/wasm-util@0.9.0':
     resolution: {integrity: sha512-6+7nlbMVX/PVDCwaIQ8nTOPveOcFLSt8GcXdx8hD0bt39uWxYT88uXzqTd4fTvqta7oeUJqudepapKNt2DYJFw==}
 
+  '@types/content-disposition@0.5.8':
+    resolution: {integrity: sha512-QVSSvno3dE0MgO76pJhmv4Qyi/j0Yk9pBp0Y7TJ2Tlj+KCgJWY6qX7nnxCOLkZ3VYRSIk1WTxCvwUSdx6CCLdg==}
+
   '@types/conventional-commits-parser@5.0.1':
     resolution: {integrity: sha512-7uz5EHdzz2TqoMfV7ee61Egf5y6NkcO4FB/1iCCQnbeiI1F3xzv3vK5dBCXUCLQgGYS+mUeigK1iKQzvED+QnQ==}
 
@@ -1828,6 +1866,10 @@ packages:
 
   console-control-strings@1.1.0:
     resolution: {integrity: sha512-ty/fTekppD2fIwRvnZAVdeOiGd1c7YXEixbgJTNzqcxJWKQnjJ/V1bNEEE6hygpM3WjwHFUVK6HTjWSzV4a8sQ==}
+
+  content-disposition@0.5.4:
+    resolution: {integrity: sha512-FveZTNuGw04cxlAiWbzi6zTAL/lhehaWbTtgluJh4/E95DqMwTmha3KZN1aAWA8cFIhHzMZUvLevkw5Rqk+tSQ==}
+    engines: {node: '>= 0.6'}
 
   conventional-changelog-angular@6.0.0:
     resolution: {integrity: sha512-6qLgrBF4gueoC7AFVHu51nHL9pF9FRjXrH+ceVf7WmAfH3gs+gEYOkvxhjMPjZu57I4AGUGoNTY8V7Hrgf1uqg==}
@@ -6018,6 +6060,8 @@ snapshots:
     dependencies:
       tslib: 2.8.1
 
+  '@types/content-disposition@0.5.8': {}
+
   '@types/conventional-commits-parser@5.0.1':
     dependencies:
       '@types/node': 22.13.7
@@ -6576,6 +6620,10 @@ snapshots:
       typedarray: 0.0.6
 
   console-control-strings@1.1.0: {}
+
+  content-disposition@0.5.4:
+    dependencies:
+      safe-buffer: 5.2.1
 
   conventional-changelog-angular@6.0.0:
     dependencies:
