@@ -2,14 +2,14 @@ import { Colors } from '@battis/qui-cli.colors';
 import * as Plugin from '@battis/qui-cli.plugin';
 import { Root } from '@battis/qui-cli.root';
 
-export * from './avoidOverwrite.js';
-export { filePathFromOutputPath } from './filePathFromOutputPath.js';
-export * from './OutputError.js';
-export { oxfordComma } from './oxfordComma.js';
-export { pathsafeTimestamp } from './pathsafeTimestamp.js';
-export { writeFetchedFile } from './writeFetchedFile.js';
-export { writeJSON } from './writeJSON.js';
-export { writeRecursive } from './writeRecursive.js';
+export * from './Output/avoidOverwrite.js';
+export { filePathFromOutputPath } from './Output/filePathFromOutputPath.js';
+export * from './Output/OutputError.js';
+export { oxfordComma } from './Output/oxfordComma.js';
+export { pathsafeTimestamp } from './Output/pathsafeTimestamp.js';
+export { writeFetchedFile } from './Output/writeFetchedFile.js';
+export { writeJSON } from './Output/writeJSON.js';
+export { writeRecursive } from './Output/writeRecursive.js';
 
 export type Configuration = Plugin.Configuration & {
   outputPath?: string;
