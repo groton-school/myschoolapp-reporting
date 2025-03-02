@@ -1,13 +1,17 @@
 import { Colors } from '@battis/qui-cli.colors';
 import { Log } from '@battis/qui-cli.log';
 
-export { CustomError } from './CustomError.js';
-
 export const name = '@msar/debug';
 export const src = import.meta.dirname;
 
 export function format(base: string, message?: string) {
   return `${base}${message ? `: ${message}` : '.'}`;
+}
+
+export class CustomError extends Error {
+  public constructor(base: string, message?: string) {
+    super(format(base, message));
+  }
 }
 
 export function formatWithGroupId(
