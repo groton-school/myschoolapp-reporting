@@ -123,6 +123,7 @@ export async function run() {
       } else if (host !== other) {
         throw new Error('Multiple hosts present in snapshot file.');
       }
+      return host;
     }, undefined);
   if (!host) {
     throw new Error('No host present in snapshot file.');
