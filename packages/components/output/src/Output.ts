@@ -6,6 +6,7 @@ export * from './Output/avoidOverwrite.js';
 export { filePathFromOutputPath } from './Output/filePathFromOutputPath.js';
 export * from './Output/OutputError.js';
 export { oxfordComma } from './Output/oxfordComma.js';
+export * from './Output/pathSafeFilename.js';
 export { pathsafeTimestamp } from './Output/pathsafeTimestamp.js';
 export { Configuration } from './Output/Storage.js';
 export { writeFetchedFile } from './Output/writeFetchedFile.js';
