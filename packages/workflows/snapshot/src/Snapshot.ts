@@ -19,7 +19,7 @@ Core.configure({ core: { requirePositionals: true } });
 export const name = '@msar/snapshot';
 export const src = import.meta.dirname;
 
-const snapshotOptions: Single.SnapshotOptions = {
+let snapshotOptions: Single.SnapshotOptions = {
   bulletinBoard: true,
   topics: true,
   assignments: true,
@@ -33,7 +33,7 @@ const snapshotOptions: Single.SnapshotOptions = {
   }
 };
 
-const allOptions: All.AllOptions = {
+let allOptions: All.AllOptions = {
   association: undefined,
   termsOffered: undefined,
   year: `${new Date().getFullYear()} - ${new Date().getFullYear() + 1}`,
@@ -63,7 +63,7 @@ function hydrate<T extends Record<string, any>>(
 }
 
 export function configure(config: Configuration = {}) {
-  hydrate(
+  snapshotOptions = hydrate(
     config,
     snapshotOptions,
     ['bulletinBoard', 'topics', 'assignments', 'gradebook', 'studentData'],
@@ -71,14 +71,14 @@ export function configure(config: Configuration = {}) {
   );
 
   const payload: api.datadirect.ContentItem.Payload = { format: 'json' };
-  hydrate(
+  snapshotOptions.payload = hydrate(
     config.payload || payload,
     snapshotOptions.payload || payload,
     ['active', 'future', 'expired'],
     payload
   );
 
-  hydrate(
+  allOptions = hydrate(
     config,
     allOptions,
     ['association', 'termsOffered', 'year', 'groupsPath'],
