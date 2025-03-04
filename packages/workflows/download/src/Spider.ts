@@ -110,12 +110,12 @@ export class Spider {
               let url: string = snapshotComponent[key];
               if (
                 key === 'ThumbFilename' &&
-                /^thumb_topic_[a-z0-9_.]/i.test(url)
+                /^thumb_topic[a-z0-9_.]/i.test(url)
               ) {
                 url = `/ftpimages/:SchoolId/topics/${url}`;
               } else if (
                 key === 'PhotoFilename' &&
-                /^thumb_user_[a-z0-9_.]/i.test(url)
+                /^thumb_user[a-z0-9_.]/i.test(url)
               ) {
                 url = `/ftpimages/:SchoolId/user/${url}`;
               }
