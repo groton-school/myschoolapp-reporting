@@ -30,6 +30,7 @@ export type SnapshotOptions = {
   gradebook?: boolean;
   studentData?: boolean;
   payload?: types.datadirect.common.ContentItem.Payload;
+  outputPath?: string;
   quit?: boolean;
 };
 
@@ -53,6 +54,7 @@ export async function snapshot({
   topics,
   assignments,
   gradebook,
+  outputPath,
   quit = PuppeteerSession.quit(),
   ...options
 }: Options) {
@@ -126,13 +128,15 @@ export async function snapshot({
   snapshot.Metadata.Elapsed =
     snapshot.Metadata.Finish.getTime() - snapshot.Metadata.Start.getTime();
 
-  if (Output.outputPath()) {
-    let basename = 'snapshot';
+  if (outputPath) {
+    let basename = 'snapshot.json';
     if (snapshot.SectionInfo) {
-      basename = `${snapshot.SectionInfo.SchoolYear} - ${snapshot.SectionInfo.Teacher} - ${snapshot.SectionInfo.GroupName} - ${snapshot.SectionInfo.Id}`;
+      basename = Output.pathsafeFilename(
+        `${snapshot.SectionInfo.SchoolYear} - ${snapshot.SectionInfo.Teacher} - ${snapshot.SectionInfo.GroupName} - ${snapshot.SectionInfo.Id}.json`
+      );
     }
     const filepath = await Output.avoidOverwrite(
-      Output.filePathFromOutputPath(Output.outputPath(), `${basename}.json`)
+      Output.filePathFromOutputPath(outputPath, basename)
     );
     Output.writeJSON(filepath, snapshot);
     Output.writeJSON(filepath.replace(/\.json$/, '.metadata.json'), {
