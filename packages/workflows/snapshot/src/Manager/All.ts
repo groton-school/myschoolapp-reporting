@@ -11,6 +11,7 @@ import fs from 'node:fs/promises';
 import path from 'node:path';
 import ora from 'ora';
 import PQueue from 'p-queue';
+import * as Storage from '../Storage.js';
 import * as Single from './Single.js';
 
 export type AllOptions = {
@@ -34,15 +35,8 @@ function cleanSplit(list?: string) {
   return (list || '').split(',').map((item) => item.trim());
 }
 
-export async function snapshot({
-  url,
-  association,
-  termsOffered,
-  year,
-  groupsPath,
-  ...options
-}: Options) {
-  if (!year) {
+export async function snapshot({ url, ...options }: Options) {
+  if (!Storage.allOptions().year) {
     throw new Error(`year must be defined`);
   }
 
@@ -51,19 +45,20 @@ export async function snapshot({
   const session = await PuppeteerSession.Fetchable.init(url);
   spinner.succeed('Authentication complete.');
   Log.info(`Snapshot temporary files will be saved to ${Colors.url(TEMP)}`);
-  const associations = cleanSplit(association);
-  const terms = cleanSplit(termsOffered);
+  const associations = cleanSplit(Storage.allOptions().association);
+  const terms = cleanSplit(Storage.allOptions().termsOffered);
   const groups = (
     await DatadirectPuppeteer.api.datadirect.groupFinderByYear({
       ...options,
       payload: {
-        schoolYearLabel: year
+        schoolYearLabel: Storage.allOptions().year!
       }
     })
   ).filter(
     (group) =>
-      (association === undefined || associations.includes(group.association)) &&
-      (termsOffered === undefined ||
+      (Storage.allOptions().association === undefined ||
+        associations.includes(group.association)) &&
+      (Storage.allOptions().termsOffered === undefined ||
         terms.reduce(
           (match, term) => match && group.terms_offered.includes(term),
           true
@@ -72,9 +67,12 @@ export async function snapshot({
   Log.info(`${groups.length} groups match filters`);
 
   Progress.start({ max: groups.length });
-  if (groupsPath) {
-    groupsPath = Output.filePathFromOutputPath(groupsPath, 'groups.json');
-    Output.writeJSON(groupsPath, groups);
+  if (Storage.allOptions().groupsPath) {
+    Storage.allOptions().groupsPath = Output.filePathFromOutputPath(
+      Storage.allOptions().groupsPath,
+      'groups.json'
+    );
+    Output.writeJSON(Storage.allOptions().groupsPath, groups);
   }
 
   const zeros = new Array((groups.length + '').length).fill(0).join('');
@@ -138,8 +136,8 @@ export async function snapshot({
     Start,
     Finish,
     Elapsed: Finish.getTime() - Start.getTime(),
-    year,
-    groupsPath,
+    year: Storage.allOptions().year,
+    groupsPath: Storage.allOptions().groupsPath,
     bulletinBoard,
     topics,
     assignments,

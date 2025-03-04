@@ -4,6 +4,7 @@ import { Output } from '@msar/output';
 import { PuppeteerSession } from '@msar/puppeteer-session';
 import { api as types } from 'datadirect';
 import * as Area from '../Area.js';
+import * as Storage from '../Storage.js';
 
 export type Metadata = {
   Host: string;
@@ -48,19 +49,16 @@ export type Options = SnapshotOptions & Context;
 
 export async function snapshot({
   session,
-  url,
   groupId,
-  bulletinBoard,
-  topics,
-  assignments,
-  gradebook,
   outputPath,
   quit = PuppeteerSession.quit(),
   ...options
 }: Options) {
-  if (url && groupId === undefined) {
+  if (Storage.url() && groupId === undefined) {
     groupId = parseInt(
-      (url.toString().match(/https:\/\/[^0-9]+(\d+)/) || { 1: '' })[1]
+      (Storage.url()!
+        .toString()
+        .match(/https:\/\/[^0-9]+(\d+)/) || { 1: '' })[1]
     );
   }
   if (!groupId) {
@@ -69,9 +67,9 @@ export async function snapshot({
   Debug.withGroupId(groupId, 'Start');
 
   if (!session) {
-    if (url) {
+    if (Storage.url()) {
       Debug.withGroupId(groupId, 'Creating session');
-      session = await PuppeteerSession.Fetchable.init(url);
+      session = await PuppeteerSession.Fetchable.init(Storage.url()!);
     } else {
       throw new Error(
         'An LMS URL is required to open a new datadirect session'
@@ -90,10 +88,18 @@ export async function snapshot({
   const [SectionInfo, BulletinBoard, Topics, Assignments, Gradebook] =
     await Promise.all([
       Area.SectionInfo.snapshot(endpointParams),
-      bulletinBoard ? Area.BulletinBoard.snaphot(endpointParams) : undefined,
-      topics ? Area.Topics.snapshot(endpointParams) : undefined,
-      assignments ? await Area.Assignments.snapshot(endpointParams) : undefined,
-      gradebook ? Area.GradeBook.snapshot(endpointParams) : undefined
+      Storage.snapshotOptions().bulletinBoard
+        ? Area.BulletinBoard.snaphot(endpointParams)
+        : undefined,
+      Storage.snapshotOptions().topics
+        ? Area.Topics.snapshot(endpointParams)
+        : undefined,
+      Storage.snapshotOptions().assignments
+        ? await Area.Assignments.snapshot(endpointParams)
+        : undefined,
+      Storage.snapshotOptions().gradebook
+        ? Area.GradeBook.snapshot(endpointParams)
+        : undefined
     ]);
 
   const snapshot: Data = {
@@ -141,10 +147,7 @@ export async function snapshot({
     Output.writeJSON(filepath, snapshot);
     Output.writeJSON(filepath.replace(/\.json$/, '.metadata.json'), {
       ...snapshot.Metadata,
-      bulletinBoard,
-      topics,
-      assignments,
-      gradebook,
+      ...Storage.snapshotOptions(),
       options
     });
   }

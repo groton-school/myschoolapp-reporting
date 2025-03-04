@@ -7,6 +7,7 @@ import path from 'node:path';
 import ora from 'ora';
 import * as All from './Manager/All.js';
 import * as Single from './Manager/Single.js';
+import * as Storage from './Storage.js';
 
 export { All, Single };
 
@@ -18,36 +19,6 @@ Core.configure({ core: { requirePositionals: true } });
 
 export const name = '@msar/snapshot';
 export const src = import.meta.dirname;
-
-let snapshotOptions: Single.SnapshotOptions = {
-  bulletinBoard: true,
-  topics: true,
-  assignments: true,
-  gradebook: true,
-  studentData: true,
-  payload: {
-    format: 'json',
-    active: true,
-    future: true,
-    expired: true
-  }
-};
-
-let allOptions: All.AllOptions = {
-  association: undefined,
-  termsOffered: undefined,
-  year: `${new Date().getFullYear()} - ${new Date().getFullYear() + 1}`,
-  groupsPath: undefined
-};
-if (new Date().getMonth() <= 6) {
-  allOptions.year = `${new Date().getFullYear() - 1} - ${new Date().getFullYear()}`;
-}
-
-let url: string | URL | undefined = undefined;
-
-let all = false;
-let fromDate = new Date().toLocaleDateString('en-US');
-let contextLabelId = 2;
 
 function hydrate<T extends Record<string, any>>(
   proposal: T,
@@ -63,31 +34,42 @@ function hydrate<T extends Record<string, any>>(
 }
 
 export function configure(config: Configuration = {}) {
-  snapshotOptions = hydrate(
-    config,
-    snapshotOptions,
-    ['bulletinBoard', 'topics', 'assignments', 'gradebook', 'studentData'],
-    {}
+  const payload: api.datadirect.ContentItem.Payload = {
+    format: 'json',
+    active: config.active,
+    expired: config.expired,
+    future: config.future
+  };
+  Storage.snapshotOptions(
+    hydrate(
+      { payload, ...config },
+      Storage.snapshotOptions(),
+      [
+        'bulletinBoard',
+        'topics',
+        'assignments',
+        'gradebook',
+        'studentData',
+        'payload'
+      ],
+      {}
+    )
   );
 
-  const payload: api.datadirect.ContentItem.Payload = { format: 'json' };
-  snapshotOptions.payload = hydrate(
-    config.payload || payload,
-    snapshotOptions.payload || payload,
-    ['active', 'future', 'expired'],
-    payload
+  Storage.allOptions(
+    hydrate(
+      config,
+      Storage.allOptions(),
+      ['association', 'termsOffered', 'year', 'groupsPath'],
+      {}
+    )
   );
 
-  allOptions = hydrate(
-    config,
-    allOptions,
-    ['association', 'termsOffered', 'year', 'groupsPath'],
-    {}
+  Storage.all(Plugin.hydrate(config.all, Storage.all()));
+  Storage.fromDate(Plugin.hydrate(config.fromDate, Storage.fromDate));
+  Storage.contextLabelId(
+    Plugin.hydrate(config.contextLabelId, Storage.contextLabelId())
   );
-
-  all = Plugin.hydrate(config.all, all);
-  fromDate = Plugin.hydrate(config.fromDate, fromDate);
-  contextLabelId = Plugin.hydrate(config.contextLabelId, contextLabelId);
 }
 
 export function options(): Plugin.Options {
@@ -96,44 +78,44 @@ export function options(): Plugin.Options {
     flag: {
       all: {
         short: 'A',
-        description: `Capture all sections (default: ${Colors.value(all)}, positional argument ${Colors.value(`arg0`)} is used to identify MySchoolApp instance)`,
-        default: all
+        description: `Capture all sections (default: ${Colors.value(Storage.all())}, positional argument ${Colors.value(`arg0`)} is used to identify MySchoolApp instance)`,
+        default: Storage.all()
       },
       active: {
-        description: `Show currently active items (default: ${Colors.value(snapshotOptions.payload?.active)})`,
-        default: snapshotOptions.payload?.active
+        description: `Show currently active items (default: ${Colors.value(Storage.snapshotOptions().payload?.active)})`,
+        default: Storage.snapshotOptions().payload?.active
       },
       future: {
-        description: `Show future items (default: ${Colors.value(snapshotOptions.payload?.future)})`,
-        default: snapshotOptions.payload?.future
+        description: `Show future items (default: ${Colors.value(Storage.snapshotOptions().payload?.future)})`,
+        default: Storage.snapshotOptions().payload?.future
       },
       expired: {
-        description: `Show expired items (default: ${Colors.value(snapshotOptions.payload?.expired)})`,
-        default: snapshotOptions.payload?.expired
+        description: `Show expired items (default: ${Colors.value(Storage.snapshotOptions().payload?.expired)})`,
+        default: Storage.snapshotOptions().payload?.expired
       },
       bulletinBoard: {
-        description: `Include the course Bulletin Board in the snapshot (default ${Colors.value(snapshotOptions.bulletinBoard)})`,
+        description: `Include the course Bulletin Board in the snapshot (default ${Colors.value(Storage.snapshotOptions().bulletinBoard)})`,
         short: 'b',
-        default: snapshotOptions.bulletinBoard
+        default: Storage.snapshotOptions().bulletinBoard
       },
       topics: {
-        description: `Include the course Topics in the snapshot (default ${Colors.value(snapshotOptions.topics)})`,
+        description: `Include the course Topics in the snapshot (default ${Colors.value(Storage.snapshotOptions().topics)})`,
         short: 't',
-        default: snapshotOptions.topics
+        default: Storage.snapshotOptions().topics
       },
       assignments: {
         short: 'a',
-        description: `Include the course Assignments in the snapshot (default ${Colors.value(snapshotOptions.assignments)})`,
-        default: snapshotOptions.assignments
+        description: `Include the course Assignments in the snapshot (default ${Colors.value(Storage.snapshotOptions().assignments)})`,
+        default: Storage.snapshotOptions().assignments
       },
       gradebook: {
-        description: `Include the course Gradebook in the snapshot (default ${Colors.value(snapshotOptions.gradebook)})`,
+        description: `Include the course Gradebook in the snapshot (default ${Colors.value(Storage.snapshotOptions().gradebook)})`,
         short: 'g',
-        default: snapshotOptions.gradebook
+        default: Storage.snapshotOptions().gradebook
       },
       studentData: {
-        description: `Include student data in the course snapshot (default ${Colors.value(snapshotOptions.studentData)}, i.e. ${Colors.value('--no-studentData')} which preempts any other flags that have been set)`,
-        default: snapshotOptions.studentData
+        description: `Include student data in the course snapshot (default ${Colors.value(Storage.snapshotOptions().studentData)}, i.e. ${Colors.value('--no-studentData')} which preempts any other flags that have been set)`,
+        default: Storage.snapshotOptions().studentData
       }
     },
     opt: {
@@ -154,8 +136,8 @@ export function options(): Plugin.Options {
           )
       },
       fromDate: {
-        description: `Starting date for date-based filter where relevant (default is today's date: ${Colors.quotedValue(`"${fromDate}"`)})`,
-        default: fromDate
+        description: `Starting date for date-based filter where relevant (default is today's date: ${Colors.quotedValue(`"${Storage.fromDate()}"`)})`,
+        default: Storage.fromDate()
       },
       toDate: {
         description: `ending date for data-based filter where relevant`
@@ -179,14 +161,14 @@ export function options(): Plugin.Options {
         description: `Path to output directory or file to save filtered groups listing (include placeholder ${Colors.quotedValue('"%TIMESTAMP%"')} to specify its location, otherwise it is added automatically when needed to avoid overwriting existing files)`
       },
       year: {
-        description: `If ${Colors.value(`--all`)} flag is used, which year to download. (Default: ${Colors.quotedValue(`"${allOptions.year}"`)})`,
-        default: allOptions.year
+        description: `If ${Colors.value(`--all`)} flag is used, which year to download. (Default: ${Colors.quotedValue(`"${Storage.allOptions().year}"`)})`,
+        default: Storage.allOptions().year
       }
     },
     num: {
       contextLabelId: {
-        description: `(default: ${Colors.value(contextLabelId)})`,
-        default: contextLabelId
+        description: `(default: ${Colors.value(Storage.contextLabelId())})`,
+        default: Storage.contextLabelId()
       }
     },
     man: [
@@ -199,35 +181,29 @@ export function options(): Plugin.Options {
 
 export function init(args: Plugin.ExpectedArguments<typeof options>) {
   const {
-    positionals: [_url]
+    positionals: [url]
   } = args;
-  if (!_url) {
+  if (!url) {
     throw new Error(`Expected arg0 (URL) not defined`);
   }
-  url = new URL(_url);
+  Storage.url(new URL(url));
   configure(args.values);
 }
 
 export async function run() {
-  if (!url) {
+  if (!Storage.url()) {
     throw new Error(
       `${Colors.value('arg0')} must be the URL of an LMS instance`
     );
   }
 
-  if (all) {
-    await All.snapshot({
-      url,
-      ...snapshotOptions,
-      ...allOptions,
-      ...options
-    });
+  if (Storage.all()) {
+    await All.snapshot({ url: Storage.url()! });
   } else {
     const spinner = ora();
-    spinner.start(`Capturing snapshot from ${Colors.url(url)}`);
+    spinner.start(`Capturing snapshot from ${Colors.url(Storage.url())}`);
     const snapshot = await Single.snapshot({
-      url,
-      ...snapshotOptions,
+      outputPath: Output.outputPath(),
       ...options
     });
     spinner.succeed(
