@@ -41,7 +41,7 @@ export function options(): Plugin.Options {
   return {
     flag: {
       ignoreErrors: {
-        description: `Continue collecting snapshots even if errors are encountered (default: ${Colors.value(props.ignoreErrors)}${props.ignoreErrors ? `, use ${Colors.value('--no-_ignoreErrors')} to halt on errors` : ''})`,
+        description: `Continue collecting snapshots even if errors are encountered (default: ${Colors.value(props.ignoreErrors)}${props.ignoreErrors ? `, use ${Colors.value('--no--ignoreErrors')} to halt on errors` : ''})`,
         default: props.ignoreErrors
       },
       logRequests: {
