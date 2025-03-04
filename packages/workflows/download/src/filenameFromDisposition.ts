@@ -18,6 +18,7 @@ export function filenameFromDisposition({ url, value }: Options): string {
   let filename = path.basename(new URL(url).pathname);
   if (value) {
     try {
+      // FIXME why does content-disposition fail parsing so many times with Blackbaud?
       filename = contentDisposition.parse(value || '').parameters?.filename;
       Log.debug(`${url}: ${filename}`);
     } catch (error) {
