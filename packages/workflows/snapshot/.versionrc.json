@@ -1,0 +1,5 @@
+{
+  "path": ".",
+  "tag-prefix": "snapshot/",
+  "releaseCommitMessageFormat": "chore(snapshot): @msar/snapshot@{{currentTag}}"
+}

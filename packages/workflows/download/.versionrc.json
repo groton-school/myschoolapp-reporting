@@ -1,0 +1,5 @@
+{
+  "path": ".",
+  "tag-prefix": "download/",
+  "releaseCommitMessageFormat": "chore(download): @msar/download@{{currentTag}}"
+}

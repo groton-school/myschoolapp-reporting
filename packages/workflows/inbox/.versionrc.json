@@ -1,0 +1,5 @@
+{
+  "path": ".",
+  "tag-prefix": "inbox/",
+  "releaseCommitMessageFormat": "chore(inbox): @msar/inbox@{{currentTag}}"
+}
