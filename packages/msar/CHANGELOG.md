@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [0.6.1](https://github.com/battis/myschoolapp-reporting/compare/msar/0.6.0...msar/0.6.1) (2025-03-05)
+
+### Bug Fixes
+
+- **snapshot:** honor outputPath ([9283d21](https://github.com/battis/myschoolapp-reporting/commit/9283d218bc90363956b154f28e15fd591daf152b))
+
 ## [0.6.0](https://github.com/battis/myschoolapp-reporting/compare/msar/0.5.2...msar/0.6.0) (2025-03-05)
 
 ### Bug Fixes
