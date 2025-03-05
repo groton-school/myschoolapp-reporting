@@ -1,4 +1,3 @@
 .*
-/pnpm-lock.yaml
 /src/
 /tsconfig.json
