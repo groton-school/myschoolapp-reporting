@@ -1,13 +1,13 @@
 # datadirect-puppeteer
 
-![NPM Version](https://img.shields.io/npm/v/datadirect-puppeteer)
+![NPM Version](https://img.shields.io/npm/v/@msar%2Fdatadirect-puppeteer)
 
 An implementation of scraping Blackbaud's front-end APIs using Puppeteer
 
 ## Install
 
 ```sh
-npm install datadirect-puppeteer datadirect puppeteer
+npm install @msar/datadirect-puppeteer datadirect puppeteer
 ```
 
 Realistically, you'll want access to the `datadirect` types and will need to configure `puppeteer`, so they are peer dependencies.
@@ -16,7 +16,7 @@ Realistically, you'll want access to the `datadirect` types and will need to con
 
 ```ts
 import { api as types } from 'datadirect';
-import { api, PuppeteerSession } from 'datadirect-puppeteer';
+import { api, PuppeteerSession } from '@msar/datadirect-puppeteer';
 
 const session = await PuppeteerSession.Authenticated.getInstance(
   'https://example.myschoolapp.com',
@@ -50,10 +50,10 @@ const topics = await api.datadirect.sectiontopicsget({
 
 ## Headless Impersonation
 
-If you are using a `PuppeteerSession.Impersonation`, I recommend running your script with Puppeteer in headless mode. Empirically, this seems to make it less likely that stray user activity will interfere with the Puppeteer-controled UI actions neccessary to make the impersonation work in the browser.
+If you are using a `PuppeteerSession.Impersonation`, I recommend running your script with Puppeteer in headless mode. Empirically, this seems to make it less likely that stray user activity will interfere with the Puppeteer-controlled UI actions necessary to make the impersonation work in the browser.
 
 ```ts
-import { api, PuppeteerSession } from 'datadirect-puppeteer';
+import { api, PuppeteerSession } from '@msar/datadirect-puppeteer';
 const session = await PuppeteerSession.Impersonation.getInstance(
   'https://example.myschoolapp.com',
   {
