@@ -1,8 +1,4 @@
 .*
-*.map
 /docs/
-/eslint.config.js
-/pnpm-lock.yaml
 /tsconfig.json
 /src/
-/var/
