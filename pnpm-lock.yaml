@@ -28,7 +28,7 @@ importers:
         version: 8.2.0(encoding@0.1.13)
       monorepo-package-paths:
         specifier: ^0.3.10
-        version: 0.3.10(@types/node@22.13.7)(prettier@3.5.2)
+        version: 0.3.10(@types/node@22.13.7)(prettier@3.5.3)
       msar:
         specifier: workspace:*
         version: link:packages/msar
@@ -259,9 +259,9 @@ importers:
       '@msar/inbox':
         specifier: workspace:*
         version: link:../workflows/inbox
-      '@msar/snapshot':
+      '@msar/snapshot-multiple':
         specifier: workspace:*
-        version: link:../workflows/snapshot
+        version: link:../workflows/snapshot-multiple
     devDependencies:
       '@tsconfig/node20':
         specifier: ^20.1.4
@@ -315,6 +315,9 @@ importers:
       '@battis/qui-cli.progress':
         specifier: ^2.0.1
         version: 2.0.1(@battis/qui-cli.colors@2.0.1(@battis/qui-cli.plugin@2.2.0))(@battis/qui-cli.plugin@2.2.0)
+      '@msar/datadirect-puppeteer':
+        specifier: workspace:*
+        version: link:../../components/datadirect-puppeteer
       '@msar/debug':
         specifier: workspace:*
         version: link:../../components/debug
@@ -324,6 +327,9 @@ importers:
       '@msar/snapshot':
         specifier: workspace:*
         version: link:../snapshot
+      '@msar/snapshot-multiple':
+        specifier: workspace:*
+        version: link:../snapshot-multiple
       '@msar/workflow':
         specifier: workspace:*
         version: link:../../components/workflow
@@ -336,9 +342,6 @@ importers:
       commit-and-tag-version:
         specifier: ^12.5.0
         version: 12.5.0
-      datadirect-puppeteer:
-        specifier: workspace:*
-        version: link:../../components/datadirect-puppeteer
       del-cli:
         specifier: ^6.0.0
         version: 6.0.0
@@ -357,9 +360,6 @@ importers:
       datadirect:
         specifier: workspace:*
         version: link:../../datadirect
-      datadirect-puppeteer:
-        specifier: workspace:*
-        version: link:../../components/datadirect-puppeteer
       moment:
         specifier: ^2.30.1
         version: 2.30.1
@@ -382,6 +382,9 @@ importers:
       '@battis/qui-cli.root':
         specifier: ^2.0.2
         version: 2.0.2(@battis/qui-cli.plugin@2.2.0)
+      '@msar/datadirect-puppeteer':
+        specifier: workspace:*
+        version: link:../../components/datadirect-puppeteer
       '@msar/output':
         specifier: workspace:*
         version: link:../../components/output
@@ -415,9 +418,6 @@ importers:
       ora:
         specifier: ^8.2.0
         version: 8.2.0
-      p-queue:
-        specifier: ^8.1.0
-        version: 8.1.0
     devDependencies:
       '@battis/descriptive-types':
         specifier: ^0.1.0
@@ -434,9 +434,9 @@ importers:
       '@battis/qui-cli.plugin':
         specifier: ^2.2.0
         version: 2.2.0
-      '@battis/qui-cli.progress':
-        specifier: ^2.0.1
-        version: 2.0.1(@battis/qui-cli.colors@2.0.1(@battis/qui-cli.plugin@2.2.0))(@battis/qui-cli.plugin@2.2.0)
+      '@msar/datadirect-puppeteer':
+        specifier: workspace:*
+        version: link:../../components/datadirect-puppeteer
       '@msar/debug':
         specifier: workspace:*
         version: link:../../components/debug
@@ -455,9 +455,6 @@ importers:
       commit-and-tag-version:
         specifier: ^12.5.0
         version: 12.5.0
-      datadirect-puppeteer:
-        specifier: workspace:*
-        version: link:../../components/datadirect-puppeteer
       del-cli:
         specifier: ^6.0.0
         version: 6.0.0
@@ -467,6 +464,64 @@ importers:
       typescript:
         specifier: ^5.7.3
         version: 5.7.3
+
+  packages/workflows/snapshot-multiple:
+    dependencies:
+      ora:
+        specifier: ^8.2.0
+        version: 8.2.0
+      p-queue:
+        specifier: ^8.1.0
+        version: 8.1.0
+    devDependencies:
+      '@battis/qui-cli.colors':
+        specifier: ^2.0.1
+        version: 2.0.1(@battis/qui-cli.plugin@2.2.0)
+      '@battis/qui-cli.core':
+        specifier: ^2.1.0
+        version: 2.1.0(@battis/qui-cli.plugin@2.2.0)
+      '@battis/qui-cli.log':
+        specifier: ^2.0.1
+        version: 2.0.1(@battis/qui-cli.colors@2.0.1(@battis/qui-cli.plugin@2.2.0))(@battis/qui-cli.plugin@2.2.0)(@battis/qui-cli.root@2.0.2(@battis/qui-cli.plugin@2.2.0))
+      '@battis/qui-cli.plugin':
+        specifier: ^2.2.0
+        version: 2.2.0
+      '@battis/qui-cli.progress':
+        specifier: ^2.0.1
+        version: 2.0.1(@battis/qui-cli.colors@2.0.1(@battis/qui-cli.plugin@2.2.0))(@battis/qui-cli.plugin@2.2.0)
+      '@msar/datadirect-puppeteer':
+        specifier: workspace:*
+        version: link:../../components/datadirect-puppeteer
+      '@msar/debug':
+        specifier: workspace:*
+        version: link:../../components/debug
+      '@msar/output':
+        specifier: workspace:*
+        version: link:../../components/output
+      '@msar/puppeteer-session':
+        specifier: workspace:*
+        version: link:../../components/puppeteer-session
+      '@msar/snapshot':
+        specifier: workspace:*
+        version: link:../snapshot
+      '@msar/workflow':
+        specifier: workspace:*
+        version: link:../../components/workflow
+      '@tsconfig/node20':
+        specifier: ^20.1.4
+        version: 20.1.4
+      commit-and-tag-version:
+        specifier: ^12.5.0
+        version: 12.5.0
+      del-cli:
+        specifier: ^6.0.0
+        version: 6.0.0
+      npm-run-all:
+        specifier: ^4.1.5
+        version: 4.1.5
+      typescript:
+        specifier: ^5.8.2
+        version: 5.8.2
 
 packages:
 
@@ -3961,8 +4016,8 @@ packages:
     peerDependencies:
       prettier: ^3.0.3
 
-  prettier@3.5.2:
-    resolution: {integrity: sha512-lc6npv5PH7hVqozBR7lkBNOGXV9vMwROAPlumdBkX0wTbbzPu/U1hk5yL8p2pt4Xoc+2mkT8t/sow2YrV/M5qg==}
+  prettier@3.5.3:
+    resolution: {integrity: sha512-QQtaxnoDJeAkDvDKWCLiwIXkTgRhwYDEQCghU9Z6q03iyek/rxRh/2lC3HB7P8sWT2xC/y5JDctPLBIGzHKbhw==}
     engines: {node: '>=14'}
     hasBin: true
 
@@ -5038,12 +5093,12 @@ snapshots:
   '@battis/prettier-config@1.5.6(typescript@5.7.3)':
     dependencies:
       '@prettier/plugin-xml': 2.2.0
-      '@trivago/prettier-plugin-sort-imports': 4.3.0(prettier@3.5.2)
-      prettier: 3.5.2
-      prettier-plugin-ejs: 1.0.3(prettier@3.5.2)
-      prettier-plugin-organize-imports: 4.1.0(prettier@3.5.2)(typescript@5.7.3)
-      prettier-plugin-packagejson: 2.5.9(prettier@3.5.2)
-      prettier-plugin-sql: 0.18.1(prettier@3.5.2)
+      '@trivago/prettier-plugin-sort-imports': 4.3.0(prettier@3.5.3)
+      prettier: 3.5.3
+      prettier-plugin-ejs: 1.0.3(prettier@3.5.3)
+      prettier-plugin-organize-imports: 4.1.0(prettier@3.5.3)(typescript@5.7.3)
+      prettier-plugin-packagejson: 2.5.9(prettier@3.5.3)
+      prettier-plugin-sql: 0.18.1(prettier@3.5.3)
     transitivePeerDependencies:
       - '@vue/compiler-sfc'
       - supports-color
@@ -5984,7 +6039,7 @@ snapshots:
   '@prettier/plugin-xml@2.2.0':
     dependencies:
       '@xml-tools/parser': 1.0.11
-      prettier: 3.5.2
+      prettier: 3.5.3
 
   '@puppeteer/browsers@2.6.1':
     dependencies:
@@ -6044,7 +6099,7 @@ snapshots:
 
   '@tootallnate/quickjs-emscripten@0.23.0': {}
 
-  '@trivago/prettier-plugin-sort-imports@4.3.0(prettier@3.5.2)':
+  '@trivago/prettier-plugin-sort-imports@4.3.0(prettier@3.5.3)':
     dependencies:
       '@babel/generator': 7.17.7
       '@babel/parser': 7.26.9
@@ -6052,7 +6107,7 @@ snapshots:
       '@babel/types': 7.17.0
       javascript-natural-sort: 0.7.1
       lodash: 4.17.21
-      prettier: 3.5.2
+      prettier: 3.5.3
     transitivePeerDependencies:
       - supports-color
 
@@ -8450,7 +8505,7 @@ snapshots:
 
   moment@2.30.1: {}
 
-  monorepo-package-paths@0.3.10(@types/node@22.13.7)(prettier@3.5.2):
+  monorepo-package-paths@0.3.10(@types/node@22.13.7)(prettier@3.5.3):
     dependencies:
       '@battis/import-package-json': 0.1.7
       '@battis/qui-cli': 2.1.1
@@ -8460,7 +8515,7 @@ snapshots:
       package-json-type: 1.0.3
       yaml: 2.7.0
     optionalDependencies:
-      prettier: 3.5.2
+      prettier: 3.5.3
     transitivePeerDependencies:
       - '@types/node'
 
@@ -8993,31 +9048,31 @@ snapshots:
 
   prelude-ls@1.2.1: {}
 
-  prettier-plugin-ejs@1.0.3(prettier@3.5.2):
+  prettier-plugin-ejs@1.0.3(prettier@3.5.3):
     dependencies:
-      prettier: 3.5.2
+      prettier: 3.5.3
 
-  prettier-plugin-organize-imports@4.1.0(prettier@3.5.2)(typescript@5.7.3):
+  prettier-plugin-organize-imports@4.1.0(prettier@3.5.3)(typescript@5.7.3):
     dependencies:
-      prettier: 3.5.2
+      prettier: 3.5.3
       typescript: 5.7.3
 
-  prettier-plugin-packagejson@2.5.9(prettier@3.5.2):
+  prettier-plugin-packagejson@2.5.9(prettier@3.5.3):
     dependencies:
       sort-package-json: 2.15.0
       synckit: 0.9.2
     optionalDependencies:
-      prettier: 3.5.2
+      prettier: 3.5.3
 
-  prettier-plugin-sql@0.18.1(prettier@3.5.2):
+  prettier-plugin-sql@0.18.1(prettier@3.5.3):
     dependencies:
       jsox: 1.2.121
       node-sql-parser: 4.18.0
-      prettier: 3.5.2
+      prettier: 3.5.3
       sql-formatter: 15.4.11
       tslib: 2.8.1
 
-  prettier@3.5.2: {}
+  prettier@3.5.3: {}
 
   pretty-format@29.7.0:
     dependencies:

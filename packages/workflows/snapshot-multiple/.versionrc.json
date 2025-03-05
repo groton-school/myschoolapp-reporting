@@ -1,0 +1,5 @@
+{
+  "path": ".",
+  "tag-prefix": "snapshot-multiple/",
+  "releaseCommitMessageFormat": "chore(snapshot-multiple): @msar/snapshot-multiple@{{currentTag}}"
+}

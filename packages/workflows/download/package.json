@@ -37,6 +37,7 @@
     "@msar/debug": "workspace:*",
     "@msar/puppeteer-session": "workspace:*",
     "@msar/snapshot": "workspace:*",
+    "@msar/snapshot-multiple": "workspace:*",
     "@msar/workflow": "workspace:*",
     "@tsconfig/node20": "^20.1.4",
     "@types/content-disposition": "^0.5.8",
@@ -55,6 +56,7 @@
     "@msar/output": "workspace:*",
     "@msar/puppeteer-session": "workspace:*",
     "@msar/snapshot": "workspace:*",
+    "@msar/snapshot-multiple": "workspace:*",
     "@msar/workflow": "workspace:*"
   }
 }

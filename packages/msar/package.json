@@ -40,7 +40,7 @@
     "@battis/qui-cli.log": "^2.0.1",
     "@msar/download": "workspace:*",
     "@msar/inbox": "workspace:*",
-    "@msar/snapshot": "workspace:*"
+    "@msar/snapshot-multiple": "workspace:*"
   },
   "devDependencies": {
     "@tsconfig/node20": "^20.1.4",

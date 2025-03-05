@@ -1,7 +1,7 @@
 import { Colors } from '@battis/qui-cli.colors';
+import { DatadirectPuppeteer } from '@msar/datadirect-puppeteer';
 import { Debug } from '@msar/debug';
 import { api } from 'datadirect';
-import { DatadirectPuppeteer } from 'datadirect-puppeteer';
 import * as Base from './Base.js';
 
 export type Item = api.datadirect.topiccontentget.Item & {

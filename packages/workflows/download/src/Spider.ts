@@ -25,10 +25,7 @@ export class Spider {
     this.downloader = new Downloader.Downloader(options);
   }
 
-  public async download(
-    snapshot: Snapshot.Single.Data,
-    { ...options }: Options
-  ) {
+  public async download(snapshot: Snapshot.Data, { ...options }: Options) {
     if (!Output.outputPath()) {
       throw new Output.OutputError('Spider requires outputPath');
     }

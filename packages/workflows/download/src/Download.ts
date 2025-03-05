@@ -4,6 +4,7 @@ import * as Plugin from '@battis/qui-cli.plugin';
 import { Progress } from '@battis/qui-cli.progress';
 import { Output } from '@msar/output';
 import { PuppeteerSession } from '@msar/puppeteer-session';
+import { SnapshotMultiple } from '@msar/snapshot-multiple';
 import * as Snapshot from '@msar/snapshot/dist/Snapshot.js'; // import without registering plug-in
 import fs from 'node:fs';
 import path from 'node:path';
@@ -104,7 +105,7 @@ export async function run() {
   }
 
   const Start = new Date();
-  let snapshots: Snapshot.All.Data;
+  let snapshots: SnapshotMultiple.Data;
   const data = JSON.parse(fs.readFileSync(snapshotPath).toString());
   if (Array.isArray(data)) {
     snapshots = data;
