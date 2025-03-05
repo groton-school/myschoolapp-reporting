@@ -171,6 +171,7 @@ export async function run() {
           session,
           groupId: groups[i].lead_pk,
           metadata: false,
+          silent: true,
           quit: true
         });
         // TODO Configurable snapshot --all temp directory

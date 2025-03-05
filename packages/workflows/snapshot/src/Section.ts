@@ -25,6 +25,7 @@ export type Configuration = Plugin.Configuration & {
   payload?: api.datadirect.common.ContentItem.Payload;
   metadata?: boolean;
   outputPath?: string;
+  silent?: boolean;
 } & Context &
   Partial<api.datadirect.ContentItem.Payload>;
 
@@ -145,14 +146,21 @@ export class Snapshot {
       const filepath = await Output.avoidOverwrite(
         Output.filePathFromOutputPath(this.config.outputPath, basename)
       );
-      Output.writeJSON(filepath, snapshot);
+      Output.writeJSON(filepath, snapshot, {
+        silent: this.config.silent,
+        pretty: Output.pretty()
+      });
 
       if (this.config.metadata) {
-        Output.writeJSON(filepath.replace(/\.json$/, '.metadata.json'), {
-          ...snapshot.Metadata,
-          ...this.config,
-          session: undefined
-        });
+        Output.writeJSON(
+          filepath.replace(/\.json$/, '.metadata.json'),
+          {
+            ...snapshot.Metadata,
+            ...this.config,
+            session: undefined
+          },
+          { silent: this.config.silent, pretty: Output.pretty() }
+        );
       }
     }
 
