@@ -7,3 +7,5 @@ npx msar snapshot -u "$(op item get $OP_ITEM --fields username)" -p "$(op item g
 ```
 
 The only single sign-on/multi-factor authentication interaction that is currently scripted is Entra ID (for my personal convenience). All other sign-ons and MFA interaction will require running the app _not_ in headless mode (as it is by default, or by invoking it with the `--no-headless` flag) to allow for an interactive login.
+
+Nota bene: you can easily discover the identifier for a login in 1Password by right-clicking the login and copying the private link. The `i` parameter of search query in that URL is your identifier.
