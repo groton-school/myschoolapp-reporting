@@ -1,7 +1,9 @@
 import { Colors } from '@battis/qui-cli.colors';
 import { Core } from '@battis/qui-cli.core';
 import * as Plugin from '@battis/qui-cli.plugin';
+import { Root } from '@battis/qui-cli.root';
 import { Output } from '@msar/output';
+import fs from 'node:fs';
 import path from 'node:path';
 import ora from 'ora';
 import * as Section from './Section.js';
@@ -175,4 +177,9 @@ export async function run() {
 
 export async function snapshot(conf?: Configuration) {
   return await Section.Snapshot.capture(conf || config);
+}
+
+export function load(filePath: string): Section.Data {
+  filePath = path.resolve(Root.path(), filePath);
+  return JSON.parse(fs.readFileSync(filePath).toString());
 }
