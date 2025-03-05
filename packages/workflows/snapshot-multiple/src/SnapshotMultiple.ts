@@ -153,7 +153,7 @@ export async function run() {
     Log.info(`${groups.length} groups match filters`);
 
     Progress.start({ max: groups.length });
-    if (!groupsPath) {
+    if (groupsPath) {
       groupsPath = Output.filePathFromOutputPath(groupsPath, 'groups.json');
       Output.writeJSON(groupsPath, groups);
     }
