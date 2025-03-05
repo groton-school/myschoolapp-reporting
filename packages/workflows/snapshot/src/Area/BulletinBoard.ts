@@ -1,4 +1,3 @@
-import { Colors } from '@battis/qui-cli.colors';
 import { DatadirectPuppeteer } from '@msar/datadirect-puppeteer';
 import { Debug } from '@msar/debug';
 import { api } from 'datadirect';
@@ -80,21 +79,35 @@ export const snaphot: Base.Snapshot<Data> = async ({
             )
         });
       } catch (error) {
-        BulletinBoard.push({
-          ...item,
-          ContentType,
-          Content: { error: (error as Error).message }
-        });
-        if (!(error instanceof Base.StudentDataError)) {
-          if (ignoreErrors) {
-            Debug.errorWithGroupId(
-              Id,
-              `Error capturing bulletin board {ContentId: ${Colors.value(item.ContentId)}, ContentType: ${Colors.quotedValue(`"${ContentType?.Content}"`)}`,
-              error as string
-            );
-          } else {
-            throw error;
-          }
+        switch (item.ContentId) {
+          case 78:
+          case 79:
+          case 80:
+            BulletinBoard.push({
+              ...item,
+              ContentType,
+              Content: {
+                error: `${(error as Error).message}\n\nDEBUG: This ContentId is empirically associated with unpublished items in a possibly-corrupted Bulletin Board layout.`
+              }
+            });
+            break;
+          default:
+            BulletinBoard.push({
+              ...item,
+              ContentType,
+              Content: { error: (error as Error).message }
+            });
+            if (!(error instanceof Base.StudentDataError)) {
+              if (ignoreErrors) {
+                Debug.errorWithGroupId(
+                  Id,
+                  `Error capturing bulletin board item`,
+                  error as string
+                );
+              } else {
+                throw error;
+              }
+            }
         }
       }
     }
