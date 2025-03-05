@@ -8,7 +8,7 @@ import { writeRecursive } from './writeRecursive.js';
 export async function writeJSON(
   outputPath: string | undefined,
   data: object | undefined,
-  { pretty = Storage.pretty() } = {}
+  { pretty = Storage.pretty(), silent = false } = {}
 ) {
   if (data) {
     if (outputPath) {
@@ -19,7 +19,12 @@ export async function writeJSON(
         filePath,
         pretty ? JSON.stringify(data, null, 2) : JSON.stringify(data)
       );
-      Log.debug(`Wrote JSON to ${Colors.url(filePath)}`);
+      const message = `Wrote JSON to ${Colors.url(filePath)}`;
+      if (silent) {
+        Log.debug(message);
+      } else {
+        Log.info(message);
+      }
     } else {
       Log.info(data);
     }
