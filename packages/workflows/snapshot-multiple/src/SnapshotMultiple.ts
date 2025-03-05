@@ -126,10 +126,7 @@ export async function run() {
       throw new Error(`${Colors.value('--year')} must be defined`);
     }
 
-    const spinner = ora();
-    spinner.start('Waiting for authentication…');
     const session = await PuppeteerSession.Fetchable.init(url);
-    spinner.succeed('Authentication complete.');
     Log.info(`Snapshot temporary files will be saved to ${Colors.url(TEMP)}`);
     const associations = cleanSplit(association);
     const terms = cleanSplit(termsOffered);
@@ -169,17 +166,17 @@ export async function run() {
     async function snapshotGroup(i: number) {
       const tempPath = path.join(TEMP, `${pad(i)}.json`);
       try {
-        const snapshot = await Snapshot.snapshot({
+        data[i] = await Snapshot.snapshot({
           ...Snapshot.getConfig(),
           session,
           groupId: groups[i].lead_pk,
+          metadata: false,
           quit: true
         });
-        data[i] = snapshot;
         // TODO Configurable snapshot --all temp directory
         // TODO Optional snapshot --all temp files
-        Output.writeJSON(tempPath, snapshot);
-        Progress.caption(snapshot?.SectionInfo?.GroupName || '');
+        Output.writeJSON(tempPath, data[i]);
+        Progress.caption(data[i]?.SectionInfo?.GroupName || '');
       } catch (error) {
         if (Workflow.ignoreErrors()) {
           Debug.errorWithGroupId(groups[i].lead_pk, 'Error', error as string);
