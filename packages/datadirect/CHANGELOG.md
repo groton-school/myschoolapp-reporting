@@ -2,12 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
-## [0.4.1](https://github.com/battis/myschoolapp-reporting/compare/datadirect/0.4.0...datadirect/0.4.1) (2025-01-20)
+## [0.4.2](https://github.com/battis/myschoolapp-reporting/compare/datadirect/0.4.1...datadirect/0.4.2) (2025-03-05)
 
+- bump dependencies
+
+## [0.4.1](https://github.com/battis/myschoolapp-reporting/compare/datadirect/0.4.0...datadirect/0.4.1) (2025-01-20)
 
 ### Features
 
-* **datadirect:** /api/message/conversation/:ConversationId ([e5f83c8](https://github.com/battis/myschoolapp-reporting/commit/e5f83c8c29edde768e209414cde234917096c849))
+- **datadirect:** /api/message/conversation/:ConversationId ([e5f83c8](https://github.com/battis/myschoolapp-reporting/commit/e5f83c8c29edde768e209414cde234917096c849))
 
 ## [0.4.0](https://github.com/battis/myschoolapp-reporting/compare/datadirect/0.3.0...datadirect/0.4.0) (2025-01-19)
 
