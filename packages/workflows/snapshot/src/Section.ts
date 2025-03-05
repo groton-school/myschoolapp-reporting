@@ -24,6 +24,7 @@ export type Configuration = Plugin.Configuration & {
   studentData?: boolean;
   payload?: api.datadirect.common.ContentItem.Payload;
   metadata?: boolean;
+  outputPath?: string;
 } & Context &
   Partial<api.datadirect.ContentItem.Payload>;
 
@@ -134,23 +135,25 @@ export class Snapshot {
     snapshot.Metadata.Elapsed =
       snapshot.Metadata.Finish.getTime() - snapshot.Metadata.Start.getTime();
 
-    let basename = 'snapshot.json';
-    if (snapshot.SectionInfo) {
-      basename = Output.pathsafeFilename(
-        `${[snapshot.SectionInfo.SchoolYear, snapshot.SectionInfo.Teacher, snapshot.SectionInfo.GroupName, snapshot.SectionInfo.Id].filter((term) => !!term).join(' - ')}.json`
+    if (this.config.outputPath) {
+      let basename = 'snapshot.json';
+      if (snapshot.SectionInfo) {
+        basename = Output.pathsafeFilename(
+          `${[snapshot.SectionInfo.SchoolYear, snapshot.SectionInfo.Teacher, snapshot.SectionInfo.GroupName, snapshot.SectionInfo.Id].filter((term) => !!term).join(' - ')}.json`
+        );
+      }
+      const filepath = await Output.avoidOverwrite(
+        Output.filePathFromOutputPath(this.config.outputPath, basename)
       );
-    }
-    const filepath = await Output.avoidOverwrite(
-      Output.filePathFromOutputPath(Output.outputPath(), basename)
-    );
-    Output.writeJSON(filepath, snapshot);
+      Output.writeJSON(filepath, snapshot);
 
-    if (this.config.metadata) {
-      Output.writeJSON(filepath.replace(/\.json$/, '.metadata.json'), {
-        ...snapshot.Metadata,
-        ...this.config,
-        session: undefined
-      });
+      if (this.config.metadata) {
+        Output.writeJSON(filepath.replace(/\.json$/, '.metadata.json'), {
+          ...snapshot.Metadata,
+          ...this.config,
+          session: undefined
+        });
+      }
     }
 
     if (PuppeteerSession.quit()) {
