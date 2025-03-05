@@ -492,6 +492,9 @@ importers:
       '@battis/qui-cli.progress':
         specifier: ^2.0.1
         version: 2.0.1(@battis/qui-cli.colors@2.0.1(@battis/qui-cli.plugin@2.2.0))(@battis/qui-cli.plugin@2.2.0)
+      '@battis/qui-cli.root':
+        specifier: ^2.0.2
+        version: 2.0.2(@battis/qui-cli.plugin@2.2.0)
       '@msar/datadirect-puppeteer':
         specifier: workspace:*
         version: link:../../components/datadirect-puppeteer

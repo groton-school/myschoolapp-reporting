@@ -3,6 +3,7 @@ import { Core } from '@battis/qui-cli.core';
 import { Log } from '@battis/qui-cli.log';
 import * as Plugin from '@battis/qui-cli.plugin';
 import { Progress } from '@battis/qui-cli.progress';
+import { Root } from '@battis/qui-cli.root';
 import { DatadirectPuppeteer } from '@msar/datadirect-puppeteer';
 import { Debug } from '@msar/debug';
 import { Output } from '@msar/output';
@@ -12,7 +13,6 @@ import { Workflow } from '@msar/workflow';
 import crypto from 'node:crypto';
 import fs from 'node:fs/promises';
 import path from 'node:path';
-import ora from 'ora';
 import PQueue from 'p-queue';
 
 Core.configure({ core: { requirePositionals: true } });
@@ -233,5 +233,15 @@ export async function run() {
     if (PuppeteerSession.quit()) {
       session.close();
     }
+  }
+}
+
+export async function load(filePath: string): Promise<Data> {
+  filePath = path.resolve(Root.path(), filePath);
+  const data = JSON.parse((await fs.readFile(filePath)).toString());
+  if (Array.isArray(data)) {
+    return data;
+  } else {
+    return [data];
   }
 }
