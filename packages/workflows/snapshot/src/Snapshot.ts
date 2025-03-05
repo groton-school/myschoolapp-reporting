@@ -5,7 +5,6 @@ import { Root } from '@battis/qui-cli.root';
 import { Output } from '@msar/output';
 import fs from 'node:fs';
 import path from 'node:path';
-import ora from 'ora';
 import * as Section from './Section.js';
 import { Configuration } from './Section.js';
 
@@ -166,13 +165,7 @@ export async function run() {
       `${Colors.value('arg0')} must be the URL of an LMS instance`
     );
   }
-
-  const spinner = ora();
-  spinner.start(`Capturing snapshot from ${Colors.url(config.url)}`);
-  const snap = await snapshot();
-  spinner.succeed(
-    `Captured snapshot of ${snap?.SectionInfo?.Teacher}'s ${snap?.SectionInfo?.SchoolYear} ${snap?.SectionInfo?.Duration} ${snap?.SectionInfo?.GroupName}`
-  );
+  await snapshot({ ...config, outputPath: Output.outputPath() });
 }
 
 export async function snapshot(conf?: Configuration) {
