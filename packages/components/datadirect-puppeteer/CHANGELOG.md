@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [0.3.0](https://github.com/battis/myschoolapp-reporting/compare/datadirect-puppeteer/0.2.1...datadirect-puppeteer/0.3.0) (2025-03-05)
+
+
+### ⚠ BREAKING CHANGES
+
+* **datadirect-puppeteer:** rename to @msar/datadirect-puppeteer
+
+### Features
+
+* **datadirect-puppeteer:** rename to @msar/datadirect-puppeteer ([d1dc50d](https://github.com/battis/myschoolapp-reporting/commit/d1dc50d8873977ffc76fe25f34279ad804b9c6fe))
+
 ## [0.2.1](https://github.com/battis/myschoolapp-reporting/compare/datadirect-puppeteer/0.2.0...datadirect-puppeteer/0.2.1) (2025-01-20)
 
 
