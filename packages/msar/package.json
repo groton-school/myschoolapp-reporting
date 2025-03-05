@@ -38,7 +38,7 @@
     "@battis/qui-cli.colors": "^2.0.1",
     "@battis/qui-cli.core": "^2.1.0",
     "@battis/qui-cli.log": "^2.0.1",
-    "@msar/download": "workspace:*",
+    "@msar/archive": "workspace:*",
     "@msar/inbox": "workspace:*",
     "@msar/snapshot-multiple": "workspace:*"
   },

@@ -253,9 +253,9 @@ importers:
       '@battis/qui-cli.log':
         specifier: ^2.0.1
         version: 2.0.1(@battis/qui-cli.colors@2.0.1(@battis/qui-cli.plugin@2.2.0))(@battis/qui-cli.plugin@2.2.0)(@battis/qui-cli.root@2.0.2(@battis/qui-cli.plugin@2.2.0))
-      '@msar/download':
+      '@msar/archive':
         specifier: workspace:*
-        version: link:../workflows/download
+        version: link:../workflows/archive
       '@msar/inbox':
         specifier: workspace:*
         version: link:../workflows/inbox
@@ -282,7 +282,7 @@ importers:
         specifier: ^5.7.3
         version: 5.8.2
 
-  packages/workflows/download:
+  packages/workflows/archive:
     dependencies:
       '@msar/output':
         specifier: workspace:*
@@ -298,7 +298,7 @@ importers:
         version: 8.1.0
       puppeteer:
         specifier: ^23.11.1
-        version: 23.11.1(typescript@5.7.3)
+        version: 23.11.1(typescript@5.8.2)
     devDependencies:
       '@battis/qui-cli.colors':
         specifier: ^2.0.1
@@ -350,7 +350,7 @@ importers:
         version: 4.1.5
       typescript:
         specifier: ^5.7.3
-        version: 5.7.3
+        version: 5.8.2
 
   packages/workflows/inbox:
     dependencies:
@@ -6830,6 +6830,15 @@ snapshots:
     optionalDependencies:
       typescript: 5.7.3
 
+  cosmiconfig@9.0.0(typescript@5.8.2):
+    dependencies:
+      env-paths: 2.2.1
+      import-fresh: 3.3.1
+      js-yaml: 4.1.0
+      parse-json: 5.2.0
+    optionalDependencies:
+      typescript: 5.8.2
+
   cron-validate@1.4.5:
     dependencies:
       yup: 0.32.9
@@ -9154,6 +9163,21 @@ snapshots:
       '@puppeteer/browsers': 2.6.1
       chromium-bidi: 0.11.0(devtools-protocol@0.0.1367902)
       cosmiconfig: 9.0.0(typescript@5.7.3)
+      devtools-protocol: 0.0.1367902
+      puppeteer-core: 23.11.1
+      typed-query-selector: 2.12.0
+    transitivePeerDependencies:
+      - bare-buffer
+      - bufferutil
+      - supports-color
+      - typescript
+      - utf-8-validate
+
+  puppeteer@23.11.1(typescript@5.8.2):
+    dependencies:
+      '@puppeteer/browsers': 2.6.1
+      chromium-bidi: 0.11.0(devtools-protocol@0.0.1367902)
+      cosmiconfig: 9.0.0(typescript@5.8.2)
       devtools-protocol: 0.0.1367902
       puppeteer-core: 23.11.1
       typed-query-selector: 2.12.0

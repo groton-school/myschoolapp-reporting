@@ -1,11 +1,11 @@
 {
-  "name": "@msar/download",
+  "name": "@msar/archive",
   "version": "0.1.0",
-  "homepage": "https://github.com/battis/myschoolapp-reporting/tree/main/packages/workflows/download#readme",
+  "homepage": "https://github.com/battis/myschoolapp-reporting/tree/main/packages/workflows/archive#readme",
   "repository": {
     "type": "git",
     "url": "https://github.com/battis/myschoolapp-reporting.git",
-    "directory": "packages/workflows/download"
+    "directory": "packages/workflows/archive"
   },
   "author": {
     "name": "Seth Battis",

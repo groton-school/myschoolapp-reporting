@@ -1,4 +1,4 @@
 import { Core } from '@battis/qui-cli.core';
-import '@msar/download';
+import '@msar/archive';
 
 await Core.run();
