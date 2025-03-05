@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [0.1.1](https://github.com/battis/myschoolapp-reporting/compare/snapshot-multiple/0.1.0...snapshot-multiple/0.1.1) (2025-03-05)
+
+
+### Features
+
+* **snapshot-multiple:** load() data from file ([82252d0](https://github.com/battis/myschoolapp-reporting/commit/82252d07c0b6e6fbe6968c92b0bafd4dc1c5a799))
+
 ## 0.1.0 (2025-03-05)
 
 
