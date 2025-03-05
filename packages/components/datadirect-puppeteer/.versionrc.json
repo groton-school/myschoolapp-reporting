@@ -1,5 +1,5 @@
 {
   "path": ".",
   "tag-prefix": "datadirect-puppeteer/",
-  "releaseCommitMessageFormat": "chore(datadirect-puppeteer): datadirect-puppeteer@{{currentTag}}"
+  "releaseCommitMessageFormat": "chore(datadirect-puppeteer): @msar/datadirect-puppeteer@{{currentTag}}"
 }
