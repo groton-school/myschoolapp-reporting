@@ -1,5 +1,6 @@
 import { DatadirectPuppeteer } from '@msar/datadirect-puppeteer';
 import { Debug } from '@msar/debug';
+import { Workflow } from '@msar/workflow';
 import { api } from 'datadirect';
 import * as Base from './Base.js';
 
@@ -7,7 +8,7 @@ export type Data = api.datadirect.SectionInfoView.Item;
 
 export const snapshot: Base.Snapshot<Data> = async ({
   groupId: sectionId,
-  ignoreErrors = true,
+  ignoreErrors = Workflow.ignoreErrors(),
   ...options
 }): Promise<Data | undefined> => {
   Debug.withGroupId(sectionId, 'Start capturing section info');

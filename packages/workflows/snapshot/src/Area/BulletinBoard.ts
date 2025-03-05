@@ -1,5 +1,6 @@
 import { DatadirectPuppeteer } from '@msar/datadirect-puppeteer';
 import { Debug } from '@msar/debug';
+import { Workflow } from '@msar/workflow';
 import { api } from 'datadirect';
 import * as Base from './Base.js';
 
@@ -32,7 +33,7 @@ export const snaphot: Base.Snapshot<Data> = async ({
   session,
   groupId: Id,
   payload = { format: 'json' },
-  ignoreErrors = true,
+  ignoreErrors = Workflow.ignoreErrors(),
   studentData,
   logRequests
 }): Promise<Data | undefined> => {

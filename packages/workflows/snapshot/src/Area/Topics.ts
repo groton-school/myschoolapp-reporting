@@ -1,6 +1,8 @@
 import { Colors } from '@battis/qui-cli.colors';
+import { Log } from '@battis/qui-cli.log';
 import { DatadirectPuppeteer } from '@msar/datadirect-puppeteer';
 import { Debug } from '@msar/debug';
+import { Workflow } from '@msar/workflow';
 import { api } from 'datadirect';
 import * as Base from './Base.js';
 
@@ -31,7 +33,7 @@ async function getPossibleContent() {
 export const snapshot: Base.Snapshot<Data> = async ({
   groupId: Id,
   payload,
-  ignoreErrors = true,
+  ignoreErrors = Workflow.ignoreErrors(),
   studentData,
   ...options
 }): Promise<Data | undefined> => {
@@ -52,6 +54,10 @@ export const snapshot: Base.Snapshot<Data> = async ({
       },
       pathParams: { Id }
     });
+    if (!Array.isArray(topics)) {
+      Log.debug({ topics });
+      process.exit();
+    }
     for (const topic of topics) {
       const { TopicID } = topic;
       const Content: Item[] = [];
