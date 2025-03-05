@@ -2,32 +2,39 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
-## [0.5.2](https://github.com/battis/myschoolapp-reporting/compare/msar/0.5.1...msar/0.5.2) (2025-01-20)
-
-
-### Features
-
-* **msar:** Add —mfa support ([99dad85](https://github.com/battis/myschoolapp-reporting/commit/99dad852509b492c2e6e87b0aba38637e7d00947))
-* **msar:** initated conversation count/most recent ([ef44e40](https://github.com/battis/myschoolapp-reporting/commit/ef44e40d80aa1218c3ea294cef222474c2d7373c))
-
+## [0.6.0](https://github.com/battis/myschoolapp-reporting/compare/msar/0.5.2...msar/0.6.0) (2025-03-05)
 
 ### Bug Fixes
 
-* **msar:** correct initiated conversation count/date ([db84ebb](https://github.com/battis/myschoolapp-reporting/commit/db84ebbac21fcc7ed4fef642292d6d97a3cd49a8)), closes [#220](https://github.com/battis/myschoolapp-reporting/issues/220)
-* **msar:** correctly calculate most recent message ([76634e0](https://github.com/battis/myschoolapp-reporting/commit/76634e0f144957b54b34d8432fd4fe428be94dcd)), closes [#219](https://github.com/battis/myschoolapp-reporting/issues/219)
-* **msar:** default inbox to headless ([3ae26bf](https://github.com/battis/myschoolapp-reporting/commit/3ae26bf6ffb8d58fdcef0bc67bcf77d45bef4519))
-* **msar:** Inbox pagination ([c30a69d](https://github.com/battis/myschoolapp-reporting/commit/c30a69d76d8b6428c6cbc0e1b1e475f9c09513f3)), closes [#195](https://github.com/battis/myschoolapp-reporting/issues/195) [#193](https://github.com/battis/myschoolapp-reporting/issues/193)
-* **msar:** more agnostic handling of inbox messages ([936362e](https://github.com/battis/myschoolapp-reporting/commit/936362ebef23cb5fa2cecb7ebef3e3088f18537e))
-* **msar:** stopped crashing on specific user ([15f0451](https://github.com/battis/myschoolapp-reporting/commit/15f0451be4f3db30ec96babbdab785d7e1be00f5)), closes [#196](https://github.com/battis/myschoolapp-reporting/issues/196)
-
-## [0.5.1](https://github.com/battis/myschoolapp-reporting/compare/msar/0.5.0...msar/0.5.1) (2025-01-11)
-
+- **msar:** update command path to match refactored directory map ([9dfa2dc](https://github.com/battis/myschoolapp-reporting/commit/9dfa2dc496cb4a1bba7921b1bee7d432f1766ad2))
 
 ### ⚠ BREAKING CHANGES
 
-* **msar:** rename package
+- Internal refactoring and redesign has changed the command line arguments for some commands. Check usage (--help)
 
-* **msar:** rename package ([67a814e](https://github.com/battis/myschoolapp-reporting/commit/67a814ebfb5f0f322cf3e002945b0f6432b253aa))
+## [0.5.2](https://github.com/battis/myschoolapp-reporting/compare/msar/0.5.1...msar/0.5.2) (2025-01-20)
+
+### Features
+
+- **msar:** Add —mfa support ([99dad85](https://github.com/battis/myschoolapp-reporting/commit/99dad852509b492c2e6e87b0aba38637e7d00947))
+- **msar:** initated conversation count/most recent ([ef44e40](https://github.com/battis/myschoolapp-reporting/commit/ef44e40d80aa1218c3ea294cef222474c2d7373c))
+
+### Bug Fixes
+
+- **msar:** correct initiated conversation count/date ([db84ebb](https://github.com/battis/myschoolapp-reporting/commit/db84ebbac21fcc7ed4fef642292d6d97a3cd49a8)), closes [#220](https://github.com/battis/myschoolapp-reporting/issues/220)
+- **msar:** correctly calculate most recent message ([76634e0](https://github.com/battis/myschoolapp-reporting/commit/76634e0f144957b54b34d8432fd4fe428be94dcd)), closes [#219](https://github.com/battis/myschoolapp-reporting/issues/219)
+- **msar:** default inbox to headless ([3ae26bf](https://github.com/battis/myschoolapp-reporting/commit/3ae26bf6ffb8d58fdcef0bc67bcf77d45bef4519))
+- **msar:** Inbox pagination ([c30a69d](https://github.com/battis/myschoolapp-reporting/commit/c30a69d76d8b6428c6cbc0e1b1e475f9c09513f3)), closes [#195](https://github.com/battis/myschoolapp-reporting/issues/195) [#193](https://github.com/battis/myschoolapp-reporting/issues/193)
+- **msar:** more agnostic handling of inbox messages ([936362e](https://github.com/battis/myschoolapp-reporting/commit/936362ebef23cb5fa2cecb7ebef3e3088f18537e))
+- **msar:** stopped crashing on specific user ([15f0451](https://github.com/battis/myschoolapp-reporting/commit/15f0451be4f3db30ec96babbdab785d7e1be00f5)), closes [#196](https://github.com/battis/myschoolapp-reporting/issues/196)
+
+## [0.5.1](https://github.com/battis/myschoolapp-reporting/compare/msar/0.5.0...msar/0.5.1) (2025-01-11)
+
+### ⚠ BREAKING CHANGES
+
+- **msar:** rename package
+
+- **msar:** rename package ([67a814e](https://github.com/battis/myschoolapp-reporting/commit/67a814ebfb5f0f322cf3e002945b0f6432b253aa))
 
 ## [0.5.0](https://github.com/battis/myschoolapp-reporting/compare/msar/0.4.3...msar/0.5.0) (2025-01-10)
 
