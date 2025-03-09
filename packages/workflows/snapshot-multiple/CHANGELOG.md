@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [0.2.0](https://github.com/battis/myschoolapp-reporting/compare/snapshot-multiple/0.1.2...snapshot-multiple/0.2.0) (2025-03-09)
+
+### Features
+
+- **snapshot:** merge SKY API assignment with scraped assignment ([a846a8b](https://github.com/battis/myschoolapp-reporting/commit/a846a8b2aae5b563acf818d722613638658043b6))
+
 ## [0.1.2](https://github.com/battis/myschoolapp-reporting/compare/snapshot-multiple/0.1.1...snapshot-multiple/0.1.2) (2025-03-05)
 
 ### Bug Fixes
