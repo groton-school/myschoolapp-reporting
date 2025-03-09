@@ -6,6 +6,12 @@ import { Workflow } from '@msar/workflow';
 import { api } from 'datadirect';
 import * as Base from './Base.js';
 
+/*
+ * TODO capture topic layout
+ *   It looks like this can only be done by navigating to the topic and then
+ *   waiting for it to be rendered and capturing div#topic-detail-container as
+ *   an HTMLString
+ */
 export type Item = api.datadirect.topiccontentget.Item & {
   ObjectType?: api.datadirect.TopicContentTypesGet.Item;
   Content?: api.datadirect.common.ContentItem.Any.Content | { error: string };
