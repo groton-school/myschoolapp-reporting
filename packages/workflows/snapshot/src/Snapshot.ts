@@ -1,5 +1,6 @@
 import { Colors } from '@battis/qui-cli.colors';
 import { Core } from '@battis/qui-cli.core';
+import '@battis/qui-cli.env';
 import * as Plugin from '@battis/qui-cli.plugin';
 import { Root } from '@battis/qui-cli.root';
 import { Output } from '@msar/output';
@@ -7,6 +8,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import * as Section from './Section.js';
 import { Configuration } from './Section.js';
+import * as SkyAPI from './SkyAPI.js';
 
 export { Configuration, Context, Data, Metadata } from './Section.js';
 
@@ -156,6 +158,12 @@ export function init(args: Plugin.ExpectedArguments<typeof options>) {
   const {
     positionals: [url]
   } = args;
+  SkyAPI.init({
+    client_id: process.env.SKY_CLIENT_ID!,
+    client_secret: process.env.SKY_CLIENT_SECRET!,
+    subscription_key: process.env.SKY_SUBSCRIPTION_KEY!,
+    redirect_uri: process.env.SKY_REDIRECT_URI!
+  });
   configure({ ...args.values, url });
 }
 
