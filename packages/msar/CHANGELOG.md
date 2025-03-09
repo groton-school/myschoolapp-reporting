@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [0.7.0](https://github.com/battis/myschoolapp-reporting/compare/msar/0.6.1...msar/0.7.0) (2025-03-09)
+
+### Features
+
+- **snapshot:** merge SKY API assignment with scraped assignment ([a846a8b](https://github.com/battis/myschoolapp-reporting/commit/a846a8b2aae5b563acf818d722613638658043b6))
+
 ## [0.6.1](https://github.com/battis/myschoolapp-reporting/compare/msar/0.6.0...msar/0.6.1) (2025-03-05)
 
 ### Bug Fixes
