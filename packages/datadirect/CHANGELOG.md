@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [0.4.3](https://github.com/battis/myschoolapp-reporting/compare/datadirect/0.4.2...datadirect/0.4.3) (2025-03-09)
+
+
+### Features
+
+* **datadirect:** ContentItem.Text.Photos ([adbbf9a](https://github.com/battis/myschoolapp-reporting/commit/adbbf9ae189f73ce857a0daebd061be2b4589947))
+
 ## [0.4.2](https://github.com/battis/myschoolapp-reporting/compare/datadirect/0.4.1...datadirect/0.4.2) (2025-03-05)
 
 - bump dependencies
