@@ -37,10 +37,18 @@ export class Base {
     this._page = page;
   }
 
+  private logRequests = false;
+
   protected constructor(page: Page);
   protected constructor(url: URL | string, options?: Options);
   protected constructor(pageOrUrl: Page | URL | string, options?: Options);
-  protected constructor(pageOrUrl: Page | URL | string, options: Options = {}) {
+  protected constructor(
+    pageOrUrl: Page | URL | string,
+    { logRequests, ...options }: Options = {}
+  ) {
+    if (logRequests !== undefined) {
+      this.logRequests = logRequests;
+    }
     if (pageOrUrl instanceof Page) {
       this.page = pageOrUrl;
     } else {
@@ -119,7 +127,7 @@ export class Base {
   public async fetch(
     input: URL | string,
     init?: RequestInit,
-    logRequest = false
+    logRequest = this.logRequests
   ): Promise<FetchResponse> {
     await this.ready();
     const response = await Base.queue.add(
