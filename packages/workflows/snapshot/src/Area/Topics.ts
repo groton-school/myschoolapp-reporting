@@ -17,9 +17,10 @@ export type Item = api.datadirect.topiccontentget.Item & {
   Content?: api.datadirect.common.ContentItem.Any.Content | { error: string };
 };
 
-export type Topic = api.datadirect.sectiontopicsget.Item & {
-  Content?: Item[];
-};
+export type Topic = api.datadirect.sectiontopicsget.Item &
+  api.datadirect.topicget.Item & {
+    Content?: Item[];
+  };
 
 export type Data = Topic[];
 
@@ -66,6 +67,10 @@ export const snapshot: Base.Snapshot<Data> = async ({
     }
     for (const topic of topics) {
       const { TopicID } = topic;
+      const [detail] = await DatadirectPuppeteer.api.datadirect.topicget({
+        payload: { format: 'json' },
+        pathParams: { TopicID }
+      });
       const Content: Item[] = [];
       const items: api.datadirect.topiccontentget.Response = (
         await DatadirectPuppeteer.api.datadirect.topiccontentget({
@@ -151,7 +156,11 @@ export const snapshot: Base.Snapshot<Data> = async ({
           }
         }
       }
-      Topics.push({ ...topic, Content: Content.length ? Content : undefined });
+      Topics.push({
+        ...topic,
+        ...detail,
+        Content: Content.length ? Content : undefined
+      });
     }
     Debug.withGroupId(Id, 'Topics captured');
     // FIXME filter student data out of topic discussions
