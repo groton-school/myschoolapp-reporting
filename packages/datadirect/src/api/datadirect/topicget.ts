@@ -8,5 +8,5 @@ export const prepare: Endpoint.Prepare<Payload> = (payload, base?: string) =>
   Endpoint.prepare({
     payload,
     base,
-    path: '/api/DataDirect/topicget'
+    path: '/api/DataDirect/topicget/:TopicID'
   });
