@@ -19,6 +19,28 @@ export type Item = {
   Identifier: string;
   IsManager: NumericBoolean;
   IsOwner: NumericBoolean;
+  /**
+   * ```
+   *     ___________
+   * 0: |       |   | 2-col (wide left)
+   *    |_______|___|
+   *     ___________
+   * 1: |   |       | 2-col (wide right)
+   *    |___|_______|
+   *     ___________
+   * 2: |___________| header 2-col (wide left)
+   *    |_______|___|
+   *     ___________
+   * 3: |___________| header 2-col (wide right)
+   *    |___|_______|
+   *     ___________
+   * 4: |     |     | 2-col even
+   *    |_____|_____|
+   *     ___________
+   * 5: |   |   |   | 3-col even
+   *    |___|___|___|
+   * ```
+   */
   LayoutId: number;
   LeadSectionId: number;
   Length: number;
