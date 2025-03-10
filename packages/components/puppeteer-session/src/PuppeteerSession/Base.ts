@@ -22,7 +22,7 @@ export type FetchResponse = {
 };
 
 export class Base {
-  private static queue = new PQueue({ concurrency: 10, timeout: 200 });
+  private static queue = new PQueue({ concurrency: 10, interval: 200 });
 
   private initializing = new Mutex();
 
