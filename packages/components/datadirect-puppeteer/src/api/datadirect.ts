@@ -13,6 +13,7 @@ import {
   sectiontopicsget as SectionTopics,
   topiccontentget as TopicContent,
   TopicContentTypesGet as TopicContentTypes,
+  topicget as TopicGet,
   GetValidFileTypes as ValidFileTypes
 } from 'datadirect/dist/api/datadirect.js';
 
@@ -80,6 +81,11 @@ export const GetValidFileTypes: PuppeteerSession.Fetchable.Binding<
   ValidFileTypes.Payload,
   ValidFileTypes.Response
 > = PuppeteerSession.Fetchable.bind(ValidFileTypes);
+
+export const topicget: PuppeteerSession.Fetchable.Binding<
+  TopicGet.Payload,
+  TopicGet.Response
+> = PuppeteerSession.Fetchable.bind(TopicGet);
 
 export async function BulletinBoardContent_detail(
   item: BulletinBoardContent.Item,
