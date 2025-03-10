@@ -3,6 +3,7 @@ import * as Plugin from '@battis/qui-cli.plugin';
 import { Debug } from '@msar/debug';
 import { Output } from '@msar/output';
 import { PuppeteerSession } from '@msar/puppeteer-session';
+import { Workflow } from '@msar/workflow';
 import { api } from 'datadirect';
 import * as Area from './Area.js';
 
@@ -73,7 +74,8 @@ export class Snapshot {
       if (this.config.url) {
         Debug.withGroupId(groupId, 'Creating session');
         this.config.session = await PuppeteerSession.Fetchable.init(
-          this.config.url
+          this.config.url,
+          { logRequests: Workflow.logRequests() }
         );
       } else {
         throw new Error(
