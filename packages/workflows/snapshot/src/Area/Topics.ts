@@ -73,7 +73,7 @@ export const snapshot: Base.Snapshot<Data> = async ({
           payload: {
             format: 'json',
             index_id: topic.TopicIndexID,
-            id: topic.TopicIndexID // TODO should this be topic.TopicID?
+            id: topic.TopicID
           },
           pathParams: {
             TopicID
