@@ -14,6 +14,7 @@ export * as sectionrosterget from './datadirect/sectionrosterget.js';
 export * as sectiontopicsget from './datadirect/sectiontopicsget.js';
 export * as topiccontentget from './datadirect/topiccontentget.js';
 export * as TopicContentTypesGet from './datadirect/TopicContentTypesGet.js';
+export * as topicget from './datadirect/topicget.js';
 
 import { Response as BulletinBoardContent } from './datadirect/BulletinBoardContentGet.js';
 import { Item as MarkingPeriod } from './datadirect/GradeBookMarkingPeriodList.js';
