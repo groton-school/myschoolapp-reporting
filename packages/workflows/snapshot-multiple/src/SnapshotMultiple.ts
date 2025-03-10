@@ -126,7 +126,9 @@ export async function run() {
       throw new Error(`${Colors.value('--year')} must be defined`);
     }
 
-    const session = await PuppeteerSession.Fetchable.init(url);
+    const session = await PuppeteerSession.Fetchable.init(url, {
+      logRequests: Workflow.logRequests()
+    });
     Log.info(`Snapshot temporary files will be saved to ${Colors.url(TEMP)}`);
     const associations = cleanSplit(association);
     const terms = cleanSplit(termsOffered);
