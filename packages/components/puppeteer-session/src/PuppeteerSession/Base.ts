@@ -2,11 +2,14 @@ import { Log } from '@battis/qui-cli.log';
 import * as Plugin from '@battis/qui-cli.plugin';
 import { JSONValue } from '@battis/typescript-tricks';
 import { Mutex, MutexInterface } from 'async-mutex';
+import PQueue from 'p-queue';
 import puppeteer, { GoToOptions, Page } from 'puppeteer';
 import { InitializationError } from './InitializationError.js';
 import * as Storage from './Storage.js';
 
-export type Options = Parameters<typeof puppeteer.launch>[0];
+export type Options = Parameters<typeof puppeteer.launch>[0] & {
+  logRequests?: boolean;
+};
 
 export type FetchResponse = {
   url: string;
@@ -19,6 +22,8 @@ export type FetchResponse = {
 };
 
 export class Base {
+  private static queue = new PQueue({ concurrency: 10, timeout: 200 });
+
   private initializing = new Mutex();
 
   private _page?: Page;
@@ -117,35 +122,45 @@ export class Base {
     logRequest = false
   ): Promise<FetchResponse> {
     await this.ready();
-    const url = new URL(input, this.page.url());
-    const response = await this.page.evaluate(
-      async (input, init) => {
-        const response = await fetch(input, init);
-        let body: FetchResponse['body'] = undefined;
-        const contentType = response.headers.get('content-type');
-        if (contentType?.includes('application/json')) {
-          body = (await response.json()) as JSONValue;
-        } else if (contentType?.includes('text/')) {
-          body = await response.text();
-        } else {
-          body = await response.blob();
+    const response = await Base.queue.add(
+      (async () => {
+        const url = new URL(input, this.page.url());
+        const response = await this.page.evaluate(
+          async (input, init) => {
+            const response = await fetch(input, init);
+            let body: FetchResponse['body'] = undefined;
+            const contentType = response.headers.get('content-type');
+            if (contentType?.includes('application/json')) {
+              body = (await response.json()) as JSONValue;
+            } else if (contentType?.includes('text/')) {
+              body = await response.text();
+            } else {
+              body = await response.blob();
+            }
+            return {
+              url: response.url,
+              redirected: response.redirected,
+              type: response.type,
+              ok: response.ok,
+              status: response.status,
+              statusText: response.statusText,
+              headers: response.headers,
+              body
+            };
+          },
+          url,
+          init
+        );
+        if (logRequest) {
+          Log.debug({ url, init, response });
         }
-        return {
-          url: response.url,
-          redirected: response.redirected,
-          type: response.type,
-          ok: response.ok,
-          status: response.status,
-          statusText: response.statusText,
-          headers: response.headers,
-          body
-        };
-      },
-      url,
-      init
+        return response;
+      }).bind(this)
     );
-    if (logRequest) {
-      Log.debug({ url, init, response });
+    if (!response) {
+      throw new Error(
+        `Rate-limited fetch returned void: ${Log.syntaxColor({ input, init, response })}`
+      );
     }
     return response;
   }

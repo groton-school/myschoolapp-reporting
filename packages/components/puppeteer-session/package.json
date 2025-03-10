@@ -25,6 +25,7 @@
     "async-mutex": "^0.5.0",
     "datadirect": "workspace:*",
     "ora": "^8.2.0",
+    "p-queue": "^8.1.0",
     "puppeteer": "^23.11.1"
   },
   "devDependencies": {
