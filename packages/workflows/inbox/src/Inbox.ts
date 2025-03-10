@@ -169,7 +169,9 @@ export async function analytics(
     );
   }
 
-  const root = await PuppeteerSession.Authenticated.getInstance(url);
+  const root = await PuppeteerSession.Authenticated.getInstance(url, {
+    logRequests: Workflow.logRequests()
+  });
 
   Progress.start({ max: data.length });
   const outputPath = await Output.avoidOverwrite(
@@ -202,8 +204,7 @@ export async function analytics(
             format: 'json',
             pageNumber,
             toDate: moment().format('MM/DD/YYYY')
-          },
-          logRequests: Workflow.logRequests()
+          }
         });
         for (const preview of response) {
           const { ConversationId } = preview;
