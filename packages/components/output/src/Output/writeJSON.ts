@@ -5,11 +5,17 @@ import { avoidOverwrite } from './avoidOverwrite.js';
 import * as Storage from './Storage.js';
 import { writeRecursive } from './writeRecursive.js';
 
+type Options = {
+  pretty?: boolean;
+  silent?: boolean;
+};
+
 export async function writeJSON(
   outputPath: string | undefined,
   data: object | undefined,
-  { pretty = Storage.pretty(), silent = false } = {}
+  options: Options = {}
 ) {
+  const { pretty = Storage.pretty(), silent = false } = options;
   if (data) {
     if (outputPath) {
       const filePath = await avoidOverwrite(
