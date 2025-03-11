@@ -177,6 +177,13 @@ export async function run() {
     async function snapshotGroup(i: number) {
       const tempPath = path.join(TEMP, `${pad(i)}.json`);
       try {
+        /**
+         * FIXME redundant memory and temp file storage
+         *   Need to do some testing, but it would probably be more memory
+         *   efficient to write temp files and NOT store data to memory, an
+         *   then to copy the files into the final snapshot one at a time at
+         *   the end
+         */
         data[i] = await Snapshot.snapshot({
           ...Snapshot.getConfig(),
           session,
@@ -185,9 +192,12 @@ export async function run() {
           silent: true,
           quit: true
         });
-        // TODO Configurable snapshot --all temp directory
-        // TODO Optional snapshot --all temp files
-        Output.writeJSON(tempPath, data[i]);
+        /*
+         * FIXME redundant writeJSON
+         *   By design, snapshot-multiple should just pass an output path to
+         *   snapshot to do the write, rather than calling writeJSON itself
+         */
+        Output.writeJSON(tempPath, data[i], { silent: true });
         Progress.caption(data[i]?.SectionInfo?.GroupName || '');
       } catch (error) {
         if (Workflow.ignoreErrors()) {
