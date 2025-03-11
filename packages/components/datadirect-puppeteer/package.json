@@ -42,8 +42,8 @@
     "@battis/qui-cli.colors": "^2.0",
     "@battis/qui-cli.log": "^2.0",
     "@battis/qui-cli.plugin": "^2.2",
-    "@msar/puppeteer-session": "workspace:*",
-    "datadirect": "workspace:*",
+    "@msar/puppeteer-session": "0.x",
+    "datadirect": "0.x",
     "puppeteer": "*"
   }
 }
