@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [0.3.1](https://github.com/groton-school/myschoolapp-reporting/compare/datadirect-puppeteer/0.3.0...datadirect-puppeteer/0.3.1) (2025-03-11)
+
+
+### Features
+
+* **datadirect-puppeteer:** api.datadirect.topicget ([84f6811](https://github.com/groton-school/myschoolapp-reporting/commit/84f681126921b2cf6d46ce510820a2f12ddad7f8))
+
+
+### Bug Fixes
+
+* **datadirect-puppeteer:** relax peer dependency versioning ([b08c164](https://github.com/groton-school/myschoolapp-reporting/commit/b08c16413e25da5ba2194734c89534945d8154cc))
+
 ## [0.3.0](https://github.com/battis/myschoolapp-reporting/compare/datadirect-puppeteer/0.2.1...datadirect-puppeteer/0.3.0) (2025-03-05)
 
 
