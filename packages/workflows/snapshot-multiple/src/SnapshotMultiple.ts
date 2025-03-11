@@ -28,12 +28,13 @@ export type Configuration = {
   year?: string;
   groupsPath?: string;
   url?: URL | string;
+  temp?: string;
 };
 
 export type Item = Snapshot.Data;
 export type Data = Item[];
 
-const TEMP = path.join('/tmp/msar/snapshot', crypto.randomUUID());
+let TEMP = path.join('/tmp/msar/snapshot', crypto.randomUUID());
 
 let all = false;
 let association: string | undefined = undefined;
@@ -58,6 +59,10 @@ export function configure(config: Configuration = {}) {
   year = Plugin.hydrate(config.year, year);
   groupsPath = Plugin.hydrate(config.groupsPath, groupsPath);
   url = config.url ? new URL(config.url) : url;
+  TEMP = path.join(
+    '/tmp/msar/snapshot',
+    Plugin.hydrate(config.temp, crypto.randomUUID())
+  );
 }
 
 export function options(): Plugin.Options {
@@ -95,6 +100,9 @@ export function options(): Plugin.Options {
       year: {
         description: `If ${Colors.value(`--all`)} flag is used, which year to download. (Default: ${Colors.quotedValue(`"${year}"`)})`,
         default: year
+      },
+      resume: {
+        description: `If ${Colors.value(`--all`)} flag is used,UUID name of temp directory (${Colors.url('/tmp/msar/snapshot/:uuid')}) for which to resume collecting snapshots`
       }
     },
     man: [
@@ -192,8 +200,24 @@ export async function run() {
       Progress.increment();
     }
 
+    let resume = 0;
+    try {
+      resume = Math.max(
+        resume,
+        ...(await fs.readdir(TEMP)).map((name) => parseInt(name))
+      );
+      for (let i = 0; i <= resume; i++) {
+        data[i] = JSON.parse(
+          (await fs.readFile(path.resolve(TEMP, `${pad(i)}.json`))).toString()
+        );
+      }
+    } catch (_) {
+      // ignore missing temp dir
+    }
     const queue = new PQueue({ concurrency: RateLimiter.concurrency() });
-    await queue.addAll(groups.map((group, i) => snapshotGroup.bind(null, i)));
+    await queue.addAll(
+      groups.slice(resume + 1).map((group, i) => snapshotGroup.bind(null, i))
+    );
 
     let Start = new Date();
     let Finish = new Date('1/1/1970');
