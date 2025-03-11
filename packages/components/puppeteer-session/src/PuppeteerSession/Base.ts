@@ -1,8 +1,8 @@
 import { Log } from '@battis/qui-cli.log';
 import * as Plugin from '@battis/qui-cli.plugin';
 import { JSONValue } from '@battis/typescript-tricks';
+import { RateLimiter } from '@msar/rate-limiter';
 import { Mutex, MutexInterface } from 'async-mutex';
-import PQueue from 'p-queue';
 import puppeteer, { GoToOptions, Page } from 'puppeteer';
 import { InitializationError } from './InitializationError.js';
 import * as Storage from './Storage.js';
@@ -22,8 +22,6 @@ export type FetchResponse = {
 };
 
 export class Base {
-  private static queue = new PQueue({ concurrency: 10, interval: 200 });
-
   private initializing = new Mutex();
 
   private _page?: Page;
@@ -130,7 +128,7 @@ export class Base {
     logRequest = this.logRequests
   ): Promise<FetchResponse> {
     await this.ready();
-    const response = await Base.queue.add(
+    const response = await RateLimiter.add(
       (async () => {
         const url = new URL(input, this.page.url());
         const response = await this.page.evaluate(

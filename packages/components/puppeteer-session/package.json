@@ -25,7 +25,6 @@
     "async-mutex": "^0.5.0",
     "datadirect": "workspace:*",
     "ora": "^8.2.0",
-    "p-queue": "^8.1.0",
     "puppeteer": "^23.11.1"
   },
   "devDependencies": {
@@ -33,6 +32,7 @@
     "@battis/qui-cli.log": "^2.1.0",
     "@battis/qui-cli.plugin": "^2.3.0",
     "@battis/typescript-tricks": "^0.7.4",
+    "@msar/rate-limiter": "workspace:*",
     "@tsconfig/node20": "^20.1.4",
     "commit-and-tag-version": "^12.5.0",
     "del-cli": "^6.0.0",
@@ -42,6 +42,7 @@
   "peerDependencies": {
     "@battis/qui-cli.colors": "^2.0",
     "@battis/qui-cli.log": "^2.0",
-    "@battis/qui-cli.plugin": "^2.2"
+    "@battis/qui-cli.plugin": "^2.2",
+    "@msar/rate-limiter": "workspace:*"
   }
 }
