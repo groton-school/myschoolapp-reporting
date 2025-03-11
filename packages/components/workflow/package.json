@@ -1,15 +1,15 @@
 {
   "name": "@msar/workflow",
   "version": "0.1.0",
-  "homepage": "https://github.com/battis/myschoolapp-reporting/tree/main/packages/components/workflow#readme",
+  "homepage": "https://github.com/groton-school/myschoolapp-reporting/tree/main/packages/components/workflow#readme",
   "repository": {
     "type": "git",
-    "url": "https://github.com/battis/myschoolapp-reporting.git",
+    "url": "https://github.com/groton-school/myschoolapp-reporting.git",
     "directory": "packages/components/workflow"
   },
   "author": {
     "name": "Seth Battis",
-    "url": "https://github.com/battis"
+    "email": "sbattis@groton.org"
   },
   "type": "module",
   "main": "./dist/index.js",

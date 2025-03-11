@@ -8,16 +8,16 @@
     "sky",
     "api"
   ],
-  "homepage": "https://github.com/battis/myschoolapp-reporting/tree/main/packages/datadirect#readme",
+  "homepage": "https://github.com/groton-school/myschoolapp-reporting/tree/main/packages/datadirect#readme",
   "repository": {
     "type": "git",
-    "url": "https://github.com/battis/myschoolapp-reporting.git",
+    "url": "https://github.com/groton-school/myschoolapp-reporting.git",
     "directory": "packages/datadirect"
   },
   "license": "MIT",
   "author": {
     "name": "Seth Battis",
-    "url": "https://github.com/battis"
+    "email": "sbattis@groton.org"
   },
   "type": "module",
   "main": "./dist/index.js",

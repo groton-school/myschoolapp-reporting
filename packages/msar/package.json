@@ -11,16 +11,16 @@
     "reporting",
     "analytics"
   ],
-  "homepage": "https://github.com/battis/myschoolapp-reporting/tree/main/packages/msar#readme",
+  "homepage": "https://github.com/groton-school/myschoolapp-reporting/tree/main/packages/msar#readme",
   "repository": {
     "type": "git",
-    "url": "https://github.com/battis/myschoolapp-reporting.git",
+    "url": "https://github.com/groton-school/myschoolapp-reporting.git",
     "directory": "packages/msar"
   },
   "license": "GPL-3.0",
   "author": {
     "name": "Seth Battis",
-    "url": "https://github.com/battis"
+    "email": "sbattis@groton.org"
   },
   "type": "module",
   "bin": {

@@ -1,6 +1,16 @@
 {
   "name": "@msar/rate-limiter",
   "version": "0.0.0",
+  "homepage": "https://github.com/groton-school/myschoolapp-reporting/tree/main/packages/components/rate-limiter#readme",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/groton-school/myschoolapp-reporting.git",
+    "directory": "packages/components/rate-limiter"
+  },
+  "author": {
+    "name": "Seth Battis",
+    "email": "sbattis@groton.org"
+  },
   "type": "module",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
