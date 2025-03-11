@@ -51,13 +51,13 @@
     "@battis/qui-cli.core": "^2.1",
     "@battis/qui-cli.plugin": "^2.2",
     "@battis/qui-cli.progress": "^2.0",
-    "@msar/datadirect-puppeteer": "workspace:*",
-    "@msar/debug": "workspace:*",
-    "@msar/output": "workspace:*",
-    "@msar/puppeteer-session": "workspace:*",
-    "@msar/rate-limiter": "workspace:*",
-    "@msar/snapshot": "workspace:*",
-    "@msar/snapshot-multiple": "workspace:*",
-    "@msar/workflow": "workspace:*"
+    "@msar/datadirect-puppeteer": "0.x",
+    "@msar/debug": "0.x",
+    "@msar/output": "0.x",
+    "@msar/puppeteer-session": "0.x",
+    "@msar/rate-limiter": "0.x",
+    "@msar/snapshot": "0.x",
+    "@msar/snapshot-multiple": "0.x",
+    "@msar/workflow": "0.x"
   }
 }
