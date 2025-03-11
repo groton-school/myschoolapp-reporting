@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [0.2.1](https://github.com/groton-school/myschoolapp-reporting/compare/snapshot/0.2.0...snapshot/0.2.1) (2025-03-11)
+
+
+### Features
+
+* **snapshot,snapshot-multiple,archive:** shared rate-limiting queue ([335d143](https://github.com/groton-school/myschoolapp-reporting/commit/335d143b8a22fcd28964c30a09bd821dc544cdf7))
+* **snapshot:** apply logRequests at session level ([406a42f](https://github.com/groton-school/myschoolapp-reporting/commit/406a42f329087cd7185d46561423a7e6c7437c2c))
+* **snapshot:** capture topic layout ([4a12030](https://github.com/groton-school/myschoolapp-reporting/commit/4a120301f0ab8262eb0d7f608c1a68319ca28cae))
+
+
+### Bug Fixes
+
+* **snapshot:** relax peer dependency versioning ([26314de](https://github.com/groton-school/myschoolapp-reporting/commit/26314de624e6c2cc7a27325678e56a8cc737b509))
+* **snapshot:** so long as TopicIndexId is sent, id value doesn’t matter ([1bdaafc](https://github.com/groton-school/myschoolapp-reporting/commit/1bdaafc48af2f9fd40905eeef31f60bbd6641c4c)), closes [#53](https://github.com/groton-school/myschoolapp-reporting/issues/53)
+
 ## [0.2.0](https://github.com/battis/myschoolapp-reporting/compare/snapshot/0.1.2...snapshot/0.2.0) (2025-03-09)
 
 
