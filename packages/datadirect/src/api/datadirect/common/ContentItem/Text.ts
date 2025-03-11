@@ -1,8 +1,7 @@
 import {
   DateTimeString,
   HTMLString,
-  PathString,
-  URLString
+  PathString
 } from '@battis/descriptive-types';
 
 type ImageOp = {
