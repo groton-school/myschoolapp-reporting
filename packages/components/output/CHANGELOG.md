@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [0.1.1](https://github.com/groton-school/myschoolapp-reporting/compare/output/0.1.0...output/0.1.1) (2025-03-11)
+
+
+### Bug Fixes
+
+* **output:** relax peer dependency versioning ([9870d0f](https://github.com/groton-school/myschoolapp-reporting/commit/9870d0f4ec0b711ca47e0aba8ad533d6d03f484d))
+
 ## 0.1.0 (2025-03-05)
 
 
