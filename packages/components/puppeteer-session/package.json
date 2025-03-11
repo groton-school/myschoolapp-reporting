@@ -43,6 +43,6 @@
     "@battis/qui-cli.colors": "^2.0",
     "@battis/qui-cli.log": "^2.0",
     "@battis/qui-cli.plugin": "^2.2",
-    "@msar/rate-limiter": "workspace:*"
+    "@msar/rate-limiter": "0.x"
   }
 }
