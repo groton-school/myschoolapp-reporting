@@ -3,6 +3,7 @@ import * as Plugin from '@battis/qui-cli.plugin';
 import { Debug } from '@msar/debug';
 import { Output } from '@msar/output';
 import { PuppeteerSession } from '@msar/puppeteer-session';
+import { RateLimiter } from '@msar/rate-limiter';
 import { Workflow } from '@msar/workflow';
 import { api } from 'datadirect';
 import * as Area from './Area.js';
@@ -158,6 +159,8 @@ export class Snapshot {
           filepath.replace(/\.json$/, '.metadata.json'),
           {
             ...snapshot.Metadata,
+            serverRequests: RateLimiter.requests(),
+            serverRequestsPerSecond: RateLimiter.actual(),
             ...this.config,
             session: undefined
           },

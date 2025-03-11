@@ -8,6 +8,7 @@ import { DatadirectPuppeteer } from '@msar/datadirect-puppeteer';
 import { Debug } from '@msar/debug';
 import { Output } from '@msar/output';
 import { PuppeteerSession } from '@msar/puppeteer-session';
+import { RateLimiter } from '@msar/rate-limiter';
 import * as Snapshot from '@msar/snapshot/dist/Snapshot.js';
 import { Workflow } from '@msar/workflow';
 import crypto from 'node:crypto';
@@ -191,7 +192,7 @@ export async function run() {
       Progress.increment();
     }
 
-    const queue = new PQueue({ concurrency: Workflow.concurrentThreads() });
+    const queue = new PQueue({ concurrency: RateLimiter.concurrency() });
     await queue.addAll(groups.map((group, i) => snapshotGroup.bind(null, i)));
 
     let Start = new Date();
@@ -219,6 +220,8 @@ export async function run() {
       Start,
       Finish,
       Elapsed: Finish.getTime() - Start.getTime(),
+      serverRequests: RateLimiter.requests(),
+      serverRequestsPerSecond: RateLimiter.actual(),
       ...Snapshot.getConfig(),
       association,
       termsOffered,

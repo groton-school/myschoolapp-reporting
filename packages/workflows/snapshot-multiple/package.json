@@ -36,6 +36,7 @@
     "@msar/debug": "workspace:*",
     "@msar/output": "workspace:*",
     "@msar/puppeteer-session": "workspace:*",
+    "@msar/rate-limiter": "workspace:*",
     "@msar/snapshot": "workspace:*",
     "@msar/workflow": "workspace:*",
     "@tsconfig/node20": "^20.1.4",
@@ -55,6 +56,7 @@
     "@msar/debug": "workspace:*",
     "@msar/output": "workspace:*",
     "@msar/puppeteer-session": "workspace:*",
+    "@msar/rate-limiter": "workspace:*",
     "@msar/snapshot": "workspace:*",
     "@msar/workflow": "workspace:*"
   }

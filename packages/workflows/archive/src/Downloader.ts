@@ -1,6 +1,5 @@
 import { Output } from '@msar/output';
-import { Workflow } from '@msar/workflow';
-import PQueue from 'p-queue';
+import { RateLimiter } from '@msar/rate-limiter';
 import * as Cache from './Cache.js';
 import * as AuthenticatedFetch from './Downloader/AuthenticatedFetch.js';
 import * as HTTPFetch from './Downloader/HTTPFetch.js';
@@ -10,19 +9,16 @@ export type Options = {
   host: string;
 };
 
-// TODO Downloader needs to honor --concurrentThreads
 export class Downloader implements Strategy {
   private auth: AuthenticatedFetch.Downloader;
   private http: HTTPFetch.Downloader;
   private host: string;
-  private queue: PQueue;
 
   public constructor({ host }: Options) {
     if (!Output.outputPath()) {
       throw new Output.OutputError('Downloader requires outputPath');
     }
     this.host = host;
-    this.queue = new PQueue({ concurrency: Workflow.concurrentThreads() });
     this.auth = new AuthenticatedFetch.Downloader({
       host
     });
@@ -52,7 +48,7 @@ export class Downloader implements Strategy {
       return {
         original,
         accessed: new Date(),
-        ...(await this.queue.add(() => strategy.download(fetchUrl, filename)))
+        ...(await RateLimiter.add(() => strategy.download(fetchUrl, filename)))
       };
     });
   }

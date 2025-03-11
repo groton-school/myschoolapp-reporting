@@ -24,7 +24,6 @@
   "dependencies": {
     "content-disposition": "^0.5.4",
     "ora": "^8.2.0",
-    "p-queue": "^8.1.0",
     "puppeteer": "^23.11.1"
   },
   "devDependencies": {
@@ -36,6 +35,7 @@
     "@msar/datadirect-puppeteer": "workspace:*",
     "@msar/debug": "workspace:*",
     "@msar/puppeteer-session": "workspace:*",
+    "@msar/rate-limiter": "workspace:*",
     "@msar/snapshot": "workspace:*",
     "@msar/snapshot-multiple": "workspace:*",
     "@msar/workflow": "workspace:*",
@@ -55,6 +55,7 @@
     "@msar/debug": "workspace:*",
     "@msar/output": "workspace:*",
     "@msar/puppeteer-session": "workspace:*",
+    "@msar/rate-limiter": "workspace:*",
     "@msar/snapshot": "workspace:*",
     "@msar/snapshot-multiple": "workspace:*",
     "@msar/workflow": "workspace:*"
