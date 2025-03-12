@@ -84,6 +84,14 @@ export class Spider {
               ...options
             });
           } else if (
+            /*
+             * FIXME Grading Rubic attachment download
+             *   Non-standard structure, can be downloaded from https://example.myschoolapp.com/app/utilities/FileDownload.ashx?:AttachmentQueryString
+             */
+            /*
+             * FIXME Expectations attachment download
+             *   Non-standard structure, can be downloaded from https://example.myschoolapp.com/app/utilities/FileDownload.ashx?:AttachmentQueryString
+             */
             key === 'PhotoFilename' ||
             key === 'ThumbFilename' ||
             /Url$/i.test(key) ||
