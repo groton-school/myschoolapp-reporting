@@ -42,7 +42,8 @@ export class Spider {
       const indexName = `${snapshot.SectionInfo?.Id || 'index'}.json`;
       await Output.writeJSON(
         await Output.avoidOverwrite(path.join(Output.outputPath(), indexName)),
-        snapshot
+        snapshot,
+        { silent: true }
       );
       Debug.withGroupId(
         snapshot.SectionInfo?.Id || Colors.error('unknown'),
