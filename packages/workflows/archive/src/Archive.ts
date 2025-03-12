@@ -4,8 +4,8 @@ import * as Plugin from '@battis/qui-cli.plugin';
 import { Progress } from '@battis/qui-cli.progress';
 import { Output } from '@msar/output';
 import { PuppeteerSession } from '@msar/puppeteer-session';
+import { RateLimiter } from '@msar/rate-limiter';
 import { SnapshotMultiple } from '@msar/snapshot-multiple';
-import * as Snapshot from '@msar/snapshot/dist/Snapshot.js'; // import without registering plug-in
 import fs from 'node:fs';
 import path from 'node:path';
 import ora from 'ora';
@@ -21,7 +21,7 @@ await Core.configure({ core: { requirePositionals: 1 } });
 export const name = '@msar/download';
 export const src = import.meta.dirname;
 
-let include = [/.*/];
+let include = [/^\/.*/];
 let exclude = [/^https?:/];
 let snapshotPathArg: string | undefined = undefined;
 
@@ -130,8 +130,7 @@ export async function run() {
     throw new Error('No host present in snapshot file.');
   }
   const spider = new Spider({
-    host,
-    ...options
+    host
   });
   const indices: (string | undefined)[] = [];
 
@@ -142,7 +141,8 @@ export async function run() {
     );
     indices.push(
       await spider.download(snapshot, {
-        ...options
+        include,
+        exclude
       })
     );
     Progress.increment();
@@ -177,8 +177,11 @@ export async function run() {
     Start,
     Finish,
     Elapsed: Finish.getTime() - Start.getTime(),
-    ...options,
-    credentials: undefined
+    serverRequests: RateLimiter.requests(),
+    serverRequestsPerSecond: RateLimiter.actual(),
+    host,
+    include,
+    exclude
   });
 
   if (PuppeteerSession.quit()) {
