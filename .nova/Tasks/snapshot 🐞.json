@@ -12,7 +12,7 @@
     },
     "run" : {
       "enabled" : true,
-      "script" : "source .env\n# node --inspect-wait .\/packages\/msar\/dist\/bin\/msar.js ...\ntsx .\/packages\/msar\/src\/index.ts snapshot --stdoutLevel all --logFilePath .\/var\/snapshot.log --logRequests -u \"$(op item get $OP_ITEM --fields username)\" -p \"$(op item get $OP_ITEM --fields password --reveal)\" --sso $SSO --mfa $MFA --outputPath \"$OUT\" --pretty --studentData \"$URL\""
+      "script" : "source .env\n# node --inspect-wait .\/packages\/msar\/dist\/bin\/msar.js ...\ntsx .\/packages\/msar\/src\/index.ts snapshot --stdoutLevel all --logFilePath .\/var\/snapshot.log --logRequests -u \"$(op item get $OP_ITEM --fields username)\" -p \"$(op item get --account $OP_ACCOUNT $OP_ITEM --fields password --reveal)\" --sso $SSO --mfa $MFA --outputPath \"$OUT\" --pretty --studentData \"$URL\""
     }
   },
   "buildBeforeRunning" : true,
