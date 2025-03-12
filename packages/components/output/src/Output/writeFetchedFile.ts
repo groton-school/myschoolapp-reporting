@@ -1,5 +1,6 @@
 import { Colors } from '@battis/qui-cli.colors';
 import { Log } from '@battis/qui-cli.log';
+import { Workflow } from '@msar/workflow';
 import fs from 'node:fs';
 import path from 'node:path';
 import { Readable } from 'node:stream';
@@ -34,8 +35,10 @@ export async function writeFetchedFile({ url, stream, outputPath }: Options) {
     Log.debug(`Saved ${Colors.url(url)} to ${Colors.url(localPath)}`);
     return localPath;
   } catch (error) {
-    throw new Error(
-      `Error saving ${Colors.url(url)} to ${Colors.url(localPath)}: ${Colors.error(error)}`
-    );
+    const message = `Error saving ${Colors.url(url)} to ${Colors.url(localPath)}: ${Colors.error(error)}`;
+    if (Workflow.ignoreErrors()) {
+      Log.error(message);
+    }
+    throw new Error(message);
   }
 }
