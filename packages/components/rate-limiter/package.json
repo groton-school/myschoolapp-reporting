@@ -1,6 +1,6 @@
 {
   "name": "@msar/rate-limiter",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "homepage": "https://github.com/groton-school/myschoolapp-reporting/tree/main/packages/components/rate-limiter#readme",
   "repository": {
     "type": "git",

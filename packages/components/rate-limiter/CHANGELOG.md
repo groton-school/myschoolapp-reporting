@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [0.1.1](https://github.com/groton-school/myschoolapp-reporting/compare/rate-limiter/0.1.0...rate-limiter/0.1.1) (2025-03-12)
+
+
+### Features
+
+* **rate-limiter:** default to single thread ([96667d5](https://github.com/groton-school/myschoolapp-reporting/commit/96667d569d3ce25464472d41f6d913700ae50697))
+
 ## 0.1.0 (2025-03-11)
 
 
