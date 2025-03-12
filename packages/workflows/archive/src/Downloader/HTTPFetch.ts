@@ -1,6 +1,7 @@
 import { Colors } from '@battis/qui-cli.colors';
 import { Log } from '@battis/qui-cli.log';
 import { Output } from '@msar/output';
+import { RateLimiter } from '@msar/rate-limiter';
 import { Workflow } from '@msar/workflow';
 import { ReadableStream } from 'node:stream/web';
 import {
@@ -22,7 +23,10 @@ export class Downloader implements Strategy {
 
   public async download(url: string, filename?: string) {
     Log.debug(`HTTPFetch: ${Colors.url(url)}`);
-    const response = await fetch(url);
+    const response = await RateLimiter.add(async () => await fetch(url));
+    if (!response) {
+      throw new Error(`Rate limit returned void: ${Log.syntaxColor({ url })}`);
+    }
     if (this.logRequests) {
       Log.debug({
         url,

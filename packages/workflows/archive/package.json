@@ -24,6 +24,7 @@
   "dependencies": {
     "content-disposition": "^0.5.4",
     "ora": "^8.2.0",
+    "p-queue": "^8.1.0",
     "puppeteer": "^23.11.1"
   },
   "devDependencies": {

@@ -1,5 +1,6 @@
 import { Output } from '@msar/output';
 import { RateLimiter } from '@msar/rate-limiter';
+import PQueue from 'p-queue';
 import * as Cache from './Cache.js';
 import * as AuthenticatedFetch from './Downloader/AuthenticatedFetch.js';
 import * as HTTPFetch from './Downloader/HTTPFetch.js';
@@ -13,12 +14,14 @@ export class Downloader implements Strategy {
   private auth: AuthenticatedFetch.Downloader;
   private http: HTTPFetch.Downloader;
   private host: string;
+  private queue: PQueue;
 
   public constructor({ host }: Options) {
     if (!Output.outputPath()) {
       throw new Output.OutputError('Downloader requires outputPath');
     }
     this.host = host;
+    this.queue = new PQueue({ concurrency: RateLimiter.concurrency() });
     this.auth = new AuthenticatedFetch.Downloader({
       host
     });
@@ -48,7 +51,7 @@ export class Downloader implements Strategy {
       return {
         original,
         accessed: new Date(),
-        ...(await RateLimiter.add(() => strategy.download(fetchUrl, filename)))
+        ...(await this.queue.add(() => strategy.download(fetchUrl, filename)))
       };
     });
   }
