@@ -12,7 +12,7 @@ export type Configuration = Plugin.Configuration & {
 export const name = '@msar/rate-limiter';
 export const src = import.meta.dirname;
 
-let _concurrency = 4;
+let _concurrency = 1;
 let queue: PQueue | undefined = undefined;
 
 let _requests = 0;
