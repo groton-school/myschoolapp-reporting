@@ -4,35 +4,35 @@ All notable changes to this project will be documented in this file. See [commit
 
 ## [0.3.2](https://github.com/groton-school/myschoolapp-reporting/compare/datadirect-puppeteer/0.3.1...datadirect-puppeteer/0.3.2) (2025-03-11)
 
-## [0.3.1](https://github.com/groton-school/myschoolapp-reporting/compare/datadirect-puppeteer/0.3.0...datadirect-puppeteer/0.3.1) (2025-03-11)
+### Bug Fixes
 
+- **datadirect-puppeteer:** datadirect is dependency, not peer ([d1a35e7](https://github.com/groton-school/myschoolapp-reporting/commit/d1a35e7db20b6ba189ff865f554f879bc9e2e4e8))
+
+## [0.3.1](https://github.com/groton-school/myschoolapp-reporting/compare/datadirect-puppeteer/0.3.0...datadirect-puppeteer/0.3.1) (2025-03-11)
 
 ### Features
 
-* **datadirect-puppeteer:** api.datadirect.topicget ([84f6811](https://github.com/groton-school/myschoolapp-reporting/commit/84f681126921b2cf6d46ce510820a2f12ddad7f8))
-
+- **datadirect-puppeteer:** api.datadirect.topicget ([84f6811](https://github.com/groton-school/myschoolapp-reporting/commit/84f681126921b2cf6d46ce510820a2f12ddad7f8))
 
 ### Bug Fixes
 
-* **datadirect-puppeteer:** relax peer dependency versioning ([b08c164](https://github.com/groton-school/myschoolapp-reporting/commit/b08c16413e25da5ba2194734c89534945d8154cc))
+- **datadirect-puppeteer:** relax peer dependency versioning ([b08c164](https://github.com/groton-school/myschoolapp-reporting/commit/b08c16413e25da5ba2194734c89534945d8154cc))
 
 ## [0.3.0](https://github.com/battis/myschoolapp-reporting/compare/datadirect-puppeteer/0.2.1...datadirect-puppeteer/0.3.0) (2025-03-05)
 
-
 ### ⚠ BREAKING CHANGES
 
-* **datadirect-puppeteer:** rename to @msar/datadirect-puppeteer
+- **datadirect-puppeteer:** rename to @msar/datadirect-puppeteer
 
 ### Features
 
-* **datadirect-puppeteer:** rename to @msar/datadirect-puppeteer ([d1dc50d](https://github.com/battis/myschoolapp-reporting/commit/d1dc50d8873977ffc76fe25f34279ad804b9c6fe))
+- **datadirect-puppeteer:** rename to @msar/datadirect-puppeteer ([d1dc50d](https://github.com/battis/myschoolapp-reporting/commit/d1dc50d8873977ffc76fe25f34279ad804b9c6fe))
 
 ## [0.2.1](https://github.com/battis/myschoolapp-reporting/compare/datadirect-puppeteer/0.2.0...datadirect-puppeteer/0.2.1) (2025-01-20)
 
-
 ### Features
 
-* **datadirect-puppeteer:** api.message.conversation() ([e0298d5](https://github.com/battis/myschoolapp-reporting/commit/e0298d565416645207a57c0d0132ae4200a43d6c))
+- **datadirect-puppeteer:** api.message.conversation() ([e0298d5](https://github.com/battis/myschoolapp-reporting/commit/e0298d565416645207a57c0d0132ae4200a43d6c))
 
 ## [0.2.0](https://github.com/battis/myschoolapp-reporting/compare/datadirect-puppeteer/0.1.0...datadirect-puppeteer/0.2.0) (2025-01-19)
 
