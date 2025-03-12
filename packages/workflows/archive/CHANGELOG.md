@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [0.1.2](https://github.com/groton-school/myschoolapp-reporting/compare/archive/0.1.1...archive/0.1.2) (2025-03-12)
+
+
+### Bug Fixes
+
+* **archive:** honor include/exclude directives ([62b36fe](https://github.com/groton-school/myschoolapp-reporting/commit/62b36feadad43965b6f820b9c5cbcb390c4280a4))
+* **archive:** stop rate-limiting building the download queue ([11a6ddd](https://github.com/groton-school/myschoolapp-reporting/commit/11a6dddb6f30b0ba6fecf2410868a37f3106827b))
+* **archive:** suppress extraneous cache file output ([0f3f50e](https://github.com/groton-school/myschoolapp-reporting/commit/0f3f50e5a533d020bd20dc71d7d35022d4707d6a))
+
 ## [0.1.1](https://github.com/groton-school/myschoolapp-reporting/compare/archive/0.1.0...archive/0.1.1) (2025-03-11)
 
 
