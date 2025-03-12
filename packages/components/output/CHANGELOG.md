@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [0.1.2](https://github.com/groton-school/myschoolapp-reporting/compare/output/0.1.1...output/0.1.2) (2025-03-12)
+
+
+### Bug Fixes
+
+* **output:** honor Workflow.ignoreErrors ([d35a76a](https://github.com/groton-school/myschoolapp-reporting/commit/d35a76a89b6324036486701a29d2f4ce808229a7))
+
 ## [0.1.1](https://github.com/groton-school/myschoolapp-reporting/compare/output/0.1.0...output/0.1.1) (2025-03-11)
 
 
