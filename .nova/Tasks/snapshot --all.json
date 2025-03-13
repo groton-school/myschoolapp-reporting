@@ -11,7 +11,7 @@
     },
     "run" : {
       "enabled" : true,
-      "script" : "source .env\nmsar snapshot -u \"$(op item get $OP_ITEM --fields username)\" -p \"$(op item get --account $OP_ACCOUNT $OP_ITEM --fields password --reveal)\" --sso $SSO --mfa $MFA --outputPath \"$OUT\" --all --association \"Classes\" --pretty \"$URL\"\n"
+      "script" : "source .env\nmsar snapshot -u \"$(op item get --account $OP_ACCOUNT $OP_ITEM --fields username)\" -p \"$(op item get --account $OP_ACCOUNT $OP_ITEM --fields password --reveal)\" --sso $SSO --mfa $MFA --outputPath \"$OUT\" --all --association \"Classes\" --pretty \"$URL\"\n"
     }
   },
   "buildBeforeRunning" : true,
