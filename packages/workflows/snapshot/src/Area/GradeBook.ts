@@ -1,18 +1,9 @@
 import { DatadirectPuppeteer } from '@msar/datadirect-puppeteer';
 import { Debug } from '@msar/debug';
-import { api } from 'datadirect';
+import * as Snapshot from '@msar/types.snapshot';
 import * as Base from './Base.js';
 
-export type Item = {
-  markingPeriod: api.datadirect.GradeBookMarkingPeriodList.Item;
-  gradebook: Omit<api.gradebook.hydrategradebook.Response, 'Roster'> & {
-    Roster: api.gradebook.hydrategradebook.Roster | { error: string };
-  };
-};
-
-export type Data = Item[];
-
-export const snapshot: Base.Snapshot<Data> = async ({
+export const snapshot: Base.Snapshot<Snapshot.GradeBook.Data> = async ({
   groupId: sectionId,
   ignoreErrors,
   studentData,
@@ -25,9 +16,9 @@ export const snapshot: Base.Snapshot<Data> = async ({
         ...options,
         payload: { sectionId }
       });
-    const Gradebook: Data = [];
+    const Gradebook: Snapshot.GradeBook.Data = [];
     for (const markingPeriod of markingPeriods) {
-      const entry: Item = {
+      const entry: Snapshot.GradeBook.Item = {
         markingPeriod,
         gradebook: await DatadirectPuppeteer.api.gradebook.hydrategradebook({
           ...options,

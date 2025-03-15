@@ -1,38 +1,11 @@
-import { DateTimeString } from '@battis/descriptive-types';
 import { DatadirectPuppeteer } from '@msar/datadirect-puppeteer';
 import { Debug } from '@msar/debug';
-import { api } from 'datadirect';
+import * as Snapshot from '@msar/types.snapshot';
+import { School } from '@oauth2-cli/sky-api';
 import { sky } from '../SkyAPI.js';
 import * as Base from './Base.js';
 
-export type SkyAssignment = {
-  id: number;
-  date: DateTimeString;
-  description: string;
-  discussion: false;
-  due_date: DateTimeString;
-  enrolled: number;
-  graded_count: number;
-  index_id: number;
-  major: boolean;
-  name: string;
-  publish_on_assigned: boolean;
-  published: boolean;
-  rank: number;
-  status: number;
-  type: string;
-  type_id: number;
-};
-
-type SkyAssignmentList = {
-  count: number;
-  value: SkyAssignment[];
-};
-
-export type Data = (api.Assignment2.UserAssignmentDetailsGetAllData.Response &
-  Partial<SkyAssignment>)[];
-
-export const snapshot: Base.Snapshot<Data> = async ({
+export const snapshot: Base.Snapshot<Snapshot.Assignments.Data> = async ({
   session,
   groupId: sectionId,
   ignoreErrors,
@@ -43,7 +16,7 @@ export const snapshot: Base.Snapshot<Data> = async ({
   const skyAssignments = (
     (await sky().fetch(
       `/school/v1/academics/sections/${sectionId}/assignments`
-    )) as SkyAssignmentList
+    )) as School.AssignmentList
   ).value;
 
   const assignmentList =
@@ -53,7 +26,7 @@ export const snapshot: Base.Snapshot<Data> = async ({
       }
     });
 
-  const assignments: Data = [];
+  const assignments: Snapshot.Assignments.Data = [];
   for (const assignment of assignmentList) {
     try {
       assignments.push({

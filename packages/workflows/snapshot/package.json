@@ -22,8 +22,8 @@
     "release": "commit-and-tag-version"
   },
   "dependencies": {
-    "@groton/sky-api.school": "^0.1.2",
-    "@oauth2-cli/sky-api": "^0.2.0",
+    "@msar/types.snapshot": "workspace:*",
+    "@oauth2-cli/sky-api": "^0.2.1",
     "datadirect": "workspace:*",
     "ora": "^8.2.0"
   },

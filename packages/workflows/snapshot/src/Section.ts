@@ -1,9 +1,9 @@
-import { NumericDuration } from '@battis/descriptive-types';
 import * as Plugin from '@battis/qui-cli.plugin';
 import { Debug } from '@msar/debug';
 import { Output } from '@msar/output';
 import { PuppeteerSession } from '@msar/puppeteer-session';
 import { RateLimiter } from '@msar/rate-limiter';
+import { Data } from '@msar/types.snapshot';
 import { Workflow } from '@msar/workflow';
 import { api } from 'datadirect';
 import * as Area from './Area.js';
@@ -30,24 +30,6 @@ export type Configuration = Plugin.Configuration & {
   silent?: boolean;
 } & Context &
   Partial<api.datadirect.ContentItem.Payload>;
-
-export type Metadata = {
-  Host: string;
-  User: string;
-  Start: Date;
-  Finish: Date;
-  Elapsed?: NumericDuration;
-};
-
-export type Data = {
-  Metadata: Metadata;
-  GroupId: number;
-  SectionInfo?: Area.SectionInfo.Data;
-  BulletinBoard?: Area.BulletinBoard.Data;
-  Topics?: Area.Topics.Data;
-  Assignments?: Area.Assignments.Data;
-  Gradebook?: Area.GradeBook.Data;
-};
 
 export class Snapshot {
   private constructor(private config: Configuration) {}

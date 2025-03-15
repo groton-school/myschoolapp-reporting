@@ -1,20 +1,9 @@
 import { DatadirectPuppeteer } from '@msar/datadirect-puppeteer';
 import { Debug } from '@msar/debug';
+import * as Snapshot from '@msar/types.snapshot';
 import { Workflow } from '@msar/workflow';
 import { api } from 'datadirect';
 import * as Base from './Base.js';
-
-/*
- * TODO capture bulletin board layout
- *   It looks like this can only be done by navigating to the page and then
- *   waiting for it to be rendered and capturing div#topic-detail-container as
- *   an HTMLString
- */
-export type Item = api.datadirect.BulletinBoardContentGet.Item & {
-  Content?: api.datadirect.common.ContentItem.Any.Content | { error: string };
-  ContentType?: api.datadirect.common.ContentType.Any;
-};
-export type Data = Item[];
 
 const studentDataContentTypes = ['Roster'];
 
@@ -35,17 +24,17 @@ async function getPossibleContent(leadSectionId: number) {
   return possibleContent;
 }
 
-export const snaphot: Base.Snapshot<Data> = async ({
+export const snaphot: Base.Snapshot<Snapshot.BulletinBoard.Data> = async ({
   session,
   groupId: Id,
   payload = { format: 'json' },
   ignoreErrors = Workflow.ignoreErrors(),
   studentData,
   logRequests
-}): Promise<Data | undefined> => {
+}): Promise<Snapshot.BulletinBoard.Data | undefined> => {
   Debug.withGroupId(Id, 'Start capturing bulletin board');
   try {
-    const BulletinBoard: Data = [];
+    const BulletinBoard: Snapshot.BulletinBoard.Data = [];
     await getPossibleContent(Id);
     const items =
       await DatadirectPuppeteer.api.datadirect.BulletinBoardContentGet({

@@ -2,27 +2,10 @@ import { Colors } from '@battis/qui-cli.colors';
 import { Log } from '@battis/qui-cli.log';
 import { DatadirectPuppeteer } from '@msar/datadirect-puppeteer';
 import { Debug } from '@msar/debug';
+import * as Snapshot from '@msar/types.snapshot';
 import { Workflow } from '@msar/workflow';
 import { api } from 'datadirect';
 import * as Base from './Base.js';
-
-/*
- * TODO capture topic layout
- *   It looks like this can only be done by navigating to the topic and then
- *   waiting for it to be rendered and capturing div#topic-detail-container as
- *   an HTMLString
- */
-export type Item = api.datadirect.topiccontentget.Item & {
-  ObjectType?: api.datadirect.TopicContentTypesGet.Item;
-  Content?: api.datadirect.common.ContentItem.Any.Content | { error: string };
-};
-
-export type Topic = api.datadirect.sectiontopicsget.Item &
-  api.datadirect.topicget.Item & {
-    Content?: Item[];
-  };
-
-export type Data = Topic[];
 
 let possibleContent: api.datadirect.TopicContentTypesGet.Response | undefined =
   undefined;
@@ -37,16 +20,16 @@ async function getPossibleContent() {
   return possibleContent;
 }
 
-export const snapshot: Base.Snapshot<Data> = async ({
+export const snapshot: Base.Snapshot<Snapshot.Topics.Data> = async ({
   groupId: Id,
   payload,
   ignoreErrors = Workflow.ignoreErrors(),
   studentData,
   ...options
-}): Promise<Data | undefined> => {
+}): Promise<Snapshot.Topics.Data | undefined> => {
   Debug.withGroupId(Id, 'Start capturing topics');
   try {
-    const Topics: Data = [];
+    const Topics: Snapshot.Topics.Data = [];
     await getPossibleContent();
     const topics = await DatadirectPuppeteer.api.datadirect.sectiontopicsget({
       ...options,
@@ -71,7 +54,7 @@ export const snapshot: Base.Snapshot<Data> = async ({
         payload: { format: 'json' },
         pathParams: { TopicID }
       });
-      const Content: Item[] = [];
+      const Content: Snapshot.Topics.Item[] = [];
       const items: api.datadirect.topiccontentget.Response = (
         await DatadirectPuppeteer.api.datadirect.topiccontentget({
           ...options,
@@ -104,7 +87,7 @@ export const snapshot: Base.Snapshot<Data> = async ({
             t.Id == item.ContentId
         );
         try {
-          const entry: Item = {
+          const entry: Snapshot.Topics.Item = {
             ...item,
             ObjectType,
             Content:

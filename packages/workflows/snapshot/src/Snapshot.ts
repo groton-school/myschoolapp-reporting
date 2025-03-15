@@ -4,13 +4,14 @@ import '@battis/qui-cli.env';
 import * as Plugin from '@battis/qui-cli.plugin';
 import { Root } from '@battis/qui-cli.root';
 import { Output } from '@msar/output';
+import * as Snapshot from '@msar/types.snapshot';
 import fs from 'node:fs';
 import path from 'node:path';
 import * as Section from './Section.js';
 import { Configuration } from './Section.js';
 import * as SkyAPI from './SkyAPI.js';
 
-export { Configuration, Context, Data, Metadata } from './Section.js';
+export { Configuration, Context } from './Section.js';
 
 Core.configure({ core: { requirePositionals: true } });
 
@@ -180,7 +181,7 @@ export async function snapshot(conf?: Configuration) {
   return await Section.Snapshot.capture(conf || config);
 }
 
-export function load(filePath: string): Section.Data {
+export function load(filePath: string): Snapshot.Data {
   filePath = path.resolve(Root.path(), filePath);
   return JSON.parse(fs.readFileSync(filePath).toString());
 }
