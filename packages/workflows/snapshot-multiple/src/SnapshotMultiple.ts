@@ -272,15 +272,3 @@ export async function run() {
     }
   }
 }
-
-export async function load(
-  filePath: string
-): Promise<SnapshotType.Multiple.Data> {
-  filePath = path.resolve(Root.path(), filePath);
-  const data = JSON.parse((await fs.readFile(filePath)).toString());
-  if (Array.isArray(data)) {
-    return data;
-  } else {
-    return [data];
-  }
-}
