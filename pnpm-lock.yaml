@@ -318,7 +318,16 @@ importers:
       '@msar/types.snapshot':
         specifier: workspace:*
         version: link:../snapshot
+      datadirect:
+        specifier: workspace:*
+        version: link:../../datadirect
     devDependencies:
+      '@battis/descriptive-types':
+        specifier: ^0.1.0
+        version: 0.1.0
+      '@battis/typescript-tricks':
+        specifier: ^0.7.4
+        version: 0.7.4
       '@tsconfig/node20':
         specifier: ^20.1.4
         version: 20.1.4
@@ -368,6 +377,12 @@ importers:
       '@msar/output':
         specifier: 0.x
         version: 0.1.0(@battis/qui-cli.colors@2.0.1(@battis/qui-cli.plugin@2.3.0))(@battis/qui-cli.log@2.1.0(@battis/qui-cli.colors@2.0.1(@battis/qui-cli.plugin@2.3.0))(@battis/qui-cli.plugin@2.3.0)(@battis/qui-cli.root@2.0.2(@battis/qui-cli.plugin@2.3.0)))(@battis/qui-cli.plugin@2.3.0)(@battis/qui-cli.root@2.0.2(@battis/qui-cli.plugin@2.3.0))(@msar/debug@packages+components+debug)(@msar/workflow@packages+components+workflow)
+      '@msar/types.archive':
+        specifier: workspace:*
+        version: link:../../types/archive
+      '@msar/types.snapshot':
+        specifier: workspace:*
+        version: link:../../types/snapshot
       content-disposition:
         specifier: ^0.5.4
         version: 0.5.4
