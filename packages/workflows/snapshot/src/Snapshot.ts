@@ -180,8 +180,3 @@ export async function run() {
 export async function snapshot(conf?: Configuration) {
   return await Section.Snapshot.capture(conf || config);
 }
-
-export function load(filePath: string): Snapshot.Data {
-  filePath = path.resolve(Root.path(), filePath);
-  return JSON.parse(fs.readFileSync(filePath).toString());
-}
