@@ -1,3 +1,4 @@
+import { DatadirectPuppeteer } from '@msar/datadirect-puppeteer';
 import { Output } from '@msar/output';
 import { RateLimiter } from '@msar/rate-limiter';
 import PQueue from 'p-queue';
@@ -15,6 +16,7 @@ export class Downloader implements Strategy {
   private http: HTTPFetch.Downloader;
   private host: string;
   private queue: PQueue;
+  private SchoolId?: number;
 
   public constructor({ host }: Options) {
     if (!Output.outputPath()) {
@@ -44,8 +46,23 @@ export class Downloader implements Strategy {
           '$1/$2/1/video.$3'
         );
       }
+
+      if (/:SchoolId/.test(fetchUrl)) {
+        if (!this.SchoolId) {
+          this.SchoolId = (
+            await DatadirectPuppeteer.api.schoolinfo.schoolparams({
+              session: this.auth,
+              payload: { all: true },
+              logRequests: true
+            })
+          ).SchoolId;
+        }
+        fetchUrl = fetchUrl.replace(':SchoolId', `${this.SchoolId}`);
+        original = fetchUrl;
+      }
+
       let strategy: Strategy = this.http;
-      if (/ftpimages/.test(fetchUrl)) {
+      if (/\/ftpimages\//.test(fetchUrl) || /\/app\//.test(fetchUrl)) {
         strategy = this.auth;
       }
       return {

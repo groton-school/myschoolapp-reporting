@@ -2,7 +2,7 @@ import { Colors } from '@battis/qui-cli.colors';
 import { Log } from '@battis/qui-cli.log';
 import { Debug } from '@msar/debug';
 import { Output } from '@msar/output';
-import * as Snapshot from '@msar/snapshot/dist/Snapshot.js';
+import * as Snapshot from '@msar/types.snapshot';
 import { Workflow } from '@msar/workflow';
 import path from 'node:path';
 import * as Cache from './Cache.js';
@@ -84,35 +84,14 @@ export class Spider {
               ...options
             });
           } else if (
-            /*
-             * FIXME Grading Rubic attachment download
-             *   Non-standard structure, can be downloaded from https://example.myschoolapp.com/app/utilities/FileDownload.ashx?:AttachmentQueryString
-             */
-            /*
-             * FIXME Expectations attachment download
-             *   Non-standard structure, can be downloaded from https://example.myschoolapp.com/app/utilities/FileDownload.ashx?:AttachmentQueryString
-             */
             key === 'PhotoFilename' ||
             key === 'ThumbFilename' ||
+            key === 'AttachmentQueryString' ||
             /Url$/i.test(key) ||
             (/FilePath$/i.test(key) &&
               !(snapshotComponent[key] as string).endsWith('/'))
           ) {
-            if (
-              snapshotComponent[key] &&
-              (!include ||
-                include.reduce(
-                  (included, regex) =>
-                    included || regex.test(snapshotComponent[key]),
-                  false
-                )) &&
-              (!exclude ||
-                exclude.reduce(
-                  (excluded, regex) =>
-                    excluded && !regex.test(snapshotComponent[key]),
-                  true
-                ))
-            ) {
+            if (snapshotComponent[key]) {
               let url: string = snapshotComponent[key];
               if (
                 key === 'ThumbFilename' &&
@@ -124,34 +103,52 @@ export class Spider {
                 /^thumb_user[a-z0-9_.]/i.test(url)
               ) {
                 url = `/ftpimages/:SchoolId/user/${url}`;
+              } else if (key === 'AttachmentQueryString') {
+                url = `/app/utilities/FileDownload.ashx?${snapshotComponent[key]}`;
               }
-              Log.debug({ pathToComponent, key, url });
+              if (
+                (!include ||
+                  include.reduce(
+                    (included, regex) => included || regex.test(url),
+                    false
+                  )) &&
+                (!exclude ||
+                  exclude.reduce(
+                    (excluded, regex) => excluded && !regex.test(url),
+                    true
+                  ))
+              ) {
+                Log.debug({ pathToComponent, key, url });
 
-              try {
-                const item = await this.downloader.download(
-                  url,
-                  'FriendlyFileName' in snapshotComponent &&
-                    typeof snapshotComponent['FriendlyFileName'] === 'string'
-                    ? snapshotComponent['FriendlyFileName']
-                    : undefined
-                );
-                (snapshotComponent[key] as Cache.Item) = item;
-                Log.debug(
-                  `${pathToComponent}[${key}]: ${item.localPath || item.error}`
-                );
-              } catch (error) {
-                if (Workflow.ignoreErrors()) {
-                  const message = `Download ${Colors.value(key)} ${Colors.url(
-                    snapshotComponent[key]
-                  )} failed: ${error}`;
-                  Log.error(message);
-                  (snapshotComponent[key] as Cache.Item) = {
-                    original: snapshotComponent[key],
-                    accessed: new Date(),
-                    error: message
-                  };
-                } else {
-                  throw error;
+                try {
+                  const item = await this.downloader.download(
+                    url,
+                    'FriendlyFileName' in snapshotComponent &&
+                      typeof snapshotComponent['FriendlyFileName'] === 'string'
+                      ? snapshotComponent['FriendlyFileName']
+                      : 'Attachment' in snapshotComponent &&
+                          typeof snapshotComponent['Attachment'] === 'string'
+                        ? snapshotComponent['Attachment']
+                        : undefined
+                  );
+                  (snapshotComponent[key] as Cache.Item) = item;
+                  Log.debug(
+                    `${pathToComponent}[${key}]: ${item.localPath || item.error}`
+                  );
+                } catch (error) {
+                  if (Workflow.ignoreErrors()) {
+                    const message = `Download ${Colors.value(key)} ${Colors.url(
+                      snapshotComponent[key]
+                    )} failed: ${error}`;
+                    Log.error(message);
+                    (snapshotComponent[key] as Cache.Item) = {
+                      original: snapshotComponent[key],
+                      accessed: new Date(),
+                      error: message
+                    };
+                  } else {
+                    throw error;
+                  }
                 }
               }
             }

@@ -34,7 +34,6 @@ export class Downloader
 {
   private outputPath: string;
   private emitter = new EventEmitter();
-  private SchoolId?: number;
 
   public constructor({ host }: Options) {
     super(`https://${host}`);
@@ -49,19 +48,6 @@ export class Downloader
     await this.ready();
     const session = await this.baseFork('about:blank');
     const client = await session.page.createCDPSession();
-
-    if (/:SchoolId/.test(url)) {
-      if (!this.SchoolId) {
-        this.SchoolId = (
-          await DatadirectPuppeteer.api.schoolinfo.schoolparams({
-            session: this,
-            payload: { all: true },
-            logRequests: true
-          })
-        ).SchoolId;
-      }
-      url = url.replace(':SchoolId', `${this.SchoolId}`);
-    }
 
     await client.send('Fetch.enable', {
       patterns: [
@@ -108,7 +94,10 @@ export class Downloader
             guid: downloadEvent.guid
           });
 
-          const localPath = new URL(url).pathname;
+          const localPath = path.join(
+            path.dirname(new URL(url).pathname),
+            filename || path.basename(new URL(url).pathname)
+          );
           const destFilepath = path.resolve(
             process.cwd(),
             Output.filePathFromOutputPath(this.outputPath, localPath)!
