@@ -4,7 +4,7 @@ import {
   URLString
 } from '@battis/descriptive-types';
 
-type LinkItem = {
+export type LinkItem = {
   Url: URLString;
   ShortDescription: string;
   UrlDisplay: URLString;
@@ -38,7 +38,7 @@ type LinkItem = {
   AssociationId: number;
 };
 
-type DownloadItem = {
+export type DownloadItem = {
   DownloadID: number;
   ItemID: number;
   ShortDescription: string;
