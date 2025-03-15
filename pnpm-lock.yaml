@@ -313,6 +313,56 @@ importers:
         specifier: ^5.7.3
         version: 5.8.2
 
+  packages/types/archive:
+    dependencies:
+      '@msar/types.snapshot':
+        specifier: workspace:*
+        version: link:../snapshot
+    devDependencies:
+      '@tsconfig/node20':
+        specifier: ^20.1.4
+        version: 20.1.4
+      commit-and-tag-version:
+        specifier: ^12.5.0
+        version: 12.5.0
+      del-cli:
+        specifier: ^6.0.0
+        version: 6.0.0
+      npm-run-all:
+        specifier: ^4.1.5
+        version: 4.1.5
+      typescript:
+        specifier: 5.7.3
+        version: 5.7.3
+
+  packages/types/snapshot:
+    dependencies:
+      '@oauth2-cli/sky-api':
+        specifier: ^0.2.1
+        version: 0.2.1(ejs@3.1.10)
+      datadirect:
+        specifier: workspace:*
+        version: link:../../datadirect
+    devDependencies:
+      '@battis/descriptive-types':
+        specifier: ^0.1.0
+        version: 0.1.0
+      '@tsconfig/node20':
+        specifier: ^20.1.4
+        version: 20.1.4
+      commit-and-tag-version:
+        specifier: ^12.5.0
+        version: 12.5.0
+      del-cli:
+        specifier: ^6.0.0
+        version: 6.0.0
+      npm-run-all:
+        specifier: ^4.1.5
+        version: 4.1.5
+      typescript:
+        specifier: 5.7.3
+        version: 5.7.3
+
   packages/workflows/archive:
     dependencies:
       '@msar/output':
@@ -446,12 +496,12 @@ importers:
 
   packages/workflows/snapshot:
     dependencies:
-      '@groton/sky-api.school':
-        specifier: ^0.1.2
-        version: 0.1.2(@groton/sky-api.tsconfig@0.1.1)
+      '@msar/types.snapshot':
+        specifier: workspace:*
+        version: link:../../types/snapshot
       '@oauth2-cli/sky-api':
-        specifier: ^0.2.0
-        version: 0.2.0(ejs@3.1.10)
+        specifier: ^0.2.1
+        version: 0.2.1(ejs@3.1.10)
       datadirect:
         specifier: workspace:*
         version: link:../../datadirect
@@ -516,6 +566,9 @@ importers:
 
   packages/workflows/snapshot-multiple:
     dependencies:
+      '@msar/types.snapshot':
+        specifier: workspace:*
+        version: link:../../types/snapshot
       ora:
         specifier: ^8.2.0
         version: 8.2.0
@@ -1010,17 +1063,6 @@ packages:
     resolution: {integrity: sha512-JubJ5B2pJ4k4yGxaNLdbjrnk9d/iDz6/q8wOilpIowd6PJPgaxCuHBnBszq7Ce2TyMrywm5r4PnKm6V3iiZF+g==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
 
-  '@groton/sky-api.auth-middleware@0.1.1':
-    resolution: {integrity: sha512-qVKiWhG+n6IbdsUsKFiqstNAf+Ct98ZHklAaRt5UYXFc2QpHzJo07Es4loPqsSamh6esO2ZYI7/WcAOHErKNxQ==}
-
-  '@groton/sky-api.school@0.1.2':
-    resolution: {integrity: sha512-ZUephW/WnU8yHWNNpAVeQnbWWbRU0Sf8Qg7VVrEYsHEP5p1D9wZcdLGXJ3pbZxAvQcTggzHUt5F1R9qd1hNoug==}
-    peerDependencies:
-      '@groton/sky-api.tsconfig': 0.1.1
-
-  '@groton/sky-api.tsconfig@0.1.1':
-    resolution: {integrity: sha512-tM0Fsm8QtKv0oNzmm4P0v5t0DoiLudKYa2Bd5LFY97auNe6LeoOxdvjVyZ1mP7wkhuuODUmqTxOTsmPslX3AUQ==}
-
   '@gwhitney/detect-indent@7.0.1':
     resolution: {integrity: sha512-7bQW+gkKa2kKZPeJf6+c6gFK9ARxQfn+FKy9ScTBppyKRWH2KzsmweXUoklqeEiHiNVWaeP5csIdsNq6w7QhzA==}
     engines: {node: '>=12.20'}
@@ -1309,8 +1351,8 @@ packages:
     cpu: [x64]
     os: [win32]
 
-  '@oauth2-cli/sky-api@0.2.0':
-    resolution: {integrity: sha512-U4DH04KVS09cVNLfmHGxSG8a10cK7+ZvCpsUMWaQP9mMCNJRbCyZ2fqBcsMlkyFRJ2rnGbD5DVwEy15Do+3Viw==}
+  '@oauth2-cli/sky-api@0.2.1':
+    resolution: {integrity: sha512-Wd0IJYeecfb6huOwwcKsnKopdo9OOlPvrYxJRBVT5BFDVynT1Y7z9sFAgpaFg1SYPhodW2HcrdVlZaVxfUuE2A==}
 
   '@octokit/auth-token@4.0.0':
     resolution: {integrity: sha512-tY/msAuJo6ARbK6SPIxZrPBms3xPbfwBrulZe0Wtr/DIY9lje2HeV1uoebShn6mx7SjCHif6EjMvoREj+gZ+SA==}
@@ -1477,9 +1519,6 @@ packages:
 
   '@tsconfig/node20@20.1.4':
     resolution: {integrity: sha512-sqgsT69YFeLWf5NtJ4Xq/xAF8p4ZQHlmGW74Nu2tD4+g5fAsposc4ZfaaPixVu4y01BEiDCWLRDCvDM5JOsRxg==}
-
-  '@tsconfig/recommended@1.0.8':
-    resolution: {integrity: sha512-TotjFaaXveVUdsrXCdalyF6E5RyG6+7hHHQVZonQtdlk1rJZ1myDIvPUUKPhoYv+JAzThb2lQJh9+9ZfF46hsA==}
 
   '@tufjs/canonical-json@2.0.0':
     resolution: {integrity: sha512-yVtV8zsdo8qFHe+/3kw81dSLyF7D576A5cCFCi4X7B39tWT7SekaEFUnvnWJHz+9qO7qJTah1JbrDjWKqFtdWA==}
@@ -3341,8 +3380,8 @@ packages:
     resolution: {integrity: sha512-rg9zJN+G4n2nfJl5MW3BMygZX56zKPNVEYYqq7adpmMh4Jn2QNEwhvQlFy6jPVdcod7txZtKHWnyZiA3a0zP7A==}
     hasBin: true
 
-  jose@6.0.9:
-    resolution: {integrity: sha512-6HEy/G3IBiGwOeT0phvu19yt/zagFKSpQPpQ6YUIiCxBUPfThVkOv9wlwHGkatUqbHvkWHYPtJJil4U5jHwllw==}
+  jose@6.0.10:
+    resolution: {integrity: sha512-skIAxZqcMkOrSwjJvplIPYrlXGpxTPnro2/QWTDCxAdWQrSTV5/KqspMWmi5WAx5+ULswASJiZ0a+1B/Lxt9cw==}
 
   js-tokens@4.0.0:
     resolution: {integrity: sha512-RdJUflcE3cUzKiMqQgsCu06FPu9UdIJO0beYbPhHN4k6apgJtifcoCtT9bcxOpYBtpD2kCM6Sbzg4CausW/PKQ==}
@@ -3941,14 +3980,8 @@ packages:
     resolution: {integrity: sha512-7x81NCL719oNbsq/3mh+hVrAWmFuEYUqrq/Iw3kUzH8ReypT9QQ0BLoJS7/G9k6N81XjW4qHWtjWwe/9eLy1EQ==}
     engines: {node: '>=12'}
 
-  openapi-fetch@0.12.5:
-    resolution: {integrity: sha512-FnAMWLt0MNL6ComcL4q/YbB1tUgyz5YnYtwA1+zlJ5xcucmK5RlWsgH1ynxmEeu8fGJkYjm8armU/HVpORc9lw==}
-
-  openapi-typescript-helpers@0.0.15:
-    resolution: {integrity: sha512-opyTPaunsklCBpTK8JGef6mfPhLSnyy5a0IN9vKtx3+4aExf+KxEqYwIy3hqkedXIB97u357uLMJsOnm3GVjsw==}
-
-  openid-client@6.3.3:
-    resolution: {integrity: sha512-lTK8AV8SjqCM4qznLX0asVESAwzV39XTVdfMAM185ekuaZCnkWdPzcxMTXNlsm9tsUAMa1Q30MBmKAykdT1LWw==}
+  openid-client@6.3.4:
+    resolution: {integrity: sha512-CGZGk9Y6Bv9R4bXlrzVoxzD1n4h8iP914UhjVyRSftqzqO4CWaRqKpOmW253Jmpv4EWkz7/Gut/90iiWW8t0ow==}
 
   optionator@0.9.4:
     resolution: {integrity: sha512-6IpQ7mKUxRcZNLIObR0hz7lxsapSSIYNZJwXPGeF0mTVqGKFIXj1DQcMoT22S3ROcLyY/rz0PWaWZ9ayWmad9g==}
@@ -4884,8 +4917,8 @@ packages:
   tr46@0.0.3:
     resolution: {integrity: sha512-N3WMsuqV66lT30CrXNbEjx4GEwlow3v6rr4mCcv6prnfwhS01rkgyFdjPNBYd9br7LpXV1+Emh01fHnq2Gdgrw==}
 
-  tr46@5.0.0:
-    resolution: {integrity: sha512-tk2G5R2KRwBd+ZN0zaEXpmzdKyOYksXwywulIX95MBODjSzMIuQnQ3m8JxgbhnL1LeVo7lqQKsYa1O3Htl7K5g==}
+  tr46@5.1.0:
+    resolution: {integrity: sha512-IUWnUK7ADYR5Sl1fZlO1INDUhVhatWl7BtJWsIhwJ0UAK7ilzzIa8uIqOO/aYVWHZPJkKbEL+362wrzoeRF7bw==}
     engines: {node: '>=18'}
 
   treeverse@3.0.0:
@@ -5095,8 +5128,8 @@ packages:
     resolution: {integrity: sha512-QaKxh0eNIi2mE9p2vEdzfagOKHCcj1pJ56EEHGQOVxp8r9/iszLUUV7v89x9O1p/T+NlTM5W7jW6+cz4Fq1YVg==}
     engines: {node: '>=18'}
 
-  whatwg-url@14.1.1:
-    resolution: {integrity: sha512-mDGf9diDad/giZ/Sm9Xi2YcyzaFpbdLpJPr+E9fSkyQ7KpQD4SdFcugkRQYzhmfI4KeV4Qpnn2sKPdo+kmsgRQ==}
+  whatwg-url@14.2.0:
+    resolution: {integrity: sha512-De72GdQZzNTUBBChsXueQUnPKDkg/5A5zp7pFDuQAj5UFoENpiACU0wlCvzpAGnTkj++ihpKwKyYewn/XNUbKw==}
     engines: {node: '>=18'}
 
   whatwg-url@5.0.0:
@@ -5340,7 +5373,7 @@ snapshots:
   '@battis/oauth2-configure@0.1.2':
     dependencies:
       async-mutex: 0.5.0
-      openid-client: 6.3.3
+      openid-client: 6.3.4
 
   '@battis/prettier-config@1.5.7(typescript@5.8.2)':
     dependencies:
@@ -5750,20 +5783,6 @@ snapshots:
     dependencies:
       '@eslint/core': 0.12.0
       levn: 0.4.1
-
-  '@groton/sky-api.auth-middleware@0.1.1':
-    dependencies:
-      openapi-fetch: 0.12.5
-
-  '@groton/sky-api.school@0.1.2(@groton/sky-api.tsconfig@0.1.1)':
-    dependencies:
-      '@groton/sky-api.auth-middleware': 0.1.1
-      '@groton/sky-api.tsconfig': 0.1.1
-      openapi-fetch: 0.12.5
-
-  '@groton/sky-api.tsconfig@0.1.1':
-    dependencies:
-      '@tsconfig/recommended': 1.0.8
 
   '@gwhitney/detect-indent@7.0.1': {}
 
@@ -6226,7 +6245,7 @@ snapshots:
   '@nx/nx-win32-x64-msvc@20.5.0':
     optional: true
 
-  '@oauth2-cli/sky-api@0.2.0(ejs@3.1.10)':
+  '@oauth2-cli/sky-api@0.2.1(ejs@3.1.10)':
     dependencies:
       node-fetch: 3.3.2
       oauth2-cli: 0.2.0(ejs@3.1.10)
@@ -6434,8 +6453,6 @@ snapshots:
       - supports-color
 
   '@tsconfig/node20@20.1.4': {}
-
-  '@tsconfig/recommended@1.0.8': {}
 
   '@tufjs/canonical-json@2.0.0': {}
 
@@ -7233,7 +7250,7 @@ snapshots:
   data-urls@5.0.0:
     dependencies:
       whatwg-mimetype: 4.0.0
-      whatwg-url: 14.1.1
+      whatwg-url: 14.2.0
 
   data-view-buffer@1.0.2:
     dependencies:
@@ -8468,7 +8485,7 @@ snapshots:
   jake@10.9.2:
     dependencies:
       async: 3.2.6
-      chalk: 4.1.0
+      chalk: 4.1.2
       filelist: 1.0.4
       minimatch: 3.1.2
 
@@ -8485,7 +8502,7 @@ snapshots:
 
   jiti@2.4.2: {}
 
-  jose@6.0.9: {}
+  jose@6.0.10: {}
 
   js-tokens@4.0.0: {}
 
@@ -8520,7 +8537,7 @@ snapshots:
       webidl-conversions: 7.0.0
       whatwg-encoding: 3.1.1
       whatwg-mimetype: 4.0.0
-      whatwg-url: 14.1.1
+      whatwg-url: 14.2.0
       ws: 8.18.1
       xml-name-validator: 5.0.0
     transitivePeerDependencies:
@@ -9198,7 +9215,7 @@ snapshots:
       ejs: 3.1.10
       express: 4.21.2
       open: 10.1.0
-      openid-client: 6.3.3
+      openid-client: 6.3.4
     transitivePeerDependencies:
       - supports-color
 
@@ -9250,15 +9267,9 @@ snapshots:
       is-docker: 2.2.1
       is-wsl: 2.2.0
 
-  openapi-fetch@0.12.5:
+  openid-client@6.3.4:
     dependencies:
-      openapi-typescript-helpers: 0.0.15
-
-  openapi-typescript-helpers@0.0.15: {}
-
-  openid-client@6.3.3:
-    dependencies:
-      jose: 6.0.9
+      jose: 6.0.10
       oauth4webapi: 3.3.1
 
   optionator@0.9.4:
@@ -10316,7 +10327,7 @@ snapshots:
 
   tr46@0.0.3: {}
 
-  tr46@5.0.0:
+  tr46@5.1.0:
     dependencies:
       punycode: 2.3.1
 
@@ -10507,9 +10518,9 @@ snapshots:
 
   whatwg-mimetype@4.0.0: {}
 
-  whatwg-url@14.1.1:
+  whatwg-url@14.2.0:
     dependencies:
-      tr46: 5.0.0
+      tr46: 5.1.0
       webidl-conversions: 7.0.0
 
   whatwg-url@5.0.0:

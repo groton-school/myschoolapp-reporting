@@ -4,3 +4,5 @@ packages:
   - 'packages/components/*'
   - '!packages/workflows'
   - 'packages/workflows/*'
+  - '!pacakages/types'
+  - 'packages/types/*'
