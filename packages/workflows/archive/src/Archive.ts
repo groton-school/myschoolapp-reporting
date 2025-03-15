@@ -5,7 +5,8 @@ import { Progress } from '@battis/qui-cli.progress';
 import { Output } from '@msar/output';
 import { PuppeteerSession } from '@msar/puppeteer-session';
 import { RateLimiter } from '@msar/rate-limiter';
-import { SnapshotMultiple } from '@msar/snapshot-multiple';
+import * as Archive from '@msar/types.archive';
+import * as Snapshot from '@msar/types.snapshot';
 import fs from 'node:fs';
 import path from 'node:path';
 import ora from 'ora';
@@ -105,7 +106,7 @@ export async function run() {
   }
 
   const Start = new Date();
-  let snapshots: SnapshotMultiple.Data;
+  let snapshots: Snapshot.Multiple.Data;
   const data = JSON.parse(fs.readFileSync(snapshotPath).toString());
   if (Array.isArray(data)) {
     snapshots = data;
@@ -150,7 +151,7 @@ export async function run() {
   Progress.stop();
   const Finish = new Date();
 
-  const index: any[] = [];
+  const index: Archive.Multiple.Data = [];
   for (const fileName of indices) {
     if (fileName) {
       index.push(
