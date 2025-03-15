@@ -10,6 +10,7 @@ import { Output } from '@msar/output';
 import { PuppeteerSession } from '@msar/puppeteer-session';
 import { RateLimiter } from '@msar/rate-limiter';
 import * as Snapshot from '@msar/snapshot/dist/Snapshot.js';
+import * as SnapshotType from '@msar/types.snapshot';
 import { Workflow } from '@msar/workflow';
 import crypto from 'node:crypto';
 import fs from 'node:fs/promises';
@@ -30,9 +31,6 @@ export type Configuration = {
   url?: URL | string;
   temp?: string;
 };
-
-export type Item = Snapshot.Data;
-export type Data = Item[];
 
 let TEMP = path.join('/tmp/msar/snapshot', crypto.randomUUID());
 
@@ -172,7 +170,7 @@ export async function run() {
     }
 
     const errors: typeof groups = [];
-    const data: Data = [];
+    const data: SnapshotType.Multiple.Data = [];
 
     async function snapshotGroup(i: number) {
       const tempPath = path.join(TEMP, `${pad(i)}.json`);
@@ -231,7 +229,7 @@ export async function run() {
 
     let Start = new Date();
     let Finish = new Date('1/1/1970');
-    let first: Snapshot.Metadata | undefined = undefined;
+    let first: SnapshotType.Metadata.Data | undefined = undefined;
 
     for (const snapshot of data) {
       if (snapshot.Metadata.Start < Start) {
@@ -275,7 +273,9 @@ export async function run() {
   }
 }
 
-export async function load(filePath: string): Promise<Data> {
+export async function load(
+  filePath: string
+): Promise<SnapshotType.Multiple.Data> {
   filePath = path.resolve(Root.path(), filePath);
   const data = JSON.parse((await fs.readFile(filePath)).toString());
   if (Array.isArray(data)) {
