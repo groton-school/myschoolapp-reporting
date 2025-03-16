@@ -1,4 +1,5 @@
 export { GradeBook, Metadata, SectionInfo } from '@msar/types.snapshot';
+export * from './Annotation.js';
 export * as Assignments from './Assignments.js';
 export * as BulletinBoard from './BulletinBoard.js';
 export * as ContentItem from './ContentItem.js';
