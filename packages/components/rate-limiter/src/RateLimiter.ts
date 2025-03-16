@@ -69,7 +69,7 @@ export function requests() {
 
 export function actual() {
   if (start === undefined) {
-    throw new Error(`No requests have been made`);
+    return 0;
   }
   return (1000 * _requests) / (end - start);
 }
