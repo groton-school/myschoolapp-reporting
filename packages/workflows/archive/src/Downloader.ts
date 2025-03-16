@@ -12,8 +12,22 @@ export type Options = {
 };
 
 export class Downloader implements Strategy {
-  private auth: AuthenticatedFetch.Downloader;
-  private http: HTTPFetch.Downloader;
+  private _auth?: AuthenticatedFetch.Downloader;
+  private get auth() {
+    if (!this._auth) {
+      this._auth = new AuthenticatedFetch.Downloader({ host: this.host });
+    }
+    return this._auth;
+  }
+
+  private _http?: HTTPFetch.Downloader;
+  private get http() {
+    if (!this._http) {
+      this._http = new HTTPFetch.Downloader();
+    }
+    return this._http;
+  }
+
   private host: string;
   private queue: PQueue;
   private SchoolId?: number;
@@ -24,14 +38,9 @@ export class Downloader implements Strategy {
     }
     this.host = host;
     this.queue = new PQueue({ concurrency: RateLimiter.concurrency() });
-    this.auth = new AuthenticatedFetch.Downloader({
-      host
-    });
-    this.http = new HTTPFetch.Downloader();
   }
 
   public async download(original: string, filename?: string) {
-    // TODO Cache.Item typing
     // @ts-expect-error 2346 conflict between DownloadItem and DownloadError
     return await Cache.get(original, async () => {
       let fetchUrl = original;
