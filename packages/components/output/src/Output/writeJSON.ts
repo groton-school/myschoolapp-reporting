@@ -8,6 +8,7 @@ import { writeRecursive } from './writeRecursive.js';
 type Options = {
   pretty?: boolean;
   silent?: boolean;
+  overwrite?: boolean;
 };
 
 export async function writeJSON(
@@ -15,12 +16,16 @@ export async function writeJSON(
   data: object | undefined,
   options: Options = {}
 ) {
-  const { pretty = Storage.pretty(), silent = false } = options;
+  const {
+    pretty = Storage.pretty(),
+    silent = false,
+    overwrite = false
+  } = options;
   if (data) {
     if (outputPath) {
-      const filePath = await avoidOverwrite(
-        path.resolve(process.cwd(), outputPath)
-      );
+      const filePath = overwrite
+        ? path.resolve(process.cwd(), outputPath)
+        : await avoidOverwrite(path.resolve(process.cwd(), outputPath));
       writeRecursive(
         filePath,
         pretty ? JSON.stringify(data, null, 2) : JSON.stringify(data)
