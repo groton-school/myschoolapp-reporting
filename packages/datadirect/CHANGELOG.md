@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [0.4.4](https://github.com/groton-school/myschoolapp-reporting/compare/datadirect/0.4.3...datadirect/0.4.4) (2025-03-17)
+
+
+### Features
+
+* api.datadirect.topicget ([ea85cab](https://github.com/groton-school/myschoolapp-reporting/commit/ea85cabba7d171a16c60988c77466a546723b614))
+* **datadirect:** api.Assignment2.UserAssignmentDetailsGetAllData.LinkItem & DownloadItem ([a340d9f](https://github.com/groton-school/myschoolapp-reporting/commit/a340d9f5a4fe6876de6202c2556d64455ad24f69))
+
+
+### Bug Fixes
+
+* add topicget :TopicID path param ([c88d7e1](https://github.com/groton-school/myschoolapp-reporting/commit/c88d7e122e16e987205323d8dce0fee6da1c7f8c))
+* **datadirect:** identified a few more static ContentTypes ([8084325](https://github.com/groton-school/myschoolapp-reporting/commit/80843251e4729ea452d96b42d1d290806166925e))
+* **datadirect:** update api.datadirect.sectiontopicsget.Item to reflect actual response ([04ba6f7](https://github.com/groton-school/myschoolapp-reporting/commit/04ba6f75239c6b83667fb23d3e16519502b603c8))
+
 ## [0.4.3](https://github.com/battis/myschoolapp-reporting/compare/datadirect/0.4.2...datadirect/0.4.3) (2025-03-09)
 
 
