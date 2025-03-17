@@ -2,22 +2,37 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [0.8.0](https://github.com/groton-school/myschoolapp-reporting/compare/msar/0.7.1...msar/0.8.0) (2025-03-17)
+
+### Features
+
+- **archive:** lazy load downloaders ([4de7c03](https://github.com/groton-school/myschoolapp-reporting/commit/4de7c03fbca0ae6661fa308e290d08cac36b9890))
+- **archive:** retry partial or reconfigured archive ([0e9d809](https://github.com/groton-school/myschoolapp-reporting/commit/0e9d809e0b47348a60325ab7ef965890ca69500c))
+
+### ⚠ BREAKING CHANGES
+
+- **snapshot:** remove load() method
+- **snapshot-multiple:** remove load() method
+
+### revert
+
+- **snapshot:** remove load() method ([5f7e096](https://github.com/groton-school/myschoolapp-reporting/commit/5f7e096f72e8aab2aec756c42120bd08dc7abd70))
+- **snapshot-multiple:** remove load() method ([d797c87](https://github.com/groton-school/myschoolapp-reporting/commit/d797c87dd395d02a61ff3ed3d25e960f505327a6))
+
 ## [0.7.1](https://github.com/groton-school/myschoolapp-reporting/compare/msar/0.7.0...msar/0.7.1) (2025-03-11)
 
 ### Features
 
 - **snapshot,snapshot-multiple,archive:** shared rate-limiting queue ([335d143](https://github.com/groton-school/myschoolapp-reporting/commit/335d143b8a22fcd28964c30a09bd821dc544cdf7))
-
-* **snapshot:** apply logRequests at session level ([406a42f](https://github.com/groton-school/myschoolapp-reporting/commit/406a42f329087cd7185d46561423a7e6c7437c2c))
-* **snapshot:** capture topic layout ([4a12030](https://github.com/groton-school/myschoolapp-reporting/commit/4a120301f0ab8262eb0d7f608c1a68319ca28cae))
-* **snapshot-multiple:** apply logRequests at session-level ([78865b4](https://github.com/groton-school/myschoolapp-reporting/commit/78865b4fb82343ef43a192a04ed8aef8786f8856))
-* **snapshot-multiple:** resume a failed/canceled snapshot sequence using the UUID of the temp dir ([d761115](https://github.com/groton-school/myschoolapp-reporting/commit/d7611150abb785a3539da1c9a2010b4b4ee41e80))
+- **snapshot:** apply logRequests at session level ([406a42f](https://github.com/groton-school/myschoolapp-reporting/commit/406a42f329087cd7185d46561423a7e6c7437c2c))
+- **snapshot:** capture topic layout ([4a12030](https://github.com/groton-school/myschoolapp-reporting/commit/4a120301f0ab8262eb0d7f608c1a68319ca28cae))
+- **snapshot-multiple:** apply logRequests at session-level ([78865b4](https://github.com/groton-school/myschoolapp-reporting/commit/78865b4fb82343ef43a192a04ed8aef8786f8856))
+- **snapshot-multiple:** resume a failed/canceled snapshot sequence using the UUID of the temp dir ([d761115](https://github.com/groton-school/myschoolapp-reporting/commit/d7611150abb785a3539da1c9a2010b4b4ee41e80))
 
 ### Bug Fixes
 
 - **inbox:** apply logRequests at session level ([08f0202](https://github.com/groton-school/myschoolapp-reporting/commit/08f02022d5a19fba4c1be13dc8736a77b1c3e565))
-
-* **snapshot-multiple:** remove extraneous writeJSON outputs ([2818326](https://github.com/groton-school/myschoolapp-reporting/commit/2818326987bca4fae102ea66e507b2e4009912ee))
+- **snapshot-multiple:** remove extraneous writeJSON outputs ([2818326](https://github.com/groton-school/myschoolapp-reporting/commit/2818326987bca4fae102ea66e507b2e4009912ee))
 
 ## [0.7.0](https://github.com/battis/myschoolapp-reporting/compare/msar/0.6.1...msar/0.7.0) (2025-03-09)
 
@@ -103,11 +118,10 @@ Switch repos (again, returning)
 
 - Updated dependencies [9606767]
   - datadirect@0.2.2
-
-* bump dependencies ([1b27a78](https://github.com/battis/myschoolapp-reporting/commit/1b27a7855e5f9cdcf1495e50c3f3f12814bdc673))
-* download progress bar ([f62dd84](https://github.com/battis/myschoolapp-reporting/commit/f62dd84f51eb15a46286cb9ad9199fc1fb103d82))
-* further download cynicism ([0f7934b](https://github.com/battis/myschoolapp-reporting/commit/0f7934befcf1cc6dfd9d69ced8e06fff7b186e62))
-* update recipes ([bcf9647](https://github.com/battis/myschoolapp-reporting/commit/bcf964768c77e8022fee69c950a5d15082dabf3a))
+- bump dependencies ([1b27a78](https://github.com/battis/myschoolapp-reporting/commit/1b27a7855e5f9cdcf1495e50c3f3f12814bdc673))
+- download progress bar ([f62dd84](https://github.com/battis/myschoolapp-reporting/commit/f62dd84f51eb15a46286cb9ad9199fc1fb103d82))
+- further download cynicism ([0f7934b](https://github.com/battis/myschoolapp-reporting/commit/0f7934befcf1cc6dfd9d69ced8e06fff7b186e62))
+- update recipes ([bcf9647](https://github.com/battis/myschoolapp-reporting/commit/bcf964768c77e8022fee69c950a5d15082dabf3a))
 
 ## 0.4.2
 
