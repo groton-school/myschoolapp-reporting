@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [0.3.0](https://github.com/groton-school/myschoolapp-reporting/compare/snapshot/0.2.1...snapshot/0.3.0) (2025-03-17)
+
+
+### ⚠ BREAKING CHANGES
+
+* **snapshot:** remove load() method
+
+### revert
+
+* **snapshot:** remove load() method ([5f7e096](https://github.com/groton-school/myschoolapp-reporting/commit/5f7e096f72e8aab2aec756c42120bd08dc7abd70))
+
 ## [0.2.1](https://github.com/groton-school/myschoolapp-reporting/compare/snapshot/0.2.0...snapshot/0.2.1) (2025-03-11)
 
 
