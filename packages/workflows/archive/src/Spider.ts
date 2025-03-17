@@ -2,7 +2,7 @@ import { Colors } from '@battis/qui-cli.colors';
 import { Log } from '@battis/qui-cli.log';
 import { Debug } from '@msar/debug';
 import { Output } from '@msar/output';
-import * as Snapshot from '@msar/types.snapshot';
+import * as Archive from '@msar/types.archive';
 import { Workflow } from '@msar/workflow';
 import path from 'node:path';
 import * as Cache from './Cache.js';
@@ -25,7 +25,7 @@ export class Spider {
     this.downloader = new Downloader.Downloader(options);
   }
 
-  public async download(snapshot: Snapshot.Data, { ...options }: Options) {
+  public async download(snapshot: Archive.Data, { ...options }: Options) {
     if (!Output.outputPath()) {
       throw new Output.OutputError('Spider requires outputPath');
     }
@@ -131,7 +131,7 @@ export class Spider {
                         ? snapshotComponent['Attachment']
                         : undefined
                   );
-                  (snapshotComponent[key] as Cache.Item) = item;
+                  (snapshotComponent[key] as Archive.Annotation) = item;
                   Log.debug(
                     `${pathToComponent}[${key}]: ${item.localPath || item.error}`
                   );

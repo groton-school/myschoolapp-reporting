@@ -6,15 +6,17 @@ import { Output } from '@msar/output';
 import { PuppeteerSession } from '@msar/puppeteer-session';
 import { RateLimiter } from '@msar/rate-limiter';
 import * as Archive from '@msar/types.archive';
-import * as Snapshot from '@msar/types.snapshot';
 import fs from 'node:fs';
 import path from 'node:path';
 import ora from 'ora';
+import * as Cache from './Cache.js';
 import { Spider } from './Spider.js';
 
 export type Configuration = Plugin.Configuration & {
   include?: RegExp | RegExp[];
   exclude?: RegExp | RegExp[];
+  snapshotPath?: string;
+  continue?: boolean;
 };
 
 await Core.configure({ core: { requirePositionals: 1 } });
@@ -24,7 +26,8 @@ export const src = import.meta.dirname;
 
 let include = [/^\/.*/];
 let exclude = [/^https?:/];
-let snapshotPathArg: string | undefined = undefined;
+let snapshotPath: string | undefined = undefined;
+let retry = false;
 
 export function configure(config: Configuration = {}) {
   const _include = Plugin.hydrate(config.include, include);
@@ -41,10 +44,18 @@ export function configure(config: Configuration = {}) {
   } else {
     exclude = [_exclude];
   }
+
+  snapshotPath = Plugin.hydrate(config.snapshotPath, snapshotPath);
+  retry = Plugin.hydrate(config.retry, retry);
 }
 
 export function options(): Plugin.Options {
   return {
+    flag: {
+      retry: {
+        description: `Retry a previously started archive process. ${Colors.value('arg0')} must be the path to an existing archive index.json file.`
+      }
+    },
     opt: {
       include: {
         description: `Comma-separated list of regular expressions to match URLs to be included in download (e.g. ${Colors.quotedValue('"^\\/,example\\.com"')}, default: ${Colors.quotedValue(`"${include.join(', ').slice(1, -1)}"`)} to include only URLs that are paths on the LMS's servers)`,
@@ -71,42 +82,44 @@ function stringToRegExpArray(arg?: string): RegExp[] | undefined {
 
 export function init({
   values,
-  positionals
+  positionals: [snapshotPath]
 }: Plugin.ExpectedArguments<typeof options>) {
-  const [_snapshotPathArg] = positionals;
-  if (!_snapshotPathArg) {
-    throw new Error('Required arg0 snapshot path not defined');
-  }
-  snapshotPathArg = _snapshotPathArg;
   include = Plugin.hydrate(stringToRegExpArray(values.include), include);
   exclude = Plugin.hydrate(stringToRegExpArray(values.exclude), exclude);
+  configure({ ...values, include, exclude, snapshotPath });
 }
 
 export async function run() {
-  const spinner = ora();
-  spinner.start('Reading snaphot file');
+  let spinner = ora('Reading snaphot file').start();
 
-  const snapshotPath = path.resolve(process.cwd(), snapshotPathArg!);
+  snapshotPath = path.resolve(process.cwd(), snapshotPath!);
 
-  if (!Output.outputPath()) {
-    Output.configure({
-      outputPath: path.join(
-        path.dirname(snapshotPath!),
-        path.basename(snapshotPath!, '.json')
-      )
-    });
+  if (retry) {
+    Output.configure({ outputPath: path.dirname(snapshotPath) });
   } else {
-    if (fs.existsSync(Output.outputPath())) {
+    if (!Output.outputPath()) {
       Output.configure({
-        outputPath: await Output.avoidOverwrite(
-          path.join(Output.outputPath(), path.basename(snapshotPath!, '.json'))
+        outputPath: path.join(
+          path.dirname(snapshotPath!),
+          path.basename(snapshotPath!, '.json')
         )
       });
+    } else {
+      if (fs.existsSync(Output.outputPath())) {
+        Output.configure({
+          outputPath: await Output.avoidOverwrite(
+            path.join(
+              Output.outputPath(),
+              path.basename(snapshotPath!, '.json')
+            )
+          )
+        });
+      }
     }
   }
 
   const Start = new Date();
-  let snapshots: Snapshot.Multiple.Data;
+  let snapshots: Archive.Multiple.Data;
   const data = JSON.parse(fs.readFileSync(snapshotPath).toString());
   if (Array.isArray(data)) {
     snapshots = data;
@@ -116,6 +129,10 @@ export async function run() {
   spinner.succeed(
     `Read ${snapshots.length} snapshots from ${Colors.url(snapshotPath)}`
   );
+  if (retry) {
+    spinner = ora('Retrying archive');
+    snapshots = Cache.build(snapshots);
+  }
 
   const host = snapshots
     .map((snapshot) => snapshot.Metadata.Host)
@@ -172,18 +189,21 @@ export async function run() {
     Output.outputPath(),
     'index.json'
   );
-  await Output.writeJSON(indexPath, index);
-  await Output.writeJSON(path.resolve(indexPath, '../metadata.json'), {
-    snapshotPath,
-    Start,
-    Finish,
-    Elapsed: Finish.getTime() - Start.getTime(),
-    serverRequests: RateLimiter.requests(),
-    serverRequestsPerSecond: RateLimiter.actual(),
-    host,
-    include,
-    exclude
-  });
+  await Output.writeJSON(indexPath, index, { overwrite: retry });
+  await Output.writeJSON(
+    await Output.avoidOverwrite(path.resolve(indexPath, '../metadata.json')),
+    {
+      snapshotPath,
+      Start,
+      Finish,
+      Elapsed: Finish.getTime() - Start.getTime(),
+      serverRequests: RateLimiter.requests(),
+      serverRequestsPerSecond: RateLimiter.actual(),
+      host,
+      include,
+      exclude
+    }
+  );
 
   if (PuppeteerSession.quit()) {
     await spider.quit();

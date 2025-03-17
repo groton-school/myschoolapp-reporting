@@ -1,5 +1,7 @@
 import { Colors } from '@battis/qui-cli.colors';
 import { Log } from '@battis/qui-cli.log';
+import { JSONValue } from '@battis/typescript-tricks';
+import * as Archive from '@msar/types.archive';
 import { EventEmitter } from 'node:events';
 
 export type DownloadData = {
@@ -18,27 +20,27 @@ export type Item = {
 } & (DownloadData | DownloadError);
 
 const AWAITING = true;
-const cache: Record<string, Item | typeof AWAITING> = {};
+const cache: Record<string, Archive.Annotation | typeof AWAITING> = {};
 const ready = new EventEmitter();
 ready.setMaxListeners(1000);
 
 export async function get(
   url: string,
-  downloader: () => Promise<Item>
-): Promise<Item> {
+  downloader: () => Promise<Archive.Annotation>
+): Promise<Archive.Annotation> {
   url = normalizeURL(url);
   if (url in cache) {
     if (cache[url] === AWAITING) {
       return new Promise((resolve) => {
-        ready.on(url, () => resolve(cache[url] as Item));
+        ready.on(url, () => resolve(cache[url] as Archive.Annotation));
       });
     }
-    return cache[url] as Item;
+    return cache[url] as Archive.Annotation;
   } else {
     cache[url] = AWAITING;
     cache[url] = await downloader();
     ready.emit(url);
-    return cache[url] as Item;
+    return cache[url] as Archive.Annotation;
   }
 }
 
@@ -50,4 +52,35 @@ function normalizeURL(url: string) {
     Log.debug(`${Colors.url(url)} normalized to ${Colors.url(normalized)}`);
   }
   return normalized;
+}
+
+export function build(index: Archive.Multiple.Data) {
+  function spider(component: JSONValue) {
+    let result: any = component;
+    if (Array.isArray(component)) {
+      result = [];
+      for (const elt of component) {
+        result.push(spider(elt));
+      }
+    } else if (typeof component === 'object' && component !== null) {
+      if (Archive.isAnnotated(component)) {
+        if ('localPath' in component) {
+          cache[component.original] = component;
+        } else if ('error' in component) {
+          result = (component as Archive.Annotation).original;
+        }
+      } else {
+        for (const key of Object.keys(component)) {
+          result[key] = spider(component[key]);
+        }
+      }
+    }
+    return result;
+  }
+
+  if (!Array.isArray(index)) {
+    console.log(index);
+    throw new Error();
+  }
+  return spider(index) as Archive.Multiple.Data;
 }
