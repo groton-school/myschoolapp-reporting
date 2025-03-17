@@ -1,12 +1,8 @@
+import { DateTimeString, PathString } from '@battis/descriptive-types';
 import * as Snapshot from '@msar/types.snapshot';
-import * as Assignments from './Assignments.js';
-import * as BulletinBoard from './BulletinBoard.js';
-import * as Metadata from './Metadata.js';
-import * as Topics from './Topics.js';
+import { Annotation } from './Annotation.js';
 
-export type Data = Snapshot.Data & {
-  Metadata: Metadata.Data;
-  Assignments: Assignments.Data;
-  BulletinBoard: BulletinBoard.Data;
-  Topics: Topics.Data;
-};
+export type Data<
+  T = PathString | Annotation,
+  D = DateTimeString
+> = Snapshot.Data<T, D>;

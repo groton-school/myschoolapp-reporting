@@ -1,22 +1,6 @@
-import { ArrayElement } from '@battis/typescript-tricks';
+import { PathString } from '@battis/descriptive-types';
 import * as Snapshot from '@msar/types.snapshot';
 import { Annotation } from './Annotation.js';
 
-type LinkItem = ArrayElement<Snapshot.Assignments.Item['LinkItems']> & {
-  LinkImageUrl: Annotation;
-  HoverImageUrl: Annotation;
-};
-
-type DownloadItem = ArrayElement<Snapshot.Assignments.Item['DownloadItems']> & {
-  DownloadUrl: Annotation;
-};
-
-export type Item = Snapshot.Assignments.Item & {
-  LinkItems: LinkItem[];
-  DownloadItems: DownloadItem[];
-  Discussion: Snapshot.Assignments.Item['Discussion'] & {
-    PhotoFilename: Annotation;
-  };
-};
-
-export type Data = Item[];
+export type Item<T = PathString | Annotation> = Snapshot.Assignments.Item<T>;
+export type Data<T = PathString | Annotation> = Snapshot.Assignments.Data<T>;

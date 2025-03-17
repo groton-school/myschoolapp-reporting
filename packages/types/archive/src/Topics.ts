@@ -1,13 +1,7 @@
+import { PathString } from '@battis/descriptive-types';
 import * as Snapshot from '@msar/types.snapshot';
 import { Annotation } from './Annotation.js';
-import * as ContentItem from './ContentItem.js';
 
-export type Item = Snapshot.Topics.Item & { Content: ContentItem.Content };
-
-export type Topic = Snapshot.Topics.Topic & {
-  HoverFilename: Annotation;
-  OriginalFilename: Annotation;
-  HoverImageOriginalFilename: Annotation;
-};
-
-export type Data = Topic[];
+export type Item<T = PathString | Annotation> = Snapshot.Topics.Item<T>;
+export type Topic<T = PathString | Annotation> = Snapshot.Topics.Topic<T>;
+export type Data<T = PathString | Annotation> = Snapshot.Topics.Data<T>;
