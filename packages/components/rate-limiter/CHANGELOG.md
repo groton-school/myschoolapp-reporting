@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [0.1.2](https://github.com/groton-school/myschoolapp-reporting/compare/rate-limiter/0.1.1...rate-limiter/0.1.2) (2025-03-17)
+
+
+### Bug Fixes
+
+* **rate-limiter:** remove unnecessary error thown ([b4c623c](https://github.com/groton-school/myschoolapp-reporting/commit/b4c623c633ba92545e496798c6d498ae6fbee312))
+
 ## [0.1.1](https://github.com/groton-school/myschoolapp-reporting/compare/rate-limiter/0.1.0...rate-limiter/0.1.1) (2025-03-12)
 
 
