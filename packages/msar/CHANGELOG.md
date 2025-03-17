@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [0.8.1](https://github.com/groton-school/myschoolapp-reporting/compare/msar/0.8.0...msar/0.8.1) (2025-03-17)
+
+### Features
+
+- **archive:** archive topic downloads ([c2003d2](https://github.com/groton-school/myschoolapp-reporting/commit/c2003d2965d0e0ab059721f72e74898ec8685e5d))
+
 ## [0.8.0](https://github.com/groton-school/myschoolapp-reporting/compare/msar/0.7.1...msar/0.8.0) (2025-03-17)
 
 ### Features
