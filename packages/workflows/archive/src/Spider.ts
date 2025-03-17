@@ -89,7 +89,8 @@ export class Spider {
             key === 'AttachmentQueryString' ||
             /Url$/i.test(key) ||
             (/FilePath$/i.test(key) &&
-              !(snapshotComponent[key] as string).endsWith('/'))
+              'FileName' in snapshotComponent &&
+              typeof snapshotComponent.FileName === 'string')
           ) {
             if (snapshotComponent[key]) {
               let url: string = snapshotComponent[key];
@@ -105,6 +106,15 @@ export class Spider {
                 url = `/ftpimages/:SchoolId/user/${url}`;
               } else if (key === 'AttachmentQueryString') {
                 url = `/app/utilities/FileDownload.ashx?${snapshotComponent[key]}`;
+              } else if (
+                /FilePath$/i.test(key) &&
+                'FileName' in snapshotComponent &&
+                typeof snapshotComponent.FileName === 'string'
+              ) {
+                url = path.join(
+                  snapshotComponent[key],
+                  snapshotComponent.FileName
+                );
               }
               if (
                 (!include ||
