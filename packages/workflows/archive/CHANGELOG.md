@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [0.1.3](https://github.com/groton-school/myschoolapp-reporting/compare/archive/0.1.2...archive/0.1.3) (2025-03-17)
+
+
+### Features
+
+* **archive:** lazy load downloaders ([4de7c03](https://github.com/groton-school/myschoolapp-reporting/commit/4de7c03fbca0ae6661fa308e290d08cac36b9890))
+* **archive:** retry partial or reconfigured archive ([0e9d809](https://github.com/groton-school/myschoolapp-reporting/commit/0e9d809e0b47348a60325ab7ef965890ca69500c))
+
+
+### Bug Fixes
+
+* **archive:** download attachments, topic cover images ([d3d54b2](https://github.com/groton-school/myschoolapp-reporting/commit/d3d54b22b531103921553a20a2ce26bacf60bb63)), closes [#256](https://github.com/groton-school/myschoolapp-reporting/issues/256) [#257](https://github.com/groton-school/myschoolapp-reporting/issues/257)
+
 ## [0.1.2](https://github.com/groton-school/myschoolapp-reporting/compare/archive/0.1.1...archive/0.1.2) (2025-03-12)
 
 
