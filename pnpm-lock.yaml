@@ -356,6 +356,9 @@ importers:
       '@battis/descriptive-types':
         specifier: ^0.1.0
         version: 0.1.0
+      '@battis/typescript-tricks':
+        specifier: ^0.7.4
+        version: 0.7.4
       '@tsconfig/node20':
         specifier: ^20.1.4
         version: 20.1.4
@@ -374,9 +377,6 @@ importers:
 
   packages/workflows/archive:
     dependencies:
-      '@msar/output':
-        specifier: 0.x
-        version: 0.1.0(@battis/qui-cli.colors@2.0.1(@battis/qui-cli.plugin@2.3.0))(@battis/qui-cli.log@2.1.0(@battis/qui-cli.colors@2.0.1(@battis/qui-cli.plugin@2.3.0))(@battis/qui-cli.plugin@2.3.0)(@battis/qui-cli.root@2.0.2(@battis/qui-cli.plugin@2.3.0)))(@battis/qui-cli.plugin@2.3.0)(@battis/qui-cli.root@2.0.2(@battis/qui-cli.plugin@2.3.0))(@msar/debug@packages+components+debug)(@msar/workflow@packages+components+workflow)
       '@msar/types.archive':
         specifier: workspace:*
         version: link:../../types/archive
@@ -411,12 +411,18 @@ importers:
       '@battis/qui-cli.progress':
         specifier: ^2.0.1
         version: 2.0.1(@battis/qui-cli.colors@2.0.1(@battis/qui-cli.plugin@2.3.0))(@battis/qui-cli.plugin@2.3.0)
+      '@battis/typescript-tricks':
+        specifier: ^0.7.4
+        version: 0.7.4
       '@msar/datadirect-puppeteer':
         specifier: workspace:*
         version: link:../../components/datadirect-puppeteer
       '@msar/debug':
         specifier: workspace:*
         version: link:../../components/debug
+      '@msar/output':
+        specifier: workspace:*
+        version: link:../../components/output
       '@msar/puppeteer-session':
         specifier: workspace:*
         version: link:../../components/puppeteer-session
@@ -1217,16 +1223,6 @@ packages:
   '@lerna/create@8.2.1':
     resolution: {integrity: sha512-Cz2u/fwc03D1EE6VFZCLMmI8FIUtGmxHQ3ECeNblsxv9i0YSKWe4Xm18sjO1xltG/K5ByiH8/HMeY9dlyAv22A==}
     engines: {node: '>=18.0.0'}
-
-  '@msar/output@0.1.0':
-    resolution: {integrity: sha512-x39Oi0+AMFl6QVXxPokgIIQzDRdjmJlpcH+FeBnz/vkKg9w3bF/H31JtobnxyMUnJ7IYwmlcl/c+huWgAT5+Qg==}
-    peerDependencies:
-      '@battis/qui-cli.colors': ^2.0
-      '@battis/qui-cli.log': ^2.0
-      '@battis/qui-cli.plugin': ^2.2
-      '@battis/qui-cli.root': ^2.0
-      '@msar/debug': 0.1.0
-      '@msar/workflow': 0.1.0
 
   '@napi-rs/wasm-runtime@0.2.4':
     resolution: {integrity: sha512-9zESzOO5aDByvhIAsOy9TbpZ0Ur2AJbUI7UT73kcUTS2mxAMHOBaa1st/jAymNoCtvrit99kkzT1FZuXVcgfIQ==}
@@ -6060,15 +6056,6 @@ snapshots:
       - encoding
       - supports-color
       - typescript
-
-  '@msar/output@0.1.0(@battis/qui-cli.colors@2.0.1(@battis/qui-cli.plugin@2.3.0))(@battis/qui-cli.log@2.1.0(@battis/qui-cli.colors@2.0.1(@battis/qui-cli.plugin@2.3.0))(@battis/qui-cli.plugin@2.3.0)(@battis/qui-cli.root@2.0.2(@battis/qui-cli.plugin@2.3.0)))(@battis/qui-cli.plugin@2.3.0)(@battis/qui-cli.root@2.0.2(@battis/qui-cli.plugin@2.3.0))(@msar/debug@packages+components+debug)(@msar/workflow@packages+components+workflow)':
-    dependencies:
-      '@battis/qui-cli.colors': 2.0.1(@battis/qui-cli.plugin@2.3.0)
-      '@battis/qui-cli.log': 2.1.0(@battis/qui-cli.colors@2.0.1(@battis/qui-cli.plugin@2.3.0))(@battis/qui-cli.plugin@2.3.0)(@battis/qui-cli.root@2.0.2(@battis/qui-cli.plugin@2.3.0))
-      '@battis/qui-cli.plugin': 2.3.0
-      '@battis/qui-cli.root': 2.0.2(@battis/qui-cli.plugin@2.3.0)
-      '@msar/debug': link:packages/components/debug
-      '@msar/workflow': link:packages/components/workflow
 
   '@napi-rs/wasm-runtime@0.2.4':
     dependencies:
