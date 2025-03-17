@@ -25,9 +25,10 @@ export type Video<T = PathString> = Media<T>;
 
 export type Download<T = PathString> = Omit<
   api.datadirect.ContentItem.Download.Download,
-  'DownloadUrl'
+  'DownloadUrl' | 'FilePath'
 > & {
   DownloadUrl: T;
+  FilePath: T;
 };
 
 export type Expectations<T = PathString> = Omit<
