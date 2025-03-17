@@ -30,18 +30,15 @@ export function prepareContent(
       return assignment();
     case 'Horizontal Line':
     case 'Spacer':
-      throw new Error(
-        `There is no content endpoint for ${contentType.Content}`
-      );
-    // FIXME capture Learning Tool content data
     case 'Cover Brief':
     case 'Cover Image':
     case 'Cover Title':
-      throw new TopicContentError(
-        `${contentType.Content} is captured by /api/datadirect/stopiccontentget/:TopicID`
+      throw new Error(
+        `There is no content endpoint for ${contentType.Content}`
       );
     case 'Roster':
     case 'Learning Tool':
+      // FIXME capture Learning Tool content data
       throw new NotImplementedError(
         `Capturing ${contentType.Content} is not yet supported`
       );
