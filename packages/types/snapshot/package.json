@@ -1,6 +1,16 @@
 {
   "name": "@msar/types.snapshot",
   "version": "0.1.0",
+  "homepage": "https://github.com/groton-school/myschoolapp-reporting/tree/main/packages/types/snapshot#readme",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/groton-school/myschoolapp-reporting.git",
+    "directory": "packages/types/snapshot"
+  },
+  "author": {
+    "name": "Seth Battis",
+    "email": "sbattis@groton.org"
+  },
   "type": "module",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
