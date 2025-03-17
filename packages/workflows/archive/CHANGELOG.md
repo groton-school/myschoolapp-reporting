@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [0.1.4](https://github.com/groton-school/myschoolapp-reporting/compare/archive/0.1.3...archive/0.1.4) (2025-03-17)
+
+
+### Features
+
+* **archive:** archive topic downloads ([c2003d2](https://github.com/groton-school/myschoolapp-reporting/commit/c2003d2965d0e0ab059721f72e74898ec8685e5d))
+
 ## [0.1.3](https://github.com/groton-school/myschoolapp-reporting/compare/archive/0.1.2...archive/0.1.3) (2025-03-17)
 
 
