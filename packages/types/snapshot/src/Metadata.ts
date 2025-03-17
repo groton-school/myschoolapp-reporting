@@ -1,9 +1,9 @@
 import { NumericDuration } from '@battis/descriptive-types';
 
-export type Data = {
+export type Data<D = Date> = {
   Host: string;
   User: string;
-  Start: Date;
-  Finish: Date;
+  Start: D;
+  Finish: D;
   Elapsed?: NumericDuration;
 };

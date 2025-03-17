@@ -1,13 +1,19 @@
+import { PathString } from '@battis/descriptive-types';
 import { api } from 'datadirect';
+import * as ContentItem from './ContentItem.js';
 
-export type Item = api.datadirect.topiccontentget.Item & {
+export type Item<T = PathString> = api.datadirect.topiccontentget.Item & {
   ObjectType?: api.datadirect.TopicContentTypesGet.Item;
-  Content?: api.datadirect.common.ContentItem.Any.Content | { error: string };
+  Content?: ContentItem.Any<T>;
 };
 
-export type Topic = api.datadirect.sectiontopicsget.Item &
+export type Topic<T = PathString> = Omit<
+  api.datadirect.sectiontopicsget.Item,
+  'ThumbFilename'
+> &
   api.datadirect.topicget.Item & {
-    Content?: Item[];
+    ThumbFilename: T | null;
+    Content?: Item<T>[];
   };
 
-export type Data = Topic[];
+export type Data<T = PathString> = Topic<T>[];
