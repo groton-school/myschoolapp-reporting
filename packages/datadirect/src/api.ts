@@ -7,6 +7,7 @@ export * as datadirect from './api/datadirect.js';
 export * as googleapi from './api/googleapi.js';
 export * as gradebook from './api/gradebook.js';
 export * as LtiTool from './api/LtiTool.js';
+export * as media from './api/media/index.js';
 export * as message from './api/message.js';
 export * as Rubric from './api/Rubric.js';
 export * as schoolinfo from './api/schoolinfo.js';
