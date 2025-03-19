@@ -47,6 +47,7 @@ export class Downloader implements Strategy {
       if (fetchUrl.slice(0, 2) == '//') {
         fetchUrl = `https:${fetchUrl}`;
       } else if (fetchUrl.slice(0, 1) == '/') {
+        // FIXME *.myschoolcdn.com URLs are not getting archived
         fetchUrl = `https://${this.host}${fetchUrl}`;
       }
       if (/myschoolcdn\.com\/.+\/video\//.test(fetchUrl)) {
