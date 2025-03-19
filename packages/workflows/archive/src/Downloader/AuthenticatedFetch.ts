@@ -95,6 +95,7 @@ export class Downloader
 
           const localPath = path.join(
             path.dirname(new URL(url).pathname),
+            // TODO should filename be left as the basename of the URL to avoid collisions?
             filename || path.basename(new URL(url).pathname)
           );
           const destFilepath = path.resolve(
