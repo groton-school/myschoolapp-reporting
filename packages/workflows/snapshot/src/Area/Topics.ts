@@ -55,7 +55,7 @@ export const snapshot: Base.Snapshot<Snapshot.Topics.Data> = async ({
         pathParams: { TopicID }
       });
       const Content: Snapshot.Topics.Item[] = [];
-      const items: api.datadirect.topiccontentget.Response = (
+      const items: api.datadirect.topiccontentget.Response =
         await DatadirectPuppeteer.api.datadirect.topiccontentget({
           ...options,
           payload: {
@@ -66,21 +66,7 @@ export const snapshot: Base.Snapshot<Snapshot.Topics.Data> = async ({
           pathParams: {
             TopicID
           }
-        })
-      ).reduce((merged, item) => {
-        if (
-          !merged.find(
-            (m) =>
-              m.ColumnIndex === item.ColumnIndex &&
-              m.RowIndex === item.RowIndex &&
-              m.CellIndex === item.CellIndex &&
-              m.ContentId === item.ContentId
-          )
-        ) {
-          merged.push(item);
-        }
-        return merged;
-      }, [] as api.datadirect.topiccontentget.Response);
+        });
       for (const item of items) {
         const ObjectType = possibleContent!.find(
           (t: api.datadirect.TopicContentTypesGet.Item) =>
