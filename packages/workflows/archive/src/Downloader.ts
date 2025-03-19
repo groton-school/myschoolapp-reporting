@@ -44,10 +44,9 @@ export class Downloader implements Strategy {
     // @ts-expect-error 2346 conflict between DownloadItem and DownloadError
     return await Cache.get(original, async () => {
       let fetchUrl = original;
-      if (fetchUrl.slice(0, 2) == '//') {
-        fetchUrl = `https:${fetchUrl}`;
+      if (/^\/?[^/]+\.myschoolcdn.com\//.test(fetchUrl)) {
+        fetchUrl = `https://${fetchUrl.replace(/^\/+/, '')}`;
       } else if (fetchUrl.slice(0, 1) == '/') {
-        // FIXME *.myschoolcdn.com URLs are not getting archived
         fetchUrl = `https://${this.host}${fetchUrl}`;
       }
       if (/myschoolcdn\.com\/.+\/video\//.test(fetchUrl)) {
