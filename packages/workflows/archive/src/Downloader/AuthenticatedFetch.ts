@@ -1,6 +1,5 @@
 import { Colors } from '@battis/qui-cli.colors';
 import { Log } from '@battis/qui-cli.log';
-import { DatadirectPuppeteer } from '@msar/datadirect-puppeteer';
 import { Output } from '@msar/output';
 import { PuppeteerSession } from '@msar/puppeteer-session';
 import { EventEmitter } from 'node:events';
