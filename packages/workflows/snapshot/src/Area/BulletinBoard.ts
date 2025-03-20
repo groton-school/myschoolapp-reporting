@@ -59,7 +59,7 @@ export const snaphot: Base.Snapshot<Snapshot.BulletinBoard.Data> = async ({
         ) {
           throw new Base.StudentDataError();
         }
-        const nextItem = {
+        const entry = {
           ...item,
           ContentType,
           Content:
@@ -75,10 +75,13 @@ export const snaphot: Base.Snapshot<Snapshot.BulletinBoard.Data> = async ({
             )
         };
         if (
-          nextItem.ContentType?.Content == 'Photo' &&
-          Array.isArray(nextItem.Content)
+          (entry.ContentType?.Content == 'Photo' ||
+            entry.ContentType?.Content == 'Video' ||
+            entry.ContentType?.Content == 'Audio' ||
+            entry.ContentType?.Content == 'Media') &&
+          Array.isArray(entry.Content)
         ) {
-          const albumIds = nextItem.Content?.map(
+          const albumIds = entry.Content?.map(
             (content: any) => content.AlbumId
           ).filter((id, i, arr) => arr.indexOf(id) === i);
           // @ts-expect-error
@@ -97,7 +100,7 @@ export const snaphot: Base.Snapshot<Snapshot.BulletinBoard.Data> = async ({
             }))
           );
         }
-        BulletinBoard.push(nextItem);
+        BulletinBoard.push(entry);
       } catch (error) {
         switch (item.ContentId) {
           case 78:

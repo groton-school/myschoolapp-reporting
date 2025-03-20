@@ -105,6 +105,32 @@ export const snapshot: Base.Snapshot<Snapshot.Topics.Data> = async ({
           ) {
             entry.Content = { error: new Base.StudentDataError().message };
           }
+          if (
+            (entry.ObjectType?.Name == 'Photo' ||
+              entry.ObjectType?.Name == 'Video' ||
+              entry.ObjectType?.Name == 'Audio' ||
+              entry.ObjectType?.Name == 'Media') &&
+            Array.isArray(entry.Content)
+          ) {
+            const albumIds = entry.Content?.map(
+              (content: any) => content.AlbumId
+            ).filter((id, i, arr) => arr.indexOf(id) === i);
+            // @ts-expect-error
+            nextItem.AlbumContent = await Promise.all(
+              albumIds.map(async (albumId) => ({
+                AlbumId: albumId,
+                Content: await DatadirectPuppeteer.api.media.AlbumFilesGet({
+                  ...options,
+                  payload: {
+                    format: 'json',
+                    albumId,
+                    logView: false
+                  }
+                })
+              }))
+            );
+          }
+
           Content.push(entry);
         } catch (error) {
           if (error instanceof api.datadirect.common.TopicContentError) {
