@@ -17,6 +17,22 @@ export type Media<T = PathString> = Omit<
 > & {
   CoverFilenameUrl: T;
   FilenameUrl: T;
+  AlbumContent: (Omit<
+    api.media.AlbumFilesGet.Item,
+    | 'FilenameUrl'
+    | 'OriginalFilenameUrl'
+    | 'ThumbFilenameUrl'
+    | 'FilenameEditedUrl'
+    | 'OriginalFilenameEditedUrl'
+    | 'ThumbFilenameEditedUrl'
+  > & {
+    FilenameUrl: T;
+    OriginalFilenameUrl: T;
+    ThumbFilenameUrl: T;
+    FilenameEditedUrl: T;
+    OriginalFilenameEditedUrl: T;
+    ThumbFilenameEditedUrl: T;
+  })[];
 };
 
 export type Audio<T = PathString> = Media<T>;
