@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [0.1.2](https://github.com/groton-school/myschoolapp-reporting/compare/types/snapshot/0.1.1...types/snapshot/0.1.2) (2025-03-20)
+
+
+### Features
+
+* **types.snapshot:** Media content AlbumContent field ([53aa51e](https://github.com/groton-school/myschoolapp-reporting/commit/53aa51e05cf1419505d4dc95527632fb2d78dbed))
+
 ## [0.1.1](https://github.com/groton-school/myschoolapp-reporting/compare/types/snapshot/0.1.0...types/snapshot/0.1.1) (2025-03-17)
 
 
