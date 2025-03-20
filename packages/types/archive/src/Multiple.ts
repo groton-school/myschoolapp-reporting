@@ -1,12 +1,12 @@
-import { DateTimeString, PathString } from '@battis/descriptive-types';
+import { DateTimeString } from '@battis/descriptive-types';
 import * as Snapshot from '@msar/types.snapshot';
-import { Annotation } from './Annotation.js';
+import { PotentialAnnotation } from './Annotation.js';
 
 export type Item<
-  T = PathString | Annotation,
+  T = PotentialAnnotation,
   D = DateTimeString
 > = Snapshot.Multiple.Item<T, D>;
 export type Data<
-  T = PathString | Annotation,
+  T = PotentialAnnotation,
   D = DateTimeString
 > = Snapshot.Multiple.Data<T, D>;

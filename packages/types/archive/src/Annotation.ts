@@ -1,5 +1,7 @@
 import { DateTimeString, PathString } from '@battis/descriptive-types';
 
+export type PotentialAnnotation = PathString | Annotation;
+
 export type Annotation = {
   original: PathString;
   accessed: DateTimeString;

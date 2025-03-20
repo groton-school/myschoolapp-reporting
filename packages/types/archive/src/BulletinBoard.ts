@@ -1,6 +1,5 @@
-import { PathString } from '@battis/descriptive-types';
-import * as Snapashot from '@msar/types.snapshot';
-import { Annotation } from './Annotation.js';
+import * as Snapshot from '@msar/types.snapshot';
+import { PotentialAnnotation } from './Annotation.js';
 
-export type Item<T = PathString | Annotation> = Snapashot.BulletinBoard.Item<T>;
-export type Data<T = PathString | Annotation> = Snapashot.BulletinBoard.Data<T>;
+export type Item<T = PotentialAnnotation> = Snapshot.BulletinBoard.Item<T>;
+export type Data<T = PotentialAnnotation> = Snapshot.BulletinBoard.Data<T>;
