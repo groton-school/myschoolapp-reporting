@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [0.1.4](https://github.com/groton-school/myschoolapp-reporting/compare/types/snapshot/0.1.3...types/snapshot/0.1.4) (2025-03-20)
+
+
+### Bug Fixes
+
+* **types.snapshot:** RSS reader Url will not be archived ([99c09f8](https://github.com/groton-school/myschoolapp-reporting/commit/99c09f82996e50d6276e182885fd35adf7881f35))
+
 ## [0.1.3](https://github.com/groton-school/myschoolapp-reporting/compare/types/snapshot/0.1.2...types/snapshot/0.1.3) (2025-03-20)
 
 
