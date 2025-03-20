@@ -59,7 +59,7 @@ export const snaphot: Base.Snapshot<Snapshot.BulletinBoard.Data> = async ({
         ) {
           throw new Base.StudentDataError();
         }
-        BulletinBoard.push({
+        const nextItem = {
           ...item,
           ContentType,
           Content:
@@ -73,7 +73,31 @@ export const snaphot: Base.Snapshot<Snapshot.BulletinBoard.Data> = async ({
                 logRequests
               }
             )
-        });
+        };
+        if (
+          nextItem.ContentType?.Content == 'Photo' &&
+          Array.isArray(nextItem.Content)
+        ) {
+          const albumIds = nextItem.Content?.map(
+            (content: any) => content.AlbumId
+          ).filter((id, i, arr) => arr.indexOf(id) === i);
+          // @ts-expect-error
+          nextItem.AlbumContent = await Promise.all(
+            albumIds.map(async (albumId) => ({
+              AlbumId: albumId,
+              Content: await DatadirectPuppeteer.api.media.AlbumFilesGet({
+                session,
+                payload: {
+                  format: 'json',
+                  albumId,
+                  logView: false
+                },
+                logRequests
+              })
+            }))
+          );
+        }
+        BulletinBoard.push(nextItem);
       } catch (error) {
         switch (item.ContentId) {
           case 78:
