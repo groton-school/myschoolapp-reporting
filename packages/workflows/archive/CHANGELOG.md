@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [0.1.5](https://github.com/groton-school/myschoolapp-reporting/compare/archive/0.1.4...archive/0.1.5) (2025-03-20)
+
+
+### Bug Fixes
+
+* **archive:** archive *.myschoolcdn.com paths ([82dbc35](https://github.com/groton-school/myschoolapp-reporting/commit/82dbc35f8e3a88612d9a97a5ff63c70425dc35d2))
+* **archive:** avoid name collisions ([1424bcb](https://github.com/groton-school/myschoolapp-reporting/commit/1424bcb5bbd41e252867bf2433d5e834c2b24078))
+
 ## [0.1.4](https://github.com/groton-school/myschoolapp-reporting/compare/archive/0.1.3...archive/0.1.4) (2025-03-17)
 
 
