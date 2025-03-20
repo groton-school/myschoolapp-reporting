@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [0.1.3](https://github.com/groton-school/myschoolapp-reporting/compare/types/archive/0.1.2...types/archive/0.1.3) (2025-03-20)
+
+
+### Features
+
+* **types.archive:** expose ContentItem for reuse ([92ba187](https://github.com/groton-school/myschoolapp-reporting/commit/92ba1873084301bf4db3adfedafbd005097b7021))
+
 ## [0.1.2](https://github.com/groton-school/myschoolapp-reporting/compare/types/archive/0.1.1...types/archive/0.1.2) (2025-03-20)
 
 ### Features
