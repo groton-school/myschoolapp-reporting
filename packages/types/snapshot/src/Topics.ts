@@ -22,7 +22,7 @@ export type Topic<T = PathString> = Omit<
   api.datadirect.sectiontopicsget.Item,
   'ThumbFilename'
 > &
-  api.datadirect.topicget.Item & {
+  Omit<api.datadirect.topicget.Item, 'ThumbFilename'> & {
     ThumbFilename: T | null;
     Content?: Item<T>[];
   };
