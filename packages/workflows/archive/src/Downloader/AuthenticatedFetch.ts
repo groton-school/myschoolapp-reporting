@@ -93,11 +93,10 @@ export class Downloader
             guid: downloadEvent.guid
           });
 
-          const localPath = path.join(
-            path.dirname(new URL(url).pathname),
-            // TODO should filename be left as the basename of the URL to avoid collisions?
-            filename || path.basename(new URL(url).pathname)
-          );
+          let localPath = new URL(url).pathname;
+          if (localPath == '/app/utilities/FileDownload.ashx') {
+            localPath = path.join(path.dirname(localPath), filename!);
+          }
           const destFilepath = path.resolve(
             process.cwd(),
             Output.filePathFromOutputPath(this.outputPath, localPath)!
