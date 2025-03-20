@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [0.3.3](https://github.com/groton-school/myschoolapp-reporting/compare/datadirect-puppeteer/0.3.2...datadirect-puppeteer/0.3.3) (2025-03-20)
+
+
+### Features
+
+* **datadirect-puppeteer:** api.media.AlbumFilesGet ([cf92dc4](https://github.com/groton-school/myschoolapp-reporting/commit/cf92dc459a95f7ba1ebeb8617184beed2f65f695))
+
 ## [0.3.2](https://github.com/groton-school/myschoolapp-reporting/compare/datadirect-puppeteer/0.3.1...datadirect-puppeteer/0.3.2) (2025-03-11)
 
 ### Bug Fixes
