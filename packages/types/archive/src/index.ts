@@ -1,5 +1,6 @@
 import { ContentItem, GradeBook, SectionInfo } from '@msar/types.snapshot';
 
+export * as AlbumContent from './AlbumContent.js';
 export * from './Annotation.js';
 export * as Assignments from './Assignments.js';
 export * as BulletinBoard from './BulletinBoard.js';
