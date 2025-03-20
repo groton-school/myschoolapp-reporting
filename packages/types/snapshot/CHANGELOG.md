@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [0.1.5](https://github.com/groton-school/myschoolapp-reporting/compare/types/snapshot/0.1.4...types/snapshot/0.1.5) (2025-03-20)
+
+
+### Bug Fixes
+
+* **types.snapshot:** relocate AlbumContent within BulletinBoard/Topic.Item  ([d740e51](https://github.com/groton-school/myschoolapp-reporting/commit/d740e5194b034f8e19dc6a8dea9e6fec1d7ead22))
+
 ## [0.1.4](https://github.com/groton-school/myschoolapp-reporting/compare/types/snapshot/0.1.3...types/snapshot/0.1.4) (2025-03-20)
 
 
