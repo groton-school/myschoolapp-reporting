@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [0.1.6](https://github.com/groton-school/myschoolapp-reporting/compare/types/snapshot/0.1.5...types/snapshot/0.1.6) (2025-03-20)
+
+
+### Features
+
+* **types.snapshot:** export AlbumContent for reuse ([f5c2451](https://github.com/groton-school/myschoolapp-reporting/commit/f5c24510ecd5ccdbc6ed730ecf63db3cd6e32983))
+
 ## [0.1.5](https://github.com/groton-school/myschoolapp-reporting/compare/types/snapshot/0.1.4...types/snapshot/0.1.5) (2025-03-20)
 
 
