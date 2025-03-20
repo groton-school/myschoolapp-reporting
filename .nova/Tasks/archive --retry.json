@@ -11,7 +11,7 @@
     },
     "run" : {
       "enabled" : true,
-      "script" : "source .env\nmsar archive -u \"$(op item get --account $OP_ACCOUNT $OP_ITEM --fields username)\" -p \"$(op item get --account $OP_ACCOUNT $OP_ITEM --fields password --reveal)\" --sso $SSO --mfa $MFA --pretty --retry \"$RETRY\""
+      "script" : "source .env\nmsar archive -u \"$(op item get --account $OP_ACCOUNT $OP_ITEM --fields username)\" -p \"$(op item get --account $OP_ACCOUNT $OP_ITEM --fields password --reveal)\" --sso $SSO --mfa $MFA --pretty --headless --retry \"$RETRY\""
     }
   },
   "buildBeforeRunning" : true,
