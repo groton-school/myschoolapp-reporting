@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [0.8.2](https://github.com/groton-school/myschoolapp-reporting/compare/msar/0.8.1...msar/0.8.2) (2025-03-20)
+
+### Features
+
+- **snapshot:** capture Audio, Video, Media albums in Topics and on Bulletin Board ([dae555f](https://github.com/groton-school/myschoolapp-reporting/commit/dae555f154c8350b7af93870be369aca73007d20))
+- **snapshot:** capture photo album files ([4c4d167](https://github.com/groton-school/myschoolapp-reporting/commit/4c4d167879841c1d6fff2987878ec096ff55bd4d))
+
+### Bug Fixes
+
+- **snapshot:** remove incorrect merge of multiple items to same cell ([9143ec4](https://github.com/groton-school/myschoolapp-reporting/commit/9143ec4bdb1037ca5ec73d1fe26c00b56fb1aff9))
+- **archive:** archive \*.myschoolcdn.com paths ([82dbc35](https://github.com/groton-school/myschoolapp-reporting/commit/82dbc35f8e3a88612d9a97a5ff63c70425dc35d2))
+- **archive:** avoid name collisions ([1424bcb](https://github.com/groton-school/myschoolapp-reporting/commit/1424bcb5bbd41e252867bf2433d5e834c2b24078))
+
 ## [0.8.1](https://github.com/groton-school/myschoolapp-reporting/compare/msar/0.8.0...msar/0.8.1) (2025-03-17)
 
 ### Features
