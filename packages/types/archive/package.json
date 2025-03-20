@@ -22,16 +22,19 @@
     "release": "commit-and-tag-version"
   },
   "dependencies": {
-    "@msar/types.snapshot": "workspace:*",
     "datadirect": "workspace:*"
   },
   "devDependencies": {
     "@battis/descriptive-types": "^0.1.0",
     "@battis/typescript-tricks": "^0.7.4",
+    "@msar/types.snapshot": "workspace:*",
     "@tsconfig/node20": "^20.1.4",
     "commit-and-tag-version": "^12.5.0",
     "del-cli": "^6.0.0",
     "npm-run-all": "^4.1.5",
     "typescript": "5.7.3"
+  },
+  "peerDependencies": {
+    "@msar/types.snapshot": "0.x"
   }
 }
