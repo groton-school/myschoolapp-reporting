@@ -18,4 +18,4 @@ export type Item<T = PathString> = Omit<
   OriginalFilenameEditedUrl: T;
 };
 
-export type Data = Item[];
+export type Data<T = PathString> = Item<T>[];

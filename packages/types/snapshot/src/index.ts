@@ -1,3 +1,4 @@
+export * as AlbumContent from './AlbumContent.js';
 export * as Assignments from './Assignments.js';
 export * as BulletinBoard from './BulletinBoard.js';
 export * as ContentItem from './ContentItem.js';
