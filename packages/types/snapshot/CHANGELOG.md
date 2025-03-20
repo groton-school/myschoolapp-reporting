@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [0.1.7](https://github.com/groton-school/myschoolapp-reporting/compare/types/snapshot/0.1.6...types/snapshot/0.1.7) (2025-03-20)
+
+
+### Bug Fixes
+
+* **types.snapshot:** less flexible Topic.Thumbfilename typing ([de2d290](https://github.com/groton-school/myschoolapp-reporting/commit/de2d290b158d275b6594ab706a659e497c086a2f))
+
 ## [0.1.6](https://github.com/groton-school/myschoolapp-reporting/compare/types/snapshot/0.1.5...types/snapshot/0.1.6) (2025-03-20)
 
 
