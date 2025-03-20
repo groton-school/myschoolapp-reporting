@@ -80,12 +80,7 @@ export type News<T = PathString> = Omit<
   Url: T;
 };
 
-export type RSSReader<T = URLString> = Omit<
-  api.datadirect.ContentItem.RSSReader.Content,
-  'Url'
-> & {
-  Url: T | null;
-};
+export type RSSReader = api.datadirect.ContentItem.RSSReader.Content;
 
 export type Syllabus<T = PathString> = Omit<
   api.datadirect.ContentItem.Syllabus.Syllabus,
@@ -131,7 +126,7 @@ export type Any<T = PathString> =
   | Expectations<T>[]
   | GradingRubric<T>[]
   | Link<T>[]
-  | RSSReader<T>
+  | RSSReader
   | Syllabus<T>[]
   | Text<T>[]
   | { error: string };
