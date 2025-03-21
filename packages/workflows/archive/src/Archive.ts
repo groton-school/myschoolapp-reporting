@@ -1,5 +1,6 @@
 import { Colors } from '@battis/qui-cli.colors';
 import { Core } from '@battis/qui-cli.core';
+import { Log } from '@battis/qui-cli.log';
 import * as Plugin from '@battis/qui-cli.plugin';
 import { Progress } from '@battis/qui-cli.progress';
 import { Output } from '@msar/output';
@@ -90,7 +91,7 @@ export function init({
 }
 
 export async function run() {
-  let spinner = ora('Reading snaphot file').start();
+  const spinner = ora('Reading snaphot file').start();
 
   snapshotPath = path.resolve(process.cwd(), snapshotPath!);
 
@@ -130,7 +131,7 @@ export async function run() {
     `Read ${snapshots.length} snapshots from ${Colors.url(snapshotPath)}`
   );
   if (retry) {
-    spinner = ora('Retrying archive');
+    Log.info(`Retrying archive`);
     snapshots = Cache.build(snapshots);
   }
 
