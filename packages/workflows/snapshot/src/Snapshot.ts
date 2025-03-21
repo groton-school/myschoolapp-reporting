@@ -78,6 +78,13 @@ export function configure(proposal: Configuration = {}) {
 }
 
 export function options(): Plugin.Options {
+  /*
+   * TODO add snapshot retry option
+   *   This needs to happen *before* adding any new tweaks to snapshot
+   *   algorithm, so that any subsequent tweaks can be checked for and run
+   *   on retry. Also, any results that yielded an error should be retried.
+   *   But all updates conforming to @msar/types.import need to be preserved!
+   */
   const outputOptions = Output.options();
   return {
     flag: {
