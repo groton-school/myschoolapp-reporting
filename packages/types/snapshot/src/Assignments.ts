@@ -22,10 +22,11 @@ type DownloadItem<T = PathString> = Omit<
   DownloadUrl: T | null;
 };
 
-export type Item<T = PathString> = Omit<
-  api.Assignment2.UserAssignmentDetailsGetAllData.Response,
-  'LinkItems' | 'DownloadItems'
-> &
+export type Item<T = PathString> = api.datadirect.ImportAssignmentsGet.Item &
+  Omit<
+    api.Assignment2.UserAssignmentDetailsGetAllData.Response,
+    'LinkItems' | 'DownloadItems'
+  > &
   Partial<School.Assignment> & {
     LinkItems: LinkItem<T>[];
     DownloadItems: DownloadItem<T>[];
