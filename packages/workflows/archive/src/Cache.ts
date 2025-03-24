@@ -79,8 +79,7 @@ export function build(index: Archive.Multiple.Data) {
   }
 
   if (!Array.isArray(index)) {
-    console.log(index);
-    throw new Error();
+    throw new Error(`Index is unexpectedly not an array`);
   }
   return spider(index) as Archive.Multiple.Data;
 }
