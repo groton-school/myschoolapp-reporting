@@ -3,6 +3,7 @@ import { Core } from '@battis/qui-cli.core';
 import { Log } from '@battis/qui-cli.log';
 import * as Plugin from '@battis/qui-cli.plugin';
 import { Progress } from '@battis/qui-cli.progress';
+import { Root } from '@battis/qui-cli.root';
 import { Output } from '@msar/output';
 import { PuppeteerSession } from '@msar/puppeteer-session';
 import { RateLimiter } from '@msar/rate-limiter';
@@ -93,7 +94,7 @@ export function init({
 export async function run() {
   const spinner = ora('Reading snaphot file').start();
 
-  snapshotPath = path.resolve(process.cwd(), snapshotPath!);
+  snapshotPath = path.resolve(Root.path(), snapshotPath!);
 
   if (retry) {
     Output.configure({ outputPath: path.dirname(snapshotPath) });

@@ -1,5 +1,6 @@
 import { Colors } from '@battis/qui-cli.colors';
 import { Log } from '@battis/qui-cli.log';
+import { Root } from '@battis/qui-cli.root';
 import { Output } from '@msar/output';
 import { PuppeteerSession } from '@msar/puppeteer-session';
 import { EventEmitter } from 'node:events';
@@ -98,7 +99,7 @@ export class Downloader
             localPath = path.join(path.dirname(localPath), filename!);
           }
           const destFilepath = path.resolve(
-            process.cwd(),
+            Root.path(),
             Output.filePathFromOutputPath(this.outputPath, localPath)!
           );
           const dir = path.dirname(destFilepath);
