@@ -1,5 +1,6 @@
 import { Colors } from '@battis/qui-cli.colors';
 import { Log } from '@battis/qui-cli.log';
+import { Root } from '@battis/qui-cli.root';
 import path from 'node:path';
 import { avoidOverwrite } from './avoidOverwrite.js';
 import * as Storage from './Storage.js';
@@ -24,8 +25,8 @@ export async function writeJSON(
   if (data) {
     if (outputPath) {
       const filePath = overwrite
-        ? path.resolve(process.cwd(), outputPath)
-        : await avoidOverwrite(path.resolve(process.cwd(), outputPath));
+        ? path.resolve(Root.path(), outputPath)
+        : await avoidOverwrite(path.resolve(Root.path(), outputPath));
       writeRecursive(
         filePath,
         pretty ? JSON.stringify(data, null, 2) : JSON.stringify(data)

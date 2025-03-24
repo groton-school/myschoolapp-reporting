@@ -1,5 +1,6 @@
 import { Colors } from '@battis/qui-cli.colors';
 import { Log } from '@battis/qui-cli.log';
+import { Root } from '@battis/qui-cli.root';
 import { Workflow } from '@msar/workflow';
 import fs from 'node:fs';
 import path from 'node:path';
@@ -19,7 +20,7 @@ export async function writeFetchedFile({ url, stream, outputPath }: Options) {
     if (localPath == '') {
       localPath = new URL(url).hostname + '/index.html';
     }
-    const streamPath = path.resolve(process.cwd(), outputPath, localPath);
+    const streamPath = path.resolve(Root.path(), outputPath, localPath);
     fs.mkdirSync(path.dirname(streamPath), {
       recursive: true
     });
