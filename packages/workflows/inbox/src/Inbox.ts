@@ -144,7 +144,7 @@ export async function analytics(
   let data: Record<string, string | number>[] = [];
   if (pathToUserList) {
     data = await parseCSV(
-      await fs.readFile(path.resolve(process.cwd(), pathToUserList)),
+      await fs.readFile(path.resolve(Root.path(), pathToUserList)),
       {
         bom: true,
         columns: (row: string[]) => {
@@ -176,7 +176,7 @@ export async function analytics(
   Progress.start({ max: data.length });
   const outputPath = await Output.avoidOverwrite(
     path.resolve(
-      process.cwd(),
+      Root.path(),
       Output.filePathFromOutputPath(
         Output.outputPath(),
         path.basename(Output.outputPath())
