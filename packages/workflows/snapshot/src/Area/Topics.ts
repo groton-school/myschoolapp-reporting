@@ -6,7 +6,7 @@ import * as Snapshot from '@msar/types.snapshot';
 import { Workflow } from '@msar/workflow';
 import { api } from 'datadirect';
 import * as Base from './Base.js';
-import { merge } from './merge.js';
+import { DEFAULT_ID_KEYS, merge } from './merge.js';
 
 let possibleContent: api.datadirect.TopicContentTypesGet.Response | undefined =
   undefined;
@@ -164,7 +164,7 @@ export const snapshot: Base.Snapshot<Snapshot.Topics.Data> = async (
     Debug.withGroupId(Id, 'Topics captured');
     // FIXME filter student data out of topic discussions
     if (prev) {
-      return merge(prev, Topics);
+      return merge(prev, Topics, ['TopicID', ...DEFAULT_ID_KEYS]);
     }
     return Topics;
   } catch (error) {
