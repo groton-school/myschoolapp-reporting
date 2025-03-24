@@ -82,19 +82,15 @@ export function merge<T extends JSONValue = JSONValue>(
   errors = DEFAULT_ERROR_KEYS
 ): T {
   if (a === undefined || a === null) {
-    console.log({ a, b, result: 'b (a undefined)' });
     return b;
   }
   if (b === undefined || b === null) {
-    console.log({ a, b, result: 'a (b undefined)' });
     return a;
   }
   if (isError(a, errors)) {
-    console.log({ a, b, result: 'b (a error)' });
     return b;
   }
   if (isJSONObject(a) && typeof b === 'string') {
-    console.log({ a, b, result: 'a (b string, a object)' });
     return a;
   }
   if (Array.isArray(a) && Array.isArray(b)) {
@@ -112,7 +108,6 @@ export function merge<T extends JSONValue = JSONValue>(
         result.push(eltB);
       }
     }
-    console.log({ a, b, result });
     return result as T;
   }
   if (isJSONObject(a) && isJSONObject(b)) {
@@ -124,18 +119,14 @@ export function merge<T extends JSONValue = JSONValue>(
         result[prop] = b[prop];
       }
     }
-    console.log({ a, b, result });
     return result as T;
   }
   if (isJSONObject(a) && isError(b)) {
-    console.log({ a, b, result: 'b (a is error)' });
     return b;
   }
   if (isJSONObject(b) && isError(a)) {
-    console.log({ a, b, result: 'a (b is error)' });
     return a;
   }
 
-  console.log({ a, b, result: 'whichever is truthier' });
   return b || a;
 }
