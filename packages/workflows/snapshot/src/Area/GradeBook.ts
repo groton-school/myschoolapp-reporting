@@ -2,13 +2,12 @@ import { DatadirectPuppeteer } from '@msar/datadirect-puppeteer';
 import { Debug } from '@msar/debug';
 import * as Snapshot from '@msar/types.snapshot';
 import * as Base from './Base.js';
+import { merge } from './merge.js';
 
-export const snapshot: Base.Snapshot<Snapshot.GradeBook.Data> = async ({
-  groupId: sectionId,
-  ignoreErrors,
-  studentData,
-  ...options
-}) => {
+export const snapshot: Base.Snapshot<Snapshot.GradeBook.Data> = async (
+  { groupId: sectionId, ignoreErrors, studentData, ...options },
+  prev?: Snapshot.GradeBook.Data
+) => {
   Debug.withGroupId(sectionId, 'Start capturing gradebook');
   try {
     const markingPeriods =
@@ -34,6 +33,9 @@ export const snapshot: Base.Snapshot<Snapshot.GradeBook.Data> = async ({
       Gradebook.push(entry);
     }
     Debug.withGroupId(sectionId, 'Gradebook captured');
+    if (prev) {
+      return merge(prev, Gradebook);
+    }
     return Gradebook;
   } catch (error) {
     if (ignoreErrors) {

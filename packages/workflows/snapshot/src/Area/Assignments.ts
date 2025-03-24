@@ -4,13 +4,12 @@ import * as Snapshot from '@msar/types.snapshot';
 import { School } from '@oauth2-cli/sky-api';
 import { sky } from '../SkyAPI.js';
 import * as Base from './Base.js';
+import { merge } from './merge.js';
 
-export const snapshot: Base.Snapshot<Snapshot.Assignments.Data> = async ({
-  session,
-  groupId: sectionId,
-  ignoreErrors,
-  logRequests
-}) => {
+export const snapshot: Base.Snapshot<Snapshot.Assignments.Data> = async (
+  { session, groupId: sectionId, ignoreErrors, logRequests },
+  prev?: Snapshot.Assignments.Data
+) => {
   Debug.withGroupId(sectionId, 'Start capturing assignments');
 
   const skyAssignments = (
@@ -26,10 +25,11 @@ export const snapshot: Base.Snapshot<Snapshot.Assignments.Data> = async ({
       }
     });
 
-  const assignments: Snapshot.Assignments.Data = [];
+  const Assignments: Snapshot.Assignments.Data = [];
   for (const assignment of assignmentList) {
     try {
-      assignments.push({
+      Assignments.push({
+        ...assignment,
         ...(await DatadirectPuppeteer.api.Assignment2.UserAssignmentDetailsGetAllData(
           {
             session,
@@ -59,5 +59,8 @@ export const snapshot: Base.Snapshot<Snapshot.Assignments.Data> = async ({
     }
   }
   Debug.withGroupId(sectionId, 'Assignments captured');
-  return assignments;
+  if (prev) {
+    return merge(prev, Assignments);
+  }
+  return Assignments;
 };

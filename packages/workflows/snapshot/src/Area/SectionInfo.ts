@@ -4,15 +4,15 @@ import * as Snapshot from '@msar/types.snapshot';
 import { Workflow } from '@msar/workflow';
 import { api } from 'datadirect';
 import * as Base from './Base.js';
+import { merge } from './merge.js';
 
-export const snapshot: Base.Snapshot<Snapshot.SectionInfo.Data> = async ({
-  groupId: sectionId,
-  ignoreErrors = Workflow.ignoreErrors(),
-  ...options
-}): Promise<Snapshot.SectionInfo.Data | undefined> => {
+export const snapshot: Base.Snapshot<Snapshot.SectionInfo.Data> = async (
+  { groupId: sectionId, ignoreErrors = Workflow.ignoreErrors(), ...options },
+  prev?: Snapshot.SectionInfo.Data
+): Promise<Snapshot.SectionInfo.Data | undefined> => {
   Debug.withGroupId(sectionId, 'Start capturing section info');
   try {
-    return (
+    const SectionInfo = (
       await DatadirectPuppeteer.api.datadirect.SectionInfoView({
         ...options,
         payload: {
@@ -30,6 +30,10 @@ export const snapshot: Base.Snapshot<Snapshot.SectionInfo.Data> = async ({
       },
       undefined
     );
+    if (prev && SectionInfo) {
+      return merge(prev, SectionInfo);
+    }
+    return SectionInfo;
   } catch (error) {
     if (ignoreErrors) {
       Debug.errorWithGroupId(

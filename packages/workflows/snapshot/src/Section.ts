@@ -1,4 +1,5 @@
 import * as Plugin from '@battis/qui-cli.plugin';
+import { JSONObject } from '@battis/typescript-tricks';
 import { Debug } from '@msar/debug';
 import { Output } from '@msar/output';
 import { PuppeteerSession } from '@msar/puppeteer-session';
@@ -6,7 +7,8 @@ import { RateLimiter } from '@msar/rate-limiter';
 import { Data } from '@msar/types.snapshot';
 import { Workflow } from '@msar/workflow';
 import { api } from 'datadirect';
-import * as Area from './Area.js';
+import * as Area from './Area/index.js';
+import { unmatchedProperties } from './Area/merge.js';
 
 /*
  * FIXME Context typing
@@ -15,7 +17,7 @@ import * as Area from './Area.js';
 export type Context = {
   session?: PuppeteerSession.Authenticated;
   groupId?: number;
-  url?: URL | string;
+  url?: string;
 };
 
 export type Configuration = Plugin.Configuration & {
@@ -31,22 +33,32 @@ export type Configuration = Plugin.Configuration & {
 } & Context &
   Partial<api.datadirect.ContentItem.Payload>;
 
-export class Snapshot {
-  private constructor(private config: Configuration) {}
+type ConstructorOptions = Configuration & { section?: Data<string, string> };
 
-  public static async capture(config: Configuration) {
+export class Snapshot {
+  private constructor(private config: ConstructorOptions) {}
+
+  public static async capture(config: ConstructorOptions) {
     const snapshot = new this(config);
     return await snapshot.scrape();
   }
 
   private async scrape() {
     let groupId = this.config.groupId;
-    if (this.config.url && !groupId) {
-      groupId = parseInt(
-        (this.config.url.toString().match(/https:\/\/[^0-9]+(\d+)/) || {
-          1: ''
-        })[1]
-      );
+    if (this.config.retry) {
+      if (this.config.section) {
+        groupId = this.config.section.GroupId;
+      } else {
+        throw new Error(`Cannot retry without section data`);
+      }
+    } else {
+      if (this.config.url && !groupId) {
+        groupId = parseInt(
+          (this.config.url.toString().match(/https:\/\/[^0-9]+(\d+)/) || {
+            1: ''
+          })[1]
+        );
+      }
     }
     if (!groupId) {
       throw new Error('Group ID cannot be determined');
@@ -54,17 +66,19 @@ export class Snapshot {
     Debug.withGroupId(groupId, 'Start');
 
     if (!this.config.session) {
-      if (this.config.url) {
-        Debug.withGroupId(groupId, 'Creating session');
-        this.config.session = await PuppeteerSession.Fetchable.init(
-          this.config.url,
-          { logRequests: Workflow.logRequests() }
-        );
-      } else {
+      let url = this.config.url;
+      if (this.config.retry) {
+        url = `https://${this.config.section?.Metadata.Host}/app/faculty#academicclass/${this.config.section?.GroupId}/0/bulletinboard`;
+      }
+      if (!url) {
         throw new Error(
           'An LMS URL is required to open a new datadirect session'
         );
       }
+      Debug.withGroupId(groupId, 'Creating session');
+      this.config.session = await PuppeteerSession.Fetchable.init(url, {
+        logRequests: Workflow.logRequests()
+      });
     } else {
       Debug.withGroupId(groupId, 'Forking session in new window');
       this.config.session = await this.config.session.fork(
@@ -78,20 +92,32 @@ export class Snapshot {
 
     const [SectionInfo, BulletinBoard, Topics, Assignments, Gradebook] =
       await Promise.all([
-        Area.SectionInfo.snapshot(areaConfig),
+        Area.SectionInfo.snapshot(areaConfig, this.config.section?.SectionInfo),
         this.config.bulletinBoard
-          ? Area.BulletinBoard.snaphot(areaConfig)
+          ? Area.BulletinBoard.snaphot(
+              areaConfig,
+              this.config.section?.BulletinBoard
+            )
           : undefined,
-        this.config.topics ? Area.Topics.snapshot(areaConfig) : undefined,
+        this.config.topics
+          ? Area.Topics.snapshot(areaConfig, this.config.section?.Topics)
+          : undefined,
         this.config.assignments
-          ? await Area.Assignments.snapshot(areaConfig)
+          ? await Area.Assignments.snapshot(
+              areaConfig,
+              this.config.section?.Assignments
+            )
           : undefined,
-        this.config.gradebook ? Area.GradeBook.snapshot(areaConfig) : undefined
+        this.config.gradebook
+          ? Area.GradeBook.snapshot(areaConfig, this.config.section?.Gradebook)
+          : undefined
       ]);
 
     const snapshot: Data = {
       Metadata: {
-        Host: (await this.config.session.url()).host,
+        Host:
+          this.config.section?.Metadata.Host ||
+          (await this.config.session.url()).host,
         User: await this.config.session.user(),
         Start,
         Finish: new Date()
@@ -155,6 +181,16 @@ export class Snapshot {
       await this.config.session.close();
     }
 
+    if (this.config.section) {
+      const stringified = JSON.parse(JSON.stringify(snapshot)) as Data<
+        string,
+        string
+      >;
+      return {
+        ...unmatchedProperties(this.config.section, stringified),
+        ...stringified
+      };
+    }
     return snapshot;
   }
 }

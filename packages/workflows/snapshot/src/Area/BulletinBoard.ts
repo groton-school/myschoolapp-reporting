@@ -4,6 +4,7 @@ import * as Snapshot from '@msar/types.snapshot';
 import { Workflow } from '@msar/workflow';
 import { api } from 'datadirect';
 import * as Base from './Base.js';
+import { DEFAULT_ID_KEYS, merge } from './merge.js';
 
 const studentDataContentTypes = ['Roster'];
 
@@ -24,14 +25,17 @@ async function getPossibleContent(leadSectionId: number) {
   return possibleContent;
 }
 
-export const snaphot: Base.Snapshot<Snapshot.BulletinBoard.Data> = async ({
-  session,
-  groupId: Id,
-  payload = { format: 'json' },
-  ignoreErrors = Workflow.ignoreErrors(),
-  studentData,
-  logRequests
-}): Promise<Snapshot.BulletinBoard.Data | undefined> => {
+export const snaphot: Base.Snapshot<Snapshot.BulletinBoard.Data> = async (
+  {
+    session,
+    groupId: Id,
+    payload = { format: 'json' },
+    ignoreErrors = Workflow.ignoreErrors(),
+    studentData,
+    logRequests
+  },
+  prev?: Snapshot.BulletinBoard.Data
+): Promise<Snapshot.BulletinBoard.Data | undefined> => {
   Debug.withGroupId(Id, 'Start capturing bulletin board');
   try {
     const BulletinBoard: Snapshot.BulletinBoard.Data = [];
@@ -59,7 +63,7 @@ export const snaphot: Base.Snapshot<Snapshot.BulletinBoard.Data> = async ({
         ) {
           throw new Base.StudentDataError();
         }
-        const entry = {
+        const entry: Snapshot.BulletinBoard.Item = {
           ...item,
           ContentType,
           Content:
@@ -85,7 +89,7 @@ export const snaphot: Base.Snapshot<Snapshot.BulletinBoard.Data> = async ({
             (content: any) => content.AlbumId
           ).filter((id, i, arr) => arr.indexOf(id) === i);
           // @ts-expect-error
-          nextItem.AlbumContent = await Promise.all(
+          entry.AlbumContent = await Promise.all(
             albumIds.map(async (albumId) => ({
               AlbumId: albumId,
               Content: await DatadirectPuppeteer.api.media.AlbumFilesGet({
@@ -136,6 +140,13 @@ export const snaphot: Base.Snapshot<Snapshot.BulletinBoard.Data> = async ({
     }
 
     Debug.withGroupId(Id, 'Bulletin board captured');
+    if (prev) {
+      return merge(prev, BulletinBoard, [
+        'ContentId',
+        ...DEFAULT_ID_KEYS,
+        'Url'
+      ]);
+    }
     return BulletinBoard;
   } catch (error) {
     if (ignoreErrors) {

@@ -13,7 +13,7 @@ import * as Snapshot from '@msar/snapshot/dist/Snapshot.js';
 import * as SnapshotType from '@msar/types.snapshot';
 import { Workflow } from '@msar/workflow';
 import crypto from 'node:crypto';
-import fs from 'node:fs/promises';
+import fs from 'node:fs';
 import path from 'node:path';
 import PQueue from 'p-queue';
 
@@ -28,8 +28,9 @@ export type Configuration = {
   termsOffered?: string;
   year?: string;
   groupsPath?: string;
-  url?: URL | string;
+  url?: string;
   temp?: string;
+  retry?: boolean;
 };
 
 let TEMP = path.join('/tmp/msar/snapshot', crypto.randomUUID());
@@ -38,13 +39,14 @@ let all = false;
 let association: string | undefined = undefined;
 let termsOffered: string | undefined = undefined;
 let groupsPath: string | undefined = undefined;
+let retry = false;
 
 let year = `${new Date().getFullYear()} - ${new Date().getFullYear() + 1}`;
 if (new Date().getMonth() <= 6) {
   year = `${new Date().getFullYear() - 1} - ${new Date().getFullYear()}`;
 }
 
-let url: URL | undefined = undefined;
+let url: string | undefined = undefined;
 
 function cleanSplit(list?: string) {
   return (list || '').split(',').map((item) => item.trim());
@@ -56,7 +58,8 @@ export function configure(config: Configuration = {}) {
   termsOffered = Plugin.hydrate(config.termsOffered, termsOffered);
   year = Plugin.hydrate(config.year, year);
   groupsPath = Plugin.hydrate(config.groupsPath, groupsPath);
-  url = config.url ? new URL(config.url) : url;
+  url = Plugin.hydrate(config.url, url);
+  retry = Plugin.hydrate(config.retry, retry);
   TEMP = path.join(
     '/tmp/msar/snapshot',
     Plugin.hydrate(config.temp, crypto.randomUUID())
@@ -73,6 +76,9 @@ export function options(): Plugin.Options {
         short: 'A',
         description: `Capture all sections (default: ${Colors.value(all)}, positional argument ${Colors.value(`arg0`)} is used to identify MySchoolApp instance)`,
         default: all
+      },
+      retry: {
+        description: `Retry a previous snapshot. If this flag is set, ${Colors.value('arg0')} must be the path to an existing snapshot JSON file.`
       }
     },
     opt: {
@@ -120,44 +126,89 @@ export function init(args: Plugin.ExpectedArguments<typeof options>) {
 }
 
 export async function run() {
-  if (!all) {
-    Snapshot.run();
-  } else {
+  let snapshots: SnapshotType.Multiple.Data<string, string> | undefined =
+    undefined;
+  if (retry) {
     if (!url) {
       throw new Error(
-        `${Colors.value('arg0')} must be the URL of an LMS instance`
+        `${Colors.value('arg0')} must be a path to an existing snapshot JSON file`
       );
     }
-
-    if (!year) {
-      throw new Error(`${Colors.value('--year')} must be defined`);
+    const filePath = path.resolve(Root.path(), url);
+    const file = JSON.parse(fs.readFileSync(filePath).toString()) as
+      | SnapshotType.Multiple.Data<string, string>
+      | SnapshotType.Data<string, string>;
+    if (file) {
+      Output.configure({ outputPath: filePath });
+      if (Array.isArray(file)) {
+        snapshots = file;
+      } else {
+        snapshots = [file];
+      }
+    } else {
+      throw new Error(`No snapshot data in ${Colors.url(url)}`);
     }
+  }
+  if (!all && !snapshots) {
+    Snapshot.run();
+  } else {
+    let session: PuppeteerSession.Authenticated | undefined = undefined;
+    let groups: { lead_pk: number }[] | undefined = undefined;
+    if (snapshots) {
+      const hostname = snapshots.reduce(
+        (hostname: string | undefined, snapshot) => {
+          if (hostname) {
+            return hostname;
+          } else {
+            return snapshot.Metadata.Host;
+          }
+        },
+        undefined
+      );
+      session = await PuppeteerSession.Fetchable.init(`https://${hostname}`, {
+        logRequests: Workflow.logRequests()
+      });
+      groups = snapshots.map((snapshot) => ({ lead_pk: snapshot.GroupId }));
+      Log.info(`Retrying ${groups.length} groups in ${Colors.url(url)}`);
+    } else {
+      if (!url) {
+        throw new Error(
+          `${Colors.value('arg0')} must be the URL of an LMS instance`
+        );
+      }
 
-    const session = await PuppeteerSession.Fetchable.init(url, {
-      logRequests: Workflow.logRequests()
-    });
-    Log.info(`Snapshot temporary files will be saved to ${Colors.url(TEMP)}`);
-    const associations = cleanSplit(association);
-    const terms = cleanSplit(termsOffered);
-    const groups = (
-      await DatadirectPuppeteer.api.datadirect.groupFinderByYear({
-        ...options,
-        payload: {
-          schoolYearLabel: year
-        }
-      })
-    ).filter(
-      (group) =>
-        (association === undefined ||
-          associations.includes(group.association)) &&
-        (termsOffered === undefined ||
-          terms.reduce(
-            (match, term) => match && group.terms_offered.includes(term),
-            true
-          ))
-    );
-    Log.info(`${groups.length} groups match filters`);
+      if (!year) {
+        throw new Error(`${Colors.value('--year')} must be defined`);
+      }
+      session = await PuppeteerSession.Fetchable.init(url, {
+        logRequests: Workflow.logRequests()
+      });
 
+      Log.info(`Snapshot temporary files will be saved to ${Colors.url(TEMP)}`);
+      const associations = cleanSplit(association);
+      const terms = cleanSplit(termsOffered);
+      groups = (
+        await DatadirectPuppeteer.api.datadirect.groupFinderByYear({
+          ...options,
+          payload: {
+            schoolYearLabel: year
+          }
+        })
+      ).filter(
+        (group) =>
+          (association === undefined ||
+            associations.includes(group.association)) &&
+          (termsOffered === undefined ||
+            terms.reduce(
+              (match, term) => match && group.terms_offered.includes(term),
+              true
+            ))
+      );
+      Log.info(`${groups.length} groups match filters`);
+    }
+    if (!groups) {
+      throw new Error(`No groups identified`);
+    }
     Progress.start({ max: groups.length });
     if (groupsPath) {
       groupsPath = Output.filePathFromOutputPath(groupsPath, 'groups.json');
@@ -170,7 +221,7 @@ export async function run() {
     }
 
     const errors: typeof groups = [];
-    const data: SnapshotType.Multiple.Data = [];
+    const data: SnapshotType.Multiple.Data<string, string | Date> = [];
 
     async function snapshotGroup(i: number) {
       const tempPath = path.join(TEMP, `${pad(i)}.json`);
@@ -185,10 +236,11 @@ export async function run() {
         data[i] = await Snapshot.snapshot({
           ...Snapshot.getConfig(),
           session,
-          groupId: groups[i].lead_pk,
+          groupId: groups![i].lead_pk,
           metadata: false,
           silent: true,
-          quit: true
+          quit: true,
+          section: snapshots && snapshots.length > i ? snapshots[i] : undefined
         });
         /*
          * FIXME redundant writeJSON
@@ -199,8 +251,8 @@ export async function run() {
         Progress.caption(data[i]?.SectionInfo?.GroupName || '');
       } catch (error) {
         if (Workflow.ignoreErrors()) {
-          Debug.errorWithGroupId(groups[i].lead_pk, 'Error', error as string);
-          errors.push(groups[i]);
+          Debug.errorWithGroupId(groups![i].lead_pk, 'Error', error as string);
+          errors.push(groups![i]);
         } else {
           throw error;
         }
@@ -209,44 +261,46 @@ export async function run() {
     }
 
     let resume = 0;
-    try {
+    if (fs.existsSync(TEMP)) {
       resume = Math.max(
         resume,
-        ...(await fs.readdir(TEMP)).map((name) => parseInt(name))
+        ...fs.readdirSync(TEMP).map((name) => parseInt(name))
       );
       for (let i = 0; i <= resume; i++) {
         data[i] = JSON.parse(
-          (await fs.readFile(path.resolve(TEMP, `${pad(i)}.json`))).toString()
+          fs.readFileSync(path.resolve(TEMP, `${pad(i)}.json`)).toString()
         );
       }
-    } catch (_) {
-      // ignore missing temp dir
     }
     const queue = new PQueue({ concurrency: RateLimiter.concurrency() });
     await queue.addAll(
-      groups.slice(resume + 1).map((group, i) => snapshotGroup.bind(null, i))
+      groups.slice(resume).map((group, i) => snapshotGroup.bind(null, i))
     );
 
     let Start = new Date();
     let Finish = new Date('1/1/1970');
-    let first: SnapshotType.Metadata.Data | undefined = undefined;
+    let first: SnapshotType.Metadata.Data<string | Date> | undefined =
+      undefined;
 
     for (const snapshot of data) {
       if (snapshot.Metadata.Start < Start) {
-        Start = snapshot.Metadata.Start;
+        Start = new Date(snapshot.Metadata.Start);
       }
       if (snapshot.Metadata.Finish > Finish) {
-        Finish = snapshot.Metadata.Finish;
+        Finish = new Date(snapshot.Metadata.Finish);
       }
       if (!first) {
         first = snapshot.Metadata;
       }
     }
-    const filepath = await Output.avoidOverwrite(
-      Output.filePathFromOutputPath(Output.outputPath(), 'snapshot.json'),
-      Output.AddTimestamp
+    let filepath = Output.filePathFromOutputPath(
+      Output.outputPath(),
+      'snapshot.json'
     );
-    Output.writeJSON(filepath, data);
+    if (!retry) {
+      filepath = await Output.avoidOverwrite(filepath, Output.AddTimestamp);
+    }
+    Output.writeJSON(filepath, data, { overwrite: retry });
     Output.writeJSON(filepath.replace(/\.json$/, '.metadata.json'), {
       ...first,
       Start,
@@ -264,7 +318,9 @@ export async function run() {
       Output.writeJSON(errorsPath, errors);
       Log.error(`Errors output to ${Colors.url(errorsPath)}`);
     }
-    await fs.rm(TEMP, { recursive: true });
+    if (fs.existsSync(TEMP)) {
+      fs.rmSync(TEMP, { recursive: true });
+    }
     Progress.stop();
 
     if (PuppeteerSession.quit()) {

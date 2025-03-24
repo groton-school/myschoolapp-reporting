@@ -19,5 +19,6 @@ type Context = {
 };
 
 export type Snapshot<Data = Endpoint.Response> = (
-  options: Options & Context
+  options: Options & Context,
+  prev?: Data
 ) => Promise<Data | undefined>;

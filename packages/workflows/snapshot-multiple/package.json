@@ -23,6 +23,7 @@
   },
   "dependencies": {
     "@msar/types.snapshot": "workspace:*",
+    "datadirect": "workspace:*",
     "ora": "^8.2.0",
     "p-queue": "^8.1.0"
   },

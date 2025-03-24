@@ -6,6 +6,7 @@ import * as Snapshot from '@msar/types.snapshot';
 import { Workflow } from '@msar/workflow';
 import { api } from 'datadirect';
 import * as Base from './Base.js';
+import { merge } from './merge.js';
 
 let possibleContent: api.datadirect.TopicContentTypesGet.Response | undefined =
   undefined;
@@ -20,13 +21,16 @@ async function getPossibleContent() {
   return possibleContent;
 }
 
-export const snapshot: Base.Snapshot<Snapshot.Topics.Data> = async ({
-  groupId: Id,
-  payload,
-  ignoreErrors = Workflow.ignoreErrors(),
-  studentData,
-  ...options
-}): Promise<Snapshot.Topics.Data | undefined> => {
+export const snapshot: Base.Snapshot<Snapshot.Topics.Data> = async (
+  {
+    groupId: Id,
+    payload,
+    ignoreErrors = Workflow.ignoreErrors(),
+    studentData,
+    ...options
+  },
+  prev?: Snapshot.Topics.Data
+): Promise<Snapshot.Topics.Data | undefined> => {
   Debug.withGroupId(Id, 'Start capturing topics');
   try {
     const Topics: Snapshot.Topics.Data = [];
@@ -159,6 +163,9 @@ export const snapshot: Base.Snapshot<Snapshot.Topics.Data> = async ({
     }
     Debug.withGroupId(Id, 'Topics captured');
     // FIXME filter student data out of topic discussions
+    if (prev) {
+      return merge(prev, Topics);
+    }
     return Topics;
   } catch (error) {
     if (ignoreErrors) {

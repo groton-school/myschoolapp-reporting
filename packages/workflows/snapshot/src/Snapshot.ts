@@ -36,7 +36,8 @@ let config: Configuration = {
   fromDate: new Date().toLocaleDateString('en-US'),
   toDate: undefined,
   contextLabelId: 2,
-  metadata: true
+  metadata: true,
+  retry: false
 };
 
 export function getConfig() {
@@ -47,7 +48,7 @@ export function configure(proposal: Configuration = {}) {
   config = {
     session: Plugin.hydrate(proposal.session, config.session),
     groupId: Plugin.hydrate(proposal.groupId, config.groupId),
-    url: proposal.url ? new URL(proposal.url) : config.url,
+    url: proposal.url ? proposal.url : config.url,
 
     bulletinBoard: Plugin.hydrate(proposal.bulletinBoard, config.bulletinBoard),
     topics: Plugin.hydrate(proposal.topics, config.topics),
@@ -73,7 +74,8 @@ export function configure(proposal: Configuration = {}) {
       config.contextLabelId
     ),
 
-    metadata: Plugin.hydrate(proposal.metadata, config.metadata)
+    metadata: Plugin.hydrate(proposal.metadata, config.metadata),
+    retry: Plugin.hydrate(proposal.retry, config.retry)
   };
 }
 
@@ -127,6 +129,9 @@ export function options(): Plugin.Options {
       metadata: {
         description: `Include additional ${Colors.value(':SnapshotName.metadata.json')} recording the parameters of the snapshot command. (default ${Colors.value(config.metadata)}, use ${Colors.value('--no-metadata')} to disable)`,
         default: config.metadata
+      },
+      retry: {
+        description: `Retry a previous snapshot. If this flag is set, ${Colors.value('arg0')} must be the path to an existing snapshot JSON file.`
       }
     },
     opt: {
@@ -136,7 +141,7 @@ export function options(): Plugin.Options {
           ?.replace(
             outputOptions.opt?.outputPath.description,
             path.resolve(
-              process.cwd(),
+              Root.path(),
               outputOptions.opt?.outputPath.description,
               ':SnapshotName.json'
             )
@@ -177,11 +182,23 @@ export function init(args: Plugin.ExpectedArguments<typeof options>) {
 
 export async function run() {
   if (!config.url) {
-    throw new Error(
-      `${Colors.value('arg0')} must be the URL of an LMS instance`
+    if (config.retry) {
+      throw new Error(
+        `${Colors.value('arg0')} must be a path to an existing snapshot JSON file`
+      );
+    } else {
+      throw new Error(
+        `${Colors.value('arg0')} must be the URL of an LMS instance`
+      );
+    }
+  }
+  let section: Snapshot.Data | undefined = undefined;
+  if (config.retry) {
+    section = JSON.parse(
+      fs.readFileSync(path.resolve(Root.path(), config.url)).toString()
     );
   }
-  await snapshot({ ...config, outputPath: Output.outputPath() });
+  await snapshot({ ...config, outputPath: Output.outputPath(), section });
 }
 
 export async function snapshot(conf?: Configuration) {
