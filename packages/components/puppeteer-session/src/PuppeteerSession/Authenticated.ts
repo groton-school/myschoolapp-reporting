@@ -119,7 +119,15 @@ export class Authenticated extends Base {
           const displaySign = await (
             await this.page.waitForSelector('.displaySign')
           )?.evaluate((elt) => elt.textContent);
-          spinner.start(`${message} ${Colors.value(displaySign)}`);
+          const newMessage = message.replace(
+            'the number shown',
+            Colors.value(displaySign)
+          );
+          spinner.start(
+            message == newMessage
+              ? `${message} ${Colors.value(displaySign)}`
+              : newMessage
+          );
         }
       }
     }
