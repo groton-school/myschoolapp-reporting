@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [0.8.4](https://github.com/groton-school/myschoolapp-reporting/compare/msar/0.8.3...msar/0.8.4) (2025-03-25)
+
+### Features
+
+- **types.snapshot,snapshot:** capture rubric data if associated with assignment ([06dc3b3](https://github.com/groton-school/myschoolapp-reporting/commit/06dc3b310a84b3734b7ba1eb0ffa1b800945c7c3))
+
 ## [0.8.3](https://github.com/groton-school/myschoolapp-reporting/compare/msar/0.8.2...msar/0.8.3) (2025-03-25)
 
 ### Bug Fixes
