@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [0.1.10](https://github.com/groton-school/myschoolapp-reporting/compare/types/snapshot/0.1.9...types/snapshot/0.1.10) (2025-03-25)
+
+
+### Features
+
+* **types.snapshot,snapshot:** capture rubric data if associated with assignment ([06dc3b3](https://github.com/groton-school/myschoolapp-reporting/commit/06dc3b310a84b3734b7ba1eb0ffa1b800945c7c3))
+
 ## [0.1.9](https://github.com/groton-school/myschoolapp-reporting/compare/types/snapshot/0.1.8...types/snapshot/0.1.9) (2025-03-25)
 
 
