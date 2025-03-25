@@ -29,7 +29,7 @@ export const snapshot: Base.Snapshot<Snapshot.Assignments.Data> = async ({
   const assignments: Snapshot.Assignments.Data = [];
   for (const assignment of assignmentList) {
     try {
-      assignments.push({
+      const ass: Snapshot.Assignments.Item = {
         ...assignment,
         ...(await DatadirectPuppeteer.api.Assignment2.UserAssignmentDetailsGetAllData(
           {
@@ -46,7 +46,13 @@ export const snapshot: Base.Snapshot<Snapshot.Assignments.Data> = async ({
           (skyAssignment) =>
             skyAssignment.index_id == assignment.assignment_index_id
         )
-      });
+      };
+      if (ass.RubricId > 0) {
+        ass.Rubric = await DatadirectPuppeteer.api.Rubric.AssignmentRubric({
+          payload: { id: ass.RubricId }
+        });
+      }
+      assignments.push(ass);
     } catch (error) {
       if (ignoreErrors) {
         Debug.errorWithGroupId(

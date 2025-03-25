@@ -30,6 +30,7 @@ export type Item<T = PathString> = api.datadirect.ImportAssignmentsGet.Item &
   Partial<School.Assignment> & {
     LinkItems: LinkItem<T>[];
     DownloadItems: DownloadItem<T>[];
+    Rubric?: api.Rubric.AssignmentRubric.Response;
   };
 
 export type Data<T = PathString> = Item<T>[];
