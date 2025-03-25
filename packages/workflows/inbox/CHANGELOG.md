@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [0.1.2](https://github.com/groton-school/myschoolapp-reporting/compare/inbox/0.1.1...inbox/0.1.2) (2025-03-25)
+
+
+### Features
+
+* **inbox:** replace process.cwd() with Root.path() for better reusability ([0571302](https://github.com/groton-school/myschoolapp-reporting/commit/05713029f09533f0742982287774544aa5245522))
+
 ## [0.1.1](https://github.com/groton-school/myschoolapp-reporting/compare/inbox/0.1.0...inbox/0.1.1) (2025-03-11)
 
 
