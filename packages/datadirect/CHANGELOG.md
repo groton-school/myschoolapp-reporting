@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [0.4.6](https://github.com/groton-school/myschoolapp-reporting/compare/datadirect/0.4.5...datadirect/0.4.6) (2025-03-25)
+
+
+### Features
+
+* **datadirect:** api.Rubric.AssignmentRubric ([df3d7f3](https://github.com/groton-school/myschoolapp-reporting/commit/df3d7f398da951f673cec2c836c16560b0ff40d4))
+
 ## [0.4.5](https://github.com/groton-school/myschoolapp-reporting/compare/datadirect/0.4.4...datadirect/0.4.5) (2025-03-20)
 
 
