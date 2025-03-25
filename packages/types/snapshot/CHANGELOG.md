@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [0.1.9](https://github.com/groton-school/myschoolapp-reporting/compare/types/snapshot/0.1.8...types/snapshot/0.1.9) (2025-03-25)
+
+
+### Bug Fixes
+
+* **types.snapshot:** Assignment.Item now (correctly) includes api.datadirect.ImportAssignmentsGet ([75c668b](https://github.com/groton-school/myschoolapp-reporting/commit/75c668b40a649e0704c8deb2d23ba41d14d8792a))
+
 ## [0.1.8](https://github.com/groton-school/myschoolapp-reporting/compare/types/snapshot/0.1.7...types/snapshot/0.1.8) (2025-03-20)
 
 
