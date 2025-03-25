@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [0.8.3](https://github.com/groton-school/myschoolapp-reporting/compare/msar/0.8.2...msar/0.8.3) (2025-03-25)
+
+### Bug Fixes
+
+- **snapshot:** include datadirect.ImportAssignmentsGet in Assignment snapshot, as intended ([3fff145](https://github.com/groton-school/myschoolapp-reporting/commit/3fff145d6956f256d79070481e5f72bd03bb3af9))
+
+### Features
+
+- **archive:** replace process.cwd() with Root.path() for better reusability ([b2cec4c](https://github.com/groton-school/myschoolapp-reporting/commit/b2cec4cf6a15d483290e26be2e3582632e7901ec))
+- **inbox:** replace process.cwd() with Root.path() for better reusability ([0571302](https://github.com/groton-school/myschoolapp-reporting/commit/05713029f09533f0742982287774544aa5245522))
+- **snapshot:** capture Audio, Video, Media albums in Topics and on Bulletin Board ([dae555f](https://github.com/groton-school/myschoolapp-reporting/commit/dae555f154c8350b7af93870be369aca73007d20))
+- **snapshot:** capture photo album files ([4c4d167](https://github.com/groton-school/myschoolapp-reporting/commit/4c4d167879841c1d6fff2987878ec096ff55bd4d))
+
 ## [0.8.2](https://github.com/groton-school/myschoolapp-reporting/compare/msar/0.8.1...msar/0.8.2) (2025-03-20)
 
 ### Features

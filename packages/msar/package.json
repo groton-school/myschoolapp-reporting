@@ -1,6 +1,6 @@
 {
   "name": "msar",
-  "version": "0.8.2",
+  "version": "0.8.3",
   "description": "A CLI Tool for collecting reporting data from the Blackbaud LMS (formerly `myschoolapp-reporting`)",
   "keywords": [
     "Blackbaud",
