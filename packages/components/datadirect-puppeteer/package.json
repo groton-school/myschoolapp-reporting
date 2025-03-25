@@ -1,6 +1,6 @@
 {
   "name": "@msar/datadirect-puppeteer",
-  "version": "0.3.3",
+  "version": "0.3.4",
   "description": "A library for calling the Blackbaud LMS's front-end APIs using Puppeteer",
   "homepage": "https://github.com/groton-school/myschoolapp-reporting/tree/main/packages/components/datadirect-puppeteer#readme",
   "repository": {

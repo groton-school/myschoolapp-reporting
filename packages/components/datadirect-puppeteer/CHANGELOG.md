@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [0.3.4](https://github.com/groton-school/myschoolapp-reporting/compare/datadirect-puppeteer/0.3.3...datadirect-puppeteer/0.3.4) (2025-03-25)
+
+
+### Features
+
+* **datadirect-puppeteer:** api.Rubric.AssignmentRubric ([7659780](https://github.com/groton-school/myschoolapp-reporting/commit/76597804414773bbe06130761f8fb89f2c350dee))
+
 ## [0.3.3](https://github.com/groton-school/myschoolapp-reporting/compare/datadirect-puppeteer/0.3.2...datadirect-puppeteer/0.3.3) (2025-03-20)
 
 
