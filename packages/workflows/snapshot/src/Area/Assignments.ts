@@ -30,6 +30,7 @@ export const snapshot: Base.Snapshot<Snapshot.Assignments.Data> = async ({
   for (const assignment of assignmentList) {
     try {
       assignments.push({
+        ...assignment,
         ...(await DatadirectPuppeteer.api.Assignment2.UserAssignmentDetailsGetAllData(
           {
             session,
