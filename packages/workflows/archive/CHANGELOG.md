@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [0.1.6](https://github.com/groton-school/myschoolapp-reporting/compare/archive/0.1.5...archive/0.1.6) (2025-03-25)
+
+
+### Features
+
+* **archive:** replace process.cwd() with Root.path() for better reusability ([b2cec4c](https://github.com/groton-school/myschoolapp-reporting/commit/b2cec4cf6a15d483290e26be2e3582632e7901ec))
+
+
+### Bug Fixes
+
+* **archive:** redundant spinner ([6712d3e](https://github.com/groton-school/myschoolapp-reporting/commit/6712d3ec034abdb6a28bf3273e8f9340bec65c77))
+
 ## [0.1.5](https://github.com/groton-school/myschoolapp-reporting/compare/archive/0.1.4...archive/0.1.5) (2025-03-20)
 
 
