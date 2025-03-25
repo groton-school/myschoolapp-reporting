@@ -411,6 +411,9 @@ importers:
       '@battis/qui-cli.progress':
         specifier: ^2.0.1
         version: 2.0.1(@battis/qui-cli.colors@2.0.1(@battis/qui-cli.plugin@2.3.0))(@battis/qui-cli.plugin@2.3.0)
+      '@battis/qui-cli.root':
+        specifier: ^2.0.2
+        version: 2.0.2(@battis/qui-cli.plugin@2.3.0)
       '@battis/typescript-tricks':
         specifier: ^0.7.4
         version: 0.7.4
