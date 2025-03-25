@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [0.1.4](https://github.com/groton-school/myschoolapp-reporting/compare/output/0.1.3...output/0.1.4) (2025-03-25)
+
+
+### Features
+
+* **output:** Replace process.cwd() with more reusable Root.path() ([89ec48e](https://github.com/groton-school/myschoolapp-reporting/commit/89ec48e0a310689996393931d47a010febe5ec60))
+
 ## [0.1.3](https://github.com/groton-school/myschoolapp-reporting/compare/output/0.1.2...output/0.1.3) (2025-03-17)
 
 
