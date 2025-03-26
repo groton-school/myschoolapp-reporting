@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [0.1.5](https://github.com/groton-school/myschoolapp-reporting/compare/types/archive/0.1.4...types/archive/0.1.5) (2025-03-26)
+
+
+### Bug Fixes
+
+* **types.archive:** correct typing for Assignment.Data  ([906ee99](https://github.com/groton-school/myschoolapp-reporting/commit/906ee9961aa901a1c69705d37b0cddbfccda8d2c))
+
 ## [0.1.4](https://github.com/groton-school/myschoolapp-reporting/compare/types/archive/0.1.3...types/archive/0.1.4) (2025-03-20)
 
 
