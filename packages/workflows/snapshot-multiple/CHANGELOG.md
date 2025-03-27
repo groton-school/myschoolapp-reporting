@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [0.3.4](https://github.com/groton-school/myschoolapp-reporting/compare/snapshot-multiple/0.3.3...snapshot-multiple/0.3.4) (2025-03-27)
+
+
+### Features
+
+* **snapshot-multiple:** load a target list of GroupIDs from a CSV file ([679f444](https://github.com/groton-school/myschoolapp-reporting/commit/679f4445c7d8ee8ba95e84ad71f3c0d67183729d))
+
 ## [0.3.3](https://github.com/groton-school/myschoolapp-reporting/compare/snapshot-multiple/0.3.2...snapshot-multiple/0.3.3) (2025-03-25)
 
 ### Features
