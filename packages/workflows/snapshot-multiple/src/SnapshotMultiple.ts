@@ -12,6 +12,7 @@ import { RateLimiter } from '@msar/rate-limiter';
 import * as Snapshot from '@msar/snapshot/dist/Snapshot.js';
 import * as SnapshotType from '@msar/types.snapshot';
 import { Workflow } from '@msar/workflow';
+import { parse } from 'csv-parse/sync';
 import crypto from 'node:crypto';
 import fs from 'node:fs/promises';
 import path from 'node:path';
@@ -27,6 +28,7 @@ export type Configuration = {
   association?: string;
   termsOffered?: string;
   year?: string;
+  csv?: string;
   groupsPath?: string;
   url?: URL | string;
   temp?: string;
@@ -38,6 +40,7 @@ let all = false;
 let association: string | undefined = undefined;
 let termsOffered: string | undefined = undefined;
 let groupsPath: string | undefined = undefined;
+let csvPath: string | undefined = undefined;
 
 let year = `${new Date().getFullYear()} - ${new Date().getFullYear() + 1}`;
 if (new Date().getMonth() <= 6) {
@@ -56,6 +59,7 @@ export function configure(config: Configuration = {}) {
   termsOffered = Plugin.hydrate(config.termsOffered, termsOffered);
   year = Plugin.hydrate(config.year, year);
   groupsPath = Plugin.hydrate(config.groupsPath, groupsPath);
+  csvPath = Plugin.hydrate(config.csv, csvPath);
   url = config.url ? new URL(config.url) : url;
   TEMP = path.join(
     '/tmp/msar/snapshot',
@@ -99,6 +103,9 @@ export function options(): Plugin.Options {
         description: `If ${Colors.value(`--all`)} flag is used, which year to download. (Default: ${Colors.quotedValue(`"${year}"`)})`,
         default: year
       },
+      csv: {
+        description: `Path to CSV file of group IDs to snapshot (must contain a column named ${Colors.value('GroupId')})`
+      },
       resume: {
         description: `If ${Colors.value(`--all`)} flag is used,UUID name of temp directory (${Colors.url('/tmp/msar/snapshot/:uuid')}) for which to resume collecting snapshots`
       }
@@ -120,7 +127,7 @@ export function init(args: Plugin.ExpectedArguments<typeof options>) {
 }
 
 export async function run() {
-  if (!all) {
+  if (!all && !csvPath) {
     Snapshot.run();
   } else {
     if (!url) {
@@ -129,47 +136,57 @@ export async function run() {
       );
     }
 
-    if (!year) {
-      throw new Error(`${Colors.value('--year')} must be defined`);
-    }
-
     const session = await PuppeteerSession.Fetchable.init(url, {
       logRequests: Workflow.logRequests()
     });
     Log.info(`Snapshot temporary files will be saved to ${Colors.url(TEMP)}`);
-    const associations = cleanSplit(association);
-    const terms = cleanSplit(termsOffered);
-    const groups = (
-      await DatadirectPuppeteer.api.datadirect.groupFinderByYear({
-        ...options,
-        payload: {
-          schoolYearLabel: year
-        }
-      })
-    ).filter(
-      (group) =>
-        (association === undefined ||
-          associations.includes(group.association)) &&
-        (termsOffered === undefined ||
-          terms.reduce(
-            (match, term) => match && group.terms_offered.includes(term),
-            true
-          ))
-    );
-    Log.info(`${groups.length} groups match filters`);
 
-    Progress.start({ max: groups.length });
-    if (groupsPath) {
-      groupsPath = Output.filePathFromOutputPath(groupsPath, 'groups.json');
-      Output.writeJSON(groupsPath, groups);
+    let groupIds: number[] = [];
+    if (year && all) {
+      const associations = cleanSplit(association);
+      const terms = cleanSplit(termsOffered);
+      const groups = (
+        await DatadirectPuppeteer.api.datadirect.groupFinderByYear({
+          ...options,
+          payload: {
+            schoolYearLabel: year
+          }
+        })
+      ).filter(
+        (group) =>
+          (association === undefined ||
+            associations.includes(group.association)) &&
+          (termsOffered === undefined ||
+            terms.reduce(
+              (match, term) => match && group.terms_offered.includes(term),
+              true
+            ))
+      );
+      groupIds = groups.map((group) => group.lead_pk);
+      Log.info(`${groups.length} groups match filters`);
+      if (groupsPath) {
+        groupsPath = Output.filePathFromOutputPath(groupsPath, 'groups.json');
+        Output.writeJSON(groupsPath, groups);
+      }
+    } else if (csvPath) {
+      groupIds = parse(await fs.readFile(path.resolve(Root.path(), csvPath)), {
+        columns: true
+      }).map((row: { GroupId: number }) => row.GroupId);
+      Log.info(`${groupIds.length} group IDs loaded from CSV file`);
+    } else {
+      throw new Error(
+        `Either ${Colors.value('--year')} or ${Colors.value('--csv')} must be defined`
+      );
     }
 
-    const zeros = new Array((groups.length + '').length).fill(0).join('');
+    Progress.start({ max: groupIds.length });
+
+    const zeros = new Array((groupIds.length + '').length).fill(0).join('');
     function pad(n: number) {
       return (zeros + n).slice(-zeros.length);
     }
 
-    const errors: typeof groups = [];
+    const errors: typeof groupIds = [];
     const data: SnapshotType.Multiple.Data = [];
 
     async function snapshotGroup(i: number) {
@@ -185,7 +202,7 @@ export async function run() {
         data[i] = await Snapshot.snapshot({
           ...Snapshot.getConfig(),
           session,
-          groupId: groups[i].lead_pk,
+          groupId: groupIds[i],
           metadata: false,
           silent: true,
           quit: true
@@ -199,8 +216,8 @@ export async function run() {
         Progress.caption(data[i]?.SectionInfo?.GroupName || '');
       } catch (error) {
         if (Workflow.ignoreErrors()) {
-          Debug.errorWithGroupId(groups[i].lead_pk, 'Error', error as string);
-          errors.push(groups[i]);
+          Debug.errorWithGroupId(groupIds[i], 'Error', error as string);
+          errors.push(groupIds[i]);
         } else {
           throw error;
         }
@@ -224,7 +241,7 @@ export async function run() {
     }
     const queue = new PQueue({ concurrency: RateLimiter.concurrency() });
     await queue.addAll(
-      groups.slice(resume + 1).map((group, i) => snapshotGroup.bind(null, i))
+      groupIds.slice(resume + 1).map((group, i) => snapshotGroup.bind(null, i))
     );
 
     let Start = new Date();
