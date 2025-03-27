@@ -12,7 +12,7 @@ export type Item<T = PathString> = api.datadirect.BulletinBoardContentGet.Item &
     | {
         Content?: ContentItem.Media<T>[];
         ContentType?: api.datadirect.common.ContentType.Media;
-        AlbumContent?: AlbumContent.Data;
+        AlbumContent?: AlbumContent.Data<T>;
       }
   );
 export type Data<T = PathString> = Item<T>[];

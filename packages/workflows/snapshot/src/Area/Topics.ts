@@ -20,6 +20,17 @@ async function getPossibleContent() {
   return possibleContent;
 }
 
+function isMedia(
+  entry: Snapshot.Topics.Item
+): entry is Snapshot.Topics.MediaItem {
+  return (
+    entry.ObjectType?.Name === 'Photo' ||
+    entry.ObjectType?.Name == 'Audio' ||
+    entry.ObjectType?.Name === 'Video' ||
+    entry.ObjectType?.Name === 'Media'
+  );
+}
+
 export const snapshot: Base.Snapshot<Snapshot.Topics.Data> = async ({
   groupId: Id,
   payload,
@@ -75,8 +86,31 @@ export const snapshot: Base.Snapshot<Snapshot.Topics.Data> = async ({
         try {
           const entry: Snapshot.Topics.Item = {
             ...item,
-            ObjectType,
-            Content:
+            ObjectType
+          };
+          if (
+            !studentData &&
+            entry.ObjectType?.Name === 'Discussion Thread' &&
+            'Content' in entry
+          ) {
+            entry.Content = { error: new Base.StudentDataError().message };
+          }
+          if (isMedia(entry) && entry.ContentItemId) {
+            entry.AlbumContent = {
+              AlbumId: entry.ContentItemId,
+              // @ts-ignore-error
+              Content: await DatadirectPuppeteer.api.media.AlbumFilesGet({
+                ...options,
+                payload: {
+                  format: 'json',
+                  albumId: entry.ContentItemId,
+                  logView: false
+                }
+              })
+            };
+          } else {
+            // @ts-ignore-error
+            entry.Content =
               await DatadirectPuppeteer.api.datadirect.TopicContent_detail(
                 item,
                 possibleContent!,
@@ -96,39 +130,7 @@ export const snapshot: Base.Snapshot<Snapshot.Topics.Data> = async ({
                   },
                   pathParams: { Id }
                 }
-              )
-          };
-          if (
-            !studentData &&
-            entry.ObjectType?.Name === 'Discussion Thread' &&
-            'Content' in entry
-          ) {
-            entry.Content = { error: new Base.StudentDataError().message };
-          }
-          if (
-            (entry.ObjectType?.Name == 'Photo' ||
-              entry.ObjectType?.Name == 'Video' ||
-              entry.ObjectType?.Name == 'Audio' ||
-              entry.ObjectType?.Name == 'Media') &&
-            Array.isArray(entry.Content)
-          ) {
-            const albumIds = entry.Content?.map(
-              (content: any) => content.AlbumId
-            ).filter((id, i, arr) => arr.indexOf(id) === i);
-            // @ts-expect-error
-            nextItem.AlbumContent = await Promise.all(
-              albumIds.map(async (albumId) => ({
-                AlbumId: albumId,
-                Content: await DatadirectPuppeteer.api.media.AlbumFilesGet({
-                  ...options,
-                  payload: {
-                    format: 'json',
-                    albumId,
-                    logView: false
-                  }
-                })
-              }))
-            );
+              );
           }
 
           Content.push(entry);

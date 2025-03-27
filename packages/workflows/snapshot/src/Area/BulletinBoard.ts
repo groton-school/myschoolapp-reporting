@@ -85,7 +85,7 @@ export const snaphot: Base.Snapshot<Snapshot.BulletinBoard.Data> = async ({
             (content: any) => content.AlbumId
           ).filter((id, i, arr) => arr.indexOf(id) === i);
           // @ts-expect-error
-          nextItem.AlbumContent = await Promise.all(
+          entry.AlbumContent = await Promise.all(
             albumIds.map(async (albumId) => ({
               AlbumId: albumId,
               Content: await DatadirectPuppeteer.api.media.AlbumFilesGet({
