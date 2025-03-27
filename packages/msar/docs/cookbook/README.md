@@ -7,3 +7,4 @@ Make sure that you have [`jq`](https://jqlang.github.io/jq/) installed (`brew in
 - [Extract all Zoom links posted to Bulletin Boards](./bulletin-board-zoom-links-csv.md)
 - [Retry a batch of failed snapshots](./retry-failed-snapshots.md)
 - [Manually merging uncaptured downloads](./merging-uncaptured-downloads.md)
+- [Sync LMS data to Canvas](./sync-lms-data-to-canvas.md)
