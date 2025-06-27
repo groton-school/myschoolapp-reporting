@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [0.8.6](https://github.com/groton-school/myschoolapp-reporting/compare/msar/0.8.5...msar/0.8.6) (2025-06-27)
+
+
+### Bug Fixes
+
+* updated bin to be npm-friendly ([20c2fd1](https://github.com/groton-school/myschoolapp-reporting/commit/20c2fd1b27ea531e18a106cc56ccf0c241070704))
+
 ## [0.8.5](https://github.com/groton-school/myschoolapp-reporting/compare/msar/0.8.4...msar/0.8.5) (2025-03-27)
 
 ### Features
