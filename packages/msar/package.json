@@ -23,8 +23,8 @@
     "email": "sbattis@groton.org"
   },
   "type": "module",
-  "bin": {
-    "msar": "./dist/index.js"
+  "directories": {
+    "bin": "./bin"
   },
   "scripts": {
     "clean": "del ./dist",
