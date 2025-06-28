@@ -2,10 +2,7 @@ import { Colors } from '@battis/qui-cli.colors';
 import { Core } from '@battis/qui-cli.core';
 import '@battis/qui-cli.env';
 import * as Plugin from '@battis/qui-cli.plugin';
-import { Root } from '@battis/qui-cli.root';
 import { Output } from '@msar/output';
-import * as Snapshot from '@msar/types.snapshot';
-import fs from 'node:fs';
 import path from 'node:path';
 import * as Section from './Section.js';
 import { Configuration } from './Section.js';
@@ -57,7 +54,7 @@ export function configure(proposal: Configuration = {}) {
 
     payload: Plugin.hydrate(
       {
-        format: proposal.format,
+        format: proposal.format!,
         active: proposal.active,
         future: proposal.future,
         expired: proposal.expired,

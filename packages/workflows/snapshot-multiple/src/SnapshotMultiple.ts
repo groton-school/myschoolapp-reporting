@@ -63,6 +63,7 @@ export function configure(config: Configuration = {}) {
   url = config.url ? new URL(config.url) : url;
   TEMP = path.join(
     '/tmp/msar/snapshot',
+    // @ts-expect-error 2345 Plugin.hydrate typing is too narrow
     Plugin.hydrate(config.temp, crypto.randomUUID())
   );
 }

@@ -32,7 +32,9 @@ let snapshotPath: string | undefined = undefined;
 let retry = false;
 
 export function configure(config: Configuration = {}) {
+    // @ts-expect-error 2345 Plugin.hydrate typing is too narrow
   const _include = Plugin.hydrate(config.include, include);
+    // @ts-expect-error 2345 Plugin.hydrate typing is too narrow
   const _exclude = Plugin.hydrate(config.exclude, exclude);
 
   if (Array.isArray(_include)) {
@@ -48,6 +50,7 @@ export function configure(config: Configuration = {}) {
   }
 
   snapshotPath = Plugin.hydrate(config.snapshotPath, snapshotPath);
+  // @ts-expect-error 2345 Plugin.hydrate typing is too narrow
   retry = Plugin.hydrate(config.retry, retry);
 }
 

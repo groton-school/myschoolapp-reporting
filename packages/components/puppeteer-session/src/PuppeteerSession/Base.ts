@@ -75,7 +75,9 @@ export class Base {
      */
     initialized?: MutexInterface.Releaser
   ) {
+    // @ts-expect-error 2345 Plugin.hydrate typing is too narrow
     headless = Plugin.hydrate(headless, Storage.headless());
+    // @ts-expect-error 2345 Plugin.hydrate typing is too narrow
     defaultViewport = Plugin.hydrate(defaultViewport, {
       height: Storage.viewportHeight(),
       width: Storage.viewportWidth()

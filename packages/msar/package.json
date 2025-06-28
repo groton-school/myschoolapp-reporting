@@ -35,18 +35,19 @@
   },
   "prettier": "@battis/prettier-config",
   "dependencies": {
-    "@battis/qui-cli.core": "^2.1.0",
-    "@battis/qui-cli.plugin": "^2.3.0",
-    "@battis/qui-cli.structured": "^0.1.1",
+    "@battis/qui-cli.core": "^3.0.0",
+    "@battis/qui-cli.plugin": "^2.4.2",
+    "@battis/qui-cli.structured": "^0.1.4",
     "@msar/archive": "workspace:*",
     "@msar/inbox": "workspace:*",
     "@msar/snapshot-multiple": "workspace:*"
   },
   "devDependencies": {
-    "@tsconfig/node20": "^20.1.5",
+    "@tsconfig/node20": "^20.1.6",
+    "@types/node": "^22.15.33",
     "commit-and-tag-version": "^12.5.1",
     "del-cli": "^6.0.0",
-    "globals": "^15.15.0",
+    "globals": "^16.2.0",
     "npm-run-all": "^4.1.5",
     "typescript": "^5.8.3"
   },
