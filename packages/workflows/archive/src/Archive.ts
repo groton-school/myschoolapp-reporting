@@ -24,7 +24,6 @@ export type Configuration = Plugin.Configuration & {
 await Core.configure({ core: { requirePositionals: 1 } });
 
 export const name = '@msar/download';
-export const src = import.meta.dirname;
 
 let include = [/^\/.*/];
 let exclude = [/^https?:/];
@@ -32,9 +31,9 @@ let snapshotPath: string | undefined = undefined;
 let retry = false;
 
 export function configure(config: Configuration = {}) {
-    // @ts-expect-error 2345 Plugin.hydrate typing is too narrow
+  // @ts-expect-error 2345 Plugin.hydrate typing is too narrow
   const _include = Plugin.hydrate(config.include, include);
-    // @ts-expect-error 2345 Plugin.hydrate typing is too narrow
+  // @ts-expect-error 2345 Plugin.hydrate typing is too narrow
   const _exclude = Plugin.hydrate(config.exclude, exclude);
 
   if (Array.isArray(_include)) {

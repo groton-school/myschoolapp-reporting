@@ -6,7 +6,7 @@ import { RateLimiter } from '@msar/rate-limiter';
 import { Data } from '@msar/types.snapshot';
 import { Workflow } from '@msar/workflow';
 import { api } from 'datadirect';
-import * as Area from './Area.js';
+import * as Area from './Area/index.js';
 
 /*
  * FIXME Context typing

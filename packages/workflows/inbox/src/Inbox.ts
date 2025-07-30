@@ -23,7 +23,6 @@ export type Configuration = {
 };
 
 export const name = '@msar/inbox';
-export const src = import.meta.dirname;
 
 let url: string | undefined = undefined;
 let pathToUserListCsv: string | undefined = undefined;

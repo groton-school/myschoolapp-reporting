@@ -1,5 +1,5 @@
 import { PuppeteerSession } from '@msar/puppeteer-session';
-import { context as Context } from 'datadirect/dist/api/webapp.js';
+import { context as Context } from 'datadirect/dist/api/webapp/index.js';
 
 export const context: PuppeteerSession.Fetchable.Binding<
   Context.Payload,

@@ -3,14 +3,13 @@ import * as Plugin from '@battis/qui-cli.plugin';
 import PQueue from 'p-queue';
 
 export type Configuration = Plugin.Configuration & {
-  /** number of concurrent threads */
+  /** Number of concurrent threads */
   concurrency?: number;
-  /** server requests per second */
+  /** Server requests per second */
   rate?: number;
 };
 
 export const name = '@msar/rate-limiter';
-export const src = import.meta.dirname;
 
 let _concurrency = 1;
 let queue: PQueue | undefined = undefined;

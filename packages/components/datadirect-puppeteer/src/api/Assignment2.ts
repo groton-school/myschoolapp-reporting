@@ -6,7 +6,7 @@ import {
   AssignmentPreference as P,
   SecureGet as S,
   UserAssignmentDetailsGetAllData as U
-} from 'datadirect/dist/api/Assignment2.js';
+} from 'datadirect/dist/api/Assignment2/index.js';
 
 export const AssignmentCenterCourseListGet: PuppeteerSession.Fetchable.Binding<
   A.Payload,

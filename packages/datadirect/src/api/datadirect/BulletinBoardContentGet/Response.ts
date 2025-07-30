@@ -1,5 +1,5 @@
-import * as common from '../common.js';
 import { JSONValue } from '@battis/typescript-tricks';
+import * as common from '../common/index.js';
 
 export type Item = common.ContentItem.Container & {
   ContentId: number;

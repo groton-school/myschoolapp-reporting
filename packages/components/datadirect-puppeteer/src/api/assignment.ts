@@ -2,7 +2,7 @@ import { PuppeteerSession } from '@msar/puppeteer-session';
 import {
   ViewAssignmentOptions as AssignmentOptions,
   TypesForSectionSpa as TypesForSection
-} from 'datadirect/dist/api/assignment.js';
+} from 'datadirect/dist/api/assignment/index.js';
 
 export const TypesForSectionSpa: PuppeteerSession.Fetchable.Binding<
   TypesForSection.Payload,

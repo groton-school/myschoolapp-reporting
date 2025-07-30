@@ -1,1 +1,1 @@
-export * as AlbumFilesGet from './AlbumFilesGet.js';
+export * as AlbumFilesGet from './AlbumFilesGet/index.js';

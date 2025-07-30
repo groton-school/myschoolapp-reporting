@@ -1,5 +1,5 @@
 import * as Endpoint from '../../../../Endpoint.js';
-import { Payload } from '../ContentItem.js';
+import { Payload } from '../ContentItem/index.js';
 
 export function rssReader() {
   return (payload: Payload, base?: string) => {

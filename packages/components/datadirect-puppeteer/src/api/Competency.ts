@@ -2,7 +2,7 @@ import { PuppeteerSession } from '@msar/puppeteer-session';
 import {
   CompetencySetup as Setup,
   CompetencySkillAssignmentGet as Skills
-} from 'datadirect/dist/api/Competency.js';
+} from 'datadirect/dist/api/Competency/index.js';
 
 export const CompetencySetup: PuppeteerSession.Fetchable.Binding<
   Setup.Payload,

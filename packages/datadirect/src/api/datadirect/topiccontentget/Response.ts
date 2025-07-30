@@ -1,4 +1,4 @@
-import * as common from '../common.js';
+import * as common from '../common/index.js';
 
 export type Item = common.ContentItem.Response;
 

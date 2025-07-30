@@ -6,7 +6,7 @@ import * as Archive from '@msar/types.archive';
 import { Workflow } from '@msar/workflow';
 import path from 'node:path';
 import * as Cache from './Cache.js';
-import * as Downloader from './Downloader.js';
+import * as Downloader from './Downloader/index.js';
 
 export type Options = {
   include?: RegExp[];

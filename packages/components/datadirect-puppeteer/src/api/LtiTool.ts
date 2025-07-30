@@ -2,7 +2,7 @@ import { PuppeteerSession } from '@msar/puppeteer-session';
 import {
   Edit as E,
   ProviderList as Providers
-} from 'datadirect/dist/api/LtiTool.js';
+} from 'datadirect/dist/api/LtiTool/index.js';
 
 export const ProviderList: PuppeteerSession.Fetchable.Binding<
   Providers.Payload,

@@ -1,5 +1,5 @@
 import * as Endpoint from '../../../../Endpoint.js';
-import { Payload } from '../ContentItem.js';
+import { Payload } from '../ContentItem/index.js';
 import * as ContentType from '../ContentType.js';
 
 type Options = { plural?: boolean };

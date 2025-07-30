@@ -15,7 +15,7 @@ import {
   TopicContentTypesGet as TopicContentTypes,
   topicget as TopicGet,
   GetValidFileTypes as ValidFileTypes
-} from 'datadirect/dist/api/datadirect.js';
+} from 'datadirect/dist/api/datadirect/index.js';
 
 export const groupFinderByYear: PuppeteerSession.Fetchable.Binding<
   Groups.Payload,

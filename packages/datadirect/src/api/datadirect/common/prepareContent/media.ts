@@ -1,5 +1,5 @@
 import * as Endpoint from '../../../../Endpoint.js';
-import { Container, Payload } from '../ContentItem.js';
+import { Container, Payload } from '../ContentItem/index.js';
 
 export function media(container: Container) {
   return (payload: Payload, base?: string) => {

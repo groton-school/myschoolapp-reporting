@@ -2,7 +2,7 @@ import { PuppeteerSession } from '@msar/puppeteer-session';
 import {
   DefaultAdminSettingsGet as DefaultAdminSettings,
   hydrategradebook as Gradebook
-} from 'datadirect/dist/api/gradebook.js';
+} from 'datadirect/dist/api/gradebook/index.js';
 
 export const hydrategradebook: PuppeteerSession.Fetchable.Binding<
   Gradebook.Payload,

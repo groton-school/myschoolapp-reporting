@@ -1,5 +1,5 @@
 import { PuppeteerSession } from '@msar/puppeteer-session';
-import { TeacherCoursesGet as TeacherCourses } from 'datadirect/dist/api/Course.js';
+import { TeacherCoursesGet as TeacherCourses } from 'datadirect/dist/api/Course/index.js';
 
 export const TeacherCoursesGet: PuppeteerSession.Fetchable.Binding<
   TeacherCourses.Payload,

@@ -21,7 +21,6 @@ import PQueue from 'p-queue';
 Core.configure({ core: { requirePositionals: true } });
 
 export const name = '@msar/snapshot-multiple';
-export const src = import.meta.dirname;
 
 export type Configuration = {
   all?: boolean;
@@ -194,11 +193,10 @@ export async function run() {
       const tempPath = path.join(TEMP, `${pad(i)}.json`);
       try {
         /**
-         * FIXME redundant memory and temp file storage
-         *   Need to do some testing, but it would probably be more memory
-         *   efficient to write temp files and NOT store data to memory, an
-         *   then to copy the files into the final snapshot one at a time at
-         *   the end
+         * FIXME redundant memory and temp file storage Need to do some testing,
+         * but it would probably be more memory efficient to write temp files
+         * and NOT store data to memory, an then to copy the files into the
+         * final snapshot one at a time at the end
          */
         data[i] = await Snapshot.snapshot({
           ...Snapshot.getConfig(),

@@ -13,7 +13,6 @@ export { Configuration, Context } from './Section.js';
 Core.configure({ core: { requirePositionals: true } });
 
 export const name = '@msar/snapshot';
-export const src = import.meta.dirname;
 
 let config: Configuration = {
   url: undefined,

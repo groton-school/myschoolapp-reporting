@@ -7,7 +7,6 @@ export type Configuration = Plugin.Configuration & {
 };
 
 export const name = '@msar/workflow';
-export const src = import.meta.dirname;
 
 const props = {
   ignoreErrors: true,
