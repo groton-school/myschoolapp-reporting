@@ -1,5 +1,4 @@
 import { Core } from '@battis/qui-cli.core';
-import { Inbox } from '@msar/inbox';
+import '@msar/inbox';
 
-await Core.init();
-await Inbox.analytics();
+await Core.run();

@@ -1,5 +1,4 @@
 import { Colors } from '@battis/qui-cli.colors';
-import { Core } from '@battis/qui-cli.core';
 import { Log } from '@battis/qui-cli.log';
 import * as Plugin from '@battis/qui-cli.plugin';
 import { Progress } from '@battis/qui-cli.progress';
@@ -9,7 +8,7 @@ import { Debug } from '@msar/debug';
 import { Output } from '@msar/output';
 import { PuppeteerSession } from '@msar/puppeteer-session';
 import { RateLimiter } from '@msar/rate-limiter';
-import * as Snapshot from '@msar/snapshot/dist/Snapshot.js';
+import { Snapshot } from '@msar/snapshot';
 import * as SnapshotType from '@msar/types.snapshot';
 import { Workflow } from '@msar/workflow';
 import { parse } from 'csv-parse/sync';
@@ -17,8 +16,6 @@ import crypto from 'node:crypto';
 import fs from 'node:fs/promises';
 import path from 'node:path';
 import PQueue from 'p-queue';
-
-Core.configure({ core: { requirePositionals: true } });
 
 export const name = '@msar/snapshot-multiple';
 
@@ -68,19 +65,15 @@ export function configure(config: Configuration = {}) {
 }
 
 export function options(): Plugin.Options {
-  const snapshotOptions = Snapshot.options();
   return {
-    ...snapshotOptions,
     flag: {
-      ...snapshotOptions.flag,
       all: {
         short: 'A',
-        description: `Capture all sections (default: ${Colors.value(all)}, positional argument ${Colors.value(`arg0`)} is used to identify MySchoolApp instance)`,
+        description: `Capture all sections (default: ${Colors.value(all)}, positional argument ${Colors.positionalArg(`url`)} is used to identify MySchoolApp instance)`,
         default: all
       }
     },
     opt: {
-      ...snapshotOptions.opt,
       association: {
         description: `Comma-separated list of group associations to include if ${Colors.value('--all')} flag is used. Possible values: ${Output.oxfordComma(
           [
@@ -112,17 +105,14 @@ export function options(): Plugin.Options {
     },
     man: [
       {
-        text: `Capture a JSON snapshot of an individual course or of a collection of courses (using the ${Colors.value('--all')} flag). In addition to relevant flags and options, the only argument expected is a URL (${Colors.value('arg0')}) to a page within the target course (or target LMS instance, if snapshotting more than one course).`
+        text: `Capture multiple screenshots using the ${Colors.value('--all')} flag and filter using the available options.`
       }
     ]
   };
 }
 
 export function init(args: Plugin.ExpectedArguments<typeof options>) {
-  Snapshot.init(args);
-  const {
-    positionals: [url]
-  } = args;
+  const url = Snapshot.getUrl();
   configure({ ...args.values, url });
 }
 
@@ -132,7 +122,7 @@ export async function run() {
   } else {
     if (!url) {
       throw new Error(
-        `${Colors.value('arg0')} must be the URL of an LMS instance`
+        `${Colors.positionalArg('url')} must be the URL of an LMS instance`
       );
     }
 
@@ -235,6 +225,7 @@ export async function run() {
           (await fs.readFile(path.resolve(TEMP, `${pad(i)}.json`))).toString()
         );
       }
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (_) {
       // ignore missing temp dir
     }

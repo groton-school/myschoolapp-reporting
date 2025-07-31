@@ -1,5 +1,5 @@
 import { Colors } from '@battis/qui-cli.colors';
-import { Core } from '@battis/qui-cli.core';
+import { Positionals } from '@battis/qui-cli.core';
 import '@battis/qui-cli.env';
 import * as Plugin from '@battis/qui-cli.plugin';
 import { Output } from '@msar/output';
@@ -8,9 +8,28 @@ import * as Section from './Section.js';
 import { Configuration } from './Section.js';
 import * as SkyAPI from './SkyAPI.js';
 
-export { Configuration, Context } from './Section.js';
+const old = Output.outputPathDescription();
+Output.outputPathDescription(
+  old
+    ?.replace(
+      Output.outputPath(),
+      path.resolve(Output.outputPath(), `:SnapshotName.json`)
+    )
+    .replace(
+      /\)$/,
+      ` where ${Colors.value(
+        ':SnapshotName'
+      )} is either the name of the course in ${Colors.quotedValue(
+        `":Year - :Teacher - :CourseTitle - :SectionId"`
+      )} format for a single section or group or ${Colors.quotedValue(
+        `"snapshot"`
+      )} if the ${Colors.value('--all')} flag is set. ${Colors.url(
+        ':SnapshotName.metadata.json'
+      )} is also output, recording the parameters of the snapshot command.)`
+    )
+);
 
-Core.configure({ core: { requirePositionals: true } });
+export { Configuration, Context } from './Section.js';
 
 export const name = '@msar/snapshot';
 
@@ -74,6 +93,13 @@ export function configure(proposal: Configuration = {}) {
 }
 
 export function options(): Plugin.Options {
+  Positionals.require({
+    url: {
+      description: `The URL of a page within the target course`
+    }
+  });
+  Positionals.allowOnlyNamedArgs();
+
   /*
    * TODO add snapshot retry option
    *   This needs to happen *before* adding any new tweaks to snapshot
@@ -81,7 +107,6 @@ export function options(): Plugin.Options {
    *   on retry. Also, any results that yielded an error should be retried.
    *   But all updates conforming to @msar/types.import need to be preserved!
    */
-  const outputOptions = Output.options();
   return {
     flag: {
       active: {
@@ -126,6 +151,7 @@ export function options(): Plugin.Options {
       }
     },
     opt: {
+      /*
       outputPath: {
         ...outputOptions.opt?.outputPath,
         description: outputOptions.opt?.outputPath.description
@@ -141,7 +167,7 @@ export function options(): Plugin.Options {
             /\)$/,
             ` where ${Colors.value(':SnapshotName')} is either the name of the course in ${Colors.quotedValue(`":Year - :Teacher - :CourseTitle - :SectionId"`)} format for a single section or group or ${Colors.quotedValue(`"snapshot"`)} if the ${Colors.value('--all')} flag is set. ${Colors.url(':SnapshotName.metadata.json')} is also output, recording the parameters of the snapshot command.)`
           )
-      },
+      },*/
       fromDate: {
         description: `Starting date for date-based filter where relevant (default is today's date: ${Colors.quotedValue(`"${config.fromDate}"`)})`,
         default: config.fromDate
@@ -152,16 +178,14 @@ export function options(): Plugin.Options {
     },
     man: [
       {
-        text: `Capture a JSON snapshot of an individual course. In addition to relevant flags and options, the only argument expected is a URL (${Colors.value('arg0')}) to a page within the target course.`
+        text: `Capture a JSON snapshot of an individual course. In addition to relevant flags and options, the only argument expected is a ${Colors.positionalArg('url')} to a page within the target course.`
       }
     ]
   };
 }
 
 export function init(args: Plugin.ExpectedArguments<typeof options>) {
-  const {
-    positionals: [url]
-  } = args;
+  const url = Positionals.get('url');
   SkyAPI.init({
     client_id: process.env.SKY_CLIENT_ID!,
     client_secret: process.env.SKY_CLIENT_SECRET!,
@@ -174,7 +198,7 @@ export function init(args: Plugin.ExpectedArguments<typeof options>) {
 export async function run() {
   if (!config.url) {
     throw new Error(
-      `${Colors.value('arg0')} must be the URL of an LMS instance`
+      `${Colors.positionalArg('url')} must be the URL of an LMS instance`
     );
   }
   await snapshot({ ...config, outputPath: Output.outputPath() });
@@ -182,4 +206,8 @@ export async function run() {
 
 export async function snapshot(conf?: Configuration) {
   return await Section.Snapshot.capture(conf || config);
+}
+
+export function getUrl() {
+  return config.url;
 }

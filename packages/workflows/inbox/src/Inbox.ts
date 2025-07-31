@@ -1,5 +1,5 @@
 import { Colors } from '@battis/qui-cli.colors';
-import { Core } from '@battis/qui-cli.core';
+import { Positionals } from '@battis/qui-cli.core';
 import { Log } from '@battis/qui-cli.log';
 import * as Plugin from '@battis/qui-cli.plugin';
 import { Progress } from '@battis/qui-cli.progress';
@@ -14,7 +14,10 @@ import moment from 'moment';
 import fs from 'node:fs/promises';
 import path from 'node:path';
 
-await Core.configure({ core: { requirePositionals: true } });
+Output.configure({
+  outputPath: path.join(Output.outputPath(), 'inboxAnalysis.csv')
+});
+PuppeteerSession.configure({ headless: true });
 
 export type Configuration = {
   vals?: string[];
@@ -46,29 +49,17 @@ export function configure(config: Configuration = {}) {
 }
 
 export function options(): Plugin.Options {
-  const puppeteerOptions = PuppeteerSession.options();
-  const outputOptions = Output.options();
-  const outputPath = path.join(Output.outputPath(), 'inboxAnalysis.csv');
-  return {
-    flag: {
-      headless: {
-        ...puppeteerOptions.flag?.headless,
-        description: puppeteerOptions.flag?.headless?.description?.replace(
-          /\(default: .*\)/,
-          `default: ${Colors.value('false')}, use ${Colors.value('--no-headless')} to not run headless. Due to the number of impersonated clicks necessary for this workflow, running headless reduces the likelihood of stray user actions interfering with the script.`
-        ),
-        default: false
-      }
+  Positionals.require({
+    url: {
+      description: `The URL of the LMS instance as ${Colors.value('url')} (required)`
     },
+    csv: {
+      description: `Path to a CSV file of user identifiers to analyze as ${Colors.value('csv')} (optional if ${Colors.value('--val')} is set)`
+    }
+  });
+  Positionals.allowOnlyNamedArgs();
+  return {
     opt: {
-      outputPath: {
-        ...outputOptions.opt?.outputPath,
-        description: outputOptions.opt?.outputPath?.description?.replace(
-          Output.outputPath(),
-          path.resolve(Root.path(), outputPath)
-        ),
-        default: outputPath
-      },
       column: {
         description: `Column label for CSV input (${Colors.value('arg1')}) column containing user identifier for inboxes to analyze. Required if opening a CSV of user identifiers. (default: ${Colors.quotedValue(`"${column}"`)})`,
         default: column
@@ -89,27 +80,30 @@ export function options(): Plugin.Options {
     },
     optList: {
       val: {
-        description: `A user identifier to query. Requires corresponding ${Colors.value('--searchIn')}. If set, ${Colors.value('arg1')} path to CSV file is not required.`,
+        description: `A user identifier to query. Requires corresponding ${Colors.value('--searchIn')}. If set, ${Colors.value('csv')} path to CSV file is not required.`,
         short: 'v',
         default: vals
       }
     },
     man: [
       {
-        text: `Analyze inbox contents for a user or users. Include the URL of the LMS instance as ${Colors.value('arg0')} (required) and path to a CSV file of user identifiers to analyze as ${Colors.value('arg1')} (optional if ${Colors.value('--val')} is set). Intended to receive a generic ${Colors.url('UserWorkList.csv')} export from the LMS as input, outputting the same CSV file to ${Colors.value('--outputPath')} with analysis columns appended.`
+        text: `Analyze inbox contents for a user or users. Include the URL of the LMS instance as ${Colors.value('url')} (required) and path to a CSV file of user identifiers to analyze as ${Colors.value('csv')} (optional if ${Colors.value('--val')} is set). Intended to receive a generic ${Colors.url('UserWorkList.csv')} export from the LMS as input, outputting the same CSV file to ${Colors.value('--outputPath')} with analysis columns appended.`
+      },
+      {
+        text: `Due to the number of impersonated clicks necessary for this workflow, running ${Colors.value('--headless')} reduces the likelihood of stray user actions interfering with the script.`
       }
     ]
   };
 }
 
-export function init(args: Plugin.ExpectedArguments<typeof options>) {
-  const {
-    values,
-    positionals: [_url, _pathToUserListCsv]
-  } = args;
-  url = Plugin.hydrate(_url, url);
-  pathToUserListCsv = Plugin.hydrate(_pathToUserListCsv, pathToUserListCsv);
+export function init({ values }: Plugin.ExpectedArguments<typeof options>) {
+  url = Plugin.hydrate(Positionals.get('url'), url);
+  pathToUserListCsv = Plugin.hydrate(Positionals.get('csv'), pathToUserListCsv);
   configure(values);
+}
+
+export async function run() {
+  return await analytics();
 }
 
 export async function analytics(

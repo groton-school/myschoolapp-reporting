@@ -20,7 +20,7 @@ export function options(): Plugin.Options {
     opt: {
       outputPath: {
         short: 'o',
-        description: `Path to output directory or file to save command output (default: ${Colors.quotedValue(`"${Storage.outputPath()}"`)})`,
+        description: Storage.outputPathDescription(),
         default: Storage.outputPath()
       }
     },
@@ -34,6 +34,12 @@ export function options(): Plugin.Options {
 
 export function configure(config: Storage.Configuration = {}) {
   Storage.outputPath(Plugin.hydrate(config.outputPath, Storage.outputPath()));
+  Storage.outputPathDescription(
+    Plugin.hydrate(
+      config.outputPathDescription,
+      Storage.outputPathDescription()
+    )
+  );
   Storage.pretty(Plugin.hydrate(config.pretty, Storage.pretty()));
 }
 
