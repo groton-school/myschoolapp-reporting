@@ -1,4 +1,5 @@
 import { Colors } from '@battis/qui-cli.colors';
+import '@battis/qui-cli.env/1Password.js';
 import * as Plugin from '@battis/qui-cli.plugin';
 import { Base } from './Base.js';
 import * as Storage from './Storage.js';
@@ -9,6 +10,9 @@ export * as Fetchable from './Fetchable.js';
 export * from './Impersonation.js';
 export * from './InitializationError.js';
 export { Configuration } from './Storage.js';
+
+const PUPPETEER_MFA = 'PUPPETEER_MFA';
+const PUPPETEER_SSO = 'PUPPETEER_SSO';
 
 export const name = '@msar/puppeteer-session';
 
@@ -29,6 +33,12 @@ export function configure(config: Storage.Configuration = {}) {
 
 export function options(): Plugin.Options {
   return {
+    man: [
+      {
+        level: 1,
+        text: 'Puppeteer options'
+      }
+    ],
     flag: {
       headless: {
         description: `Run Puppeteer's Chrome instance headless (default: ${Colors.value(
@@ -53,9 +63,15 @@ export function options(): Plugin.Options {
         description: 'MySchoolApp password'
       },
       sso: {
-        description: `MySchoolApp SSO configuration (currently only accepts ${Colors.quotedValue('"entra-id"')})`
+        description: `MySchoolApp SSO configuration (currently only accepts ${Colors.quotedValue(
+          '"entra-id"'
+        )}, will use the value in environment variable ${Colors.value(PUPPETEER_SSO)} if present)`
       },
-      mfa: {}
+      mfa: {
+        description: `MySchoolApp MFA configuration (currently only accepts ${Colors.quotedValue(
+          '"entra-id"'
+        )}, will use the value in environment variable ${Colors.value(PUPPETEER_MFA)} if present)`
+      }
     },
     num: {
       viewportWidth: {
@@ -68,8 +84,12 @@ export function options(): Plugin.Options {
   };
 }
 
-export function init(args: Plugin.ExpectedArguments<typeof options>) {
-  configure(args.values);
+export function init({ values }: Plugin.ExpectedArguments<typeof options>) {
+  configure({
+    mfa: process.env[PUPPETEER_MFA],
+    sso: process.env[PUPPETEER_SSO],
+    ...values
+  });
 }
 
 export async function open(url: string | URL) {

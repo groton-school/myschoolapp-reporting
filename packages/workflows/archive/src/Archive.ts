@@ -1,5 +1,5 @@
 import { Colors } from '@battis/qui-cli.colors';
-import { Core } from '@battis/qui-cli.core';
+import { Positionals } from '@battis/qui-cli.core';
 import { Log } from '@battis/qui-cli.log';
 import * as Plugin from '@battis/qui-cli.plugin';
 import { Progress } from '@battis/qui-cli.progress';
@@ -21,7 +21,7 @@ export type Configuration = Plugin.Configuration & {
   continue?: boolean;
 };
 
-await Core.configure({ core: { requirePositionals: 1 } });
+const SNAPSHOT_PATH = 'snapshotPath';
 
 export const name = '@msar/download';
 
@@ -54,27 +54,37 @@ export function configure(config: Configuration = {}) {
 }
 
 export function options(): Plugin.Options {
+  Positionals.require({
+    [SNAPSHOT_PATH]: { description: `Path to an existing snapshot file` }
+  });
+  Positionals.allowOnlyNamedArgs();
   return {
+    man: [
+      { level: 1, text: 'Archive options' },
+      {
+        text: `Download the supporting files for an existing snapshot JSON file.. This command requires a path to an existing snapshot file (${Colors.positionalArg(SNAPSHOT_PATH)}).`
+      }
+    ],
+
     flag: {
       retry: {
-        description: `Retry a previously started archive process. ${Colors.value('arg0')} must be the path to an existing archive index.json file.`
+        description: `Retry a previously started archive process. ${Colors.positionalArg(SNAPSHOT_PATH)} must be the path to an existing archive index.json file.`
       }
     },
     opt: {
       include: {
-        description: `Comma-separated list of regular expressions to match URLs to be included in download (e.g. ${Colors.quotedValue('"^\\/,example\\.com"')}, default: ${Colors.quotedValue(`"${include.join(', ').slice(1, -1)}"`)} to include only URLs that are paths on the LMS's servers)`,
+        description: `Comma-separated list of regular expressions to match URLs to be included in download (e.g. ${Colors.quotedValue(
+          '"^\\/,example\\.com"'
+        )}, default: ${Colors.quotedValue(`"${include.join(', ').slice(1, -1)}"`)} to include only URLs that are paths on the LMS's servers)`,
         default: include.join(',').slice(1, -1)
       },
       exclude: {
-        description: `Comma-separated list of regular expressions to match URLs to exclude from download (e.g. ${Colors.quotedValue('"example\\.com,foo\\..+\\.com"')}, default: ${Colors.quotedValue(`"${exclude.join(', ').slice(1, -1)}`)})`,
+        description: `Comma-separated list of regular expressions to match URLs to exclude from download (e.g. ${Colors.quotedValue(
+          '"example\\.com,foo\\..+\\.com"'
+        )}, default: ${Colors.quotedValue(`"${exclude.join(', ').slice(1, -1)}`)})`,
         default: exclude.join(',').slice(1, -1)
       }
-    },
-    man: [
-      {
-        text: `Download the supporting files for an existing snapshot JSON file.. This command expects either 1 or 2 arguments: at least a path to an existing snapshot file (${Colors.value('arg0')}), and optionally also the desired path to the output folder of supporting files (${Colors.value('arg1')}).`
-      }
-    ]
+    }
   };
 }
 
@@ -84,10 +94,8 @@ function stringToRegExpArray(arg?: string): RegExp[] | undefined {
     : undefined;
 }
 
-export function init({
-  values,
-  positionals: [snapshotPath]
-}: Plugin.ExpectedArguments<typeof options>) {
+export function init({ values }: Plugin.ExpectedArguments<typeof options>) {
+  const snapshotPath = Positionals.get(SNAPSHOT_PATH);
   include = Plugin.hydrate(stringToRegExpArray(values.include), include);
   exclude = Plugin.hydrate(stringToRegExpArray(values.exclude), exclude);
   configure({ ...values, include, exclude, snapshotPath });

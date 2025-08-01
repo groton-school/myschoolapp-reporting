@@ -5,7 +5,7 @@ export type Configuration = Plugin.Configuration & {
   quit?: boolean;
   username?: string;
   password?: string;
-  sso?: 'entra-id';
+  sso?: string;
   mfa?: string;
   viewportWidth?: number;
   viewportHeight?: number;

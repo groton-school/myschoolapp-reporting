@@ -66,6 +66,13 @@ export function configure(config: Configuration = {}) {
 
 export function options(): Plugin.Options {
   return {
+    man: [
+      { level: 1, text: 'Multiple snapshot options' },
+      {
+        text: `Capture multiple screenshots using the ${Colors.value('--all')} flag and filter using the available options.`
+      }
+    ],
+
     flag: {
       all: {
         short: 'A',
@@ -102,12 +109,7 @@ export function options(): Plugin.Options {
       resume: {
         description: `If ${Colors.value(`--all`)} flag is used,UUID name of temp directory (${Colors.url('/tmp/msar/snapshot/:uuid')}) for which to resume collecting snapshots`
       }
-    },
-    man: [
-      {
-        text: `Capture multiple screenshots using the ${Colors.value('--all')} flag and filter using the available options.`
-      }
-    ]
+    }
   };
 }
 

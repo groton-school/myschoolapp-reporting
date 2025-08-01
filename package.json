@@ -18,7 +18,7 @@
     "release:publish": "pnpm publish -r --otp $(op item get npm --otp) --access public"
   },
   "devDependencies": {
-    "@battis/eslint-config": "^2.0.4",
+    "@battis/eslint-config": "^2.0.5",
     "@battis/prettier-config": "^1.6.4",
     "@commitlint/cli": "^19.8.1",
     "@commitlint/config-conventional": "^19.8.1",

@@ -25,6 +25,9 @@ export type Configuration = {
   searchIn?: string;
 };
 
+const URL = 'url';
+const CSV = 'csv';
+
 export const name = '@msar/inbox';
 
 let url: string | undefined = undefined;
@@ -50,15 +53,25 @@ export function configure(config: Configuration = {}) {
 
 export function options(): Plugin.Options {
   Positionals.require({
-    url: {
-      description: `The URL of the LMS instance as ${Colors.value('url')} (required)`
+    [URL]: {
+      description: `The URL of the LMS instance as ${Colors.positionalArg(URL)} (required)`
     },
-    csv: {
-      description: `Path to a CSV file of user identifiers to analyze as ${Colors.value('csv')} (optional if ${Colors.value('--val')} is set)`
+    [CSV]: {
+      description: `Path to a CSV file of user identifiers to analyze as ${Colors.positionalArg(CSV)} (optional if ${Colors.value('--val')} is set)`
     }
   });
   Positionals.allowOnlyNamedArgs();
   return {
+    man: [
+      { level: 1, text: 'Inbox options' },
+      {
+        text: `Analyze inbox contents for a user or users. Include the URL of the LMS instance as ${Colors.value('url')} (required) and path to a CSV file of user identifiers to analyze as ${Colors.value('csv')} (optional if ${Colors.value('--val')} is set). Intended to receive a generic ${Colors.url('UserWorkList.csv')} export from the LMS as input, outputting the same CSV file to ${Colors.value('--outputPath')} with analysis columns appended.`
+      },
+      {
+        text: `Due to the number of impersonated clicks necessary for this workflow, running ${Colors.value('--headless')} reduces the likelihood of stray user actions interfering with the script.`
+      }
+    ],
+
     opt: {
       column: {
         description: `Column label for CSV input (${Colors.value('arg1')}) column containing user identifier for inboxes to analyze. Required if opening a CSV of user identifiers. (default: ${Colors.quotedValue(`"${column}"`)})`,
@@ -84,21 +97,13 @@ export function options(): Plugin.Options {
         short: 'v',
         default: vals
       }
-    },
-    man: [
-      {
-        text: `Analyze inbox contents for a user or users. Include the URL of the LMS instance as ${Colors.value('url')} (required) and path to a CSV file of user identifiers to analyze as ${Colors.value('csv')} (optional if ${Colors.value('--val')} is set). Intended to receive a generic ${Colors.url('UserWorkList.csv')} export from the LMS as input, outputting the same CSV file to ${Colors.value('--outputPath')} with analysis columns appended.`
-      },
-      {
-        text: `Due to the number of impersonated clicks necessary for this workflow, running ${Colors.value('--headless')} reduces the likelihood of stray user actions interfering with the script.`
-      }
-    ]
+    }
   };
 }
 
 export function init({ values }: Plugin.ExpectedArguments<typeof options>) {
-  url = Plugin.hydrate(Positionals.get('url'), url);
-  pathToUserListCsv = Plugin.hydrate(Positionals.get('csv'), pathToUserListCsv);
+  url = Plugin.hydrate(Positionals.get(URL), url);
+  pathToUserListCsv = Plugin.hydrate(Positionals.get(CSV), pathToUserListCsv);
   configure(values);
 }
 

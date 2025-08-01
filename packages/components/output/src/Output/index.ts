@@ -1,4 +1,5 @@
 import { Colors } from '@battis/qui-cli.colors';
+import '@battis/qui-cli.env/1Password.js';
 import * as Plugin from '@battis/qui-cli.plugin';
 import * as Storage from './Storage.js';
 
@@ -17,23 +18,35 @@ export const name = '@msar/output';
 
 export function options(): Plugin.Options {
   return {
+    man: [
+      {
+        level: 1,
+        text: 'Output options'
+      }
+    ],
     opt: {
       outputPath: {
         short: 'o',
-        description: Storage.outputPathDescription(),
-        default: Storage.outputPath()
+        description: Storage.outputPathDescription()
       }
     },
     flag: {
       pretty: {
-        description: `Pretty print output to file (if ${Colors.value('--outputPath')} option is used)`
+        description: `Pretty print output to file (if ${Colors.value(
+          '--outputPath'
+        )} option is used)`
       }
     }
   };
 }
 
 export function configure(config: Storage.Configuration = {}) {
-  Storage.outputPath(Plugin.hydrate(config.outputPath, Storage.outputPath()));
+  Storage.outputPath(
+    Plugin.hydrate(
+      config.outputPath || process.env[Storage.OUTPUT_PATH],
+      Storage.outputPath()
+    )
+  );
   Storage.outputPathDescription(
     Plugin.hydrate(
       config.outputPathDescription,
@@ -43,8 +56,8 @@ export function configure(config: Storage.Configuration = {}) {
   Storage.pretty(Plugin.hydrate(config.pretty, Storage.pretty()));
 }
 
-export function init(args: Plugin.ExpectedArguments<typeof options>) {
-  configure(args.values);
+export function init({ values }: Plugin.ExpectedArguments<typeof options>) {
+  configure({ outputPath: process.env.OUTPUT_PATH, ...values });
 }
 
 export function outputPath() {

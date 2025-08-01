@@ -1,33 +1,29 @@
 import { Colors } from '@battis/qui-cli.colors';
 import { Positionals } from '@battis/qui-cli.core';
-import '@battis/qui-cli.env';
+import '@battis/qui-cli.env/1Password.js';
 import * as Plugin from '@battis/qui-cli.plugin';
 import { Output } from '@msar/output';
-import path from 'node:path';
 import * as Section from './Section.js';
 import { Configuration } from './Section.js';
 import * as SkyAPI from './SkyAPI.js';
 
-const old = Output.outputPathDescription();
 Output.outputPathDescription(
-  old
-    ?.replace(
-      Output.outputPath(),
-      path.resolve(Output.outputPath(), `:SnapshotName.json`)
-    )
-    .replace(
-      /\)$/,
-      ` where ${Colors.value(
-        ':SnapshotName'
-      )} is either the name of the course in ${Colors.quotedValue(
-        `":Year - :Teacher - :CourseTitle - :SectionId"`
-      )} format for a single section or group or ${Colors.quotedValue(
-        `"snapshot"`
-      )} if the ${Colors.value('--all')} flag is set. ${Colors.url(
-        ':SnapshotName.metadata.json'
-      )} is also output, recording the parameters of the snapshot command.)`
-    )
+  `Path to output directory or file to save command output (default: ${Colors.quotedValue(
+    `"${Output.outputPath()}:Snapshot.json"`
+  )},  where ${Colors.value(
+    ':SnapshotName'
+  )} is either the name of the course in ${Colors.quotedValue(
+    `":Year - :Teacher - :CourseTitle - :SectionId"`
+  )} format for a single section or group or ${Colors.quotedValue(
+    `"snapshot"`
+  )} if the ${Colors.value('--all')} flag is set. ${Colors.url(
+    ':SnapshotName.metadata.json'
+  )} is also output, recording the parameters of the snapshot command. Will use the value in environment variable ${Colors.value(
+    'OUTPUT_PATH'
+  )} if present)`
 );
+
+const COURSE_URL = 'url';
 
 export { Configuration, Context } from './Section.js';
 
@@ -94,7 +90,7 @@ export function configure(proposal: Configuration = {}) {
 
 export function options(): Plugin.Options {
   Positionals.require({
-    url: {
+    [COURSE_URL]: {
       description: `The URL of a page within the target course`
     }
   });
@@ -108,6 +104,12 @@ export function options(): Plugin.Options {
    *   But all updates conforming to @msar/types.import need to be preserved!
    */
   return {
+    man: [
+      { level: 1, text: 'Snapshot options' },
+      {
+        text: `Capture a JSON snapshot of an individual course. In addition to relevant flags and options, the only argument expected is a ${Colors.positionalArg('url')} to a page within the target course.`
+      }
+    ],
     flag: {
       active: {
         description: `Show currently active items (default: ${Colors.value(config.payload?.active)})`,
@@ -151,48 +153,39 @@ export function options(): Plugin.Options {
       }
     },
     opt: {
-      /*
-      outputPath: {
-        ...outputOptions.opt?.outputPath,
-        description: outputOptions.opt?.outputPath.description
-          ?.replace(
-            outputOptions.opt?.outputPath.description,
-            path.resolve(
-              process.cwd(),
-              outputOptions.opt?.outputPath.description,
-              ':SnapshotName.json'
-            )
-          )
-          .replace(
-            /\)$/,
-            ` where ${Colors.value(':SnapshotName')} is either the name of the course in ${Colors.quotedValue(`":Year - :Teacher - :CourseTitle - :SectionId"`)} format for a single section or group or ${Colors.quotedValue(`"snapshot"`)} if the ${Colors.value('--all')} flag is set. ${Colors.url(':SnapshotName.metadata.json')} is also output, recording the parameters of the snapshot command.)`
-          )
-      },*/
       fromDate: {
         description: `Starting date for date-based filter where relevant (default is today's date: ${Colors.quotedValue(`"${config.fromDate}"`)})`,
         default: config.fromDate
       },
       toDate: {
         description: `ending date for data-based filter where relevant`
+      },
+      clientId: {
+        description: `SKY API app client ID, will use value in environment variable ${Colors.value('SKY_CLIENT_ID')} if present`
+      },
+      clientSecret: {
+        description: `SKY API app client secret, will use value in environment variable ${Colors.value('SKY_CLIENT_SECRET')} if present`
+      },
+      redirectUri: {
+        description: `SKY API app redirect URI, will use value in environment variable ${Colors.value('SKY_REDIRECT_URI')} if present (must be of the form ${Colors.url('http://localhost:XXXX/path/to/redirect')} were ${Colors.value('XXXX')} is a unique port)`
+      },
+      subscriptionKey: {
+        description: `SKY API subscription access key, will use value in environment variable ${Colors.value('SKY_SUBSCRIPTION_KEY')} if present`
       }
-    },
-    man: [
-      {
-        text: `Capture a JSON snapshot of an individual course. In addition to relevant flags and options, the only argument expected is a ${Colors.positionalArg('url')} to a page within the target course.`
-      }
-    ]
+    }
   };
 }
 
-export function init(args: Plugin.ExpectedArguments<typeof options>) {
-  const url = Positionals.get('url');
+export function init({ values }: Plugin.ExpectedArguments<typeof options>) {
+  const url = Positionals.get(COURSE_URL);
   SkyAPI.init({
-    client_id: process.env.SKY_CLIENT_ID!,
-    client_secret: process.env.SKY_CLIENT_SECRET!,
-    subscription_key: process.env.SKY_SUBSCRIPTION_KEY!,
-    redirect_uri: process.env.SKY_REDIRECT_URI!
+    client_id: values.clientId || process.env.SKY_CLIENT_ID,
+    client_secret: values.clientSecret || process.env.SKY_CLIENT_SECRET,
+    subscription_key:
+      values.subscriptionKey || process.env.SKY_SUBSCRIPTION_KEY,
+    redirect_uri: values.redirectUri || process.env.SKY_REDIRECT_URI
   });
-  configure({ ...args.values, url });
+  configure({ ...values, url });
 }
 
 export async function run() {

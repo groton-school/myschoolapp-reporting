@@ -28,9 +28,17 @@ export function configure(config: Configuration = {}) {
 
 export function options(): Plugin.Options {
   return {
+    man: [
+      {
+        level: 1,
+        text: 'Workflow behavior options'
+      }
+    ],
     flag: {
       ignoreErrors: {
-        description: `Continue collecting snapshots even if errors are encountered (default: ${Colors.value(props.ignoreErrors)}${props.ignoreErrors ? `, use ${Colors.value('--no--ignoreErrors')} to halt on errors` : ''})`,
+        description: `Continue collecting snapshots even if errors are encountered (default: ${Colors.value(
+          props.ignoreErrors
+        )}${props.ignoreErrors ? `, use ${Colors.value('--no-ignoreErrors')} to halt on errors` : ''})`,
         default: props.ignoreErrors
       },
       logRequests: {
