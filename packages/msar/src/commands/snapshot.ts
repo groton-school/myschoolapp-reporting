@@ -1,1 +1,1 @@
-export * from '@msar/snapshot-multiple';
+export * from '@msar/snapshot';

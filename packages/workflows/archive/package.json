@@ -43,7 +43,6 @@
     "@msar/puppeteer-session": "workspace:*",
     "@msar/rate-limiter": "workspace:*",
     "@msar/snapshot": "workspace:*",
-    "@msar/snapshot-multiple": "workspace:*",
     "@msar/workflow": "workspace:*",
     "@tsconfig/node20": "^20.1.6",
     "@types/content-disposition": "^0.5.9",
@@ -63,7 +62,6 @@
     "@msar/puppeteer-session": "0.x",
     "@msar/rate-limiter": "0.x",
     "@msar/snapshot": "0.x",
-    "@msar/snapshot-multiple": "0.x",
     "@msar/workflow": "0.x"
   }
 }

@@ -40,7 +40,7 @@
     "@battis/qui-cli.structured": "^0.1.5",
     "@msar/archive": "workspace:*",
     "@msar/inbox": "workspace:*",
-    "@msar/snapshot-multiple": "workspace:*"
+    "@msar/snapshot": "workspace:*"
   },
   "devDependencies": {
     "@tsconfig/node20": "^20.1.6",

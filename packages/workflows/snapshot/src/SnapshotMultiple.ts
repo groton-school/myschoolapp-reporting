@@ -8,7 +8,6 @@ import { Debug } from '@msar/debug';
 import { Output } from '@msar/output';
 import { PuppeteerSession } from '@msar/puppeteer-session';
 import { RateLimiter } from '@msar/rate-limiter';
-import { Snapshot } from '@msar/snapshot';
 import * as SnapshotType from '@msar/types.snapshot';
 import { Workflow } from '@msar/workflow';
 import { parse } from 'csv-parse/sync';
@@ -16,10 +15,15 @@ import crypto from 'node:crypto';
 import fs from 'node:fs/promises';
 import path from 'node:path';
 import PQueue from 'p-queue';
+import * as Snapshot from './Snapshot.js';
 
-export const name = '@msar/snapshot-multiple';
+export const getConfig = Snapshot.getConfig;
+export const getUrl = Snapshot.getUrl;
+export const snapshot = Snapshot.snapshot;
 
-export type Configuration = {
+export const name = Snapshot.name;
+
+export type Configuration = Snapshot.Configuration & {
   all?: boolean;
   association?: string;
   termsOffered?: string;
@@ -50,6 +54,7 @@ function cleanSplit(list?: string) {
 }
 
 export function configure(config: Configuration = {}) {
+  Snapshot.configure(config);
   all = Plugin.hydrate(config.all, all);
   association = Plugin.hydrate(config.association, association);
   termsOffered = Plugin.hydrate(config.termsOffered, termsOffered);
@@ -65,15 +70,11 @@ export function configure(config: Configuration = {}) {
 }
 
 export function options(): Plugin.Options {
+  const snapshotOptions = Snapshot.options();
   return {
-    man: [
-      { level: 1, text: 'Multiple snapshot options' },
-      {
-        text: `Capture multiple screenshots using the ${Colors.value('--all')} flag and filter using the available options.`
-      }
-    ],
-
+    ...snapshotOptions,
     flag: {
+      ...snapshotOptions.flag,
       all: {
         short: 'A',
         description: `Capture all sections (default: ${Colors.value(all)}, positional argument ${Colors.positionalArg(`url`)} is used to identify MySchoolApp instance)`,
@@ -81,6 +82,7 @@ export function options(): Plugin.Options {
       }
     },
     opt: {
+      ...snapshotOptions.opt,
       association: {
         description: `Comma-separated list of group associations to include if ${Colors.value('--all')} flag is used. Possible values: ${Output.oxfordComma(
           [
@@ -114,6 +116,7 @@ export function options(): Plugin.Options {
 }
 
 export function init(args: Plugin.ExpectedArguments<typeof options>) {
+  Snapshot.init(args);
   const url = Snapshot.getUrl();
   configure({ ...args.values, url });
 }
