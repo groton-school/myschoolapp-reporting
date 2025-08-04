@@ -1,4 +1,4 @@
-import { build } from '@battis/qui-cli.structured';
+import { build } from '@qui-cli/structured';
 import path from 'node:path';
 
 build({

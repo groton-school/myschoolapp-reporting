@@ -1,7 +1,7 @@
-import { Log } from '@battis/qui-cli.log';
-import * as Plugin from '@battis/qui-cli.plugin';
 import { JSONValue } from '@battis/typescript-tricks';
 import { RateLimiter } from '@msar/rate-limiter';
+import { Log } from '@qui-cli/log';
+import * as Plugin from '@qui-cli/plugin';
 import { Mutex, MutexInterface } from 'async-mutex';
 import puppeteer, { GoToOptions, Page } from 'puppeteer';
 import { InitializationError } from './InitializationError.js';

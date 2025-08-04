@@ -1,6 +1,6 @@
-import { Colors } from '@battis/qui-cli.colors';
-import { Log } from '@battis/qui-cli.log';
-import { Root } from '@battis/qui-cli.root';
+import { Colors } from '@qui-cli/colors';
+import { Log } from '@qui-cli/log';
+import { Root } from '@qui-cli/root';
 import path from 'node:path';
 import { avoidOverwrite } from './avoidOverwrite.js';
 import * as Storage from './Storage.js';

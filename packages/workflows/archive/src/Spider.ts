@@ -1,9 +1,9 @@
-import { Colors } from '@battis/qui-cli.colors';
-import { Log } from '@battis/qui-cli.log';
 import { Debug } from '@msar/debug';
 import { Output } from '@msar/output';
 import * as Archive from '@msar/types.archive';
 import { Workflow } from '@msar/workflow';
+import { Colors } from '@qui-cli/colors';
+import { Log } from '@qui-cli/log';
 import path from 'node:path';
 import * as Cache from './Cache.js';
 import * as Downloader from './Downloader/index.js';

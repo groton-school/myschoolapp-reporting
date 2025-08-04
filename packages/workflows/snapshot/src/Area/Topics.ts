@@ -1,9 +1,9 @@
-import { Colors } from '@battis/qui-cli.colors';
-import { Log } from '@battis/qui-cli.log';
 import { DatadirectPuppeteer } from '@msar/datadirect-puppeteer';
 import { Debug } from '@msar/debug';
 import * as Snapshot from '@msar/types.snapshot';
 import { Workflow } from '@msar/workflow';
+import { Colors } from '@qui-cli/colors';
+import { Log } from '@qui-cli/log';
 import { api } from 'datadirect';
 import * as Base from './Base.js';
 

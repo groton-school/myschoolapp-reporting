@@ -1,6 +1,6 @@
-import { Colors } from '@battis/qui-cli.colors';
-import * as Plugin from '@battis/qui-cli.plugin';
-import { Root } from '@battis/qui-cli.root';
+import { Colors } from '@qui-cli/colors';
+import * as Plugin from '@qui-cli/plugin';
+import { Root } from '@qui-cli/root';
 
 export type Configuration = Plugin.Configuration & {
   outputPath?: string;

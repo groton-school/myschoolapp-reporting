@@ -1,8 +1,8 @@
-import { Colors } from '@battis/qui-cli.colors';
-import { Log } from '@battis/qui-cli.log';
 import { Output } from '@msar/output';
 import { RateLimiter } from '@msar/rate-limiter';
 import { Workflow } from '@msar/workflow';
+import { Colors } from '@qui-cli/colors';
+import { Log } from '@qui-cli/log';
 import { ReadableStream } from 'node:stream/web';
 import {
   ContentDisposition,

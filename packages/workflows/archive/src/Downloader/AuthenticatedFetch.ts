@@ -1,8 +1,8 @@
-import { Colors } from '@battis/qui-cli.colors';
-import { Log } from '@battis/qui-cli.log';
-import { Root } from '@battis/qui-cli.root';
 import { Output } from '@msar/output';
 import { PuppeteerSession } from '@msar/puppeteer-session';
+import { Colors } from '@qui-cli/colors';
+import { Log } from '@qui-cli/log';
+import { Root } from '@qui-cli/root';
 import { EventEmitter } from 'node:events';
 import fs from 'node:fs';
 import os from 'node:os';

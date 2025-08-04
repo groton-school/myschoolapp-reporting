@@ -1,5 +1,5 @@
-import { Colors } from '@battis/qui-cli.colors';
-import * as Plugin from '@battis/qui-cli.plugin';
+import { Colors } from '@qui-cli/colors';
+import * as Plugin from '@qui-cli/plugin';
 import { Mutex, MutexInterface } from 'async-mutex';
 import ora from 'ora';
 import { HTTPResponse, Page } from 'puppeteer';

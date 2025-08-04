@@ -1,4 +1,4 @@
-import * as Plugin from '@battis/qui-cli.plugin';
+import * as Plugin from '@qui-cli/plugin';
 
 export type Configuration = Plugin.Configuration & {
   headless?: boolean;

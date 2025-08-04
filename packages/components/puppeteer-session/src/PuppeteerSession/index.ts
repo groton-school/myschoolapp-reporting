@@ -1,6 +1,6 @@
-import { Colors } from '@battis/qui-cli.colors';
-import '@battis/qui-cli.env/1Password.js';
-import * as Plugin from '@battis/qui-cli.plugin';
+import { Colors } from '@qui-cli/colors';
+import '@qui-cli/env/1Password.js';
+import * as Plugin from '@qui-cli/plugin';
 import { Base } from './Base.js';
 import * as Storage from './Storage.js';
 

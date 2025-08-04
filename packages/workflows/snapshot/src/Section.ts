@@ -1,10 +1,10 @@
-import * as Plugin from '@battis/qui-cli.plugin';
 import { Debug } from '@msar/debug';
 import { Output } from '@msar/output';
 import { PuppeteerSession } from '@msar/puppeteer-session';
 import { RateLimiter } from '@msar/rate-limiter';
 import { Data } from '@msar/types.snapshot';
 import { Workflow } from '@msar/workflow';
+import * as Plugin from '@qui-cli/plugin';
 import { api } from 'datadirect';
 import * as Area from './Area/index.js';
 

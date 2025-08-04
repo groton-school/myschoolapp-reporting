@@ -1,4 +1,4 @@
-import { Colors } from '@battis/qui-cli.colors';
+import { Colors } from '@qui-cli/colors';
 import { Mutex, MutexInterface } from 'async-mutex';
 import { api as types } from 'datadirect';
 import ora from 'ora';

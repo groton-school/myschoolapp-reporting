@@ -1,7 +1,7 @@
-import { Colors } from '@battis/qui-cli.colors';
-import { Log } from '@battis/qui-cli.log';
 import { JSONValue } from '@battis/typescript-tricks';
 import * as Archive from '@msar/types.archive';
+import { Colors } from '@qui-cli/colors';
+import { Log } from '@qui-cli/log';
 import { EventEmitter } from 'node:events';
 
 export type DownloadData = {

@@ -22,9 +22,9 @@
     "release": "commit-and-tag-version"
   },
   "devDependencies": {
-    "@battis/qui-cli.colors": "^2.1.0",
-    "@battis/qui-cli.log": "^2.2.2",
-    "@battis/qui-cli.plugin": "^2.4.2",
+    "@qui-cli/colors": "^3.0.1",
+    "@qui-cli/log": "^3.0.1",
+    "@qui-cli/plugin": "^3.0.0",
     "@tsconfig/node20": "^20.1.6",
     "commit-and-tag-version": "^12.5.2",
     "del-cli": "^6.0.0",
@@ -32,8 +32,8 @@
     "typescript": "5.8.3"
   },
   "peerDependencies": {
-    "@battis/qui-cli.colors": "^2.0",
-    "@battis/qui-cli.log": "^2.0",
-    "@battis/qui-cli.plugin": "^2.2"
+    "@qui-cli/colors": "3.x",
+    "@qui-cli/log": "3.x",
+    "@qui-cli/plugin": "3.x"
   }
 }

@@ -1,8 +1,8 @@
-import { Colors } from '@battis/qui-cli.colors';
-import { Positionals } from '@battis/qui-cli.core';
-import '@battis/qui-cli.env/1Password.js';
-import * as Plugin from '@battis/qui-cli.plugin';
 import { Output } from '@msar/output';
+import { Colors } from '@qui-cli/colors';
+import { Positionals } from '@qui-cli/core';
+import '@qui-cli/env/1Password.js';
+import * as Plugin from '@qui-cli/plugin';
 import * as Section from './Section.js';
 import { Configuration } from './Section.js';
 import * as SkyAPI from './SkyAPI.js';
