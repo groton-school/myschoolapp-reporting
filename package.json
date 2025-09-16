@@ -11,9 +11,10 @@
   },
   "type": "module",
   "scripts": {
-    "build": "lerna run build",
+    "build": "run-s build:*",
+    "build:paths": "monorepo-package-paths -w --repository --homepage --author",
+    "build:compile": "lerna run build",
     "release": "run-s release:*",
-    "release:paths": "monorepo-package-paths -w --repository --homepage --author",
     "release:build": "run-s build",
     "release:publish": "pnpm publish -r --otp $(op item get npm --otp) --access public"
   },
