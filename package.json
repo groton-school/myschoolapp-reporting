@@ -19,16 +19,16 @@
     "release:publish": "pnpm publish -r --otp $(op item get npm --otp) --access public"
   },
   "devDependencies": {
-    "@battis/eslint-config": "^2.0.5",
-    "@battis/prettier-config": "^1.6.4",
+    "@battis/eslint-config": "^2.0.6",
+    "@battis/prettier-config": "^1.7.0",
     "@commitlint/cli": "^19.8.1",
     "@commitlint/config-conventional": "^19.8.1",
-    "@commitlint/config-pnpm-scopes": "^19.8.1",
-    "lerna": "^8.2.3",
+    "@commitlint/config-pnpm-scopes": "^19.9.1",
+    "lerna": "^8.2.4",
     "monorepo-package-paths": "^0.4.0",
     "msar": "workspace:*",
     "npm-run-all": "^4.1.5",
-    "tsx": "^4.20.3"
+    "tsx": "^4.20.6"
   },
   "packageManager": "pnpm@9.12.3+sha512.cce0f9de9c5a7c95bef944169cc5dfe8741abfb145078c0d508b868056848a87c81e626246cb60967cbd7fd29a6c062ef73ff840d96b3c86c40ac92cf4a813ee"
 }

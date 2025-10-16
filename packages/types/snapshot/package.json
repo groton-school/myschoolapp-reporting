@@ -22,14 +22,14 @@
     "release": "commit-and-tag-version"
   },
   "dependencies": {
-    "@oauth2-cli/sky-api": "^0.2.1",
+    "@oauth2-cli/sky-api": "^0.2.2",
     "datadirect": "workspace:*"
   },
   "devDependencies": {
     "@battis/descriptive-types": "^0.1.0",
     "@battis/typescript-tricks": "^0.7.4",
     "@tsconfig/node20": "^20.1.6",
-    "commit-and-tag-version": "^12.5.2",
+    "commit-and-tag-version": "^12.6.0",
     "del-cli": "^6.0.0",
     "npm-run-all": "^4.1.5",
     "typescript": "5.8.3"
