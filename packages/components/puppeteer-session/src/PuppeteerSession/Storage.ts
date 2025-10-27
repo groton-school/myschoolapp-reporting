@@ -2,6 +2,7 @@ import * as Plugin from '@qui-cli/plugin';
 
 export type Configuration = Plugin.Configuration & {
   headless?: boolean;
+  devtools?: boolean;
   quit?: boolean;
   username?: string;
   password?: string;
@@ -12,6 +13,7 @@ export type Configuration = Plugin.Configuration & {
 };
 
 let _headless = false;
+let _devtools = false;
 let _quit = true;
 let _username: string | undefined = undefined;
 let _password: string | undefined = undefined;
@@ -25,6 +27,13 @@ export function headless(value?: boolean) {
     _headless = value;
   }
   return _headless;
+}
+
+export function devtools(value?: boolean) {
+  if (value !== undefined) {
+    _devtools = value;
+  }
+  return _devtools;
 }
 
 export function quit(value?: boolean) {

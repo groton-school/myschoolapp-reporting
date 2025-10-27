@@ -62,7 +62,7 @@ export class Base {
 
   private async openURL(
     url: URL | string,
-    { headless, defaultViewport }: Options = {},
+    { headless, devtools, defaultViewport, ...options }: Options = {},
     /*
      * TODO Why doesn't Chrome consistently receive CDP directives?
      *   Theoretically this should work, but it seems to have zero impact on actual behavior
@@ -77,12 +77,18 @@ export class Base {
   ) {
     // @ts-expect-error 2345 Plugin.hydrate typing is too narrow
     headless = Plugin.hydrate(headless, Storage.headless());
+    devtools = Plugin.hydrate(devtools, Storage.devtools());
     // @ts-expect-error 2345 Plugin.hydrate typing is too narrow
     defaultViewport = Plugin.hydrate(defaultViewport, {
       height: Storage.viewportHeight(),
       width: Storage.viewportWidth()
     });
-    const browser = await puppeteer.launch({ headless, defaultViewport });
+    const browser = await puppeteer.launch({
+      headless,
+      devtools,
+      defaultViewport,
+      ...options
+    });
     const [page] = await browser.pages();
     await page.goto(new URL(url).toString());
     this.page = page;
@@ -176,7 +182,9 @@ export class Base {
   public async close() {
     await this.ready();
     if ((await this.page.browser().pages()).length === 1) {
-      await this.page.browser().close();
+      if (Storage.quit()) {
+        await this.page.browser().close();
+      }
     } else {
       await this.page.close();
     }

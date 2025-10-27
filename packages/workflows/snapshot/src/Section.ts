@@ -151,9 +151,7 @@ export class Snapshot {
       }
     }
 
-    if (PuppeteerSession.quit()) {
-      await this.config.session.close();
-    }
+    await this.config.session.close();
 
     return snapshot;
   }

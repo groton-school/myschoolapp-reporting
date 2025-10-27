@@ -1,5 +1,4 @@
 import { Output } from '@msar/output';
-import { PuppeteerSession } from '@msar/puppeteer-session';
 import { RateLimiter } from '@msar/rate-limiter';
 import * as Archive from '@msar/types.archive';
 import { Colors } from '@qui-cli/colors';
@@ -217,9 +216,7 @@ export async function run() {
     }
   );
 
-  if (PuppeteerSession.quit()) {
-    await spider.quit();
-  }
+  await spider.quit();
   spinner.succeed(
     `Snapshot supporting files exported to ${Colors.url(path.dirname(indexPath!))}`
   );

@@ -279,8 +279,6 @@ export async function run() {
     await fs.rm(TEMP, { recursive: true });
     Progress.stop();
 
-    if (PuppeteerSession.quit()) {
-      session.close();
-    }
+    session.close();
   }
 }

@@ -271,9 +271,7 @@ export async function analytics(
   }
   await writing;
 
-  if (PuppeteerSession.quit()) {
-    await root.close();
-  }
+  await root.close();
 
   Progress.stop();
 

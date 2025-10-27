@@ -18,6 +18,7 @@ export const name = '@msar/puppeteer-session';
 
 export function configure(config: Storage.Configuration = {}) {
   Storage.headless(Plugin.hydrate(config.headless, Storage.headless()));
+  Storage.devtools(Plugin.hydrate(config.devtools, Storage.devtools()));
   Storage.quit(Plugin.hydrate(config.quit, Storage.quit()));
   Storage.username(Plugin.hydrate(config.username, Storage.username()));
   Storage.password(Plugin.hydrate(config.password, Storage.password()));
@@ -45,6 +46,9 @@ export function options(): Plugin.Options {
           Storage.headless()
         )})`,
         default: Storage.headless()
+      },
+      devtools: {
+        description: `Open Chrome DevTools with the window`
       },
       quit: {
         description: `Quit Puppeteer's Chrome instance on successful completion (default: ${Colors.value(Storage.quit())}, ${Colors.value(
@@ -100,8 +104,4 @@ export async function open(url: string | URL) {
       height: Storage.viewportHeight()
     }
   });
-}
-
-export function quit() {
-  return Storage.quit();
 }
