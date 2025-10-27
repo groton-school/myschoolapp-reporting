@@ -108,7 +108,11 @@ export function init({ values }: Plugin.ExpectedArguments<typeof options>) {
 }
 
 export async function run() {
-  return await analytics();
+  try {
+    return await analytics();
+  } catch (e) {
+    console.error(e);
+  }
 }
 
 export async function analytics(

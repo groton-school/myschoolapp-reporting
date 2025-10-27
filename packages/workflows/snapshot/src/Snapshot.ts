@@ -194,7 +194,11 @@ export async function run() {
       `${Colors.positionalArg('url')} must be the URL of an LMS instance`
     );
   }
-  await snapshot({ ...config, outputPath: Output.outputPath() });
+  try {
+    await snapshot({ ...config, outputPath: Output.outputPath() });
+  } catch (e) {
+    console.error(e);
+  }
 }
 
 export async function snapshot(conf?: Configuration) {

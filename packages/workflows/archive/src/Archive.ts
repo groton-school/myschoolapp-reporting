@@ -101,123 +101,127 @@ export function init({ values }: Plugin.ExpectedArguments<typeof options>) {
 }
 
 export async function run() {
-  const spinner = ora('Reading snaphot file').start();
+  try {
+    const spinner = ora('Reading snaphot file').start();
 
-  snapshotPath = path.resolve(Root.path(), snapshotPath!);
+    snapshotPath = path.resolve(Root.path(), snapshotPath!);
 
-  if (retry) {
-    Output.configure({ outputPath: path.dirname(snapshotPath) });
-  } else {
-    if (!Output.outputPath()) {
-      Output.configure({
-        outputPath: path.join(
-          path.dirname(snapshotPath!),
-          path.basename(snapshotPath!, '.json')
-        )
-      });
+    if (retry) {
+      Output.configure({ outputPath: path.dirname(snapshotPath) });
     } else {
-      if (fs.existsSync(Output.outputPath())) {
+      if (!Output.outputPath()) {
         Output.configure({
-          outputPath: await Output.avoidOverwrite(
-            path.join(
-              Output.outputPath(),
-              path.basename(snapshotPath!, '.json')
-            )
+          outputPath: path.join(
+            path.dirname(snapshotPath!),
+            path.basename(snapshotPath!, '.json')
           )
         });
+      } else {
+        if (fs.existsSync(Output.outputPath())) {
+          Output.configure({
+            outputPath: await Output.avoidOverwrite(
+              path.join(
+                Output.outputPath(),
+                path.basename(snapshotPath!, '.json')
+              )
+            )
+          });
+        }
       }
     }
-  }
 
-  const Start = new Date();
-  let snapshots: Archive.Multiple.Data;
-  const data = JSON.parse(fs.readFileSync(snapshotPath).toString());
-  if (Array.isArray(data)) {
-    snapshots = data;
-  } else {
-    snapshots = [data];
-  }
-  spinner.succeed(
-    `Read ${snapshots.length} snapshots from ${Colors.url(snapshotPath)}`
-  );
-  if (retry) {
-    Log.info(`Retrying archive`);
-    snapshots = Cache.build(snapshots);
-  }
-
-  const host = snapshots
-    .map((snapshot) => snapshot.Metadata.Host)
-    .reduce((host: string | undefined, other: string) => {
-      if (!host) {
-        return other;
-      } else if (host !== other) {
-        throw new Error('Multiple hosts present in snapshot file.');
-      }
-      return host;
-    }, undefined);
-  if (!host) {
-    throw new Error('No host present in snapshot file.');
-  }
-  const spider = new Spider({
-    host
-  });
-  const indices: (string | undefined)[] = [];
-
-  Progress.start({ max: snapshots.length, value: 0 });
-  for (const snapshot of snapshots) {
-    Progress.caption(
-      `Downloading ${snapshot.SectionInfo?.Teacher}'s ${snapshot.SectionInfo?.SchoolYear} ${snapshot.SectionInfo?.GroupName} ${snapshot.SectionInfo?.Block}`
+    const Start = new Date();
+    let snapshots: Archive.Multiple.Data;
+    const data = JSON.parse(fs.readFileSync(snapshotPath).toString());
+    if (Array.isArray(data)) {
+      snapshots = data;
+    } else {
+      snapshots = [data];
+    }
+    spinner.succeed(
+      `Read ${snapshots.length} snapshots from ${Colors.url(snapshotPath)}`
     );
-    indices.push(
-      await spider.download(snapshot, {
+    if (retry) {
+      Log.info(`Retrying archive`);
+      snapshots = Cache.build(snapshots);
+    }
+
+    const host = snapshots
+      .map((snapshot) => snapshot.Metadata.Host)
+      .reduce((host: string | undefined, other: string) => {
+        if (!host) {
+          return other;
+        } else if (host !== other) {
+          throw new Error('Multiple hosts present in snapshot file.');
+        }
+        return host;
+      }, undefined);
+    if (!host) {
+      throw new Error('No host present in snapshot file.');
+    }
+    const spider = new Spider({
+      host
+    });
+    const indices: (string | undefined)[] = [];
+
+    Progress.start({ max: snapshots.length, value: 0 });
+    for (const snapshot of snapshots) {
+      Progress.caption(
+        `Downloading ${snapshot.SectionInfo?.Teacher}'s ${snapshot.SectionInfo?.SchoolYear} ${snapshot.SectionInfo?.GroupName} ${snapshot.SectionInfo?.Block}`
+      );
+      indices.push(
+        await spider.download(snapshot, {
+          include,
+          exclude
+        })
+      );
+      Progress.increment();
+    }
+    Progress.stop();
+    const Finish = new Date();
+
+    const index: Archive.Multiple.Data = [];
+    for (const fileName of indices) {
+      if (fileName) {
+        index.push(
+          JSON.parse(
+            fs
+              .readFileSync(
+                Output.filePathFromOutputPath(Output.outputPath(), fileName)!
+              )
+              .toString()
+          )
+        );
+        fs.unlinkSync(
+          Output.filePathFromOutputPath(Output.outputPath(), fileName)!
+        );
+      }
+    }
+    const indexPath = Output.filePathFromOutputPath(
+      Output.outputPath(),
+      'index.json'
+    );
+    await Output.writeJSON(indexPath, index, { overwrite: retry });
+    await Output.writeJSON(
+      await Output.avoidOverwrite(path.resolve(indexPath, '../metadata.json')),
+      {
+        snapshotPath,
+        Start,
+        Finish,
+        Elapsed: Finish.getTime() - Start.getTime(),
+        serverRequests: RateLimiter.requests(),
+        serverRequestsPerSecond: RateLimiter.actual(),
+        host,
         include,
         exclude
-      })
+      }
     );
-    Progress.increment();
-  }
-  Progress.stop();
-  const Finish = new Date();
 
-  const index: Archive.Multiple.Data = [];
-  for (const fileName of indices) {
-    if (fileName) {
-      index.push(
-        JSON.parse(
-          fs
-            .readFileSync(
-              Output.filePathFromOutputPath(Output.outputPath(), fileName)!
-            )
-            .toString()
-        )
-      );
-      fs.unlinkSync(
-        Output.filePathFromOutputPath(Output.outputPath(), fileName)!
-      );
-    }
+    await spider.quit();
+    spinner.succeed(
+      `Snapshot supporting files exported to ${Colors.url(path.dirname(indexPath!))}`
+    );
+  } catch (e) {
+    console.error(e);
   }
-  const indexPath = Output.filePathFromOutputPath(
-    Output.outputPath(),
-    'index.json'
-  );
-  await Output.writeJSON(indexPath, index, { overwrite: retry });
-  await Output.writeJSON(
-    await Output.avoidOverwrite(path.resolve(indexPath, '../metadata.json')),
-    {
-      snapshotPath,
-      Start,
-      Finish,
-      Elapsed: Finish.getTime() - Start.getTime(),
-      serverRequests: RateLimiter.requests(),
-      serverRequestsPerSecond: RateLimiter.actual(),
-      host,
-      include,
-      exclude
-    }
-  );
-
-  await spider.quit();
-  spinner.succeed(
-    `Snapshot supporting files exported to ${Colors.url(path.dirname(indexPath!))}`
-  );
 }
