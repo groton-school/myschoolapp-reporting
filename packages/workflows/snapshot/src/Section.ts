@@ -68,7 +68,7 @@ export class Snapshot {
     } else {
       Debug.withGroupId(groupId, 'Forking session in new window');
       this.config.session = await this.config.session.fork(
-        `/app/faculty#academicclass/${groupId}/0/bulletinboard`
+        `/app/faculty#academicclass/${groupId}/0/topics`
       );
     }
 
