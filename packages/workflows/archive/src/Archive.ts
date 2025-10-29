@@ -221,7 +221,7 @@ export async function run() {
     spinner.succeed(
       `Snapshot supporting files exported to ${Colors.url(path.dirname(indexPath!))}`
     );
-  } catch (e) {
-    console.error(e);
+  } catch (error) {
+    Log.error({ error });
   }
 }

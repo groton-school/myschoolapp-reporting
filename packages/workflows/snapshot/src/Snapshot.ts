@@ -2,6 +2,7 @@ import { Output } from '@msar/output';
 import { Colors } from '@qui-cli/colors';
 import { Positionals } from '@qui-cli/core';
 import '@qui-cli/env/1Password.js';
+import { Log } from '@qui-cli/log';
 import * as Plugin from '@qui-cli/plugin';
 import * as Section from './Section.js';
 import { Configuration } from './Section.js';
@@ -196,8 +197,8 @@ export async function run() {
   }
   try {
     await snapshot({ ...config, outputPath: Output.outputPath() });
-  } catch (e) {
-    console.error(e);
+  } catch (error) {
+    Log.error({ error });
   }
 }
 
