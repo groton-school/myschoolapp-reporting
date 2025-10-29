@@ -65,7 +65,7 @@ export function options(): Plugin.Options {
     man: [
       { level: 1, text: 'Inbox options' },
       {
-        text: `Analyze inbox contents for a user or users. Include the URL of the LMS instance as ${Colors.value('url')} (required) and path to a CSV file of user identifiers to analyze as ${Colors.value('csv')} (optional if ${Colors.value('--val')} is set). Intended to receive a generic ${Colors.url('UserWorkList.csv')} export from the LMS as input, outputting the same CSV file to ${Colors.value('--outputPath')} with analysis columns appended.`
+        text: `Analyze inbox contents for a user or users. Include the URL of the LMS instance as ${Colors.positionalArg(URL)} (required) and path to a CSV file of user identifiers to analyze as ${Colors.positionalArg(CSV)} (optional if ${Colors.value('--val')} is set). Intended to receive a generic ${Colors.url('UserWorkList.csv')} export from the LMS as input, outputting the same CSV file to ${Colors.value('--outputPath')} with analysis columns appended.`
       },
       {
         text: `Due to the number of impersonated clicks necessary for this workflow, running ${Colors.value('--headless')} reduces the likelihood of stray user actions interfering with the script.`
@@ -74,7 +74,7 @@ export function options(): Plugin.Options {
 
     opt: {
       column: {
-        description: `Column label for CSV input (${Colors.value('arg1')}) column containing user identifier for inboxes to analyze. Required if opening a CSV of user identifiers. (default: ${Colors.quotedValue(`"${column}"`)})`,
+        description: `Column label for CSV input (${Colors.positionalArg(CSV)}) column containing user identifier for inboxes to analyze. Required if opening a CSV of user identifiers. (default: ${Colors.quotedValue(`"${column}"`)})`,
         default: column
       },
       searchIn: {
@@ -93,7 +93,7 @@ export function options(): Plugin.Options {
     },
     optList: {
       val: {
-        description: `A user identifier to query. Requires corresponding ${Colors.value('--searchIn')}. If set, ${Colors.value('csv')} path to CSV file is not required.`,
+        description: `A user identifier to query. Requires corresponding ${Colors.value('--searchIn')}. If set, ${Colors.positionalArg(CSV)} path to CSV file is not required.`,
         short: 'v',
         default: vals
       }
