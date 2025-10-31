@@ -37,6 +37,7 @@
   "dependencies": {
     "@msar/archive": "workspace:*",
     "@msar/inbox": "workspace:*",
+    "@msar/pronunciation": "workspace:*",
     "@msar/snapshot": "workspace:*",
     "@qui-cli/core": "^4.0.1",
     "@qui-cli/plugin": "^3.0.0",

@@ -1,0 +1,55 @@
+{
+  "name": "@msar/pronunciation",
+  "version": "0.0.0",
+  "homepage": "https://github.com/groton-school/myschoolapp-reporting/tree/main/packages/workflows/pronunciation#readme",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/groton-school/myschoolapp-reporting.git",
+    "directory": "packages/workflows/pronunciation"
+  },
+  "author": {
+    "name": "Seth Battis",
+    "email": "sbattis@groton.org"
+  },
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "clean": "del ./dist",
+    "build": "run-s build:*",
+    "build:clean": "run-s clean",
+    "build:compile": "tsc",
+    "release": "commit-and-tag-version"
+  },
+  "dependencies": {
+    "csv": "^6.4.1"
+  },
+  "devDependencies": {
+    "@msar/output": "workspace:*",
+    "@msar/puppeteer-session": "workspace:*",
+    "@msar/workflow": "workspace:*",
+    "@qui-cli/colors": "^3.0.1",
+    "@qui-cli/core": "^4.0.1",
+    "@qui-cli/log": "^3.0.1",
+    "@qui-cli/plugin": "^3.0.0",
+    "@qui-cli/progress": "^3.0.1",
+    "@qui-cli/root": "^3.0.1",
+    "@tsconfig/node20": "^20.1.6",
+    "commit-and-tag-version": "^12.6.0",
+    "del-cli": "^6.0.0",
+    "npm-run-all": "^4.1.5",
+    "puppeteer": "^23.11.1",
+    "typescript": "5.8.3"
+  },
+  "peerDependencies": {
+    "@msar/output": "0.x",
+    "@msar/puppeteer-session": "0.x",
+    "@msar/workflow": "0.x",
+    "@qui-cli/colors": "3.x",
+    "@qui-cli/core": "4.x",
+    "@qui-cli/log": "3.x",
+    "@qui-cli/plugin": "3.x",
+    "@qui-cli/progress": "3.x",
+    "@qui-cli/root": "3.x"
+  }
+}

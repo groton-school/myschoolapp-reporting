@@ -1,0 +1,5 @@
+{
+  "path": ".",
+  "tag-prefix": "pronunciation/",
+  "releaseCommitMessageFormat": "chore(pronunciation): @msar/pronunciation@{{currentTag}}"
+}
