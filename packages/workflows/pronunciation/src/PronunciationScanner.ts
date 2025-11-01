@@ -8,7 +8,7 @@ import { stringify } from 'csv';
 import { existsSync } from 'node:fs';
 import fs from 'node:fs/promises';
 import path from 'node:path';
-import { Handler, HTTPResponse } from 'puppeteer';
+import { Handler, HTTPRequest, HTTPResponse } from 'puppeteer';
 
 type ScanOptions = {
   data: Record<string, string | number>[];
@@ -72,6 +72,23 @@ export class PronunciationScanner {
       }
       try {
         let sas_url: string | undefined = undefined;
+
+        // FIXME race condition between URL and blob requests
+        const requestHandler: Handler<HTTPRequest> = async (request) => {
+          const poll = () => {
+            if (
+              !sas_url &&
+              request.resourceType() === 'xhr' &&
+              /app.blackbaud.net\/files/.test(request.url())
+            ) {
+              setTimeout(poll, 100);
+            } else {
+              request.continue();
+            }
+          };
+          poll();
+        };
+
         const responseHandler: Handler<HTTPResponse> = async (response) => {
           const request = response.request();
           if (request.resourceType() === 'xhr') {
@@ -95,8 +112,9 @@ export class PronunciationScanner {
             }
           }
         };
+
         session.page.setRequestInterception(true);
-        session.page.on('request', (request) => request.continue());
+        session.page.on('request', requestHandler);
         session.page.on('response', responseHandler);
         session.goto(
           new URL(
