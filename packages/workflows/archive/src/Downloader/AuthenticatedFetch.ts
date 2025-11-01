@@ -41,6 +41,17 @@ export class Downloader
       throw new Output.OutputError('AuthenticatedFetch requires outputPath');
     }
     this.outputPath = Output.outputPath();
+    this.keepAlive();
+  }
+
+  private keepAlive() {
+    setTimeout(
+      () => {
+        this.page.reload();
+        this.keepAlive();
+      },
+      5 * 60 * 1000
+    );
   }
 
   public async download(url: string, filename?: string) {
