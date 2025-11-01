@@ -1,18 +1,14 @@
-import { Output } from '@msar/output';
 import { PuppeteerSession } from '@msar/puppeteer-session';
 import { Workflow } from '@msar/workflow';
 import { Colors } from '@qui-cli/colors';
 import { Positionals } from '@qui-cli/core';
 import { Log } from '@qui-cli/log';
 import * as Plugin from '@qui-cli/plugin';
-import { Progress } from '@qui-cli/progress';
 import { Root } from '@qui-cli/root';
-import { stringify } from 'csv';
 import { parse } from 'csv/sync';
-import { existsSync } from 'node:fs';
 import fs from 'node:fs/promises';
 import path from 'node:path';
-import { Handler, HTTPResponse } from 'puppeteer';
+import { PronunciationScanner } from './PronunciationScanner.js';
 
 PuppeteerSession.configure({ headless: true });
 
@@ -32,12 +28,6 @@ let pathToUserListCsv: string | undefined = undefined;
 let users: string[] = [];
 let column = 'User ID';
 let download = true;
-
-const PronunciationColumns = {
-  Recorded: 'Recorded',
-  FilePath: 'File Path',
-  Downloaded: 'Downloaded'
-};
 
 export function configure(config: Configuration = {}) {
   users = Plugin.hydrate(config.users, users);
@@ -100,114 +90,26 @@ export function init({ values }: Plugin.ExpectedArguments<typeof options>) {
 
 export async function run() {
   try {
-    return await pronunciations();
+    if (!url) {
+      throw new Error(`${Colors.positionalArg(URL_ARG)} must be defined`);
+    }
+
+    const { data, columns } = await parseCsvFile();
+    data.push(...users.map((val) => ({ [column]: val })));
+    if (data.length === 0) {
+      throw new Error(
+        `Inbox users must be passed as either a path to a CSV file or a list of ${Colors.value('val')}`
+      );
+    }
+    return new PronunciationScanner(
+      await PuppeteerSession.Authenticated.getInstance(url, {
+        logRequests: Workflow.logRequests()
+      })
+    ).scan({ data, columns, column, download });
   } catch (e) {
     const error = e as Error;
     Log.error(Colors.error(error.message));
   }
-}
-
-async function pronunciations() {
-  if (!url) {
-    throw new Error(`Instance URL must be defined`);
-  }
-
-  const { data, columns } = await parseCsvFile();
-  data.push(...users.map((val) => ({ [column]: val })));
-  if (data.length === 0) {
-    throw new Error(
-      `Inbox users must be passed as either a path to a CSV file or a list of ${Colors.value('val')}`
-    );
-  }
-
-  const session = await PuppeteerSession.Authenticated.getInstance(url, {
-    logRequests: Workflow.logRequests()
-  });
-  session.page.setRequestInterception(true);
-  session.page.on('request', (request) => request.continue());
-
-  const recordingPath = await Output.avoidOverwrite(
-    Output.filePathFromOutputPath(Output.outputPath(), 'recordings')
-  );
-  if (download) {
-    if (!existsSync(recordingPath)) {
-      await fs.mkdir(recordingPath, { recursive: true });
-    }
-    Log.info(`Recordings will be downloaded to ${Colors.url(recordingPath)}`);
-  }
-
-  Progress.start({ max: data.length });
-  columns.push(...Object.values(PronunciationColumns));
-
-  for (const row of data) {
-    await new Promise<void>((resolve) => {
-      const val = `${row[column]}`;
-      let sas_url: string | undefined = undefined;
-      const responseHandler: Handler<HTTPResponse> = async (response) => {
-        const request = response.request();
-        if (request.resourceType() === 'xhr') {
-          if (request.url() === sas_url) {
-            await saveRecording(recordingPath, row, response);
-            detachAndResolve(session, responseHandler, resolve);
-          } else if (
-            /\/namep\/v1\/usernamepronunciation\/\d+\?addin=1$/.test(
-              request.url()
-            )
-          ) {
-            sas_url = await getRecordingUrl(response, sas_url, row);
-            row[PronunciationColumns.Recorded] = (
-              sas_url !== undefined
-            ).toString();
-            if (sas_url && download) {
-              awaitPronunciation(session);
-            } else {
-              detachAndResolve(session, responseHandler, resolve);
-            }
-          }
-        }
-      };
-      session.page.on('response', responseHandler);
-      session.goto(
-        new URL(`/app/core?svcid=edu#userprofile/${val}/contactcard`, url)
-      );
-    });
-  }
-  await session.close();
-  const indexPath = await Output.avoidOverwrite(
-    Output.filePathFromOutputPath(Output.outputPath(), 'pronunciations.csv')
-  );
-  await fs.writeFile(indexPath, stringify(data, { header: true, columns }));
-  Progress.stop();
-  Log.info(`Index written to ${Colors.url(indexPath)}`);
-}
-
-async function getRecordingUrl(
-  response: HTTPResponse,
-  sas_url: string | undefined,
-  row: Record<string, string | number>
-) {
-  try {
-    const data = await response.json();
-    if (data.file_exists) {
-      row[PronunciationColumns.Recorded] = 'Yes';
-      return data.sas_url;
-    }
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  } catch (_) {
-    // ignore JSON parse error
-  }
-  return undefined;
-}
-
-async function saveRecording(
-  recordingPath: string,
-  row: Record<string, string | number>,
-  response: HTTPResponse
-) {
-  const filePath = path.resolve(recordingPath, `${row[column]}.mp3`);
-  await fs.writeFile(filePath, await response.buffer());
-  row[PronunciationColumns.FilePath] = filePath;
-  row[PronunciationColumns.Downloaded] = new Date().toISOString();
 }
 
 async function parseCsvFile() {
@@ -231,25 +133,4 @@ async function parseCsvFile() {
     );
   }
   return { columns, data };
-}
-
-async function awaitPronunciation(session: PuppeteerSession.Authenticated) {
-  const iframe = await session.page.waitForSelector(
-    'iframe[title="Name Pronunciation"]'
-  );
-  const content = await iframe?.contentFrame();
-  const button = await content?.waitForSelector(
-    '.play-name-pronunciation:has([data-sky-icon="play-circle"])'
-  );
-  button?.$eval('*', (elt) => elt.click());
-}
-
-function detachAndResolve(
-  session: PuppeteerSession.Authenticated,
-  responseHandler: Handler<HTTPResponse>,
-  resolve: (value: void | PromiseLike<void>) => void
-) {
-  session.page.off('response', responseHandler);
-  Progress.increment();
-  resolve();
 }
