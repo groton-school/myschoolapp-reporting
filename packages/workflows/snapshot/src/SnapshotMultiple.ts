@@ -207,7 +207,9 @@ export async function run() {
          *   snapshot to do the write, rather than calling writeJSON itself
          */
         Output.writeJSON(tempPath, data[i], { silent: true });
-        Progress.caption(data[i]?.SectionInfo?.GroupName || '');
+        Progress.caption(
+          `${data[i].SectionInfo?.Block || ''} ${data[i]?.SectionInfo?.GroupName || ''} (${data[i].SectionInfo?.Teacher || ''} ${data[i].SectionInfo?.SchoolYear || ''})`
+        );
       } catch (error) {
         if (Workflow.ignoreErrors()) {
           Debug.errorWithGroupId(groupIds[i], 'Error', error as string);

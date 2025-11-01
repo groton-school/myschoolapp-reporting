@@ -167,7 +167,7 @@ export async function run() {
     Progress.start({ max: snapshots.length, value: 0 });
     for (const snapshot of snapshots) {
       Progress.caption(
-        `Downloading ${snapshot.SectionInfo?.Teacher}'s ${snapshot.SectionInfo?.SchoolYear} ${snapshot.SectionInfo?.GroupName} ${snapshot.SectionInfo?.Block}`
+        `Downloading ${snapshot.SectionInfo?.Block} ${snapshot.SectionInfo?.GroupName} (${snapshot.SectionInfo?.Teacher} ${snapshot.SectionInfo?.SchoolYear})`
       );
       indices.push(
         await spider.download(snapshot, {
