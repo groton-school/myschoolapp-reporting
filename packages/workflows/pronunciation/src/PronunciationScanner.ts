@@ -112,6 +112,9 @@ export class PronunciationScanner {
               ).toString();
               if (sas_url && this.download) {
                 this.startRecordingDownload(session);
+                if (Workflow.logRequests()) {
+                  Log.debug({ user_id: row[this.column!], sas_url });
+                }
               } else {
                 resolve();
               }
