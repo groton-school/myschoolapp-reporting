@@ -73,18 +73,11 @@ export class PronunciationScanner {
       try {
         let sas_url: string | undefined = undefined;
 
-        // FIXME race condition between URL and blob requests
         const requestHandler: Handler<HTTPRequest> = async (request) => {
           const poll = () => {
             if (
               !sas_url &&
               request.resourceType() === 'xhr' &&
-              /* TODO probably not a durable test
-               *
-               * At the moment, empirically, the request to download the name
-               * pronunciation recordings is the only one from the contact
-               * card page that inludes this pattern.
-               */
               /app.blackbaud.net\/files/.test(request.url())
             ) {
               setTimeout(poll, 100);
