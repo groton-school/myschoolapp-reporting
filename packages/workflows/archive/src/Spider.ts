@@ -75,6 +75,7 @@ export class Spider {
         (
           Object.keys(snapshotComponent) as (keyof typeof snapshotComponent)[]
         ).map(async (key: keyof typeof snapshotComponent) => {
+          // TODO ideally catch null case before recursive invocation
           if (snapshotComponent[key] === null) {
             return;
           } else if (typeof snapshotComponent[key] === 'object') {
