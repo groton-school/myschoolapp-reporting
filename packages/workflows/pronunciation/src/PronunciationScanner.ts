@@ -140,6 +140,14 @@ export class PronunciationScanner {
                   });
                 }
               } else {
+                if (Workflow.logRequests()) {
+                  Log.debug({
+                    step: this.download
+                      ? `No sas_url recording file available`
+                      : `pronunciation status logged`,
+                    user_id: row[this.column!]
+                  });
+                }
                 resolve();
               }
             }
@@ -149,12 +157,11 @@ export class PronunciationScanner {
         session.page.setRequestInterception(true);
         session.page.on('request', requestHandler);
         session.page.on('response', responseHandler);
-        session.goto(
-          new URL(
-            `/app/core?svcid=edu#userprofile/${row[this.column]}/contactcard`,
-            this.root.page.url()
-          )
+        const url = new URL(
+          `/app/core?svcid=edu#userprofile/${row[this.column]}/contactcard`,
+          this.root.page.url()
         );
+        session.goto(url);
       } catch (e) {
         if (Workflow.ignoreErrors()) {
           const error = e as Error;
