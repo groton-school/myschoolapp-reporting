@@ -72,6 +72,7 @@ export class PronunciationScanner {
       }
       try {
         let sas_url: string | undefined = undefined;
+        let delayed = false;
 
         // FIXME race condition between URL and blob requests
         const requestHandler: Handler<HTTPRequest> = async (request) => {
@@ -87,8 +88,27 @@ export class PronunciationScanner {
                */
               /app.blackbaud.net\/files/.test(request.url())
             ) {
+              if (!delayed && Workflow.logRequests()) {
+                delayed = true;
+                Log.debug({
+                  step: 'delaying request for sas_url until listener ready',
+                  user_id: row[this.column!],
+                  sas_url: request.url()
+                });
+              }
               setTimeout(poll, 100);
             } else {
+              if (
+                delayed &&
+                request.url() === sas_url &&
+                Workflow.logRequests()
+              ) {
+                Log.debug({
+                  step: 'releasing request for sas_url',
+                  user_id: row[this.column!],
+                  sas_url
+                });
+              }
               request.continue();
             }
           };
@@ -113,7 +133,11 @@ export class PronunciationScanner {
               if (sas_url && this.download) {
                 this.startRecordingDownload(session);
                 if (Workflow.logRequests()) {
-                  Log.debug({ user_id: row[this.column!], sas_url });
+                  Log.debug({
+                    step: 'interactive request sent',
+                    user_id: row[this.column!],
+                    sas_url
+                  });
                 }
               } else {
                 resolve();
@@ -189,5 +213,12 @@ export class PronunciationScanner {
     await fs.writeFile(filePath, await response.buffer());
     row[PronunciationColumns.FilePath] = filePath;
     row[PronunciationColumns.Downloaded] = new Date().toISOString();
+    if (Workflow.logRequests()) {
+      Log.debug({
+        step: 'sas_url downloaded',
+        user_id: row[this.column!],
+        sas_url: response.url()
+      });
+    }
   }
 }
