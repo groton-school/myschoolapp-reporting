@@ -211,7 +211,10 @@ export class PronunciationScanner {
       `${row[this.column]}.mp3`
     );
     await fs.writeFile(filePath, await response.buffer());
-    row[PronunciationColumns.FilePath] = filePath;
+    row[PronunciationColumns.FilePath] = path.relative(
+      Output.outputPath(),
+      filePath
+    );
     row[PronunciationColumns.Downloaded] = new Date().toISOString();
     if (Workflow.logRequests()) {
       Log.debug({
