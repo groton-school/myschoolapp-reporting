@@ -2,6 +2,8 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [0.2.1](https://github.com/groton-school/myschoolapp-reporting/compare/workflow/0.2.0...workflow/0.2.1) (2025-11-05)
+
 ## [0.2.0](https://github.com/groton-school/myschoolapp-reporting/compare/workflow/0.1.0...workflow/0.2.0) (2025-09-16)
 
 
