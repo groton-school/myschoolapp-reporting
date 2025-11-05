@@ -42,6 +42,7 @@ At present the following verbs are implemented:
 - `snapshot` the course data for one or more classes from the LMS to a JSON data file.
 - `download` the supporting files for an existing JSON snapshot file.
 - `inbox` analytics
+- `pronunciation` recording downloads
 
 For each command, the `--help` (or `-h`) flag provides usage instructions:
 
@@ -62,6 +63,6 @@ npx msar snapshot https://example.myschoolapp.com/app/faculty#academicclass/1234
 
 ## Known Issues
 
-- Actual error-generating issues are tagged [bug](https://github.com/battis/myschoolapp-reporting/issues?q=is%3Aissue%20state%3Aopen%20label%3Amsar%20label%3Abug)
+- Actual error-generating issues are tagged [bug](https://github.com/groton-school/myschoolapp-reporting/issues?q=is%3Aissue%20state%3Aopen%20type%3ABug)
 - [All other issues](https://github.com/battis/myschoolapp-reporting/issues?q=is%3Aissue%20state%3Aopen%20label%3Amsar%20-label%3Abug) are questions or improvements
-- Issues are tagged by command: [snapshot](https://github.com/battis/myschoolapp-reporting/issues?q=is%3Aissue%20state%3Aopen%20label%3Amsar%20label%3Asnapshot), [download](https://github.com/battis/myschoolapp-reporting/issues?q=is%3Aissue%20state%3Aopen%20label%3Amsar%20label%3Adownload), [inbox](https://github.com/battis/myschoolapp-reporting/issues?q=is%3Aissue%20state%3Aopen%20label%3Amsar%20label%3Ainbox)
+- Issues are tagged by command: [snapshot](https://github.com/battis/myschoolapp-reporting/issues?q=is%3Aissue%20state%3Aopen%20label%3Amsar%20label%3Asnapshot), [download](https://github.com/battis/myschoolapp-reporting/issues?q=is%3Aissue%20state%3Aopen%20label%3Amsar%20label%3Adownload), [inbox](https://github.com/battis/myschoolapp-reporting/issues?q=is%3Aissue%20state%3Aopen%20label%3Amsar%20label%3Ainbox), [pronunciation](https://github.com/battis/myschoolapp-reporting/issues?q=is%3Aissue%20state%3Aopen%20label%3Amsar%20label%3Apronunciation)
