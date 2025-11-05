@@ -1,18 +1,13 @@
 # @msar/archive
 
-Capture JSON snapshots of LMS course data
+A component of [msar](https://www.npmjs.com/package/,msar): Capture JSON snapshots of LMS course data
 
 ![NPM Version](https://img.shields.io/npm/v/@msar/archive)
 
 ## Usage:
 
 ```bash
-  msar snapshot -hbtagA --o=<outputPath> --u=<username> --p=<password> --ignoreErrors --logRequests --pretty --headless --devtools --quit --active
-  --future --expired --studentData --metadata --serviceAccountToken=<serviceAccountToken> --concurrency=<concurrency> --rate=<rate>
-  --logFilePath=<logFilePath> --stdoutLevel=<stdoutLevel> --fileLevel=<fileLevel> --sso=<sso> --mfa=<mfa> --viewportWidth=<viewportWidth>
-  --viewportHeight=<viewportHeight> --fromDate=<fromDate> --toDate=<toDate> --clientId=<clientId> --clientSecret=<clientSecret>
-  --redirectUri=<redirectUri> --subscriptionKey=<subscriptionKey> --association=<association> --termsOffered=<termsOffered>
-  --groupsPath=<groupsPath> --year=<year> --csv=<csv> --resume=<resume> url
+  msar snapshot -hbtagA --o=<outputPath> --u=<username> --p=<password> --ignoreErrors --logRequests --pretty --headless --devtools --quit --active --future --expired --studentData --metadata --serviceAccountToken=<serviceAccountToken> --concurrency=<concurrency> --rate=<rate> --logFilePath=<logFilePath> --stdoutLevel=<stdoutLevel> --fileLevel=<fileLevel> --sso=<sso> --mfa=<mfa> --viewportWidth=<viewportWidth> --viewportHeight=<viewportHeight> --fromDate=<fromDate> --toDate=<toDate> --clientId=<clientId> --clientSecret=<clientSecret> --redirectUri=<redirectUri> --subscriptionKey=<subscriptionKey> --association=<association> --termsOffered=<termsOffered> --groupsPath=<groupsPath> --year=<year> --csv=<csv> --resume=<resume> url
 ```
 
 ## Arguments
