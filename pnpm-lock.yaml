@@ -444,9 +444,15 @@ importers:
       '@qui-cli/core':
         specifier: ^4.1.0
         version: 4.1.0(@qui-cli/colors@3.0.1(@qui-cli/plugin@3.0.0))(@qui-cli/plugin@3.0.0)
+      '@qui-cli/env':
+        specifier: ^4.1.0
+        version: 4.1.0(@qui-cli/plugin@3.0.0)(@qui-cli/root@3.0.1(@qui-cli/plugin@3.0.0))
       '@qui-cli/log':
         specifier: ^3.1.0
         version: 3.1.0(@qui-cli/colors@3.0.1(@qui-cli/plugin@3.0.0))(@qui-cli/plugin@3.0.0)(@qui-cli/root@3.0.1(@qui-cli/plugin@3.0.0))
+      '@qui-cli/markdown':
+        specifier: 0.0.1
+        version: 0.0.1(@qui-cli/colors@3.0.1(@qui-cli/plugin@3.0.0))(@qui-cli/core@4.1.0(@qui-cli/colors@3.0.1(@qui-cli/plugin@3.0.0))(@qui-cli/plugin@3.0.0))(@qui-cli/plugin@3.0.0)(@qui-cli/root@3.0.1(@qui-cli/plugin@3.0.0))
       '@qui-cli/plugin':
         specifier: ^3.0.0
         version: 3.0.0
@@ -1479,6 +1485,14 @@ packages:
     resolution: {integrity: sha512-tkOTrDKmJbLiAlkw/gzjkcqIyxW2enZreGTgYOJqOcIyE9T6HmTecRngZG/QM6y1GyYvEqz0Uz8bramnt7s+mg==}
     peerDependencies:
       '@qui-cli/colors': 3.x
+      '@qui-cli/plugin': 3.x
+      '@qui-cli/root': 3.x
+
+  '@qui-cli/markdown@0.0.1':
+    resolution: {integrity: sha512-gDZiUkO8l8HQ3buBddi8J0A85sw8MUZcZ7DKlAo0IXcnqvYV3Sm70g1MOqsZD3U6gDcXQwJCD9w1ipN2/M26zw==}
+    peerDependencies:
+      '@qui-cli/colors': 3.x
+      '@qui-cli/core': 4.x
       '@qui-cli/plugin': 3.x
       '@qui-cli/root': 3.x
 
@@ -6460,6 +6474,14 @@ snapshots:
       ora: 8.2.0
       strip-ansi: 7.1.2
       winston: 3.18.3
+
+  '@qui-cli/markdown@0.0.1(@qui-cli/colors@3.0.1(@qui-cli/plugin@3.0.0))(@qui-cli/core@4.1.0(@qui-cli/colors@3.0.1(@qui-cli/plugin@3.0.0))(@qui-cli/plugin@3.0.0))(@qui-cli/plugin@3.0.0)(@qui-cli/root@3.0.1(@qui-cli/plugin@3.0.0))':
+    dependencies:
+      '@qui-cli/colors': 3.0.1(@qui-cli/plugin@3.0.0)
+      '@qui-cli/core': 4.1.0(@qui-cli/colors@3.0.1(@qui-cli/plugin@3.0.0))(@qui-cli/plugin@3.0.0)
+      '@qui-cli/plugin': 3.0.0
+      '@qui-cli/root': 3.0.1(@qui-cli/plugin@3.0.0)
+      strip-ansi: 7.1.2
 
   '@qui-cli/plugin@3.0.0':
     dependencies:
