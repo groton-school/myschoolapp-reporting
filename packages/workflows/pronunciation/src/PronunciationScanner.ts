@@ -81,6 +81,7 @@ export class PronunciationScanner {
               !sas_url &&
               request.resourceType() === 'xhr' &&
               /* TODO probably not a durable test
+              Issue URL: https://github.com/groton-school/myschoolapp-reporting/issues/266
                *
                * At the moment, empirically, the request to download the name
                * pronunciation recordings is the only one from the contact
