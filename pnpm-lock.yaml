@@ -566,9 +566,15 @@ importers:
       '@qui-cli/core':
         specifier: ^4.1.0
         version: 4.1.0(@qui-cli/colors@3.0.1(@qui-cli/plugin@3.0.0))(@qui-cli/plugin@3.0.0)
+      '@qui-cli/env':
+        specifier: ^4.1.0
+        version: 4.1.0(@qui-cli/plugin@3.0.0)(@qui-cli/root@3.0.1(@qui-cli/plugin@3.0.0))
       '@qui-cli/log':
         specifier: ^3.1.0
         version: 3.1.0(@qui-cli/colors@3.0.1(@qui-cli/plugin@3.0.0))(@qui-cli/plugin@3.0.0)(@qui-cli/root@3.0.1(@qui-cli/plugin@3.0.0))
+      '@qui-cli/markdown':
+        specifier: 0.0.1
+        version: 0.0.1(@qui-cli/colors@3.0.1(@qui-cli/plugin@3.0.0))(@qui-cli/core@4.1.0(@qui-cli/colors@3.0.1(@qui-cli/plugin@3.0.0))(@qui-cli/plugin@3.0.0))(@qui-cli/plugin@3.0.0)(@qui-cli/root@3.0.1(@qui-cli/plugin@3.0.0))
       '@qui-cli/plugin':
         specifier: ^3.0.0
         version: 3.0.0
