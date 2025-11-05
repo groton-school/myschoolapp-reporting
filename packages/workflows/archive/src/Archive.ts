@@ -59,7 +59,7 @@ export function options(): Plugin.Options {
   Positionals.allowOnlyNamedArgs();
   return {
     man: [
-      { level: 1, text: 'Archive options' },
+      { level: 3, text: 'Archive options' },
       {
         text: `Download the supporting files for an existing snapshot JSON file.. This command requires a path to an existing snapshot file (${Colors.positionalArg(SNAPSHOT_PATH)}).`
       }

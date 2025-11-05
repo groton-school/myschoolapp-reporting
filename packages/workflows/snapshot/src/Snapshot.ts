@@ -106,7 +106,7 @@ export function options(): Plugin.Options {
    */
   return {
     man: [
-      { level: 1, text: 'Snapshot options' },
+      { level: 3, text: 'Snapshot options' },
       {
         text: `Capture a JSON snapshot of an individual course. In addition to relevant flags and options, the only argument expected is a ${Colors.positionalArg('url')} to a page within the target course.`
       }

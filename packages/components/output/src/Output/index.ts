@@ -20,7 +20,7 @@ export function options(): Plugin.Options {
   return {
     man: [
       {
-        level: 1,
+        level: 3,
         text: 'Output options'
       }
     ],
