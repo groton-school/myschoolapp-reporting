@@ -39,10 +39,10 @@ npx msar snapshot --all https://example.myschoolapp.com
 
 At present the following verbs are implemented:
 
-- `snapshot` the course data for one or more classes from the LMS to a JSON data file.
-- `archive` the supporting files for an existing JSON snapshot file.
-- `inbox` analytics
-- `pronunciation` recording downloads
+- [`snapshot`](https://github.com/groton-school/myschoolapp-reporting/tree/main/packages/workflows/snapshot#readme) the course data for one or more classes from the LMS to a JSON data file.
+- [`archive`](https://github.com/groton-school/myschoolapp-reporting/tree/main/packages/workflows/archive#readme) the supporting files for an existing JSON snapshot file.
+- [`inbox`](https://github.com/groton-school/myschoolapp-reporting/tree/main/packages/workflows/inbox#readme) analytics
+- [`pronunciation`](https://github.com/groton-school/myschoolapp-reporting/tree/main/packages/workflows/pronunciation#readme) recording downloads
 
 For each command, the `--help` (or `-h`) flag provides usage instructions:
 
