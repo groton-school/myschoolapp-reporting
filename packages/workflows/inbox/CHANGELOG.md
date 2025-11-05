@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [0.1.3](https://github.com/groton-school/myschoolapp-reporting/compare/inbox/0.1.2...inbox/0.1.3) (2025-11-05)
+
+
+### Features
+
+* add devtools, properly encapsulate quit within PuppeteerSession ([1da25b3](https://github.com/groton-school/myschoolapp-reporting/commit/1da25b3182275ffc7e1ac8ab290274118f7464ed))
+
+
+### Bug Fixes
+
+* catch errors in workflows for clearer error reporting ([ffcc6a9](https://github.com/groton-school/myschoolapp-reporting/commit/ffcc6a9ad2d38a6aff1e54015e3e3a723277568a))
+
 ## [0.1.2](https://github.com/groton-school/myschoolapp-reporting/compare/inbox/0.1.1...inbox/0.1.2) (2025-03-25)
 
 
