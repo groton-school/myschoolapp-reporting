@@ -1,6 +1,6 @@
 {
   "name": "@msar/pronunciation",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "Capture name pronunciation recordings",
   "homepage": "https://github.com/groton-school/myschoolapp-reporting/tree/main/packages/workflows/pronunciation#readme",
   "repository": {
