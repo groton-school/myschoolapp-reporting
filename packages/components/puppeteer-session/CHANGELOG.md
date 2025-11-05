@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [0.1.3](https://github.com/groton-school/myschoolapp-reporting/compare/puppeteer-session/0.1.2...puppeteer-session/0.1.3) (2025-11-05)
+
+
+### Features
+
+* add devtools, properly encapsulate quit within PuppeteerSession ([1da25b3](https://github.com/groton-school/myschoolapp-reporting/commit/1da25b3182275ffc7e1ac8ab290274118f7464ed))
+
 ## [0.1.2](https://github.com/groton-school/myschoolapp-reporting/compare/puppeteer-session/0.1.1...puppeteer-session/0.1.2) (2025-03-25)
 
 
