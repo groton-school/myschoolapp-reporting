@@ -1,4 +1,4 @@
-# @msar/archive
+# @msar/snapshot
 
 A component of [msar](https://www.npmjs.com/package/,msar): Capture JSON snapshots of LMS course data
 
