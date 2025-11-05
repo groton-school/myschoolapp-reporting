@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [0.3.4](https://github.com/groton-school/myschoolapp-reporting/compare/snapshot/0.3.3...snapshot/0.3.4) (2025-11-05)
+
+
+### Features
+
+* add devtools, properly encapsulate quit within PuppeteerSession ([1da25b3](https://github.com/groton-school/myschoolapp-reporting/commit/1da25b3182275ffc7e1ac8ab290274118f7464ed))
+* **snapshot,types.snapshot:** improved typoing for media albums ([48844e5](https://github.com/groton-school/myschoolapp-reporting/commit/48844e595e35698d3408502d45fb71b00196d709))
+
+
+### Bug Fixes
+
+* catch errors in workflows for clearer error reporting ([ffcc6a9](https://github.com/groton-school/myschoolapp-reporting/commit/ffcc6a9ad2d38a6aff1e54015e3e3a723277568a))
+* navigate to topics to avoid Canvas redirects ([1967c60](https://github.com/groton-school/myschoolapp-reporting/commit/1967c60f82a5790c2611fece843e2ab099f2c3a4))
+
 ## [0.3.3](https://github.com/groton-school/myschoolapp-reporting/compare/snapshot/0.3.2...snapshot/0.3.3) (2025-03-25)
 
 
