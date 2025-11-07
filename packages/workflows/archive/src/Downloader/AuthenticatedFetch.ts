@@ -34,6 +34,7 @@ export class Downloader
 {
   private outputPath: string;
   private emitter = new EventEmitter();
+  private keepAliveProcess?: NodeJS.Timeout;
 
   public constructor({ host }: Options) {
     super(`https://${host}`);
@@ -45,13 +46,25 @@ export class Downloader
   }
 
   private keepAlive() {
-    setTimeout(
+    this.keepAliveProcess = setTimeout(
       () => {
-        this.page.reload();
-        this.keepAlive();
+        try {
+          this.page.reload();
+          this.keepAlive();
+          // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        } catch (_) {
+          // ignore TargetCloseError
+        }
       },
       5 * 60 * 1000
     );
+  }
+
+  public async close() {
+    if (this.keepAliveProcess) {
+      clearTimeout(this.keepAliveProcess);
+    }
+    await super.close();
   }
 
   public async download(url: string, filename?: string) {
