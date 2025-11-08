@@ -4,6 +4,16 @@ A component of [msar](https://www.npmjs.com/package/msar): Capture JSON snapshot
 
 ![NPM Version](https://img.shields.io/npm/v/@msar/snapshot)
 
+## Install
+
+This workflow is a subcommand of the [msar](https://www.npmjs.com/package/msar) tool, which can be installed using `npm` (or your preferred equivalent):
+
+```bash
+npm install -g msar
+```
+
+It depends on [Node.js](https://nodejs.org/) which provides the `npm` package manager tool when installed.
+
 ## Usage:
 
 ```bash
@@ -148,7 +158,7 @@ Capture all sections (default: false, positional argument url is used to identif
 
 #### `--fromDate=<fromDate>`
 
-Starting date for date-based filter where relevant (Default: "11/7/2025")
+Starting date for date-based filter where relevant (Default: "11/8/2025")
 
 #### `--toDate=<toDate>`
 
