@@ -7,7 +7,7 @@ A component of [msar](https://www.npmjs.com/package/msar): Capture JSON snapshot
 ## Usage:
 
 ```bash
-  msar snapshot -hbtagA --o=<outputPath> --u=<username> --p=<password> --ignoreErrors --logRequests --pretty --headless --devtools --quit --active --future --expired --studentData --metadata --serviceAccountToken=<serviceAccountToken> --concurrency=<concurrency> --rate=<rate> --logFilePath=<logFilePath> --stdoutLevel=<stdoutLevel> --fileLevel=<fileLevel> --sso=<sso> --mfa=<mfa> --viewportWidth=<viewportWidth> --viewportHeight=<viewportHeight> --fromDate=<fromDate> --toDate=<toDate> --clientId=<clientId> --clientSecret=<clientSecret> --redirectUri=<redirectUri> --subscriptionKey=<subscriptionKey> --association=<association> --termsOffered=<termsOffered> --groupsPath=<groupsPath> --year=<year> --csv=<csv> --resume=<resume> url
+  msar snapshot -hbtagA --o=<outputPath> --u=<username> --p=<password> --ignoreErrors --logRequests --pretty --headless --devtools --quit --active --future --expired --studentData --metadata --concurrency=<concurrency> --rate=<rate> --logFilePath=<logFilePath> --stdoutLevel=<stdoutLevel> --fileLevel=<fileLevel> --serviceAccountToken=<serviceAccountToken> --sso=<sso> --mfa=<mfa> --viewportWidth=<viewportWidth> --viewportHeight=<viewportHeight> --fromDate=<fromDate> --toDate=<toDate> --clientId=<clientId> --clientSecret=<clientSecret> --redirectUri=<http://localhost:XXXX/path/to/redirect> --subscriptionKey=<subscriptionKey> --association=<association> --termsOffered=<termsOffered> --groupsPath=<groupsPath> --year=<year> --csv=<csv> --resume=<resume> url
 ```
 
 ## Arguments
@@ -16,19 +16,23 @@ A component of [msar](https://www.npmjs.com/package/msar): Capture JSON snapshot
 
 Get usage information
 
-### 1Password integration
+## `--concurrency=<n>`
 
-#### `--serviceAccountToken=<serviceAccountToken>`
+The number of concurrent threads to run (Default: 1)
 
-1Password service account token (defaults to OP_SERVICE_ACCOUNT_TOKEN} environment variable, if present)
-
-#### `--concurrency=<n>`
-
-The number of concurrent threads to run (default 1)
-
-#### `--rate=<n>`
+## `--rate=<n>`
 
 The number of server requests allowed per second
+
+### Workflow behavior options
+
+#### `--ignoreErrors`
+
+Continue run even if errors are encountered (Default: true, use --no-ignoreErrors to disable)
+
+#### `--logRequests`
+
+Log fetch requests and responses for analysis and debugging (Default: false)
 
 ### Logging options
 
@@ -38,21 +42,17 @@ Path to log file (optional)
 
 #### `--stdoutLevel=<stdoutLevel>`
 
-Log level to console stdout: "all", "trace", "debug", "info", "warning", "error", "fatal", or "off" (default: "info")
+Log level to console stdout: "all", "trace", "debug", "info", "warning", "error", "fatal", or "off" (Default: "info")
 
 #### `--fileLevel=<fileLevel>`
 
-Log level to log file (if --logFilePath provided): "all", "trace", "debug", "info", "warning", "error", "fatal", or "off" (default: "all")
+Log level to log file (if --logFilePath provided): "all", "trace", "debug", "info", "warning", "error", "fatal", or "off" (Default: "all")
 
-### Workflow behavior options
+### 1Password integration
 
-#### `--ignoreErrors`
+#### `--serviceAccountToken=<serviceAccountToken>`
 
-Continue run even if errors are encountered (default: true, use --no-ignoreErrors to halt on errors)
-
-#### `--logRequests`
-
-Log fetch requests and responses for analysis and debugging (default: false)
+1Password service account token (required if any secret references are present in the environment)
 
 ### Output options
 
@@ -68,7 +68,7 @@ Pretty print output to file (if --outputPath option is used)
 
 #### `--headless`
 
-Run Puppeteer's Chrome instance headless (default: false)
+Run Puppeteer's Chrome instance headless (Default: false)
 
 #### `--devtools`
 
@@ -76,7 +76,7 @@ Open Chrome DevTools with the window
 
 #### `--quit`
 
-Quit Puppeteer's Chrome instance on successful completion (default: true, --no-quit to leave Puppeteer's Chrome instance open)
+Quit Puppeteer's Chrome instance on successful completion (Default: true, use --no-quit to disable)
 
 #### `-u<username> --username=<username>`
 
@@ -96,7 +96,11 @@ MySchoolApp MFA configuration (currently only accepts "entra-id", will use the v
 
 #### `--viewportWidth=<n>`
 
+Default: 0
+
 #### `--viewportHeight=<n>`
+
+Default: 0
 
 ### Snapshot options
 
@@ -104,47 +108,47 @@ Capture a JSON snapshot of an individual course. In addition to relevant flags a
 
 #### `--active`
 
-Show currently active items (default: true)
+Show currently active items (Default: true, use --no-active to disable)
 
 #### `--future`
 
-Show future items (default: true)
+Show future items (Default: true, use --no-future to disable)
 
 #### `--expired`
 
-Show expired items (default: true)
+Show expired items (Default: true, use --no-expired to disable)
 
 #### `-b --bulletinBoard`
 
-Include the course Bulletin Board in the snapshot (default true)
+Include the course Bulletin Board in the snapshot (Default: true, use --no-bulletinBoard to disable)
 
 #### `-t --topics`
 
-Include the course Topics in the snapshot (default true)
+Include the course Topics in the snapshot (Default: true, use --no-topics to disable)
 
 #### `-a --assignments`
 
-Include the course Assignments in the snapshot (default true)
+Include the course Assignments in the snapshot (Default: true, use --no-assignments to disable)
 
 #### `-g --gradebook`
 
-Include the course Gradebook in the snapshot (default true)
+Include the course Gradebook in the snapshot (Default: true, use --no-gradebook to disable)
 
 #### `--studentData`
 
-Include student data in the course snapshot (default true, i.e. --no-studentData which preempts any other flags that have been set)
+Include student data in the course snapshot (Default: true, use --no-studentData to disable)
 
 #### `--metadata`
 
-Include additional :SnapshotName.metadata.json recording the parameters of the snapshot command. (default true, use --no-metadata to disable)
+Include additional :SnapshotName.metadata.json recording the parameters of the snapshot command. (Default: true, use --no-metadata to disable)
 
 #### `-A --all`
 
-Capture all sections (default: false, positional argument url is used to identify MySchoolApp instance)
+Capture all sections (default: false, positional argument url is used to identify MySchoolApp instance) (Default: false)
 
 #### `--fromDate=<fromDate>`
 
-Starting date for date-based filter where relevant (default is today's date: "11/4/2025")
+Starting date for date-based filter where relevant (Default: "11/7/2025")
 
 #### `--toDate=<toDate>`
 
@@ -158,9 +162,9 @@ SKY API app client ID, will use value in environment variable SKY_CLIENT_ID if p
 
 SKY API app client secret, will use value in environment variable SKY_CLIENT_SECRET if present
 
-#### `--redirectUri=<redirectUri>`
+#### `--redirectUri=<http://localhost:XXXX/path/to/redirect>`
 
-SKY API app redirect URI, will use value in environment variable SKY_REDIRECT_URI if present (must be of the form http://localhost:XXXX/path/to/redirect were XXXX is a unique port)
+SKY API app redirect URI, will use value in environment variable SKY_REDIRECT_URI if present
 
 #### `--subscriptionKey=<subscriptionKey>`
 
@@ -180,7 +184,7 @@ Path to output directory or file to save filtered groups listing (include placeh
 
 #### `--year=<year>`
 
-If --all flag is used, which year to download. (Default: "2025 - 2026")
+If --all flag is used, which year to download. (Default: "2025 - 2026") (Default: "2025 - 2026")
 
 #### `--csv=<csv>`
 

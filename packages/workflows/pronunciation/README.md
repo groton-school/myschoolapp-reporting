@@ -7,7 +7,7 @@ A component of [msar](https://www.npmjs.com/package/msar): Capture name pronunci
 ## Usage:
 
 ```bash
-  msar pronunciation -h --o=<outputPath> --u=<username> --p=<password> --ignoreErrors --logRequests --pretty --headless --devtools --quit --download --serviceAccountToken=<serviceAccountToken> --concurrency=<concurrency> --rate=<rate> --logFilePath=<logFilePath> --stdoutLevel=<stdoutLevel> --fileLevel=<fileLevel> --sso=<sso> --mfa=<mfa> --viewportWidth=<viewportWidth> --viewportHeight=<viewportHeight> --column=<column> --user=<user> instanceURL [pathToSourceCsvFile]
+  msar pronunciation -h --o=<outputPath> --u=<username> --p=<password> --ignoreErrors --logRequests --pretty --headless --devtools --quit --download --concurrency=<concurrency> --rate=<rate> --logFilePath=<logFilePath> --stdoutLevel=<stdoutLevel> --fileLevel=<fileLevel> --serviceAccountToken=<serviceAccountToken> --sso=<sso> --mfa=<mfa> --viewportWidth=<viewportWidth> --viewportHeight=<viewportHeight> --column=<column> --user=<user> instanceURL [pathToSourceCsvFile]
 ```
 
 ## Arguments
@@ -16,19 +16,23 @@ A component of [msar](https://www.npmjs.com/package/msar): Capture name pronunci
 
 Get usage information
 
-### 1Password integration
+## `--concurrency=<n>`
 
-#### `--serviceAccountToken=<serviceAccountToken>`
+The number of concurrent threads to run (Default: 1)
 
-1Password service account token (defaults to OP_SERVICE_ACCOUNT_TOKEN} environment variable, if present)
-
-#### `--concurrency=<n>`
-
-The number of concurrent threads to run (default 1)
-
-#### `--rate=<n>`
+## `--rate=<n>`
 
 The number of server requests allowed per second
+
+### Workflow behavior options
+
+#### `--ignoreErrors`
+
+Continue run even if errors are encountered (Default: true, use --no-ignoreErrors to disable)
+
+#### `--logRequests`
+
+Log fetch requests and responses for analysis and debugging (Default: false)
 
 ### Logging options
 
@@ -38,27 +42,23 @@ Path to log file (optional)
 
 #### `--stdoutLevel=<stdoutLevel>`
 
-Log level to console stdout: "all", "trace", "debug", "info", "warning", "error", "fatal", or "off" (default: "info")
+Log level to console stdout: "all", "trace", "debug", "info", "warning", "error", "fatal", or "off" (Default: "info")
 
 #### `--fileLevel=<fileLevel>`
 
-Log level to log file (if --logFilePath provided): "all", "trace", "debug", "info", "warning", "error", "fatal", or "off" (default: "all")
+Log level to log file (if --logFilePath provided): "all", "trace", "debug", "info", "warning", "error", "fatal", or "off" (Default: "all")
 
-### Workflow behavior options
+### 1Password integration
 
-#### `--ignoreErrors`
+#### `--serviceAccountToken=<serviceAccountToken>`
 
-Continue run even if errors are encountered (default: true, use --no-ignoreErrors to halt on errors)
-
-#### `--logRequests`
-
-Log fetch requests and responses for analysis and debugging (default: false)
+1Password service account token (required if any secret references are present in the environment)
 
 ### Output options
 
 #### `-o<outputPath> --outputPath=<outputPath>`
 
-Path to output directory or file to save command output (default: "/Users/sbattis/Documents/GitHub/myschoolapp-reporting", will use the value in environment variable OUTPUT_PATH if present)
+Path to output directory or file to save command output, will use the value in environment variable OUTPUT_PATH if present
 
 #### `--pretty`
 
@@ -68,7 +68,7 @@ Pretty print output to file (if --outputPath option is used)
 
 #### `--headless`
 
-Run Puppeteer's Chrome instance headless (default: true)
+Run Puppeteer's Chrome instance headless (Default: true, use --no-headless to disable)
 
 #### `--devtools`
 
@@ -76,7 +76,7 @@ Open Chrome DevTools with the window
 
 #### `--quit`
 
-Quit Puppeteer's Chrome instance on successful completion (default: true, --no-quit to leave Puppeteer's Chrome instance open)
+Quit Puppeteer's Chrome instance on successful completion (Default: true, use --no-quit to disable)
 
 #### `-u<username> --username=<username>`
 
@@ -96,7 +96,11 @@ MySchoolApp MFA configuration (currently only accepts "entra-id", will use the v
 
 #### `--viewportWidth=<n>`
 
+Default: 0
+
 #### `--viewportHeight=<n>`
+
+Default: 0
 
 ### Name pronunciation options
 
@@ -106,12 +110,12 @@ Due to the number of impersonated clicks necessary for this workflow, running --
 
 #### `--column=<column>`
 
-Column label for CSV input (pathToSourceCsvFile) column containing Blackbaud Usesr IDs to scan for name pronunciations. Required if opening a CSV file. (default: "User ID")
+Column label for CSV input (pathToSourceCsvFile) column containing Blackbaud Usesr IDs to scan for name pronunciations. Required if opening a CSV file. (Default: "User ID")
 
 #### `--user=<user>`
 
-A Blackbaud user ID to scan. May be set multiple times to scan multiple individual users. If set, pathToSourceCsvFile path to CSV file is not required. Can be set multiple times
+A Blackbaud user ID to scan. May be set multiple times to scan multiple individual users. If set, pathToSourceCsvFile path to CSV file is not required. (Default: ) Can be set multiple times
 
 #### `--download`
 
-Download name pronunciation recordings (default: true, --no-download to skip)
+Download name pronunciation recordings (Default: true, use --no-download to disable)

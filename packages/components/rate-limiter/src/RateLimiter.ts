@@ -31,7 +31,7 @@ export function options(): Plugin.Options {
   return {
     num: {
       concurrency: {
-        description: `The number of concurrent threads to run (default ${Colors.value(_concurrency)})`,
+        description: `The number of concurrent threads to run`,
         default: _concurrency
       },
       rate: {

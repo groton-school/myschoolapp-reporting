@@ -1,4 +1,3 @@
-import { Colors } from '@qui-cli/colors';
 import * as Plugin from '@qui-cli/plugin';
 
 export type Configuration = Plugin.Configuration & {
@@ -36,13 +35,11 @@ export function options(): Plugin.Options {
     ],
     flag: {
       ignoreErrors: {
-        description: `Continue run even if errors are encountered (default: ${Colors.value(
-          props.ignoreErrors
-        )}${props.ignoreErrors ? `, use ${Colors.value('--no-ignoreErrors')} to halt on errors` : ''})`,
+        description: `Continue run even if errors are encountered`,
         default: props.ignoreErrors
       },
       logRequests: {
-        description: `Log fetch requests and responses for analysis and debugging (default: ${Colors.value(props.logRequests)})`,
+        description: `Log fetch requests and responses for analysis and debugging`,
         default: props.logRequests
       }
     }

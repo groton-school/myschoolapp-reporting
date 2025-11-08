@@ -1,5 +1,5 @@
 import { Colors } from '@qui-cli/colors';
-import '@qui-cli/env/1Password.js';
+import '@qui-cli/env-1password';
 import * as Plugin from '@qui-cli/plugin';
 import * as Storage from './Storage.js';
 

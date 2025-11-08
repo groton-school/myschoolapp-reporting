@@ -59,7 +59,7 @@ export function options(): Plugin.Options {
 
     opt: {
       column: {
-        description: `Column label for CSV input (${Colors.positionalArg(CSV_ARG)}) column containing Blackbaud Usesr IDs to scan for name pronunciations. Required if opening a CSV file. (default: ${Colors.quotedValue(`"${column}"`)})`,
+        description: `Column label for CSV input (${Colors.positionalArg(CSV_ARG)}) column containing Blackbaud Usesr IDs to scan for name pronunciations. Required if opening a CSV file.`,
         default: column
       }
     },
@@ -71,7 +71,7 @@ export function options(): Plugin.Options {
     },
     flag: {
       download: {
-        description: `Download name pronunciation recordings (default: ${Colors.value(download)}, ${Colors.value('--no-download')} to skip)`,
+        description: `Download name pronunciation recordings`,
         default: download
       }
     }

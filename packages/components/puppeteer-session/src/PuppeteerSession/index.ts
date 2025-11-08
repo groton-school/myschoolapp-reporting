@@ -1,5 +1,5 @@
 import { Colors } from '@qui-cli/colors';
-import '@qui-cli/env/1Password.js';
+import '@qui-cli/env-1password';
 import * as Plugin from '@qui-cli/plugin';
 import { Base } from './Base.js';
 import * as Storage from './Storage.js';
@@ -42,18 +42,14 @@ export function options(): Plugin.Options {
     ],
     flag: {
       headless: {
-        description: `Run Puppeteer's Chrome instance headless (default: ${Colors.value(
-          Storage.headless()
-        )})`,
+        description: `Run Puppeteer's Chrome instance headless`,
         default: Storage.headless()
       },
       devtools: {
         description: `Open Chrome DevTools with the window`
       },
       quit: {
-        description: `Quit Puppeteer's Chrome instance on successful completion (default: ${Colors.value(Storage.quit())}, ${Colors.value(
-          `--no-quit`
-        )} to leave Puppeteer's Chrome instance open)`,
+        description: `Quit Puppeteer's Chrome instance on successful completion`,
         default: Storage.quit()
       }
     },
@@ -69,12 +65,12 @@ export function options(): Plugin.Options {
       sso: {
         description: `MySchoolApp SSO configuration (currently only accepts ${Colors.quotedValue(
           '"entra-id"'
-        )}, will use the value in environment variable ${Colors.value(PUPPETEER_SSO)} if present)`
+        )}, will use the value in environment variable ${Colors.varName(PUPPETEER_SSO)} if present)`
       },
       mfa: {
         description: `MySchoolApp MFA configuration (currently only accepts ${Colors.quotedValue(
           '"entra-id"'
-        )}, will use the value in environment variable ${Colors.value(PUPPETEER_MFA)} if present)`
+        )}, will use the value in environment variable ${Colors.varName(PUPPETEER_MFA)} if present)`
       }
     },
     num: {

@@ -26,6 +26,7 @@
   "dependencies": {
     "@msar/types.snapshot": "workspace:*",
     "@oauth2-cli/sky-api": "^0.2.2",
+    "@qui-cli/colors": "^3.1.0",
     "csv-parse": "^5.6.0",
     "datadirect": "workspace:*",
     "ora": "^8.2.0",
@@ -39,19 +40,18 @@
     "@msar/puppeteer-session": "workspace:*",
     "@msar/rate-limiter": "workspace:*",
     "@msar/workflow": "workspace:*",
-    "@qui-cli/colors": "^3.0.1",
-    "@qui-cli/core": "^4.1.0",
-    "@qui-cli/env": "^4.1.0",
-    "@qui-cli/log": "^3.1.0",
-    "@qui-cli/markdown": "0.0.1",
-    "@qui-cli/plugin": "^3.0.0",
-    "@qui-cli/progress": "^3.0.1",
-    "@qui-cli/root": "^3.0.1",
+    "@qui-cli/core": "^5.0.0",
+    "@qui-cli/env-1password": "^1.0.4",
+    "@qui-cli/log": "^4.0.0",
+    "@qui-cli/markdown": "^1.0.1",
+    "@qui-cli/plugin": "^4.0.0",
+    "@qui-cli/progress": "^3.0.3",
+    "@qui-cli/root": "^3.0.3",
     "@tsconfig/node20": "^20.1.6",
     "commit-and-tag-version": "^12.6.0",
     "del-cli": "^6.0.0",
     "npm-run-all": "^4.1.5",
-    "typescript": "5.8.3"
+    "typescript": "^5.9.3"
   },
   "peerDependencies": {
     "@msar/datadirect-puppeteer": "0.x",
@@ -60,11 +60,10 @@
     "@msar/puppeteer-session": "0.x",
     "@msar/rate-limiter": "0.x",
     "@msar/workflow": "0.x",
-    "@qui-cli/colors": "3.x",
-    "@qui-cli/core": "4.x",
-    "@qui-cli/env": "4.x",
-    "@qui-cli/log": "3.x",
-    "@qui-cli/plugin": "3.x",
+    "@qui-cli/core": "5.x",
+    "@qui-cli/env-1password": "1.x",
+    "@qui-cli/log": "4.x",
+    "@qui-cli/plugin": "4.x",
     "@qui-cli/root": "3.x"
   }
 }

@@ -74,7 +74,7 @@ export function options(): Plugin.Options {
 
     opt: {
       column: {
-        description: `Column label for CSV input (${Colors.positionalArg(CSV)}) column containing user identifier for inboxes to analyze. Required if opening a CSV of user identifiers. (default: ${Colors.quotedValue(`"${column}"`)})`,
+        description: `Column label for CSV input (${Colors.positionalArg(CSV)}) column containing user identifier for inboxes to analyze. Required if opening a CSV of user identifiers.`,
         default: column
       },
       searchIn: {
@@ -87,7 +87,7 @@ export function options(): Plugin.Options {
           .replace(
             /, ([^,]+)$/,
             ' or $1'
-          )} (default: ${Colors.quotedValue(`"${searchIn}"`)})`,
+          )}`,
         default: searchIn
       }
     },

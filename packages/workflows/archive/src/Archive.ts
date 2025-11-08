@@ -72,15 +72,16 @@ export function options(): Plugin.Options {
     },
     opt: {
       include: {
-        description: `Comma-separated list of regular expressions to match URLs to be included in download (e.g. ${Colors.quotedValue(
+        description: `Comma-separated list of regular expressions to match URLs to be included in download`,
+        hint: Colors.quotedValue(
           '"^\\/,example\\.com"'
-        )}, default: ${Colors.quotedValue(`"${include.join(', ').slice(1, -1)}"`)} to include only URLs that are paths on the LMS's servers)`,
+        ),
         default: include.join(',').slice(1, -1)
       },
       exclude: {
-        description: `Comma-separated list of regular expressions to match URLs to exclude from download (e.g. ${Colors.quotedValue(
-          '"example\\.com,foo\\..+\\.com"'
-        )}, default: ${Colors.quotedValue(`"${exclude.join(', ').slice(1, -1)}`)})`,
+        description: `Comma-separated list of regular expressions to match URLs to exclude from download`,
+        hint: Colors.quotedValue( '"example\\.com,foo\\..+\\.com"'
+        ),
         default: exclude.join(',').slice(1, -1)
       }
     }

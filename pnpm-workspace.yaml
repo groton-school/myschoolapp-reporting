@@ -1,8 +1,13 @@
 packages:
-  - 'packages/*'
+  - packages/*
   - '!packages/components'
-  - 'packages/components/*'
+  - packages/components/*
   - '!packages/workflows'
-  - 'packages/workflows/*'
-  - '!pacakages/types'
-  - 'packages/types/*'
+  - packages/workflows/*
+  - '!packages/types'
+  - packages/types/*
+
+onlyBuiltDependencies:
+  - esbuild
+  - nx
+  - puppeteer

@@ -7,7 +7,7 @@ A component of [msar](https://www.npmjs.com/package/msar): Create a local archiv
 ## Usage:
 
 ```bash
-  msar archive -h --o=<outputPath> --u=<username> --p=<password> --ignoreErrors --logRequests --pretty --headless --devtools --quit --retry --serviceAccountToken=<serviceAccountToken> --logFilePath=<logFilePath> --stdoutLevel=<stdoutLevel> --fileLevel=<fileLevel> --concurrency=<concurrency> --rate=<rate> --sso=<sso> --mfa=<mfa> --viewportWidth=<viewportWidth> --viewportHeight=<viewportHeight> --include=<include> --exclude=<exclude> snapshotPath
+  msar archive -h --o=<outputPath> --u=<username> --p=<password> --ignoreErrors --logRequests --pretty --headless --devtools --quit --retry --concurrency=<concurrency> --rate=<rate> --logFilePath=<logFilePath> --stdoutLevel=<stdoutLevel> --fileLevel=<fileLevel> --serviceAccountToken=<serviceAccountToken> --sso=<sso> --mfa=<mfa> --viewportWidth=<viewportWidth> --viewportHeight=<viewportHeight> --include=<"^\\/,example\\.com"> --exclude=<"example\\.com,foo\\..+\\.com"> snapshotPath
 ```
 
 ## Arguments
@@ -16,11 +16,23 @@ A component of [msar](https://www.npmjs.com/package/msar): Create a local archiv
 
 Get usage information
 
-### 1Password integration
+### Workflow behavior options
 
-#### `--serviceAccountToken=<serviceAccountToken>`
+#### `--ignoreErrors`
 
-1Password service account token (defaults to OP_SERVICE_ACCOUNT_TOKEN} environment variable, if present)
+Continue run even if errors are encountered (Default: true, use --no-ignoreErrors to disable)
+
+#### `--logRequests`
+
+Log fetch requests and responses for analysis and debugging (Default: false)
+
+#### `--concurrency=<n>`
+
+The number of concurrent threads to run (Default: 1)
+
+#### `--rate=<n>`
+
+The number of server requests allowed per second
 
 ### Logging options
 
@@ -30,35 +42,23 @@ Path to log file (optional)
 
 #### `--stdoutLevel=<stdoutLevel>`
 
-Log level to console stdout: "all", "trace", "debug", "info", "warning", "error", "fatal", or "off" (default: "info")
+Log level to console stdout: "all", "trace", "debug", "info", "warning", "error", "fatal", or "off" (Default: "info")
 
 #### `--fileLevel=<fileLevel>`
 
-Log level to log file (if --logFilePath provided): "all", "trace", "debug", "info", "warning", "error", "fatal", or "off" (default: "all")
+Log level to log file (if --logFilePath provided): "all", "trace", "debug", "info", "warning", "error", "fatal", or "off" (Default: "all")
 
-### Workflow behavior options
+### 1Password integration
 
-#### `--ignoreErrors`
+#### `--serviceAccountToken=<serviceAccountToken>`
 
-Continue run even if errors are encountered (default: true, use --no-ignoreErrors to halt on errors)
-
-#### `--logRequests`
-
-Log fetch requests and responses for analysis and debugging (default: false)
-
-#### `--concurrency=<n>`
-
-The number of concurrent threads to run (default 1)
-
-#### `--rate=<n>`
-
-The number of server requests allowed per second
+1Password service account token (required if any secret references are present in the environment)
 
 ### Output options
 
 #### `-o<outputPath> --outputPath=<outputPath>`
 
-Path to output directory or file to save command output (default: "/Users/sbattis/Documents/GitHub/myschoolapp-reporting", will use the value in environment variable OUTPUT_PATH if present)
+Path to output directory or file to save command output, will use the value in environment variable OUTPUT_PATH if present
 
 #### `--pretty`
 
@@ -68,7 +68,7 @@ Pretty print output to file (if --outputPath option is used)
 
 #### `--headless`
 
-Run Puppeteer's Chrome instance headless (default: false)
+Run Puppeteer's Chrome instance headless (Default: false)
 
 #### `--devtools`
 
@@ -76,7 +76,7 @@ Open Chrome DevTools with the window
 
 #### `--quit`
 
-Quit Puppeteer's Chrome instance on successful completion (default: true, --no-quit to leave Puppeteer's Chrome instance open)
+Quit Puppeteer's Chrome instance on successful completion (Default: true, use --no-quit to disable)
 
 #### `-u<username> --username=<username>`
 
@@ -96,7 +96,11 @@ MySchoolApp MFA configuration (currently only accepts "entra-id", will use the v
 
 #### `--viewportWidth=<n>`
 
+Default: 0
+
 #### `--viewportHeight=<n>`
+
+Default: 0
 
 ### Archive options
 
@@ -106,10 +110,10 @@ Download the supporting files for an existing snapshot JSON file.. This command 
 
 Retry a previously started archive process. snapshotPath must be the path to an existing archive index.json file.
 
-#### `--include=<include>`
+#### `--include=<"^\/,example\.com">`
 
-Comma-separated list of regular expressions to match URLs to be included in download (e.g. "^\\/,example\\.com", default: "^\\/.*" to include only URLs that are paths on the LMS's servers)
+Comma-separated list of regular expressions to match URLs to be included in download (Default: "^\\/.*")
 
-#### `--exclude=<exclude>`
+#### `--exclude=<"example\.com,foo\..+\.com">`
 
-Comma-separated list of regular expressions to match URLs to exclude from download (e.g. "example\\.com,foo\\..+\\.com", default: "^https?:)
+Comma-separated list of regular expressions to match URLs to exclude from download (Default: "^https?:")

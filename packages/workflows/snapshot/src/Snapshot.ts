@@ -1,7 +1,7 @@
 import { Output } from '@msar/output';
 import { Colors } from '@qui-cli/colors';
 import { Positionals } from '@qui-cli/core';
-import '@qui-cli/env/1Password.js';
+import '@qui-cli/env-1password';
 import { Log } from '@qui-cli/log';
 import * as Plugin from '@qui-cli/plugin';
 import * as Section from './Section.js';
@@ -113,49 +113,49 @@ export function options(): Plugin.Options {
     ],
     flag: {
       active: {
-        description: `Show currently active items (default: ${Colors.value(config.payload?.active)})`,
+        description: `Show currently active items`,
         default: config.payload?.active
       },
       future: {
-        description: `Show future items (default: ${Colors.value(config.payload?.future)})`,
+        description: `Show future items`,
         default: config.payload?.future
       },
       expired: {
-        description: `Show expired items (default: ${Colors.value(config.payload?.expired)})`,
+        description: `Show expired items`,
         default: config.payload?.expired
       },
       bulletinBoard: {
-        description: `Include the course Bulletin Board in the snapshot (default ${Colors.value(config.bulletinBoard)})`,
+        description: `Include the course Bulletin Board in the snapshot`,
         short: 'b',
         default: config.bulletinBoard
       },
       topics: {
-        description: `Include the course Topics in the snapshot (default ${Colors.value(config.topics)})`,
+        description: `Include the course Topics in the snapshot`,
         short: 't',
         default: config.topics
       },
       assignments: {
         short: 'a',
-        description: `Include the course Assignments in the snapshot (default ${Colors.value(config.assignments)})`,
+        description: `Include the course Assignments in the snapshot`,
         default: config.assignments
       },
       gradebook: {
-        description: `Include the course Gradebook in the snapshot (default ${Colors.value(config.gradebook)})`,
+        description: `Include the course Gradebook in the snapshot`,
         short: 'g',
         default: config.gradebook
       },
       studentData: {
-        description: `Include student data in the course snapshot (default ${Colors.value(config.studentData)}, i.e. ${Colors.value('--no-studentData')} which preempts any other flags that have been set)`,
+        description: `Include student data in the course snapshot`,
         default: config.studentData
       },
       metadata: {
-        description: `Include additional ${Colors.value(':SnapshotName.metadata.json')} recording the parameters of the snapshot command. (default ${Colors.value(config.metadata)}, use ${Colors.value('--no-metadata')} to disable)`,
+        description: `Include additional ${Colors.value(':SnapshotName.metadata.json')} recording the parameters of the snapshot command.`,
         default: config.metadata
       }
     },
     opt: {
       fromDate: {
-        description: `Starting date for date-based filter where relevant (default is today's date: ${Colors.quotedValue(`"${config.fromDate}"`)})`,
+        description: `Starting date for date-based filter where relevant`,
         default: config.fromDate
       },
       toDate: {
@@ -168,7 +168,8 @@ export function options(): Plugin.Options {
         description: `SKY API app client secret, will use value in environment variable ${Colors.value('SKY_CLIENT_SECRET')} if present`
       },
       redirectUri: {
-        description: `SKY API app redirect URI, will use value in environment variable ${Colors.value('SKY_REDIRECT_URI')} if present (must be of the form ${Colors.url('http://localhost:XXXX/path/to/redirect')} were ${Colors.value('XXXX')} is a unique port)`
+        description: `SKY API app redirect URI, will use value in environment variable ${Colors.value('SKY_REDIRECT_URI')} if present`,
+        hint: Colors.url('http://localhost:XXXX/path/to/redirect')
       },
       subscriptionKey: {
         description: `SKY API subscription access key, will use value in environment variable ${Colors.value('SKY_SUBSCRIPTION_KEY')} if present`

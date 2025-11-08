@@ -10,11 +10,9 @@ export type Configuration = Plugin.Configuration & {
 
 let _outputPath = Root.path();
 export const OUTPUT_PATH = 'OUTPUT_PATH';
-let _outputPathDescription = `Path to output directory or file to save command output (default: ${Colors.quotedValue(
-  `"${_outputPath}"`
-)}, will use the value in environment variable ${Colors.value(
+let _outputPathDescription = `Path to output directory or file to save command output, will use the value in environment variable ${Colors.varName(
   OUTPUT_PATH
-)} if present)`;
+)} if present`;
 let _pretty = false;
 
 export function outputPath(value?: string) {
