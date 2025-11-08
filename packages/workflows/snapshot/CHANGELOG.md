@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [0.3.5](https://github.com/groton-school/myschoolapp-reporting/compare/snapshot/0.3.4...snapshot/0.3.5) (2025-11-08)
+
+
+### Bug Fixes
+
+* update to latest @qui-cli/* ([9abc514](https://github.com/groton-school/myschoolapp-reporting/commit/9abc514e58489409b9d7f1a888ffe254d9822df3))
+
 ## [0.3.4](https://github.com/groton-school/myschoolapp-reporting/compare/snapshot/0.3.3...snapshot/0.3.4) (2025-11-05)
 
 
