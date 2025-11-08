@@ -78,7 +78,7 @@ Pretty print output to file (if --outputPath option is used)
 
 #### `--headless`
 
-Run Puppeteer's Chrome instance headless (Default: true, use --no-headless to disable)
+Run Puppeteer's Chrome instance headless (Default: false)
 
 #### `--devtools`
 
