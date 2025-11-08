@@ -10,8 +10,6 @@ import fs from 'node:fs/promises';
 import path from 'node:path';
 import { PronunciationScanner } from './PronunciationScanner.js';
 
-PuppeteerSession.configure({ headless: true });
-
 export type Configuration = {
   users?: string[];
   column?: string;
