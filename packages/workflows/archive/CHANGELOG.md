@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [0.1.8](https://github.com/groton-school/myschoolapp-reporting/compare/archive/0.1.7...archive/0.1.8) (2025-11-08)
+
+
+### Bug Fixes
+
+* keep-alive process now ends when AuthenticatedFetch closes ([843c0dd](https://github.com/groton-school/myschoolapp-reporting/commit/843c0dd7fddbc04ad60915f5be828a6989b27369))
+* update to latest @qui-cli/* ([9abc514](https://github.com/groton-school/myschoolapp-reporting/commit/9abc514e58489409b9d7f1a888ffe254d9822df3))
+
 ## [0.1.7](https://github.com/groton-school/myschoolapp-reporting/compare/archive/0.1.6...archive/0.1.7) (2025-11-05)
 
 
