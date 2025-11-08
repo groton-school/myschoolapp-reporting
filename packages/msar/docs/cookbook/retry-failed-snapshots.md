@@ -3,13 +3,13 @@
 Suppose you attempt to snapshot a bunch of sections:
 
 ```sh
-npx msar snapshot ...args... --all "https://example.myschoolapp.com"
+msar snapshot ...args... --all "https://example.myschoolapp.com"
 ```
 
 If any snapshots fail, in addition to your expected `snapshot.json` file there will also be a `snapshot.errors.json` file.
 
 ```sh
-jq -r '.[].lead_pk' "snapshot.errors.json" | xargs -I % npx msar snapshot ...args... "https://example.myschoolapp.com/app/faculty#academicclass/%/0/bulletinboard"
+jq -r '.[].lead_pk' "snapshot.errors.json" | xargs -I % msar snapshot ...args... "https://example.myschoolapp.com/app/faculty#academicclass/%/0/bulletinboard"
 find . -name <pattern> -exec jq '. + [ inputs ]' snapshot.json {} + > snapshot.merged.json
 ```
 
@@ -23,7 +23,7 @@ Extract the list of group ID numbers from `snapshot.errors.json`…
 `| xargs -I %`
 …pass that list into `xargs` one at time, to execute the next command, replacing the `%` in the command with the actual group ID number…
 
-`npx msar snapshot ...args... "https://example.myschoolapp.com/app/faculty#academicclass/%/0/bulletinboard"`
+`msar snapshot ...args... "https://example.myschoolapp.com/app/faculty#academicclass/%/0/bulletinboard"`
 …and take a snapshot (with the same options as before) but _without_ the `--all` flag (i.e. snapshotting a single course) for which we are building the URL.
 
 Then…

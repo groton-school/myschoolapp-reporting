@@ -2,7 +2,7 @@
 
 This can probably be scripted, but I have not bothered to do so yet, since my experience has been that only about 8-12 downloads for an entire year of courses are going astray at this point.
 
-Having run `npx msar download`… (with the `--pretty` flag, ideally)
+Having run `msar archive`… (with the `--pretty` flag, ideally)
 
 1. Open the default downloads directory for Chrome `$HOME/Downloads` in the Finder/File Explorer
 2. Open `path/to/downloads/directory/index.json` (in a text editor that can handle several million lines of text, e.g. TextMate)

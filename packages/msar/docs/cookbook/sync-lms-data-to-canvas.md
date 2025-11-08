@@ -32,9 +32,9 @@ _N.B. also that the `*_REDIRECT_URI` values *must* point to different ports. Thi
 Then…
 
 ```sh
-npx msar snapshot --outputPath path/to/snapshot --csv path/to/groups.csv "https://example.myschoolapp.com"
-npx msar archive --outputPath path/to/archive path/to/snapshot.json
-npx canvas-import --duplicates reset --canvasInstanceUrl "https://example.instructure.com" path/to/archive/index.json
+msar snapshot --outputPath path/to/snapshot --csv path/to/groups.csv "https://example.myschoolapp.com"
+msar archive --outputPath path/to/archive path/to/snapshot.json
+canvas-import --duplicates reset --canvasInstanceUrl "https://example.instructure.com" path/to/archive/index.json
 ```
 
 _CAUTION: the script above uses the `--duplicates reset` flag for `canvas-import`. This will reset the contents of any affected courses and replace them with the imported content from Blackbaud._

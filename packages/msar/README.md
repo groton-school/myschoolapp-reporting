@@ -34,7 +34,7 @@ npm i msar
 This tool uses a command-and-verb model, in which you invoke the command (`msar`: **M**y**S**chool**A**pp **R**eporting) and give it a verb with the arguments that are desired. The command is invoked using the Node command runner `npx`. For example:
 
 ```sh
-npx msar snapshot --all https://example.myschoolapp.com
+msar snapshot --all https://example.myschoolapp.com
 ```
 
 At present the following verbs are implemented:
@@ -47,13 +47,13 @@ At present the following verbs are implemented:
 For each command, the `--help` (or `-h`) flag provides usage instructions:
 
 ```sh
-npx msar snaphot --help
+msar snaphot --help
 ```
 
 To capture the course information for a single course:
 
 ```sh
-npx msar snapshot https://example.myschoolapp.com/app/faculty#academicclass/12345678/0/bulletinboard
+msar snapshot https://example.myschoolapp.com/app/faculty#academicclass/12345678/0/bulletinboard
 ```
 
 ## Documentation
