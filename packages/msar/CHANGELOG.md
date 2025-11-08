@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [0.8.8](https://github.com/groton-school/myschoolapp-reporting/compare/msar/0.8.7...msar/0.8.8) (2025-11-08)
+
+
+### Bug Fixes
+
+* update to latest @qui-cli/* ([9abc514](https://github.com/groton-school/myschoolapp-reporting/commit/9abc514e58489409b9d7f1a888ffe254d9822df3))
+
 ## [0.8.7](https://github.com/groton-school/myschoolapp-reporting/compare/msar/0.8.6...msar/0.8.7) (2025-11-05)
 
 
