@@ -33,7 +33,7 @@
     "puppeteer": "^23.11.1"
   },
   "devDependencies": {
-    "@battis/typescript-tricks": "^0.7.4",
+    "@battis/typescript-tricks": "^0.7.5",
     "@msar/datadirect-puppeteer": "workspace:*",
     "@msar/debug": "workspace:*",
     "@msar/output": "workspace:*",
@@ -42,9 +42,9 @@
     "@msar/snapshot": "workspace:*",
     "@msar/workflow": "workspace:*",
     "@qui-cli/core": "^5.0.0",
-    "@qui-cli/env-1password": "^1.0.4",
-    "@qui-cli/log": "^4.0.0",
-    "@qui-cli/markdown": "^1.0.1",
+    "@qui-cli/env-1password": "^1.0.5",
+    "@qui-cli/log": "^4.0.1",
+    "@qui-cli/markdown": "^1.1.0",
     "@qui-cli/plugin": "^4.0.0",
     "@qui-cli/progress": "^3.0.4",
     "@qui-cli/root": "^3.0.4",

@@ -26,11 +26,11 @@ It depends on [Node.js](https://nodejs.org/) which provides the `npm` package ma
 
 Get usage information
 
-## `--concurrency=<n>`
+#### `--concurrency=<n>`
 
 The number of concurrent threads to run (Default: 1)
 
-## `--rate=<n>`
+#### `--rate=<n>`
 
 The number of server requests allowed per second
 
@@ -158,7 +158,7 @@ Capture all sections (default: false, positional argument url is used to identif
 
 #### `--fromDate=<fromDate>`
 
-Starting date for date-based filter where relevant (Default: "11/8/2025")
+Starting date for date-based filter where relevant (Default: "11/12/2025")
 
 #### `--toDate=<toDate>`
 

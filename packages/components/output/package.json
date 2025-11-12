@@ -27,8 +27,8 @@
   "devDependencies": {
     "@msar/debug": "workspace:*",
     "@msar/workflow": "workspace:*",
-    "@qui-cli/env-1password": "^1.0.4",
-    "@qui-cli/log": "^4.0.0",
+    "@qui-cli/env-1password": "^1.0.5",
+    "@qui-cli/log": "^4.0.1",
     "@qui-cli/plugin": "^4.0.0",
     "@qui-cli/root": "^3.0.4",
     "@tsconfig/node20": "^20.1.6",

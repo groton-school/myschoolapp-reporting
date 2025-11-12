@@ -26,11 +26,11 @@ It depends on [Node.js](https://nodejs.org/) which provides the `npm` package ma
 
 Get usage information
 
-## `--concurrency=<n>`
+#### `--concurrency=<n>`
 
 The number of concurrent threads to run (Default: 1)
 
-## `--rate=<n>`
+#### `--rate=<n>`
 
 The number of server requests allowed per second
 

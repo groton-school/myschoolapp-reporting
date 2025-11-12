@@ -59,7 +59,7 @@ export function options(): Plugin.Options {
   Positionals.allowOnlyNamedArgs();
   return {
     man: [
-      { level: 3, text: 'Archive options' },
+      { level: 1, text: 'Archive options' },
       {
         text: `Download the supporting files for an existing snapshot JSON file.. This command requires a path to an existing snapshot file (${Colors.positionalArg(SNAPSHOT_PATH)}).`
       }
@@ -73,15 +73,12 @@ export function options(): Plugin.Options {
     opt: {
       include: {
         description: `Comma-separated list of regular expressions to match URLs to be included in download`,
-        hint: Colors.quotedValue(
-          '"^\\/,example\\.com"'
-        ),
+        hint: Colors.quotedValue('"^\\/,example\\.com"'),
         default: include.join(',').slice(1, -1)
       },
       exclude: {
         description: `Comma-separated list of regular expressions to match URLs to exclude from download`,
-        hint: Colors.quotedValue( '"example\\.com,foo\\..+\\.com"'
-        ),
+        hint: Colors.quotedValue('"example\\.com,foo\\..+\\.com"'),
         default: exclude.join(',').slice(1, -1)
       }
     }

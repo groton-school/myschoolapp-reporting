@@ -26,7 +26,7 @@
   },
   "devDependencies": {
     "@battis/descriptive-types": "^0.2.6",
-    "@battis/typescript-tricks": "^0.7.4",
+    "@battis/typescript-tricks": "^0.7.5",
     "@msar/types.snapshot": "workspace:*",
     "@tsconfig/node20": "^20.1.6",
     "commit-and-tag-version": "^12.6.0",

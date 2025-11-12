@@ -46,7 +46,7 @@ export function options(): Plugin.Options {
   Positionals.requireAtLeast(1);
   return {
     man: [
-      { level: 3, text: 'Name pronunciation options' },
+      { level: 1, text: 'Name pronunciation options' },
       {
         text: `Scan users for name pronunciation recordings. Include the URL of the LMS instance as ${Colors.positionalArg(URL_ARG)} (required) and path to a CSV file of Blackbaud User IDs to analyze as ${Colors.positionalArg(CSV_ARG)} (optional if ${Colors.value('--user')} is set). Intended to receive a generic ${Colors.url('UserWorkList.csv')} export from the LMS as input, outputting the same CSV file to ${Colors.value('--outputPath')} with data columns appended.`
       },

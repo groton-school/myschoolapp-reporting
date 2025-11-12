@@ -29,9 +29,9 @@
     "ora": "^8.2.0"
   },
   "devDependencies": {
-    "@battis/typescript-tricks": "^0.7.4",
+    "@battis/typescript-tricks": "^0.7.5",
     "@msar/puppeteer-session": "workspace:*",
-    "@qui-cli/log": "^4.0.0",
+    "@qui-cli/log": "^4.0.1",
     "@qui-cli/plugin": "^4.0.0",
     "@tsconfig/node20": "^20.1.6",
     "commit-and-tag-version": "^12.6.0",

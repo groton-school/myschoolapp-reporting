@@ -14,6 +14,7 @@ Markdown.configure({
   pre: fs
     .readFileSync(path.join(import.meta.dirname, '../docs/pre.md'))
     .toString(),
+  headingLevelAdjustment: 2,
   overwrite: true
 });
 Positionals.requireNoMoreThan(0);
