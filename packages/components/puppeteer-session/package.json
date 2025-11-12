@@ -1,6 +1,6 @@
 {
   "name": "@msar/puppeteer-session",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "homepage": "https://github.com/groton-school/myschoolapp-reporting/tree/main/packages/components/puppeteer-session#readme",
   "repository": {
     "type": "git",
