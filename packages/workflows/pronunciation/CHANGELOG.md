@@ -2,6 +2,8 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [0.0.4](https://github.com/groton-school/myschoolapp-reporting/compare/pronunciation/0.0.3...pronunciation/0.0.4) (2025-11-12)
+
 ## [0.0.3](https://github.com/groton-school/myschoolapp-reporting/compare/pronunciation/0.0.2...pronunciation/0.0.3) (2025-11-08)
 
 
