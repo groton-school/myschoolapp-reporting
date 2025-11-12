@@ -2,6 +2,8 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [0.1.9](https://github.com/groton-school/myschoolapp-reporting/compare/archive/0.1.8...archive/0.1.9) (2025-11-12)
+
 ## [0.1.8](https://github.com/groton-school/myschoolapp-reporting/compare/archive/0.1.7...archive/0.1.8) (2025-11-08)
 
 
