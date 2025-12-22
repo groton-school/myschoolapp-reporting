@@ -1,4 +1,5 @@
 // TODO replace node-fetch dependency with native fetch when bumping to node@>=21
+// Issue URL: https://github.com/groton-school/myschoolapp-reporting/issues/269
 import nodeFetch, { RequestInfo, RequestInit } from 'node-fetch';
 import * as OAuth2 from 'oauth2-cli';
 
