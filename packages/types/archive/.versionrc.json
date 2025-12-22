@@ -1,5 +1,5 @@
 {
   "path": ".",
   "tag-prefix": "types/archive/",
-  "releaseCommitMessageFormat": "chore(types.archive): @msar/types.archive@{{currentTag}}"
+  "releaseCommitMessageFormat": "chore: release @msar/types.archive@{{currentTag}}"
 }

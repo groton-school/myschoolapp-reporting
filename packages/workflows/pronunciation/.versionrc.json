@@ -1,5 +1,5 @@
 {
   "path": ".",
-  "tag-prefix": "pronunciation/",
-  "releaseCommitMessageFormat": "chore(pronunciation): @msar/pronunciation@{{currentTag}}"
+  "tag-prefix": "workflows/pronunciation/",
+  "releaseCommitMessageFormat": "chore: release @msar/pronunciation@{{currentTag}}"
 }

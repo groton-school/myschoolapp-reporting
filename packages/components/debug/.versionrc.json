@@ -1,5 +1,5 @@
 {
   "path": ".",
-  "tag-prefix": "debug/",
-  "releaseCommitMessageFormat": "chore(debug): @msar/debug@{{currentTag}}"
+  "tag-prefix": "components/debug/",
+  "releaseCommitMessageFormat": "chore: release @msar/debug@{{currentTag}}"
 }

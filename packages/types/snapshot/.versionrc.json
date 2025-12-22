@@ -1,5 +1,5 @@
 {
   "path": ".",
   "tag-prefix": "types/snapshot/",
-  "releaseCommitMessageFormat": "chore(types.snapshot): @msar/types.snapshot@{{currentTag}}"
+  "releaseCommitMessageFormat": "chore: release @msar/types.snapshot@{{currentTag}}"
 }
