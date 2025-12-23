@@ -18,14 +18,14 @@ export * from './PhotoCategoryCollection.js';
 export async function categories() {
   return new Paginated<PhotoCategory>(
     await SkyAPI.requestJSON<PhotoCategoryCollection>(
-      '/school/v1/contentmanagement/photoalbums/categories'
+      'https://api.sky.blackbaud.com/school/v1/contentmanagement/photoalbums/categories'
     )
   );
 }
 
 export async function list(request: ContentManagementRequest) {
   return await SkyAPI.requestJSON<PhotoAlbum[]>(
-    '//school/v1/contentmanagement/photoalbums/list',
+    'https://api.sky.blackbaud.com/school/v1/contentmanagement/photoalbums/list',
     'POST',
     JSON.stringify(request)
   );
@@ -34,7 +34,7 @@ export async function list(request: ContentManagementRequest) {
 export async function photosById(album_id: number) {
   return new Paginated<MediaItem>(
     await SkyAPI.requestJSON<MediaItemCollection>(
-      `/school/v1/contentmanagement/photoalbums/${album_id}`
+      `https://api.sky.blackbaud.com/school/v1/contentmanagement/photoalbums/${album_id}`
     )
   );
 }

@@ -18,7 +18,7 @@ export async function assignmentsBySection(
 ) {
   return new Paginated<Assignment>(
     await SkyAPI.requestJSON<AssignmentCollection>(
-      `school/v1/academics/sections/${section_id}/assignments?${buildQuery(params)}`
+      `https://api.sky.blackbaud.com/school/v1/academics/sections/${section_id}/assignments?${buildQuery(params)}`
     )
   );
 }
