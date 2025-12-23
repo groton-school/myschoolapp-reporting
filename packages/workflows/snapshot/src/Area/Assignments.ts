@@ -1,7 +1,7 @@
 import { DatadirectPuppeteer } from '@msar/datadirect-puppeteer';
 import { Debug } from '@msar/debug';
 import * as Snapshot from '@msar/types.snapshot';
-import { School } from '@oauth2-cli/sky-api';
+import { school } from '@oauth2-cli/sky-api';
 import { sky } from '../SkyAPI.js';
 import * as Base from './Base.js';
 
@@ -14,9 +14,9 @@ export const snapshot: Base.Snapshot<Snapshot.Assignments.Data> = async ({
   Debug.withGroupId(sectionId, 'Start capturing assignments');
 
   const skyAssignments = (
-    (await sky().fetch(
+    await sky().fetch<school.v1.academics.sections.assignments.AssignmentCollection>(
       `/school/v1/academics/sections/${sectionId}/assignments`
-    )) as School.AssignmentList
+    )
   ).value;
 
   const assignmentList =
