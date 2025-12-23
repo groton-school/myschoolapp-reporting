@@ -3,6 +3,22 @@ import { Colors } from '@qui-cli/colors';
 import { Env } from '@qui-cli/env-1password';
 import * as Plugin from '@qui-cli/plugin';
 
+OAuth2.configure({
+  authorization_endpoint: 'https://app.blackbaud.com/oauth/authorize',
+  token_endpoint: 'https://oauth2.sky.blackbaud.com/token',
+  env: {
+    client_id: 'SKY_CLIENT_ID',
+    client_secret: 'SKY_CLIENT_SECRET',
+    redirect_uri: 'SKY_REDIRECT_URI',
+    token_path: 'SKY_TOKEN_PATH',
+    access_token: 'SKY_ACCESS_TOKEN'
+  },
+  suppress: {
+    authorizationEndpoint: true,
+    tokenEndpoint: true
+  }
+});
+
 export type Configuration = Plugin.Configuration & {
   subscription_key?: string;
   subscriptionKeyEnvVar: string;
@@ -15,21 +31,6 @@ const config: Configuration = {
 };
 
 export function configure(proposal: Partial<Configuration> = {}) {
-  OAuth2.configure({
-    authorization_endpoint: 'https://app.blackbaud.com/oauth/authorize',
-    token_endpoint: 'https://oauth2.sky.blackbaud.com/token',
-    env: {
-      client_id: 'SKY_CLIENT_ID',
-      client_secret: 'SKY_CLIENT_SECRET',
-      redirect_uri: 'SKY_REDIRECT_URI',
-      token_path: 'SKY_TOKEN_PATH',
-      access_token: 'SKY_ACCESS_TOKEN'
-    },
-    suppress: {
-      authorizationEndpoint: true,
-      tokenEndpoint: true
-    }
-  });
   for (const key in proposal) {
     if (proposal[key] !== undefined) {
       config[key] = proposal[key];
