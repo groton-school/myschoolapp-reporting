@@ -1,6 +1,6 @@
 import { buildQuery } from '../../../../../buildQuery.js';
 import * as SkyAPI from '../../../../../Client.js';
-import { Paginated } from '../../../../../paginated.js';
+import { Paginated } from '../../../../../Paginated.js';
 import { Assignment } from './Assignment.js';
 import { AssignmentCollection } from './AssignmentCollection.js';
 

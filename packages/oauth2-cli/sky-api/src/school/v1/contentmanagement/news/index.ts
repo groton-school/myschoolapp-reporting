@@ -1,5 +1,5 @@
 import * as SkyAPI from '../../../../Client.js';
-import { Paginated } from '../../../../paginated.js';
+import { Paginated } from '../../../../Paginated.js';
 import { ContentManagementRequest } from '../ContentManagementRequest.js';
 import { NewsCategory } from './NewsCategory.js';
 import { NewsCategoryCollection } from './NewsCategoryCollection.js';
