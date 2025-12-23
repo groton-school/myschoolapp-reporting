@@ -17,7 +17,7 @@ It depends on [Node.js](https://nodejs.org/) which provides the `npm` package ma
 ## Usage:
 
 ```bash
-  msar pronunciation -h --o=<outputPath> --u=<username> --p=<password> --ignoreErrors --logRequests --pretty --headless --devtools --quit --download --concurrency=<concurrency> --rate=<rate> --logFilePath=<logFilePath> --stdoutLevel=<stdoutLevel> --fileLevel=<fileLevel> --serviceAccountToken=<serviceAccountToken> --sso=<sso> --mfa=<mfa> --viewportWidth=<viewportWidth> --viewportHeight=<viewportHeight> --column=<column> --user=<user> instanceURL [pathToSourceCsvFile]
+  msar pronunciation -h --u=<username> --p=<password> --o=<outputPath> --ignoreErrors --logRequests --commands --silent --headless --devtools --quit --pretty --download --concurrency=<concurrency> --rate=<rate> --logFilePath=<logFilePath> --stdoutLevel=<stdoutLevel> --fileLevel=<fileLevel> --opAccount=<example.1password.com> --opItem=<opItem> --opToken=<opToken> --serviceAccountToken=<Deprecated> --sso=<sso> --mfa=<mfa> --viewportWidth=<viewportWidth> --viewportHeight=<viewportHeight> --column=<column> --user=<user> instanceURL [pathToSourceCsvFile]
 ```
 
 ## Arguments
@@ -58,21 +58,37 @@ Log level to console stdout: "all", "trace", "debug", "info", "warning", "error"
 
 Log level to log file (if --logFilePath provided): "all", "trace", "debug", "info", "warning", "error", "fatal", or "off" (Default: "all")
 
-### 1Password integration
+#### `--commands`
 
-#### `--serviceAccountToken=<serviceAccountToken>`
+Include shell commands in log (Default: true, use --no-commands to disable)
 
-1Password service account token (required if any secret references are present in the environment)
+#### `--silent`
 
-### Output options
+Hide command output (Default: false)
 
-#### `-o<outputPath> --outputPath=<outputPath>`
+### 1Password environment integration
 
-Path to output directory or file to save command output, will use the value in environment variable OUTPUT_PATH if present
+Store 1Password secret references in your environment, rather than the actual secrets.
 
-#### `--pretty`
+If 1Password secret references are stored in the environment, a 1Password service account token is required to access the secret values, which will be loaded into process.env. The service account token can be passed directly as the --opToken argument (e.g. example --opToken "(op item get SERVICE_ACCOUNT_TOKEN)") or, if the 1Password CLI tool is also installed, by simply passing the name or ID of the API Credential in your 1Password vault that holds the service account token (e.g. example --opItem SERVICE_ACCOUNT_TOKEN). If you are signed into multiple 1Password account, use the --opAccount argument to specify the account containing the token.
 
-Pretty print output to file (if --outputPath option is used)
+https://developer.1password.com/docs/cli
+
+#### `--opAccount=<example.1password.com>`
+
+1Password account to use (if signed into multiple)
+
+#### `--opItem=<opItem>`
+
+Name or ID of the 1Password API Credential item storing the 1Password service account token
+
+#### `--opToken=<opToken>`
+
+1Password service account token
+
+#### `--serviceAccountToken=<Deprecated>`
+
+1Password service account token
 
 ### Puppeteer options
 
@@ -111,6 +127,16 @@ Default: 0
 #### `--viewportHeight=<n>`
 
 Default: 0
+
+### Output options
+
+#### `-o<outputPath> --outputPath=<outputPath>`
+
+Path to output directory or file to save command output, will use the value in environment variable OUTPUT_PATH if present
+
+#### `--pretty`
+
+Pretty print output to file (if --outputPath option is used)
 
 ### Name pronunciation options
 
