@@ -34,12 +34,15 @@ export class SkyAPI {
     return this.token;
   }
 
-  public async fetch(endpoint: URL | RequestInfo, init?: RequestInit) {
+  public async fetch<T = unknown>(
+    endpoint: URL | RequestInfo,
+    init?: RequestInit
+  ): Promise<T> {
     await this.getToken();
     if (!this.token) {
       throw new Error('No access token');
     }
-    return await (
+    return (await (
       await nodeFetch(new URL(endpoint, 'https://api.sky.blackbaud.com'), {
         ...init,
         headers: {
@@ -48,6 +51,6 @@ export class SkyAPI {
           [SUBSCRIPTION_HEADER]: this.subscription_key
         }
       })
-    ).json();
+    ).json()) as T;
   }
 }
