@@ -1,5 +1,5 @@
+import { RoleModel } from '../../RoleModel.js';
 import { ImageSettings } from './ImageSettings.js';
-import { RoleModel } from './RoleModel.js';
 
 export type PhotoCategory = {
   id?: number;

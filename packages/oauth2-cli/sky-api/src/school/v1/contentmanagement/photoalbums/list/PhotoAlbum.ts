@@ -1,5 +1,5 @@
 import { URLString } from '@battis/descriptive-types';
-import { ContentCategory } from './ContentCategory.js';
+import { ContentCategory } from '../../ContentCategory.js';
 
 export type PhotoAlbum = {
   id?: number;
