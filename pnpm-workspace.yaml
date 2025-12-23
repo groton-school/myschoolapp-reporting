@@ -2,10 +2,12 @@ packages:
   - packages/*
   - '!packages/components'
   - packages/components/*
-  - '!packages/workflows'
-  - packages/workflows/*
+  - '!packages/oauth2-cli'
+  - packages/oauth2-cli/*
   - '!packages/types'
   - packages/types/*
+  - '!packages/workflows'
+  - packages/workflows/*
 
 onlyBuiltDependencies:
   - esbuild

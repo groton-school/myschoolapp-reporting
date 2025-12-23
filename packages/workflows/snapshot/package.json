@@ -25,7 +25,7 @@
   },
   "dependencies": {
     "@msar/types.snapshot": "workspace:*",
-    "@oauth2-cli/sky-api": "^0.2.2",
+    "@oauth2-cli/sky-api": "workspace:*",
     "@qui-cli/colors": "^3.1.0",
     "csv-parse": "^5.6.0",
     "datadirect": "workspace:*",
