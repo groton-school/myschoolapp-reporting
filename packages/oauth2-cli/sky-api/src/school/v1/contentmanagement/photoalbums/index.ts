@@ -1,7 +1,10 @@
 import * as SkyAPI from '../../../../Client.js';
+import { Paginated } from '../../../../paginated.js';
 import { ContentManagementRequest } from '../ContentManagementRequest.js';
+import { MediaItem } from './MediaItem.js';
 import { MediaItemCollection } from './MediaItemCollection.js';
 import { PhotoAlbum } from './PhotoAlbum.js';
+import { PhotoCategory } from './PhotoCategory.js';
 import { PhotoCategoryCollection } from './PhotoCategoryCollection.js';
 
 export * from './ImageDimension.js';
@@ -13,8 +16,10 @@ export * from './PhotoCategory.js';
 export * from './PhotoCategoryCollection.js';
 
 export async function categories() {
-  return await SkyAPI.requestJSON<PhotoCategoryCollection>(
-    '/school/v1/contentmanagement/photoalbums/categories'
+  return new Paginated<PhotoCategory>(
+    await SkyAPI.requestJSON<PhotoCategoryCollection>(
+      '/school/v1/contentmanagement/photoalbums/categories'
+    )
   );
 }
 
@@ -27,7 +32,9 @@ export async function list(request: ContentManagementRequest) {
 }
 
 export async function photosById(album_id: number) {
-  return await SkyAPI.requestJSON<MediaItemCollection>(
-    `/school/v1/contentmanagement/photoalbums/${album_id}`
+  return new Paginated<MediaItem>(
+    await SkyAPI.requestJSON<MediaItemCollection>(
+      `/school/v1/contentmanagement/photoalbums/${album_id}`
+    )
   );
 }

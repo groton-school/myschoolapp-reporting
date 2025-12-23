@@ -1,4 +1,6 @@
 import * as SkyAPI from '../../../../Client.js';
+import { Paginated } from '../../../../paginated.js';
+import { ContentCategory } from '../ContentCategory.js';
 import { ContentManagementRequest } from '../ContentManagementRequest.js';
 import { ContentAnnouncement } from './ContentAnnouncement.js';
 import { ContentAnnouncementCategoryCollection } from './ContentAnnouncementCategoryCollection.js';
@@ -8,8 +10,10 @@ export * from './ContentAnnouncementCategory.js';
 export * from './ContentAnnouncementCategoryCollection.js';
 
 export async function categories() {
-  return SkyAPI.requestJSON<ContentAnnouncementCategoryCollection>(
-    '/school/v1/contentmanagement/announcements/categories'
+  return new Paginated<ContentCategory>(
+    await SkyAPI.requestJSON<ContentAnnouncementCategoryCollection>(
+      '/school/v1/contentmanagement/announcements/categories'
+    )
   );
 }
 

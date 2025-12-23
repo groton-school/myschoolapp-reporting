@@ -1,5 +1,7 @@
 import { buildQuery } from '../../../../../buildQuery.js';
 import * as SkyAPI from '../../../../../Client.js';
+import { Paginated } from '../../../../../paginated.js';
+import { Assignment } from './Assignment.js';
 import { AssignmentCollection } from './AssignmentCollection.js';
 
 type Options = {
@@ -14,7 +16,9 @@ export async function assignmentsBySection(
   section_id: number,
   params: Options = {}
 ) {
-  return await SkyAPI.requestJSON<AssignmentCollection>(
-    `school/v1/academics/sections/${section_id}/assignments?${buildQuery(params)}`
+  return new Paginated<Assignment>(
+    await SkyAPI.requestJSON<AssignmentCollection>(
+      `school/v1/academics/sections/${section_id}/assignments?${buildQuery(params)}`
+    )
   );
 }
