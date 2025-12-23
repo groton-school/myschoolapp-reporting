@@ -6,7 +6,6 @@ import { Log } from '@qui-cli/log';
 import * as Plugin from '@qui-cli/plugin';
 import * as Section from './Section.js';
 import { Configuration } from './Section.js';
-import * as SkyAPI from './SkyAPI.js';
 
 Output.outputPathDescription(
   `Path to output directory or file to save command output (default: ${Colors.quotedValue(
@@ -160,19 +159,6 @@ export function options(): Plugin.Options {
       },
       toDate: {
         description: `ending date for data-based filter where relevant`
-      },
-      clientId: {
-        description: `SKY API app client ID, will use value in environment variable ${Colors.value('SKY_CLIENT_ID')} if present`
-      },
-      clientSecret: {
-        description: `SKY API app client secret, will use value in environment variable ${Colors.value('SKY_CLIENT_SECRET')} if present`
-      },
-      redirectUri: {
-        description: `SKY API app redirect URI, will use value in environment variable ${Colors.value('SKY_REDIRECT_URI')} if present`,
-        hint: Colors.url('http://localhost:XXXX/path/to/redirect')
-      },
-      subscriptionKey: {
-        description: `SKY API subscription access key, will use value in environment variable ${Colors.value('SKY_SUBSCRIPTION_KEY')} if present`
       }
     }
   };
@@ -180,13 +166,6 @@ export function options(): Plugin.Options {
 
 export function init({ values }: Plugin.ExpectedArguments<typeof options>) {
   const url = Positionals.get(COURSE_URL);
-  SkyAPI.init({
-    client_id: values.clientId || process.env.SKY_CLIENT_ID,
-    client_secret: values.clientSecret || process.env.SKY_CLIENT_SECRET,
-    subscription_key:
-      values.subscriptionKey || process.env.SKY_SUBSCRIPTION_KEY,
-    redirect_uri: values.redirectUri || process.env.SKY_REDIRECT_URI
-  });
   configure({ ...values, url });
 }
 
