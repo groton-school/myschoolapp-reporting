@@ -9,6 +9,7 @@ export * as gradebook from './gradebook/index.js';
 export * as LtiTool from './LtiTool/index.js';
 export * as media from './media/index.js';
 export * as message from './message/index.js';
+export * as Photo from './Photo/index.js';
 export * as Photocategory from './Photocategory/index.js';
 export * as Rubric from './Rubric/index.js';
 export * as schoolinfo from './schoolinfo/index.js';

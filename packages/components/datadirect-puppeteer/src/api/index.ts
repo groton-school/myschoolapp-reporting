@@ -11,6 +11,7 @@ export * as gradebook from './gradebook.js';
 export * as LtiTool from './LtiTool.js';
 export * as media from './media.js';
 export * as message from './message.js';
+export * as Photo from './Photo.js';
 export * as Photocategory from './Photocategory.js';
 export * as Rubric from './Rubric.js';
 export * as schoolinfo from './schoolinfo.js';
