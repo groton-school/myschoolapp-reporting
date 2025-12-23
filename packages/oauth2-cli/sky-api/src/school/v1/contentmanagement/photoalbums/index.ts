@@ -1,4 +1,33 @@
-export * as categories from './categories/index.js';
-export * as list from './list/index.js';
+import * as SkyAPI from '../../../../Client.js';
+import { ContentManagementRequest } from '../ContentManagementRequest.js';
+import { MediaItemCollection } from './MediaItemCollection.js';
+import { PhotoAlbum } from './PhotoAlbum.js';
+import { PhotoCategoryCollection } from './PhotoCategoryCollection.js';
+
+export * from './ImageDimension.js';
+export * from './ImageSettings.js';
 export * from './MediaItem.js';
 export * from './MediaItemCollection.js';
+export * from './PhotoAlbum.js';
+export * from './PhotoCategory.js';
+export * from './PhotoCategoryCollection.js';
+
+export async function categories() {
+  return await SkyAPI.requestJSON<PhotoCategoryCollection>(
+    '/school/v1/contentmanagement/photoalbums/categories'
+  );
+}
+
+export async function list(request: ContentManagementRequest) {
+  return await SkyAPI.requestJSON<PhotoAlbum[]>(
+    '//school/v1/contentmanagement/photoalbums/list',
+    'POST',
+    JSON.stringify(request)
+  );
+}
+
+export async function photosById(album_id: number) {
+  return await SkyAPI.requestJSON<MediaItemCollection>(
+    `/school/v1/contentmanagement/photoalbums/${album_id}`
+  );
+}

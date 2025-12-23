@@ -1,6 +1,6 @@
 import { DateTimeString } from '@battis/descriptive-types';
-import { ContentCategory } from '../../ContentCategory.js';
-import { MediaItem } from '../../photoalbums/MediaItem.js';
+import { ContentCategory } from '../ContentCategory.js';
+import { MediaItem } from '../photoalbums/MediaItem.js';
 
 export type NewsItem = {
   id?: number;

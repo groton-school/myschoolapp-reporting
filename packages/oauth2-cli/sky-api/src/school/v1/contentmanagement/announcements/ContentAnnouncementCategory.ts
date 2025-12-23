@@ -1,5 +1,5 @@
 import { URLString } from '@battis/descriptive-types';
-import { RoleModel } from './RoleModel.js';
+import { RoleModel } from '../RoleModel.js';
 
 export type ContentAnnouncementCategory = {
   category_id?: number;

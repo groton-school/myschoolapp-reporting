@@ -1,6 +1,6 @@
 import { URLString } from '@battis/descriptive-types';
-import { RoleModel } from '../../RoleModel.js';
-import { ImageSettings } from '../../photoalbums/categories/ImageSettings.js';
+import { RoleModel } from '../RoleModel.js';
+import { ImageSettings } from '../photoalbums/ImageSettings.js';
 
 export type NewsCategory = {
   category_id?: number;

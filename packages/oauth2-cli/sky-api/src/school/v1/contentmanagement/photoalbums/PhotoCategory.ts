@@ -1,4 +1,4 @@
-import { RoleModel } from '../../RoleModel.js';
+import { RoleModel } from '../RoleModel.js';
 import { ImageSettings } from './ImageSettings.js';
 
 export type PhotoCategory = {

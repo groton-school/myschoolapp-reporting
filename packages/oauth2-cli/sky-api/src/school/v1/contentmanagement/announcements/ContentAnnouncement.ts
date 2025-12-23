@@ -1,5 +1,5 @@
 import { DateTimeString } from '@battis/descriptive-types';
-import { ContentCategory } from './ContentCategory.js';
+import { ContentCategory } from '../ContentCategory.js';
 
 export type ContentAnnouncement = {
   id?: number;
