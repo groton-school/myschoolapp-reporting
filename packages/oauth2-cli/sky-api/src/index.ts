@@ -3,7 +3,7 @@
 import nodeFetch, { RequestInfo, RequestInit } from 'node-fetch';
 import * as OAuth2 from 'oauth2-cli';
 
-export * as School from './School/index.js';
+export * as school from './school/index.js';
 
 export type Credentials = Omit<
   OAuth2.Credentials,
