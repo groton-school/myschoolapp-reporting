@@ -31,7 +31,7 @@
   "devDependencies": {
     "@battis/typescript-tricks": "^0.7.5",
     "@msar/rate-limiter": "workspace:*",
-    "@qui-cli/env-1password": "^1.2.0",
+    "@qui-cli/env-1password": "^1.2.2",
     "@qui-cli/log": "^4.0.1",
     "@qui-cli/plugin": "^4.0.0",
     "@tsconfig/node20": "^20.1.8",

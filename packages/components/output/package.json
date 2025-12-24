@@ -27,7 +27,7 @@
   "devDependencies": {
     "@msar/debug": "workspace:*",
     "@msar/workflow": "workspace:*",
-    "@qui-cli/env-1password": "^1.2.0",
+    "@qui-cli/env-1password": "^1.2.2",
     "@qui-cli/log": "^4.0.1",
     "@qui-cli/plugin": "^4.0.0",
     "@qui-cli/root": "^3.0.4",
