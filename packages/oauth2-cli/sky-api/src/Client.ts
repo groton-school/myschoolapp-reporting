@@ -13,9 +13,11 @@ OAuth2.configure({
     token_path: 'SKY_TOKEN_PATH',
     access_token: 'SKY_ACCESS_TOKEN'
   },
+  man: { heading: 'Sky API options' },
   suppress: {
     authorizationEndpoint: true,
-    tokenEndpoint: true
+    tokenEndpoint: true,
+    tokenPath: true
   }
 });
 
