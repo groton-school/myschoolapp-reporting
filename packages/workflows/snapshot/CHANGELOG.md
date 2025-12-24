@@ -2,44 +2,39 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
-## [0.3.6](https://github.com/groton-school/myschoolapp-reporting/compare/snapshot/0.3.5...snapshot/0.3.6) (2025-11-12)
+## [0.3.6](https://github.com/groton-school/myschoolapp-reporting/compare/workflow/snapshot/0.3.5...workflow/snapshot/0.3.6) (2025-11-12)
 
-## [0.3.5](https://github.com/groton-school/myschoolapp-reporting/compare/snapshot/0.3.4...snapshot/0.3.5) (2025-11-08)
-
+## [0.3.5](https://github.com/groton-school/myschoolapp-reporting/compare/workflow/snapshot/0.3.4...workflow/snapshot/0.3.5) (2025-11-08)
 
 ### Bug Fixes
 
-* update to latest @qui-cli/* ([9abc514](https://github.com/groton-school/myschoolapp-reporting/commit/9abc514e58489409b9d7f1a888ffe254d9822df3))
+- update to latest @qui-cli/\* ([9abc514](https://github.com/groton-school/myschoolapp-reporting/commit/9abc514e58489409b9d7f1a888ffe254d9822df3))
 
-## [0.3.4](https://github.com/groton-school/myschoolapp-reporting/compare/snapshot/0.3.3...snapshot/0.3.4) (2025-11-05)
-
+## [0.3.4](https://github.com/groton-school/myschoolapp-reporting/compare/workflow/snapshot/0.3.3...workflow/snapshot/0.3.4) (2025-11-05)
 
 ### Features
 
-* add devtools, properly encapsulate quit within PuppeteerSession ([1da25b3](https://github.com/groton-school/myschoolapp-reporting/commit/1da25b3182275ffc7e1ac8ab290274118f7464ed))
-* **snapshot,types.snapshot:** improved typoing for media albums ([48844e5](https://github.com/groton-school/myschoolapp-reporting/commit/48844e595e35698d3408502d45fb71b00196d709))
-
+- add devtools, properly encapsulate quit within PuppeteerSession ([1da25b3](https://github.com/groton-school/myschoolapp-reporting/commit/1da25b3182275ffc7e1ac8ab290274118f7464ed))
+- **snapshot,types.snapshot:** improved typoing for media albums ([48844e5](https://github.com/groton-school/myschoolapp-reporting/commit/48844e595e35698d3408502d45fb71b00196d709))
 
 ### Bug Fixes
 
-* catch errors in workflows for clearer error reporting ([ffcc6a9](https://github.com/groton-school/myschoolapp-reporting/commit/ffcc6a9ad2d38a6aff1e54015e3e3a723277568a))
-* navigate to topics to avoid Canvas redirects ([1967c60](https://github.com/groton-school/myschoolapp-reporting/commit/1967c60f82a5790c2611fece843e2ab099f2c3a4))
+- catch errors in workflows for clearer error reporting ([ffcc6a9](https://github.com/groton-school/myschoolapp-reporting/commit/ffcc6a9ad2d38a6aff1e54015e3e3a723277568a))
+- navigate to topics to avoid Canvas redirects ([1967c60](https://github.com/groton-school/myschoolapp-reporting/commit/1967c60f82a5790c2611fece843e2ab099f2c3a4))
 
-## [0.3.3](https://github.com/groton-school/myschoolapp-reporting/compare/snapshot/0.3.2...snapshot/0.3.3) (2025-03-25)
-
+## [0.3.3](https://github.com/groton-school/myschoolapp-reporting/compare/workflow/snapshot/0.3.2...workflow/snapshot/0.3.3) (2025-03-25)
 
 ### Features
 
-* **types.snapshot,snapshot:** capture rubric data if associated with assignment ([06dc3b3](https://github.com/groton-school/myschoolapp-reporting/commit/06dc3b310a84b3734b7ba1eb0ffa1b800945c7c3))
+- **types.snapshot,snapshot:** capture rubric data if associated with assignment ([06dc3b3](https://github.com/groton-school/myschoolapp-reporting/commit/06dc3b310a84b3734b7ba1eb0ffa1b800945c7c3))
 
-## [0.3.2](https://github.com/groton-school/myschoolapp-reporting/compare/snapshot/0.3.1...snapshot/0.3.2) (2025-03-25)
-
+## [0.3.2](https://github.com/groton-school/myschoolapp-reporting/compare/workflow/snapshot/0.3.1...workflow/snapshot/0.3.2) (2025-03-25)
 
 ### Bug Fixes
 
-* **snapshot:** include datadirect.ImportAssignmentsGet in Assignment snapshot, as intended ([3fff145](https://github.com/groton-school/myschoolapp-reporting/commit/3fff145d6956f256d79070481e5f72bd03bb3af9))
+- **snapshot:** include datadirect.ImportAssignmentsGet in Assignment snapshot, as intended ([3fff145](https://github.com/groton-school/myschoolapp-reporting/commit/3fff145d6956f256d79070481e5f72bd03bb3af9))
 
-## [0.3.1](https://github.com/groton-school/myschoolapp-reporting/compare/snapshot/0.3.0...snapshot/0.3.1) (2025-03-20)
+## [0.3.1](https://github.com/groton-school/myschoolapp-reporting/compare/workflow/snapshot/0.3.0...workflow/snapshot/0.3.1) (2025-03-20)
 
 ### Features
 
@@ -50,7 +45,7 @@ All notable changes to this project will be documented in this file. See [commit
 
 - **snapshot:** remove incorrect merge of multiple items to same cell ([9143ec4](https://github.com/groton-school/myschoolapp-reporting/commit/9143ec4bdb1037ca5ec73d1fe26c00b56fb1aff9))
 
-## [0.3.0](https://github.com/groton-school/myschoolapp-reporting/compare/snapshot/0.2.1...snapshot/0.3.0) (2025-03-17)
+## [0.3.0](https://github.com/groton-school/myschoolapp-reporting/compare/workflow/snapshot/0.2.1...workflow/snapshot/0.3.0) (2025-03-17)
 
 ### ⚠ BREAKING CHANGES
 
@@ -60,7 +55,7 @@ All notable changes to this project will be documented in this file. See [commit
 
 - **snapshot:** remove load() method ([5f7e096](https://github.com/groton-school/myschoolapp-reporting/commit/5f7e096f72e8aab2aec756c42120bd08dc7abd70))
 
-## [0.2.1](https://github.com/groton-school/myschoolapp-reporting/compare/snapshot/0.2.0...snapshot/0.2.1) (2025-03-11)
+## [0.2.1](https://github.com/groton-school/myschoolapp-reporting/compare/workflow/snapshot/0.2.0...workflow/snapshot/0.2.1) (2025-03-11)
 
 ### Features
 
@@ -73,19 +68,19 @@ All notable changes to this project will be documented in this file. See [commit
 - **snapshot:** relax peer dependency versioning ([26314de](https://github.com/groton-school/myschoolapp-reporting/commit/26314de624e6c2cc7a27325678e56a8cc737b509))
 - **snapshot:** so long as TopicIndexId is sent, id value doesn’t matter ([1bdaafc](https://github.com/groton-school/myschoolapp-reporting/commit/1bdaafc48af2f9fd40905eeef31f60bbd6641c4c)), closes [#53](https://github.com/groton-school/myschoolapp-reporting/issues/53)
 
-## [0.2.0](https://github.com/battis/myschoolapp-reporting/compare/snapshot/0.1.2...snapshot/0.2.0) (2025-03-09)
+## [0.2.0](https://github.com/battis/myschoolapp-reporting/compare/workflow/snapshot/0.1.2...workflow/snapshot/0.2.0) (2025-03-09)
 
 ### Features
 
 - **snapshot:** merge SKY API assignment with scraped assignment ([a846a8b](https://github.com/battis/myschoolapp-reporting/commit/a846a8b2aae5b563acf818d722613638658043b6))
 
-## [0.1.2](https://github.com/battis/myschoolapp-reporting/compare/snapshot/0.1.1...snapshot/0.1.2) (2025-03-05)
+## [0.1.2](https://github.com/battis/myschoolapp-reporting/compare/workflow/snapshot/0.1.1...workflow/snapshot/0.1.2) (2025-03-05)
 
 ### Bug Fixes
 
 - **snapshot:** honor outputPath ([9283d21](https://github.com/battis/myschoolapp-reporting/commit/9283d218bc90363956b154f28e15fd591daf152b))
 
-## [0.1.1](https://github.com/battis/myschoolapp-reporting/compare/snapshot/0.1.0...snapshot/0.1.1) (2025-03-05)
+## [0.1.1](https://github.com/battis/myschoolapp-reporting/compare/workflow/snapshot/0.1.0...workflow/snapshot/0.1.1) (2025-03-05)
 
 ### Features
 
