@@ -1,6 +1,6 @@
 import { PathString } from '@battis/descriptive-types';
 import { ArrayElement } from '@battis/typescript-tricks';
-import { School } from '@oauth2-cli/sky-api';
+import { SkyAPI } from '@oauth2-cli/sky-api';
 import { api } from 'datadirect';
 
 type LinkItem<T = PathString> = Omit<
@@ -27,7 +27,7 @@ export type Item<T = PathString> = api.datadirect.ImportAssignmentsGet.Item &
     api.Assignment2.UserAssignmentDetailsGetAllData.Response,
     'LinkItems' | 'DownloadItems'
   > &
-  Partial<School.Assignment> & {
+  Partial<SkyAPI.school.v1.academics.sections.assignments.Assignment> & {
     LinkItems: LinkItem<T>[];
     DownloadItems: DownloadItem<T>[];
     Rubric?: api.Rubric.AssignmentRubric.Response;

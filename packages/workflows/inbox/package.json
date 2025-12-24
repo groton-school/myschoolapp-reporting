@@ -24,7 +24,7 @@
     "release": "commit-and-tag-version"
   },
   "dependencies": {
-    "@qui-cli/colors": "^3.1.0",
+    "@qui-cli/colors": "^3.1.1",
     "csv": "^6.4.1",
     "datadirect": "workspace:*",
     "moment": "^2.30.1"
@@ -34,15 +34,15 @@
     "@msar/output": "workspace:*",
     "@msar/puppeteer-session": "workspace:*",
     "@msar/workflow": "workspace:*",
-    "@qui-cli/core": "^5.0.0",
-    "@qui-cli/env-1password": "^1.0.5",
+    "@qui-cli/core": "^5.0.1",
+    "@qui-cli/env-1password": "^1.2.2",
     "@qui-cli/log": "^4.0.1",
     "@qui-cli/markdown": "^1.1.0",
     "@qui-cli/plugin": "^4.0.0",
     "@qui-cli/progress": "^3.0.4",
     "@qui-cli/root": "^3.0.4",
-    "@tsconfig/node20": "^20.1.6",
-    "commit-and-tag-version": "^12.6.0",
+    "@tsconfig/node20": "^20.1.8",
+    "commit-and-tag-version": "^12.6.1",
     "del-cli": "^6.0.0",
     "npm-run-all": "^4.1.5",
     "typescript": "^5.9.3"

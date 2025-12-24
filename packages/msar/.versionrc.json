@@ -1,5 +1,5 @@
 {
   "path": ".",
   "tag-prefix": "msar/",
-  "releaseCommitMessageFormat": "chore(msar): msar@{{currentTag}}"
+  "releaseCommitMessageFormat": "chore: release msar@{{currentTag}}"
 }
