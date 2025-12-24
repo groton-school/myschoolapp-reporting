@@ -1,0 +1,5 @@
+{
+  "path": ".",
+  "tag-prefix": "workflows/school-website/",
+  "releaseCommitMessageFormat": "chore: release @msar/school-website@{{currentTag}}"
+}
