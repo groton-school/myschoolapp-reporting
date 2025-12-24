@@ -35,7 +35,7 @@
     "@msar/puppeteer-session": "workspace:*",
     "@msar/workflow": "workspace:*",
     "@qui-cli/core": "^5.0.1",
-    "@qui-cli/env-1password": "^1.2.2",
+    "@qui-cli/env-1password": "^1.2.3",
     "@qui-cli/log": "^4.0.1",
     "@qui-cli/markdown": "^1.1.0",
     "@qui-cli/plugin": "^4.0.0",

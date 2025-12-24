@@ -17,7 +17,7 @@ It depends on [Node.js](https://nodejs.org/) which provides the `npm` package ma
 ## Usage:
 
 ```bash
-  msar snapshot -hbtagA --u=<username> --p=<password> --o=<outputPath> --ignoreErrors --logRequests --commands --silent --headless --devtools --quit --pretty --active --future --expired --studentData --metadata --concurrency=<concurrency> --rate=<rate> --logFilePath=<logFilePath> --stdoutLevel=<stdoutLevel> --fileLevel=<fileLevel> --opAccount=<example.1password.com> --opItem=<opItem> --opToken=<opToken> --serviceAccountToken=<Deprecated> --sso=<sso> --mfa=<mfa> --viewportWidth=<viewportWidth> --viewportHeight=<viewportHeight> --fromDate=<fromDate> --toDate=<toDate> --clientId=<clientId> --clientSecret=<clientSecret> --redirectUri=<http://localhost:XXXX/path/to/redirect> --subscriptionKey=<subscriptionKey> --association=<association> --termsOffered=<termsOffered> --groupsPath=<groupsPath> --year=<year> --csv=<csv> --resume=<resume> url
+  msar snapshot -hbtagA --u=<username> --p=<password> --o=<outputPath> --ignoreErrors --logRequests --commands --silent --headless --devtools --quit --pretty --active --future --expired --studentData --metadata --concurrency=<concurrency> --rate=<rate> --logFilePath=<logFilePath> --stdoutLevel=<stdoutLevel> --fileLevel=<fileLevel> --opAccount=<example.1password.com> --opItem=<1Password unique identifier> --opToken=<token value> --serviceAccountToken=<token value> --sso=<sso> --mfa=<mfa> --viewportWidth=<viewportWidth> --viewportHeight=<viewportHeight> --clientId=<clientId> --clientSecret=<clientSecret> --redirectUri=<"http://localhost:XXXX/path/to/redirect"> --subscriptionKey=<subscriptionKey> --fromDate=<fromDate> --toDate=<toDate> --association=<association> --termsOffered=<termsOffered> --groupsPath=<groupsPath> --year=<year> --csv=<csv> --resume=<resume> url
 ```
 
 ## Arguments
@@ -70,25 +70,25 @@ Hide command output (Default: false)
 
 Store 1Password secret references in your environment, rather than the actual secrets.
 
-If 1Password secret references are stored in the environment, a 1Password service account token is required to access the secret values, which will be loaded into process.env. The service account token can be passed directly as the --opToken argument (e.g. example --opToken "(op item get SERVICE_ACCOUNT_TOKEN)") or, if the 1Password CLI tool is also installed, by simply passing the name or ID of the API Credential in your 1Password vault that holds the service account token (e.g. example --opItem SERVICE_ACCOUNT_TOKEN). If you are signed into multiple 1Password account, use the --opAccount argument to specify the account containing the token.
+If 1Password secret references are stored in the environment, a 1Password service account token is required to access the secret values, which will be loaded into process.env. The service account token can be passed directly as the --opToken argument (e.g. example --opToken "$(op item get myToken)") or, if the 1Password CLI tool is also installed, by simply passing the name or ID of the API Credential in your 1Password vault that holds the service account token (e.g. example --opItem myToken). If you are signed into multiple 1Password account, use the --opAccount argument to specify the account containing the token.
 
 https://developer.1password.com/docs/cli
 
 #### `--opAccount=<example.1password.com>`
 
-1Password account to use (if signed into multiple)
+1Password account to use (if signed into multiple); will use environment variable OP_ACCOUNT if present
 
-#### `--opItem=<opItem>`
+#### `--opItem=<1Password unique identifier>`
 
-Name or ID of the 1Password API Credential item storing the 1Password service account token
+Name or ID of the 1Password API Credential item storing the 1Password service account token; will use environment variable OP_ITEM if present
 
-#### `--opToken=<opToken>`
+#### `--opToken=<token value>`
 
-1Password service account token
+1Password service account token; will use environment variable OP_TOKEN if present
 
-#### `--serviceAccountToken=<Deprecated>`
+#### `--serviceAccountToken=<token value>`
 
-1Password service account token
+1Password service account token (deprecated, use --opToken)
 
 ### Puppeteer options
 
@@ -138,6 +138,24 @@ Path to output directory or file to save command output (default: "/Users/sbatti
 
 Pretty print output to file (if --outputPath option is used)
 
+### Sky API options
+
+#### `--clientId=<clientId>`
+
+OAuth 2.0 client ID (defaults to environment variable SKY_CLIENT_ID)
+
+#### `--clientSecret=<clientSecret>`
+
+OAuth 2.0 client secret (defaults to environment variable SKY_CLIENT_SECRET
+
+#### `--redirectUri=<"http://localhost:XXXX/path/to/redirect">`
+
+OAuth 2.0 redirect URI (must be to host localhost, defaults to environment variables SKY_REDIRECT_URI)
+
+#### `--subscriptionKey=<subscriptionKey>`
+
+Blackbaud subscription access key; will use environment variable SKY_SUBSCRIPTION_KEY if present
+
 ### Snapshot options
 
 Capture a JSON snapshot of an individual course. In addition to relevant flags and options, the only argument expected is a url to a page within the target course.
@@ -184,27 +202,11 @@ Capture all sections (default: false, positional argument url is used to identif
 
 #### `--fromDate=<fromDate>`
 
-Starting date for date-based filter where relevant (Default: "12/23/2025")
+Starting date for date-based filter where relevant (Default: "12/24/2025")
 
 #### `--toDate=<toDate>`
 
 ending date for data-based filter where relevant
-
-#### `--clientId=<clientId>`
-
-SKY API app client ID, will use value in environment variable SKY_CLIENT_ID if present
-
-#### `--clientSecret=<clientSecret>`
-
-SKY API app client secret, will use value in environment variable SKY_CLIENT_SECRET if present
-
-#### `--redirectUri=<http://localhost:XXXX/path/to/redirect>`
-
-SKY API app redirect URI, will use value in environment variable SKY_REDIRECT_URI if present
-
-#### `--subscriptionKey=<subscriptionKey>`
-
-SKY API subscription access key, will use value in environment variable SKY_SUBSCRIPTION_KEY if present
 
 #### `--association=<association>`
 

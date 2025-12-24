@@ -62,7 +62,7 @@ https://developer.1password.com/docs/cli
 
 #### `--opItem=<1Password unique identifier>`
 
-Name or ID of the 1Password API Credential item storing the 1Password service account token; will use environmen variable OP_ITEM if present
+Name or ID of the 1Password API Credential item storing the 1Password service account token; will use environment variable OP_ITEM if present
 
 #### `--opToken=<token value>`
 

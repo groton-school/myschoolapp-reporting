@@ -17,7 +17,7 @@ It depends on [Node.js](https://nodejs.org/) which provides the `npm` package ma
 ## Usage:
 
 ```bash
-  msar archive -h --o=<outputPath> --u=<username> --p=<password> --ignoreErrors --logRequests --commands --silent --pretty --headless --devtools --quit --retry --concurrency=<concurrency> --rate=<rate> --logFilePath=<logFilePath> --stdoutLevel=<stdoutLevel> --fileLevel=<fileLevel> --opAccount=<example.1password.com> --opItem=<opItem> --opToken=<opToken> --serviceAccountToken=<Deprecated> --sso=<sso> --mfa=<mfa> --viewportWidth=<viewportWidth> --viewportHeight=<viewportHeight> --include=<"^\\/,example\\.com"> --exclude=<"example\\.com,foo\\..+\\.com"> snapshotPath
+  msar archive -h --o=<outputPath> --u=<username> --p=<password> --ignoreErrors --logRequests --commands --silent --pretty --headless --devtools --quit --retry --concurrency=<concurrency> --rate=<rate> --logFilePath=<logFilePath> --stdoutLevel=<stdoutLevel> --fileLevel=<fileLevel> --opAccount=<example.1password.com> --opItem=<1Password unique identifier> --opToken=<token value> --serviceAccountToken=<token value> --sso=<sso> --mfa=<mfa> --viewportWidth=<viewportWidth> --viewportHeight=<viewportHeight> --include=<"^\\/,example\\.com"> --exclude=<"example\\.com,foo\\..+\\.com"> snapshotPath
 ```
 
 ## Arguments
@@ -70,25 +70,25 @@ Hide command output (Default: false)
 
 Store 1Password secret references in your environment, rather than the actual secrets.
 
-If 1Password secret references are stored in the environment, a 1Password service account token is required to access the secret values, which will be loaded into process.env. The service account token can be passed directly as the --opToken argument (e.g. example --opToken "(op item get SERVICE_ACCOUNT_TOKEN)") or, if the 1Password CLI tool is also installed, by simply passing the name or ID of the API Credential in your 1Password vault that holds the service account token (e.g. example --opItem SERVICE_ACCOUNT_TOKEN). If you are signed into multiple 1Password account, use the --opAccount argument to specify the account containing the token.
+If 1Password secret references are stored in the environment, a 1Password service account token is required to access the secret values, which will be loaded into process.env. The service account token can be passed directly as the --opToken argument (e.g. example --opToken "$(op item get myToken)") or, if the 1Password CLI tool is also installed, by simply passing the name or ID of the API Credential in your 1Password vault that holds the service account token (e.g. example --opItem myToken). If you are signed into multiple 1Password account, use the --opAccount argument to specify the account containing the token.
 
 https://developer.1password.com/docs/cli
 
 #### `--opAccount=<example.1password.com>`
 
-1Password account to use (if signed into multiple)
+1Password account to use (if signed into multiple); will use environment variable OP_ACCOUNT if present
 
-#### `--opItem=<opItem>`
+#### `--opItem=<1Password unique identifier>`
 
-Name or ID of the 1Password API Credential item storing the 1Password service account token
+Name or ID of the 1Password API Credential item storing the 1Password service account token; will use environment variable OP_ITEM if present
 
-#### `--opToken=<opToken>`
+#### `--opToken=<token value>`
 
-1Password service account token
+1Password service account token; will use environment variable OP_TOKEN if present
 
-#### `--serviceAccountToken=<Deprecated>`
+#### `--serviceAccountToken=<token value>`
 
-1Password service account token
+1Password service account token (deprecated, use --opToken)
 
 ### Output options
 
