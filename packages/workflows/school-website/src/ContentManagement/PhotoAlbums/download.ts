@@ -1,4 +1,4 @@
-import { PathString, URLString } from '@battis/descriptive-types';
+import { URLString } from '@battis/descriptive-types';
 import { Output } from '@msar/output';
 import { SkyAPI } from '@oauth2-cli/sky-api';
 import { Colors } from '@qui-cli/colors';
@@ -21,9 +21,9 @@ export async function download() {
   );
   try {
     for await (const category of await SkyAPI.school.v1.contentmanagement.photoalbums.categories()) {
-      const categorySpinner = ora(
-        category.description || `Photo Album Category ${category.id}`
-      ).start();
+      const label =
+        category.description || `Photo Album Category ${category.id}`;
+      const spinner = ora().start();
       const categoryIndex: AnnotatedPhotoCategory = category;
       categoryIndex.albums = [];
       for await (const album of await SkyAPI.school.v1.contentmanagement.photoalbums.list(
@@ -32,9 +32,7 @@ export async function download() {
           show_secured: true
         }
       )) {
-        const albumSpinner = ora(
-          album.title || `Photo Album ${album.id}`
-        ).start();
+        spinner.text = `${label}: ${album.title || `Photo Album ${album.id}`}`;
         const albumIndex: AnnotatedPhotoAlbum = album;
         albumIndex.media = [];
         if (album.id) {
@@ -42,25 +40,21 @@ export async function download() {
             album.id
           )) {
             const mediaIndex: AnnotatedMediaItem = media;
-            mediaIndex.file_path = await cachedDownload(outputPath, media.url);
+            mediaIndex.file_path = await cachedDownload(media.url);
             mediaIndex.thumbnail_file_path = await cachedDownload(
-              outputPath,
               media.thumbnail_url
             );
             albumIndex.media?.push(mediaIndex);
           }
-          albumSpinner.succeed();
-        } else {
-          albumSpinner.fail();
         }
         categoryIndex.albums.push(albumIndex);
       }
-      categorySpinner.succeed();
       index.push(categoryIndex);
       await Output.writeJSON(indexPath, index, {
         overwrite: true,
         silent: true
       });
+      spinner.succeed(label);
     }
   } catch (error) {
     Log.error({ error });
@@ -79,6 +73,9 @@ async function cachedDownload(url?: URLString) {
     }
     const localPath = new URL(url).pathname.slice(1);
     if (fs.existsSync(path.join(Output.outputPath(), localPath))) {
+      Log.debug(
+        `Cached ${Colors.url(url)} already present at ${Colors.path(path.join(Output.outputPath(), localPath), Colors.keyword)}`
+      );
       spinner.info(Colors.path(localPath, Colors.keyword));
       return localPath;
     } else {
@@ -88,10 +85,15 @@ async function cachedDownload(url?: URLString) {
           stream: (await fetch(url)).body as ReadableStream,
           outputPath: Output.outputPath()
         });
+        Log.debug(
+          `Downloaded ${Colors.url(url)} to ${Colors.path(filePath, Colors.keyword)}`
+        );
         spinner.succeed(Colors.path(filePath, Colors.value));
         return filePath;
       } catch (error) {
-        spinner.fail(Colors.error(`${error}: ${Colors.url(url)}`));
+        const message = Colors.error(`${error}: ${Colors.url(url)}`);
+        Log.error(message);
+        spinner.fail(message);
         return undefined;
       }
     }
