@@ -1,7 +1,8 @@
 export type CategoryRequest = {
-  id?: number;
+  // TODO CategoryRequest.id may be a string (undocumented)
+  id?: number | string;
   type?:
-    | 'Page content'
+    | 'PageContent'
     | 'Class'
     | 'Activity'
     | 'Advisory'
