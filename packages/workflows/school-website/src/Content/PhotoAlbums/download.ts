@@ -41,36 +41,12 @@ export async function download({ outputPath }: Options) {
           for await (const media of await SkyAPI.school.v1.contentmanagement.photoalbums.photosById(
             album.id
           )) {
-            const mediaSpinner = ora(
-              media.title || `Media ${media.id}`
-            ).start();
             const mediaIndex: AnnotatedMediaItem = media;
             mediaIndex.file_path = await cachedDownload(outputPath, media.url);
             mediaIndex.thumbnail_file_path = await cachedDownload(
               outputPath,
               media.thumbnail_url
             );
-            if (mediaIndex.file_path) {
-              if (mediaIndex.thumbnail_file_path) {
-                mediaSpinner.succeed(
-                  `${Colors.path(mediaIndex.file_path, Colors.value)}\n    ↳ ${Colors.path(
-                    path
-                      .relative(
-                        mediaIndex.file_path,
-                        mediaIndex.thumbnail_file_path
-                      )
-                      .replace(/^\.\.\/([^/]+)$/, '$1'),
-                    Colors.value
-                  )}`
-                );
-              } else {
-                mediaSpinner.succeed(
-                  Colors.path(mediaIndex.file_path, Colors.value)
-                );
-              }
-            } else {
-              mediaSpinner.fail();
-            }
             albumIndex.media?.push(mediaIndex);
           }
           albumSpinner.succeed();
@@ -92,18 +68,27 @@ export async function download({ outputPath }: Options) {
 
 async function cachedDownload(outputPath: PathString, url?: URLString) {
   if (url) {
+    const spinner = ora(url).start();
     if (/^\/\//.test(url)) {
       url = `https:${url}`;
     }
     const localPath = new URL(url).pathname.slice(1);
     if (fs.existsSync(path.join(outputPath, localPath))) {
+      spinner.info(Colors.path(localPath, Colors.keyword));
       return localPath;
     } else {
-      return await Output.writeFetchedFile({
-        url,
-        stream: (await fetch(url)).body as ReadableStream,
-        outputPath
-      });
+      try {
+        const filePath = await Output.writeFetchedFile({
+          url,
+          stream: (await fetch(url)).body as ReadableStream,
+          outputPath
+        });
+        spinner.succeed(Colors.path(filePath, Colors.value));
+        return filePath;
+      } catch (error) {
+        spinner.fail(Colors.error(`${error}: ${Colors.url(url)}`));
+        return undefined;
+      }
     }
   }
 }
