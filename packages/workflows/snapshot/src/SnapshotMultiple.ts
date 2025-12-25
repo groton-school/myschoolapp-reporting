@@ -77,14 +77,15 @@ export function options(): Plugin.Options {
       ...snapshotOptions.flag,
       all: {
         short: 'A',
-        description: `Capture all sections (default: ${Colors.value(all)}, positional argument ${Colors.positionalArg(`url`)} is used to identify MySchoolApp instance)`,
+        description: `Capture all sections; positional argument ${Colors.positionalArg(`url`)} is used to identify MySchoolApp instance`,
         default: all
       }
     },
     opt: {
       ...snapshotOptions.opt,
       association: {
-        description: `Comma-separated list of group associations to include if ${Colors.value('--all')} flag is used. Possible values: ${Output.oxfordComma(
+        description: `Comma-separated list of group associations to include if ${Colors.flagArg('--all')} flag is used.`,
+        hint: Output.oxfordComma(
           [
             'Activities',
             'Advisories',
@@ -93,23 +94,28 @@ export function options(): Plugin.Options {
             'Dorms',
             'Teams'
           ].map((assoc) => Colors.quotedValue(`"${assoc}"`))
-        )}`
+        )
       },
       termsOffered: {
-        description: `Comma-separated list of terms to include if ${Colors.value('--all')} flag is used`
+        description: `Comma-separated list of terms to include if ${Colors.flagArg('--all')} flag is used`
       },
       groupsPath: {
-        description: `Path to output directory or file to save filtered groups listing (include placeholder ${Colors.quotedValue('"%TIMESTAMP%"')} to specify its location, otherwise it is added automatically when needed to avoid overwriting existing files)`
+        description: `Path to output directory or file to save filtered groups listing (include placeholder ${Colors.quotedValue(
+          '"%TIMESTAMP%"'
+        )} to specify its location, otherwise it is added automatically when needed to avoid overwriting existing files)`
       },
       year: {
-        description: `If ${Colors.value(`--all`)} flag is used, which year to download. (Default: ${Colors.quotedValue(`"${year}"`)})`,
+        description: `If ${Colors.flagArg(`--all`)} flag is used, which year to download`,
         default: year
       },
       csv: {
         description: `Path to CSV file of group IDs to snapshot (must contain a column named ${Colors.value('GroupId')})`
       },
       resume: {
-        description: `If ${Colors.value(`--all`)} flag is used,UUID name of temp directory (${Colors.url('/tmp/msar/snapshot/:uuid')}) for which to resume collecting snapshots`
+        description: `If ${Colors.flagArg(`--all`)} flag is used,UUID name of temp directory (${Colors.path(
+          '/tmp/msar/snapshot/:uuid',
+          Colors.varName
+        )}) for which to resume collecting snapshots`
       }
     }
   };
@@ -134,7 +140,7 @@ export async function run() {
     const session = await PuppeteerSession.Fetchable.init(url, {
       logRequests: Workflow.logRequests()
     });
-    Log.info(`Snapshot temporary files will be saved to ${Colors.url(TEMP)}`);
+    Log.info(`Snapshot temporary files will be saved to ${Colors.path(TEMP)}`);
 
     let groupIds: number[] = [];
     if (year && all) {
@@ -170,7 +176,7 @@ export async function run() {
       Log.info(`${groupIds.length} group IDs loaded from CSV file`);
     } else {
       throw new Error(
-        `Either ${Colors.value('--year')} or ${Colors.value('--csv')} must be defined`
+        `Either ${Colors.optionArg('--year')} or ${Colors.optionArg('--csv')} must be defined`
       );
     }
 
@@ -276,7 +282,7 @@ export async function run() {
     if (errors.length) {
       const errorsPath = filepath.replace(/\.json$/, '.errors.json');
       Output.writeJSON(errorsPath, errors);
-      Log.error(`Errors output to ${Colors.url(errorsPath)}`);
+      Log.error(`Errors output to ${Colors.path(errorsPath)}`);
     }
     await fs.rm(TEMP, { recursive: true });
     Progress.stop();

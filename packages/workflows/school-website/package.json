@@ -30,7 +30,7 @@
     "@msar/output": "workspace:*",
     "@msar/workflow": "workspace:*",
     "@oauth2-cli/sky-api": "workspace:*",
-    "@qui-cli/colors": "^3.1.1",
+    "@qui-cli/colors": "^3.2.0",
     "@qui-cli/core": "^5.0.1",
     "@qui-cli/env-1password": "^1.2.3",
     "@qui-cli/log": "^4.0.1",

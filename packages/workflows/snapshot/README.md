@@ -17,7 +17,7 @@ It depends on [Node.js](https://nodejs.org/) which provides the `npm` package ma
 ## Usage:
 
 ```bash
-  msar snapshot -hbtagA --u=<username> --p=<password> --o=<outputPath> --ignoreErrors --logRequests --commands --silent --headless --devtools --quit --pretty --active --future --expired --studentData --metadata --concurrency=<concurrency> --rate=<rate> --logFilePath=<logFilePath> --stdoutLevel=<stdoutLevel> --fileLevel=<fileLevel> --opAccount=<example.1password.com> --opItem=<1Password unique identifier> --opToken=<token value> --serviceAccountToken=<token value> --sso=<sso> --mfa=<mfa> --viewportWidth=<viewportWidth> --viewportHeight=<viewportHeight> --clientId=<clientId> --clientSecret=<clientSecret> --redirectUri=<"http://localhost:XXXX/path/to/redirect"> --subscriptionKey=<subscriptionKey> --fromDate=<fromDate> --toDate=<toDate> --association=<association> --termsOffered=<termsOffered> --groupsPath=<groupsPath> --year=<year> --csv=<csv> --resume=<resume> url
+  msar snapshot -hbtagA --u=<username> --p=<password> --o=<outputPath> --ignoreErrors --logRequests --commands --silent --headless --devtools --quit --pretty --active --future --expired --studentData --metadata --concurrency=<concurrency> --rate=<rate> --logFilePath=<logFilePath> --stdoutLevel=<stdoutLevel> --fileLevel=<fileLevel> --opAccount=<example.1password.com> --opItem=<1Password unique identifier> --opToken=<token value> --serviceAccountToken=<token value> --sso=<sso> --mfa=<mfa> --viewportWidth=<viewportWidth> --viewportHeight=<viewportHeight> --clientId=<clientId> --clientSecret=<clientSecret> --redirectUri=<"http://localhost:XXXX/path/to/redirect"> --subscriptionKey=<subscriptionKey> --fromDate=<fromDate> --toDate=<toDate> --association=<"Activities", "Advisories", "Classes", "Community Groups", "Dorms", and "Teams"> --termsOffered=<termsOffered> --groupsPath=<groupsPath> --year=<year> --csv=<csv> --resume=<resume> url
 ```
 
 ## Arguments
@@ -132,7 +132,7 @@ Default: 0
 
 #### `-o<outputPath> --outputPath=<outputPath>`
 
-Path to output directory or file to save command output (default: "/Users/sbattis/Documents/GitHub/myschoolapp-reporting:Snapshot.json", where :SnapshotName is either the name of the course in ":Year - :Teacher - :CourseTitle - :SectionId" format for a single section or group or "snapshot" if the --all flag is set. :SnapshotName.metadata.json is also output, recording the parameters of the snapshot command. Will use the value in environment variable OUTPUT_PATH if present)
+Path to output directory or file to save command output (default: /Users/sbattis/Documents/GitHub/myschoolapp-reporting/:Snapshot.json, where :Snapshot is either the name of the course in ":Year - :Teacher - :CourseTitle - :SectionId" format for a single section or group or "snapshot" if the --all flag is set. .:Snapshot.metadata.json is also output, recording the parameters of the snapshot command. Will use the value in environment variable OUTPUT_PATH if present)
 
 #### `--pretty`
 
@@ -194,11 +194,11 @@ Include student data in the course snapshot (Default: true, use --no-studentData
 
 #### `--metadata`
 
-Include additional :SnapshotName.metadata.json recording the parameters of the snapshot command. (Default: true, use --no-metadata to disable)
+Include additional .:Snapshot.metadata.json recording the parameters of the snapshot command. (Default: true, use --no-metadata to disable)
 
 #### `-A --all`
 
-Capture all sections (default: false, positional argument url is used to identify MySchoolApp instance) (Default: false)
+Capture all sections; positional argument url is used to identify MySchoolApp instance (Default: false)
 
 #### `--fromDate=<fromDate>`
 
@@ -208,9 +208,9 @@ Starting date for date-based filter where relevant (Default: "12/25/2025")
 
 ending date for data-based filter where relevant
 
-#### `--association=<association>`
+#### `--association=<"Activities", "Advisories", "Classes", "Community Groups", "Dorms", and "Teams">`
 
-Comma-separated list of group associations to include if --all flag is used. Possible values: "Activities", "Advisories", "Classes", "Community Groups", "Dorms", and "Teams"
+Comma-separated list of group associations to include if --all flag is used.
 
 #### `--termsOffered=<termsOffered>`
 
@@ -222,7 +222,7 @@ Path to output directory or file to save filtered groups listing (include placeh
 
 #### `--year=<year>`
 
-If --all flag is used, which year to download. (Default: "2025 - 2026") (Default: "2025 - 2026")
+If --all flag is used, which year to download (Default: "2025 - 2026")
 
 #### `--csv=<csv>`
 

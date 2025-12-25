@@ -47,7 +47,7 @@ export class Spider {
       );
       Debug.withGroupId(
         snapshot.SectionInfo?.Id || Colors.error('unknown'),
-        `Supporting files exported to ${Colors.url(Output.outputPath())}/${Colors.value(indexName)}`
+        `Supporting files exported to ${(Colors.path(`${Output.outputPath()}/${indexName}`), Colors.value)}`
       );
       return indexName;
     } else {

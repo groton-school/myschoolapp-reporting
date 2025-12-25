@@ -56,7 +56,7 @@ function normalizeURL(url: string) {
 
 export function build(index: Archive.Multiple.Data) {
   function spider(component: JSONValue) {
-    let result: any = component;
+    let result = component;
     if (Array.isArray(component)) {
       result = [];
       for (const elt of component) {
@@ -71,6 +71,8 @@ export function build(index: Archive.Multiple.Data) {
         }
       } else {
         for (const key of Object.keys(component)) {
+          // FIXME address typing more carefully
+          // @ts-expect-error 7054
           result[key] = spider(component[key]);
         }
       }

@@ -8,17 +8,17 @@ import * as Section from './Section.js';
 import { Configuration } from './Section.js';
 
 Output.outputPathDescription(
-  `Path to output directory or file to save command output (default: ${Colors.quotedValue(
-    `"${Output.outputPath()}:Snapshot.json"`
-  )},  where ${Colors.value(
-    ':SnapshotName'
+  `Path to output directory or file to save command output (default: ${Colors.path(
+    `${Output.outputPath()}/${Colors.varName(':Snapshot')}.json`
+  )},  where ${Colors.varName(
+    ':Snapshot'
   )} is either the name of the course in ${Colors.quotedValue(
-    `":Year - :Teacher - :CourseTitle - :SectionId"`
+    `"${Colors.varName(':Year')} - ${Colors.varName(':Teacher')} - ${Colors.varName(':CourseTitle')} - ${Colors.varName(':SectionId')}"`
   )} format for a single section or group or ${Colors.quotedValue(
     `"snapshot"`
-  )} if the ${Colors.value('--all')} flag is set. ${Colors.url(
-    ':SnapshotName.metadata.json'
-  )} is also output, recording the parameters of the snapshot command. Will use the value in environment variable ${Colors.value(
+  )} if the ${Colors.flagArg('--all')} flag is set. ${Colors.path(
+    `${Colors.varName(':Snapshot')}.metadata.json`
+  )} is also output, recording the parameters of the snapshot command. Will use the value in environment variable ${Colors.varName(
     'OUTPUT_PATH'
   )} if present)`
 );
@@ -148,7 +148,7 @@ export function options(): Plugin.Options {
         default: config.studentData
       },
       metadata: {
-        description: `Include additional ${Colors.value(':SnapshotName.metadata.json')} recording the parameters of the snapshot command.`,
+        description: `Include additional ${Colors.path(`${Colors.varName(':Snapshot')}.metadata.json`)} recording the parameters of the snapshot command.`,
         default: config.metadata
       }
     },

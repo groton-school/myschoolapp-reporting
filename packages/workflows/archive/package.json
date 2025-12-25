@@ -26,7 +26,7 @@
   "dependencies": {
     "@msar/types.archive": "workspace:*",
     "@msar/types.snapshot": "workspace:*",
-    "@qui-cli/colors": "^3.1.1",
+    "@qui-cli/colors": "^3.2.0",
     "content-disposition": "^0.5.4",
     "ora": "^8.2.0",
     "p-queue": "^8.1.1",

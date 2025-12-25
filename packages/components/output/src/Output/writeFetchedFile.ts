@@ -33,10 +33,10 @@ export async function writeFetchedFile({ url, stream, outputPath }: Options) {
         )
       );
     }
-    Log.debug(`Saved ${Colors.url(url)} to ${Colors.url(localPath)}`);
+    Log.debug(`Saved ${Colors.url(url)} to ${Colors.path(localPath)}`);
     return localPath;
   } catch (error) {
-    const message = `Error saving ${Colors.url(url)} to ${Colors.url(localPath)}: ${Colors.error(error)}`;
+    const message = `Error saving ${Colors.url(url)} to ${Colors.path(localPath)}: ${Colors.error(error)}`;
     if (Workflow.ignoreErrors()) {
       Log.error(message);
     }

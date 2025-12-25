@@ -140,7 +140,7 @@ Pretty print output to file (if --outputPath option is used)
 
 ### Inbox options
 
-Analyze inbox contents for a user or users. Include the URL of the LMS instance as url (required) and path to a CSV file of user identifiers to analyze as csv (optional if --val is set). Intended to receive a generic UserWorkList.csv export from the LMS as input, outputting the same CSV file to --outputPath with analysis columns appended.
+Analyze inbox contents for a user or users. Include the URL of the LMS instance as url (required) and path to a CSV file of user identifiers to analyze as csv (optional if --val is set). Intended to receive a generic .UserWorkList.csv export from the LMS as input, outputting the same CSV file to --outputPath with analysis columns appended.
 
 Due to the number of impersonated clicks necessary for this workflow, running --headless reduces the likelihood of stray user actions interfering with the script.
 

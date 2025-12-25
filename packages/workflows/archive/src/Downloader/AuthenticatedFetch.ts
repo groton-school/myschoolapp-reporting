@@ -136,7 +136,7 @@ export class Downloader
               if (fs.existsSync(possiblePaths[key])) {
                 fs.renameSync(possiblePaths[key], destFilepath);
                 Log.debug(
-                  `Moved ${key} file ${Colors.url(possiblePaths[key])} to ${Colors.url(localPath)}`
+                  `Moved ${key} file ${Colors.path(possiblePaths[key], Colors.value)} to ${Colors.path(localPath, Colors.value)}`
                 );
                 this.emitter.emit(url, { localPath, filename });
                 return;

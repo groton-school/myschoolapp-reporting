@@ -32,7 +32,7 @@ export function options(): Plugin.Options {
     },
     flag: {
       pretty: {
-        description: `Pretty print output to file (if ${Colors.value(
+        description: `Pretty print output to file (if ${Colors.optionArg(
           '--outputPath'
         )} option is used)`
       }

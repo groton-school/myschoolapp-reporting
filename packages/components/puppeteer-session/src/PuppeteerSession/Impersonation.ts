@@ -127,7 +127,7 @@ export class Impersonation extends Authenticated.Authenticated {
     } else {
       if (this.isHeadless) {
         throw new Error(
-          `Multiple search results for impersonation query ${Colors.quotedValue(`"${val}"`)} in ${Colors.value(searchIn)}. Cannot interactively choose in headless mode.`
+          `Multiple search results for impersonation query ${Colors.quotedValue(`"${val}"`)} in ${Colors.varName(searchIn)}. Cannot interactively choose in headless mode.`
         );
       }
       spinner.start(

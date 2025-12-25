@@ -46,7 +46,7 @@ export class PronunciationScanner {
     );
     await fs.writeFile(indexPath, stringify(data, { header: true, columns }));
     Progress.stop();
-    Log.info(`Index written to ${Colors.url(indexPath)}`);
+    Log.info(`Index written to ${Colors.path(indexPath, Colors.value)}`);
     return data;
   }
 
@@ -59,7 +59,7 @@ export class PronunciationScanner {
         await fs.mkdir(this.recordingPath, { recursive: true });
       }
       Log.info(
-        `Recordings will be downloaded to ${Colors.url(this.recordingPath)}`
+        `Recordings will be downloaded to ${Colors.path(this.recordingPath, Colors.value)}`
       );
     }
   }

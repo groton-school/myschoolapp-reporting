@@ -53,18 +53,19 @@ export async function download({ outputPath }: Options) {
             if (mediaIndex.file_path) {
               if (mediaIndex.thumbnail_file_path) {
                 mediaSpinner.succeed(
-                  `${Colors.path(`${path.dirname(mediaIndex.file_path)}/`)}${Colors.value(path.basename(mediaIndex.file_path))}\n    ↳ ${Colors.value(
+                  `${Colors.path(mediaIndex.file_path, Colors.value)}\n    ↳ ${Colors.path(
                     path
                       .relative(
                         mediaIndex.file_path,
                         mediaIndex.thumbnail_file_path
                       )
-                      .replace(/^\.\.\/([^/]+)$/, '$1')
+                      .replace(/^\.\.\/([^/]+)$/, '$1'),
+                    Colors.value
                   )}`
                 );
               } else {
                 mediaSpinner.succeed(
-                  `${Colors.path(`${path.dirname(mediaIndex.file_path)}/`)}${Colors.value(path.basename(mediaIndex.file_path))}`
+                  Colors.path(mediaIndex.file_path, Colors.value)
                 );
               }
             } else {

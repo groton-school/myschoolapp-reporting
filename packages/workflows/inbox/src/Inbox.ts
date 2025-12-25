@@ -57,7 +57,7 @@ export function options(): Plugin.Options {
       description: `The URL of the LMS instance as ${Colors.positionalArg(URL)} (required)`
     },
     [CSV]: {
-      description: `Path to a CSV file of user identifiers to analyze as ${Colors.positionalArg(CSV)} (optional if ${Colors.value('--val')} is set)`
+      description: `Path to a CSV file of user identifiers to analyze as ${Colors.positionalArg(CSV)} (optional if ${Colors.optionArg('--val')} is set)`
     }
   });
   Positionals.allowOnlyNamedArgs();
@@ -65,10 +65,10 @@ export function options(): Plugin.Options {
     man: [
       { level: 1, text: 'Inbox options' },
       {
-        text: `Analyze inbox contents for a user or users. Include the URL of the LMS instance as ${Colors.positionalArg(URL)} (required) and path to a CSV file of user identifiers to analyze as ${Colors.positionalArg(CSV)} (optional if ${Colors.value('--val')} is set). Intended to receive a generic ${Colors.url('UserWorkList.csv')} export from the LMS as input, outputting the same CSV file to ${Colors.value('--outputPath')} with analysis columns appended.`
+        text: `Analyze inbox contents for a user or users. Include the URL of the LMS instance as ${Colors.positionalArg(URL)} (required) and path to a CSV file of user identifiers to analyze as ${Colors.positionalArg(CSV)} (optional if ${Colors.optionArg('--val')} is set). Intended to receive a generic ${Colors.path('UserWorkList.csv')} export from the LMS as input, outputting the same CSV file to ${Colors.optionArg('--outputPath')} with analysis columns appended.`
       },
       {
-        text: `Due to the number of impersonated clicks necessary for this workflow, running ${Colors.value('--headless')} reduces the likelihood of stray user actions interfering with the script.`
+        text: `Due to the number of impersonated clicks necessary for this workflow, running ${Colors.flagArg('--headless')} reduces the likelihood of stray user actions interfering with the script.`
       }
     ],
 
@@ -90,7 +90,7 @@ export function options(): Plugin.Options {
     },
     optList: {
       val: {
-        description: `A user identifier to query. Requires corresponding ${Colors.value('--searchIn')}. If set, ${Colors.positionalArg(CSV)} path to CSV file is not required.`,
+        description: `A user identifier to query. Requires corresponding ${Colors.optionArg('--searchIn')}. If set, ${Colors.positionalArg(CSV)} path to CSV file is not required.`,
         short: 'v',
         default: vals
       }
@@ -164,7 +164,7 @@ export async function analytics(
 
   if (data.length === 0) {
     throw new Error(
-      `Inbox users must be passed as either a path to a CSV file or a list of ${Colors.value('val')}`
+      `Inbox users must be passed as either a path to a CSV file or a list of ${Colors.optionArg('val')}`
     );
   }
 
@@ -260,7 +260,7 @@ export async function analytics(
       await session.close();
     } catch (error) {
       Log.error(
-        `Error impersonating ${Colors.value(searchIn)}=${Colors.quotedValue(`"${val}"`)}: ${Colors.error(error)}`
+        `Error impersonating ${Colors.varName(searchIn)}=${Colors.quotedValue(`"${val}"`)}: ${Colors.error(error)}`
       );
     }
     await writing;
@@ -276,7 +276,7 @@ export async function analytics(
 
   Progress.stop();
 
-  Log.info(`Analytics written to ${Colors.url(outputPath)}`);
+  Log.info(`Analytics written to ${Colors.path(outputPath, Colors.value)}`);
 }
 
 function oldestMessage(messages: types.message.Types.Message[] = []) {

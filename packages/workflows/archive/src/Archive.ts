@@ -137,7 +137,7 @@ export async function run() {
       snapshots = [data];
     }
     spinner.succeed(
-      `Read ${snapshots.length} snapshots from ${Colors.url(snapshotPath)}`
+      `Read ${snapshots.length} snapshots from ${Colors.path(snapshotPath, Colors.value)}`
     );
     if (retry) {
       Log.info(`Retrying archive`);
@@ -217,7 +217,7 @@ export async function run() {
 
     await spider.quit();
     spinner.succeed(
-      `Snapshot supporting files exported to ${Colors.url(path.dirname(indexPath!))}`
+      `Snapshot supporting files exported to ${Colors.path(path.dirname(indexPath!))}`
     );
   } catch (error) {
     Log.error({ error });

@@ -98,7 +98,7 @@ export const snapshot: Base.Snapshot<Snapshot.Topics.Data> = async ({
           if (isMedia(entry) && entry.ContentItemId) {
             entry.AlbumContent = {
               AlbumId: entry.ContentItemId,
-              // @ts-ignore-error
+              // @ts-expect-error 2322
               Content: await DatadirectPuppeteer.api.media.AlbumFilesGet({
                 ...options,
                 payload: {
@@ -109,7 +109,7 @@ export const snapshot: Base.Snapshot<Snapshot.Topics.Data> = async ({
               })
             };
           } else {
-            // @ts-ignore-error
+            // @ts-expect-error 2322
             entry.Content =
               await DatadirectPuppeteer.api.datadirect.TopicContent_detail(
                 item,

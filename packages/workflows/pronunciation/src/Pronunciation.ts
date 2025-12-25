@@ -39,7 +39,7 @@ export function options(): Plugin.Options {
       description: `The URL of the LMS instance as ${Colors.positionalArg(URL_ARG)} (required)`
     },
     [CSV_ARG]: {
-      description: `Path to a CSV file of users with a column of Blackbaud User IDs to analyze as ${Colors.positionalArg(CSV_ARG)} (optional if ${Colors.value('--val')} is set)`
+      description: `Path to a CSV file of users with a column of Blackbaud User IDs to analyze as ${Colors.positionalArg(CSV_ARG)} (optional if ${Colors.optionArg('--val')} is set)`
     }
   });
   Positionals.allowOnlyNamedArgs();
@@ -48,10 +48,10 @@ export function options(): Plugin.Options {
     man: [
       { level: 1, text: 'Name pronunciation options' },
       {
-        text: `Scan users for name pronunciation recordings. Include the URL of the LMS instance as ${Colors.positionalArg(URL_ARG)} (required) and path to a CSV file of Blackbaud User IDs to analyze as ${Colors.positionalArg(CSV_ARG)} (optional if ${Colors.value('--user')} is set). Intended to receive a generic ${Colors.url('UserWorkList.csv')} export from the LMS as input, outputting the same CSV file to ${Colors.value('--outputPath')} with data columns appended.`
+        text: `Scan users for name pronunciation recordings. Include the URL of the LMS instance as ${Colors.positionalArg(URL_ARG)} (required) and path to a CSV file of Blackbaud User IDs to analyze as ${Colors.positionalArg(CSV_ARG)} (optional if ${Colors.optionArg('--user')} is set). Intended to receive a generic ${Colors.path('UserWorkList.csv')} export from the LMS as input, outputting the same CSV file to ${Colors.optionArg('--outputPath')} with data columns appended.`
       },
       {
-        text: `Due to the number of impersonated clicks necessary for this workflow, running ${Colors.value('--headless')} reduces the likelihood of stray user actions interfering with the script.`
+        text: `Due to the number of impersonated clicks necessary for this workflow, running ${Colors.flagArg('--headless')} reduces the likelihood of stray user actions interfering with the script.`
       }
     ],
 
@@ -96,7 +96,7 @@ export async function run() {
     data.push(...users.map((val) => ({ [column]: val })));
     if (data.length === 0) {
       throw new Error(
-        `Inbox users must be passed as either a path to a CSV file or a list of ${Colors.value('val')}`
+        `Inbox users must be passed as either a path to a CSV file or a list of ${Colors.varName('val')}`
       );
     }
     return new PronunciationScanner(
