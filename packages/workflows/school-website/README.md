@@ -17,7 +17,7 @@ It depends on [Node.js](https://nodejs.org/) which provides the `npm` package ma
 ## Usage:
 
 ```bash
-  msar schoolWebsite -h --commands --silent --logFilePath=<logFilePath> --stdoutLevel=<stdoutLevel> --fileLevel=<fileLevel> --opAccount=<example.1password.com> --opItem=<1Password unique identifier> --opToken=<token value> --serviceAccountToken=<token value> --clientId=<clientId> --clientSecret=<clientSecret> --redirectUri=<"http://localhost:XXXX/path/to/redirect"> --subscriptionKey=<subscriptionKey> --count=<count> [...]
+  msar schoolWebsite -h --o=<outputPath> --ignoreErrors --logRequests --commands --silent --pretty --photoalbums --logFilePath=<logFilePath> --stdoutLevel=<stdoutLevel> --fileLevel=<fileLevel> --opAccount=<example.1password.com> --opItem=<1Password unique identifier> --opToken=<token value> --serviceAccountToken=<token value> --clientId=<clientId> --clientSecret=<clientSecret> --redirectUri=<"http://localhost:XXXX/path/to/redirect"> --subscriptionKey=<subscriptionKey> outputPath
 ```
 
 ## Arguments
@@ -25,6 +25,16 @@ It depends on [Node.js](https://nodejs.org/) which provides the `npm` package ma
 #### `-h --help`
 
 Get usage information
+
+### Workflow behavior options
+
+#### `--ignoreErrors`
+
+Continue run even if errors are encountered (Default: true, use --no-ignoreErrors to disable)
+
+#### `--logRequests`
+
+Log fetch requests and responses for analysis and debugging (Default: false)
 
 ### Logging options
 
@@ -72,6 +82,16 @@ Name or ID of the 1Password API Credential item storing the 1Password service ac
 
 1Password service account token (deprecated, use --opToken)
 
+### Output options
+
+#### `-o<outputPath> --outputPath=<outputPath>`
+
+Path to output directory or file to save command output, will use the value in environment variable OUTPUT_PATH if present
+
+#### `--pretty`
+
+Pretty print output to file (if --outputPath option is used)
+
 ### Sky API options
 
 #### `--clientId=<clientId>`
@@ -90,8 +110,6 @@ OAuth 2.0 redirect URI (must be to host localhost, defaults to environment varia
 
 Blackbaud subscription access key; will use environment variable SKY_SUBSCRIPTION_KEY if present
 
-### School Website options
+#### `--photoalbums`
 
-#### `--count=<n>`
-
-Default: 10
+Download photo albums (Default: true, use --no-photoalbums to disable)

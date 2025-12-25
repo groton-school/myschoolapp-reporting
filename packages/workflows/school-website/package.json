@@ -22,7 +22,11 @@
     "build:readme": "./scripts/msar\\ schoolWebsite",
     "release": "commit-and-tag-version"
   },
+  "dependencies": {
+    "ora": "^8.2.0"
+  },
   "devDependencies": {
+    "@battis/descriptive-types": "^0.2.6",
     "@msar/output": "workspace:*",
     "@msar/workflow": "workspace:*",
     "@oauth2-cli/sky-api": "workspace:*",

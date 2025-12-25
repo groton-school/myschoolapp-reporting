@@ -1,15 +1,20 @@
-import { SkyAPI } from '@oauth2-cli/sky-api';
-import { Log } from '@qui-cli/log';
+import { PathString } from '@battis/descriptive-types';
+import '@msar/output';
+import { Positionals } from '@qui-cli/core';
 import * as Plugin from '@qui-cli/plugin';
+import * as Content from './Content/index.js';
 
 export type Configuration = Plugin.Configuration & {
-  count?: number;
+  outputPath?: PathString;
+  photoAlbums?: boolean;
 };
 
 export const name = 'school-website';
-const config: Configuration = { count: 10 };
+const config: Configuration = {
+  photoAlbums: true
+};
 
-export function configure(proposal: Configuration = {}) {
+export function configure(proposal: Partial<Configuration> = {}) {
   for (const key in proposal) {
     if (proposal[key] !== undefined) {
       config[key] = proposal[key];
@@ -18,46 +23,29 @@ export function configure(proposal: Configuration = {}) {
 }
 
 export function options(): Plugin.Options {
+  Positionals.require({
+    outputPath: {}
+  });
+  Positionals.allowOnlyNamedArgs();
   return {
-    man: [{ level: 1, text: 'School Website options' }],
-    num: {
-      count: {
-        default: config.count
+    flag: {
+      photoalbums: {
+        description: `Download photo albums`,
+        default: config.photoAlbums
       }
     }
   };
 }
 
 export function init({ values }: Plugin.ExpectedArguments<typeof options>) {
-  configure(values);
+  const outputPath = Positionals.get('outputPath');
+  configure({ outputPath, values });
 }
 
 export async function run() {
-  try {
-    let i = 0;
-    for await (const category of await SkyAPI.school.v1.contentmanagement.photoalbums.categories()) {
-      Log.info({ category });
-      for await (const album of await SkyAPI.school.v1.contentmanagement.photoalbums.list(
-        {
-          categories: [{ id: category.id }],
-          show_secured: true
-        }
-      )) {
-        Log.info({ album });
-        if (album.id) {
-          for await (const media of await SkyAPI.school.v1.contentmanagement.photoalbums.photosById(
-            album.id
-          )) {
-            Log.info({ media });
-            i++;
-            if (config.count && i >= config.count) {
-              process.exit();
-            }
-          }
-        }
-      }
-    }
-  } catch (error) {
-    Log.error({ error });
+  const { outputPath } = config;
+  if (!outputPath) {
+    throw new Error('Output path must be defined');
   }
+  await Content.PhotoAlbums.download({ outputPath });
 }

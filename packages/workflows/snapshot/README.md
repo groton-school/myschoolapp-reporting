@@ -202,7 +202,7 @@ Capture all sections (default: false, positional argument url is used to identif
 
 #### `--fromDate=<fromDate>`
 
-Starting date for date-based filter where relevant (Default: "12/24/2025")
+Starting date for date-based filter where relevant (Default: "12/25/2025")
 
 #### `--toDate=<toDate>`
 
