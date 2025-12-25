@@ -20,7 +20,9 @@ type Options = {
 
 export async function download({ outputPath }: Options) {
   const index: Index = [];
-  const indexPath = path.join(outputPath, 'photoAlbums.json');
+  const indexPath = await Output.avoidOverwrite(
+    path.join(outputPath, 'photoAlbums.json')
+  );
   try {
     for await (const category of await SkyAPI.school.v1.contentmanagement.photoalbums.categories()) {
       const categorySpinner = ora(
@@ -57,12 +59,17 @@ export async function download({ outputPath }: Options) {
       }
       categorySpinner.succeed();
       index.push(categoryIndex);
-      await Output.writeJSON(indexPath, index, { overwrite: true });
+      await Output.writeJSON(indexPath, index, {
+        overwrite: true,
+        silent: true
+      });
     }
   } catch (error) {
     Log.error({ error });
   } finally {
-    await Output.writeJSON(indexPath, index, { overwrite: true });
+    await Output.writeJSON(indexPath, index, {
+      overwrite: true
+    });
   }
 }
 
