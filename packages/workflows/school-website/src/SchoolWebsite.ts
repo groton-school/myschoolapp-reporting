@@ -37,12 +37,12 @@ export async function run() {
     let i = 0;
     for await (const category of await SkyAPI.school.v1.contentmanagement.photoalbums.categories()) {
       Log.info({ category });
-      const albums = await SkyAPI.school.v1.contentmanagement.photoalbums.list({
-        categories: [{ id: category.id }],
-        show_secured: true
-      });
-      Log.info({ albums });
-      for await (const album of albums) {
+      for await (const album of await SkyAPI.school.v1.contentmanagement.photoalbums.list(
+        {
+          categories: [{ id: category.id }],
+          show_secured: true
+        }
+      )) {
         Log.info({ album });
         if (album.id) {
           for await (const media of await SkyAPI.school.v1.contentmanagement.photoalbums.photosById(

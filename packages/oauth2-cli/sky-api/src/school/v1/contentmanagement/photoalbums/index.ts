@@ -4,6 +4,7 @@ import { ContentManagementRequest } from '../ContentManagementRequest.js';
 import { MediaItem } from './MediaItem.js';
 import { MediaItemCollection } from './MediaItemCollection.js';
 import { PhotoAlbum } from './PhotoAlbum.js';
+import { PhotoAlbumCollection } from './PhotoAlbumCollection.js';
 import { PhotoCategory } from './PhotoCategory.js';
 import { PhotoCategoryCollection } from './PhotoCategoryCollection.js';
 
@@ -24,11 +25,13 @@ export async function categories() {
 }
 
 export async function list(request: ContentManagementRequest) {
-  return await SkyAPI.requestJSON<PhotoAlbum[]>(
-    'https://api.sky.blackbaud.com/school/v1/contentmanagement/photoalbums/list',
-    'POST',
-    JSON.stringify(request),
-    { 'Content-Type': 'application/json' }
+  return new Paginated<PhotoAlbum>(
+    await SkyAPI.requestJSON<PhotoAlbumCollection>(
+      'https://api.sky.blackbaud.com/school/v1/contentmanagement/photoalbums/list',
+      'POST',
+      JSON.stringify(request),
+      { 'Content-Type': 'application/json' }
+    )
   );
 }
 
