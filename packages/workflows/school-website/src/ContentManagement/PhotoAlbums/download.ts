@@ -14,14 +14,10 @@ import {
 
 export type Index = AnnotatedPhotoCategory[];
 
-type Options = {
-  outputPath: string;
-};
-
-export async function download({ outputPath }: Options) {
+export async function download() {
   const index: Index = [];
   const indexPath = await Output.avoidOverwrite(
-    path.join(outputPath, 'photoAlbums.json')
+    Output.filePathFromOutputPath(Output.outputPath(), 'photoAlbums.json')
   );
   try {
     for await (const category of await SkyAPI.school.v1.contentmanagement.photoalbums.categories()) {
@@ -75,14 +71,14 @@ export async function download({ outputPath }: Options) {
   }
 }
 
-async function cachedDownload(outputPath: PathString, url?: URLString) {
+async function cachedDownload(url?: URLString) {
   if (url) {
     const spinner = ora(url).start();
     if (/^\/\//.test(url)) {
       url = `https:${url}`;
     }
     const localPath = new URL(url).pathname.slice(1);
-    if (fs.existsSync(path.join(outputPath, localPath))) {
+    if (fs.existsSync(path.join(Output.outputPath(), localPath))) {
       spinner.info(Colors.path(localPath, Colors.keyword));
       return localPath;
     } else {
@@ -90,7 +86,7 @@ async function cachedDownload(outputPath: PathString, url?: URLString) {
         const filePath = await Output.writeFetchedFile({
           url,
           stream: (await fetch(url)).body as ReadableStream,
-          outputPath
+          outputPath: Output.outputPath()
         });
         spinner.succeed(Colors.path(filePath, Colors.value));
         return filePath;
