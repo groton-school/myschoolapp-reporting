@@ -22,7 +22,7 @@ export function configure(proposal: Partial<Configuration> = {}) {
 export function options(): Plugin.Options {
   return {
     flag: {
-      photoalbums: {
+      photoAlbums: {
         description: `Download photo albums`,
         default: config.photoAlbums
       }
@@ -35,5 +35,7 @@ export function init({ values }: Plugin.ExpectedArguments<typeof options>) {
 }
 
 export async function run() {
-  await ContentManagement.PhotoAlbums.download();
+  if (config.photoAlbums) {
+    await ContentManagement.PhotoAlbums.download();
+  }
 }
