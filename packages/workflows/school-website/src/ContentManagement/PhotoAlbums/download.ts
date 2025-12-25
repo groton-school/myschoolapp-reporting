@@ -26,7 +26,7 @@ export async function download({ outputPath }: Options) {
   try {
     for await (const category of await SkyAPI.school.v1.contentmanagement.photoalbums.categories()) {
       const categorySpinner = ora(
-        category.description || `Cateogry ${category.id}`
+        category.description || `Photo Album Category ${category.id}`
       ).start();
       const categoryIndex: AnnotatedPhotoCategory = category;
       categoryIndex.albums = [];
@@ -36,7 +36,9 @@ export async function download({ outputPath }: Options) {
           show_secured: true
         }
       )) {
-        const albumSpinner = ora(album.title || `Album ${album.id}`).start();
+        const albumSpinner = ora(
+          album.title || `Photo Album ${album.id}`
+        ).start();
         const albumIndex: AnnotatedPhotoAlbum = album;
         albumIndex.media = [];
         if (album.id) {
