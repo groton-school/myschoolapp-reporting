@@ -21,6 +21,7 @@ export async function list(request: ContentManagementRequest) {
   return SkyAPI.requestJSON<ContentAnnouncement[]>(
     'https://api.sky.blackbaud.com/school/v1/contentmanagement/announcements/list',
     'POST',
-    JSON.stringify(request)
+    JSON.stringify(request),
+    { 'Content-Type': 'application/json' }
   );
 }

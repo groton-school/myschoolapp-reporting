@@ -27,7 +27,8 @@ export async function list(request: ContentManagementRequest) {
   return await SkyAPI.requestJSON<PhotoAlbum[]>(
     'https://api.sky.blackbaud.com/school/v1/contentmanagement/photoalbums/list',
     'POST',
-    JSON.stringify(request)
+    JSON.stringify(request),
+    { 'Content-Type': 'application/json' }
   );
 }
 
