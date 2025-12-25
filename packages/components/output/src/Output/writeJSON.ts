@@ -31,7 +31,7 @@ export async function writeJSON(
         filePath,
         pretty ? JSON.stringify(data, null, 2) : JSON.stringify(data)
       );
-      const message = `Wrote JSON to ${Colors.url(filePath)}`;
+      const message = `Wrote JSON to ${Colors.path(`${path.dirname(filePath)}/`)}${Colors.value(path.basename(filePath))}`;
       if (silent) {
         Log.debug(message);
       } else {
