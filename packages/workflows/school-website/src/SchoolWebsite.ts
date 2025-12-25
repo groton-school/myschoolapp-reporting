@@ -2,7 +2,7 @@ import { PathString } from '@battis/descriptive-types';
 import '@msar/output';
 import { Positionals } from '@qui-cli/core';
 import * as Plugin from '@qui-cli/plugin';
-import * as Content from './Content/index.js';
+import * as ContentManagement from './ContentManagement/index.js';
 
 export type Configuration = Plugin.Configuration & {
   outputPath?: PathString;
@@ -47,5 +47,5 @@ export async function run() {
   if (!outputPath) {
     throw new Error('Output path must be defined');
   }
-  await Content.PhotoAlbums.download({ outputPath });
+  await ContentManagement.PhotoAlbums.download({ outputPath });
 }
