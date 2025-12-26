@@ -17,7 +17,7 @@ It depends on [Node.js](https://nodejs.org/) which provides the `npm` package ma
 ## Usage:
 
 ```bash
-  msar schoolWebsite -h --o=<outputPath> --ignoreErrors --logRequests --commands --silent --pretty --news --photoAlbums --logFilePath=<logFilePath> --stdoutLevel=<stdoutLevel> --fileLevel=<fileLevel> --opAccount=<example.1password.com> --opItem=<1Password unique identifier> --opToken=<token value> --serviceAccountToken=<token value> --clientId=<clientId> --clientSecret=<clientSecret> --redirectUri=<"http://localhost:XXXX/path/to/redirect"> --subscriptionKey=<subscriptionKey> [...]
+  msar schoolWebsite -h --o=<outputPath> --ignoreErrors --logRequests --commands --silent --pretty --announcements --news --photoAlbums --logFilePath=<logFilePath> --stdoutLevel=<stdoutLevel> --fileLevel=<fileLevel> --opAccount=<example.1password.com> --opItem=<1Password unique identifier> --opToken=<token value> --serviceAccountToken=<token value> --clientId=<clientId> --clientSecret=<clientSecret> --redirectUri=<"http://localhost:XXXX/path/to/redirect"> --subscriptionKey=<subscriptionKey> [...]
 ```
 
 ## Arguments
@@ -111,6 +111,10 @@ OAuth 2.0 redirect URI (must be to host localhost, defaults to environment varia
 Blackbaud subscription access key; will use environment variable SKY_SUBSCRIPTION_KEY if present
 
 ### School Website options
+
+#### `--announcements`
+
+Download announcements (Default: true, use --no-announcements to disable)
 
 #### `--news`
 
