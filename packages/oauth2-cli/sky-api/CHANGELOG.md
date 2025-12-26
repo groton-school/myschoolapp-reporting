@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [0.3.1](https://github.com/groton-school/myschoolapp-reporting/compare/oauth2-cli/sky-api/0.3.0...oauth2-cli/sky-api/0.3.1) (2025-12-26)
+
+
+### Bug Fixes
+
+* include Content-Type header when sending JSON bodies ([b06e18e](https://github.com/groton-school/myschoolapp-reporting/commit/b06e18e5136a08a00e251171348c9cf2325656ca))
+* update CategroyRequest typing to match observed reality ([89ad060](https://github.com/groton-school/myschoolapp-reporting/commit/89ad060476e7efed3430aff969b0dbdaa99692d1))
+* update Colors usage to match current version ([7a82e9f](https://github.com/groton-school/myschoolapp-reporting/commit/7a82e9f3e624992c8c2a0ba7241d82327913391f))
+* update photoalbum.list() to reflect actual behavior, rather than documentation ([e2f1708](https://github.com/groton-school/myschoolapp-reporting/commit/e2f170804f5338c54279b2ca095a075fdbc32fb6))
+
 ## [0.3.0](https://github.com/groton-school/myschoolapp-reporting/compare/oauth2-cli/sky-api/0.2.2...oauth2-cli/sky-api/0.3.0) (2025-12-24)
 
 
