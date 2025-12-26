@@ -11,16 +11,22 @@ import { AnnotatedVideo, AnnotatedVideoCategory } from './Annotations.js';
 
 export type Index = AnnotatedVideoCategory[];
 
-export async function download(url: URLString) {
+export async function download(
+  url: URLString,
+  session?: PuppeteerSession.Authenticated
+) {
   const index: Index = [];
   const indexPath = await Output.avoidOverwrite(
     Output.filePathFromOutputPath(Output.outputPath(), 'videos.json')
   );
-  const session = await PuppeteerSession.Fetchable.init(url, {
-    logRequests: Workflow.logRequests()
-  });
+  session =
+    session ||
+    (await PuppeteerSession.Fetchable.init(url, {
+      logRequests: Workflow.logRequests()
+    }));
   try {
     for (const category of await DatadirectPuppeteer.api.VideoCategory.categories(
+      // FIXME do real pagination
       { session, payload: { pageNumber: 1, rowsPerPage: 1000 } }
     )) {
       const label = category.GroupName;
@@ -54,6 +60,6 @@ export async function download(url: URLString) {
     Log.error(Colors.error(error));
   } finally {
     Output.writeJSON(indexPath, index, { overwrite: true });
-    session.close();
   }
+  return session;
 }

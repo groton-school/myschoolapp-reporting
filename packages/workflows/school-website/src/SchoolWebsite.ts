@@ -1,5 +1,6 @@
 import { URLString } from '@battis/descriptive-types';
 import '@msar/output';
+import { PuppeteerSession } from '@msar/puppeteer-session';
 import { Colors } from '@qui-cli/colors';
 import * as Plugin from '@qui-cli/plugin';
 import * as ContentManagement from './ContentManagement/index.js';
@@ -7,6 +8,7 @@ import * as ContentManagement from './ContentManagement/index.js';
 export type Configuration = Plugin.Configuration & {
   url?: URLString;
   announcements?: boolean;
+  audio?: boolean;
   news?: boolean;
   photoAlbums?: boolean;
   videos?: boolean;
@@ -15,6 +17,7 @@ export type Configuration = Plugin.Configuration & {
 export const name = 'school-website';
 const config: Configuration = {
   announcements: true,
+  audio: true,
   news: true,
   photoAlbums: true,
   videos: true
@@ -33,7 +36,7 @@ export function options(): Plugin.Options {
     man: [{ level: 1, text: 'School Website options' }],
     opt: {
       url: {
-        description: `URL of MySchoolApp instance (required if capturing ${Colors.flagArg('--videos')})`,
+        description: `URL of MySchoolApp instance (required if capturing ${Colors.flagArg('--audio')} or ${Colors.flagArg('--videos')}})`,
         hint: Colors.url('https://example.myschoolapp.com'),
         default: config.url
       }
@@ -42,6 +45,10 @@ export function options(): Plugin.Options {
       announcements: {
         description: `Download announcements`,
         default: config.announcements
+      },
+      audio: {
+        description: `Download audio items, requires ${Colors.optionArg('--url')})`,
+        default: config.audio
       },
       news: {
         description: `Download news items`,
@@ -52,7 +59,7 @@ export function options(): Plugin.Options {
         default: config.photoAlbums
       },
       videos: {
-        description: `Download videos`,
+        description: `Download videos, requires ${Colors.optionArg('--url')})`,
         default: config.videos
       }
     }
@@ -64,8 +71,19 @@ export function init({ values }: Plugin.ExpectedArguments<typeof options>) {
 }
 
 export async function run() {
+  let session: PuppeteerSession.Authenticated | undefined = undefined;
   if (config.announcements) {
     await ContentManagement.Announcements.download();
+  }
+  if (config.audio) {
+    const { url } = config;
+    if (!url) {
+      throw new Error(
+        `${Colors.optionArg('--url')} is required to download audio`
+      );
+    }
+
+    session = await ContentManagement.Audio.download(url, session);
   }
   if (config.news) {
     await ContentManagement.News.download();
@@ -80,6 +98,9 @@ export async function run() {
         `${Colors.optionArg('--url')} is required to download videos`
       );
     }
-    await ContentManagement.Videos.download(url);
+    session = await ContentManagement.Videos.download(url, session);
+  }
+  if (session) {
+    session.close();
   }
 }

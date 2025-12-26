@@ -17,7 +17,7 @@ It depends on [Node.js](https://nodejs.org/) which provides the `npm` package ma
 ## Usage:
 
 ```bash
-  msar schoolWebsite -h --o=<outputPath> --u=<username> --p=<password> --ignoreErrors --logRequests --commands --silent --pretty --headless --devtools --quit --announcements --news --photoAlbums --videos --concurrency=<concurrency> --rate=<rate> --logFilePath=<logFilePath> --stdoutLevel=<stdoutLevel> --fileLevel=<fileLevel> --opAccount=<example.1password.com> --opItem=<1Password unique identifier> --opToken=<token value> --serviceAccountToken=<token value> --sso=<sso> --mfa=<mfa> --viewportWidth=<viewportWidth> --viewportHeight=<viewportHeight> --clientId=<clientId> --clientSecret=<clientSecret> --redirectUri=<"http://localhost:XXXX/path/to/redirect"> --subscriptionKey=<subscriptionKey> --url=<https://example.myschoolapp.com> [...]
+  msar schoolWebsite -h --o=<outputPath> --u=<username> --p=<password> --ignoreErrors --logRequests --commands --silent --pretty --headless --devtools --quit --announcements --audio --news --photoAlbums --videos --concurrency=<concurrency> --rate=<rate> --logFilePath=<logFilePath> --stdoutLevel=<stdoutLevel> --fileLevel=<fileLevel> --opAccount=<example.1password.com> --opItem=<1Password unique identifier> --opToken=<token value> --serviceAccountToken=<token value> --sso=<sso> --mfa=<mfa> --viewportWidth=<viewportWidth> --viewportHeight=<viewportHeight> --clientId=<clientId> --clientSecret=<clientSecret> --redirectUri=<"http://localhost:XXXX/path/to/redirect"> --subscriptionKey=<subscriptionKey> --url=<https://example.myschoolapp.com> [...]
 ```
 
 ## Arguments
@@ -160,11 +160,15 @@ Blackbaud subscription access key; will use environment variable SKY_SUBSCRIPTIO
 
 #### `--url=<https://example.myschoolapp.com>`
 
-URL of MySchoolApp instance (required if capturing --videos)
+URL of MySchoolApp instance (required if capturing --audio or --videos})
 
 #### `--announcements`
 
 Download announcements (Default: true, use --no-announcements to disable)
+
+#### `--audio`
+
+Download audio items, requires --url) (Default: true, use --no-audio to disable)
 
 #### `--news`
 
@@ -176,4 +180,4 @@ Download photo albums (Default: true, use --no-photoAlbums to disable)
 
 #### `--videos`
 
-Download videos (Default: true, use --no-videos to disable)
+Download videos, requires --url) (Default: true, use --no-videos to disable)
