@@ -1,5 +1,5 @@
 {
   "path": ".",
-  "tag-prefix": "components/puppeteer-session/",
+  "tag-prefix": "component/puppeteer-session/",
   "releaseCommitMessageFormat": "chore: release @msar/puppeteer-session@{{currentTag}}"
 }

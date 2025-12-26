@@ -1,5 +1,5 @@
 {
   "path": ".",
-  "tag-prefix": "components/rate-limiter/",
+  "tag-prefix": "component/rate-limiter/",
   "releaseCommitMessageFormat": "chore: release @msar/rate-limiter@{{currentTag}}"
 }

@@ -1,5 +1,5 @@
 {
   "path": ".",
-  "tag-prefix": "components/output/",
+  "tag-prefix": "component/output/",
   "releaseCommitMessageFormat": "chore: release @msar/output@{{currentTag}}"
 }

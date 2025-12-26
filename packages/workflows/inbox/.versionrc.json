@@ -1,5 +1,5 @@
 {
   "path": ".",
-  "tag-prefix": "workflows/inbox/",
+  "tag-prefix": "workflow/inbox/",
   "releaseCommitMessageFormat": "chore: release @msar/inbox@{{currentTag}}"
 }

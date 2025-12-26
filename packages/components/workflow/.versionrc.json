@@ -1,5 +1,5 @@
 {
   "path": ".",
-  "tag-prefix": "components/workflow/",
+  "tag-prefix": "component/workflow/",
   "releaseCommitMessageFormat": "chore: release @msar/workflow@{{currentTag}}"
 }
