@@ -1,6 +1,8 @@
 export * as assessment from './assessment/index.js';
 export * as assignment from './assignment/index.js';
 export * as Assignment2 from './Assignment2/index.js';
+export * as audio from './audio/index.js';
+export * as AudioCategory from './AudioCategory/index.js';
 export * as Competency from './Competency/index.js';
 export * as Course from './Course/index.js';
 export * as datadirect from './datadirect/index.js';

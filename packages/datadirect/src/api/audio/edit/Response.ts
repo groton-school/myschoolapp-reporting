@@ -1,0 +1,157 @@
+import {
+  DateString,
+  DateTimeString,
+  NumericBoolean,
+  PathString,
+  URLString
+} from '@battis/descriptive-types';
+
+export type AudioGroup = {
+  GroupName: string;
+  CourseTitle: string;
+  ContextLabelId: number;
+  ContextValue: number;
+  Id: string;
+  Name: string;
+  ExpireDate: DateTimeString | null;
+  PublishDate: DateTimeString;
+  Primary: boolean;
+  ContextLabel: number;
+  SchoolYear: string;
+  albumId: number;
+  IsPublicCategory: number;
+};
+
+export type AudioItem = {
+  Id: number;
+  FilenameUrl: URLString;
+  Filename: string;
+  Height: number;
+  Width: number;
+  ThumbFilenameUrl: URLString;
+  ThumbFilename: string;
+  ThumbWidth: number;
+  ThumbHeight: number;
+  ZoomFilename: string;
+  Title: string;
+  Caption: string;
+  LongDescription: string;
+  AudioTranscript: string;
+  TranscriptFilename: string;
+  TranscriptFilenameUrl: URLString;
+  TranscriptOriginalFilename: string;
+  TagList: string[];
+  Tags: string;
+  PhotoTitleInd: NumericBoolean;
+  PhotoDescriptionInd: NumericBoolean;
+  TranscriptInd: NumericBoolean;
+  PhotoCaptionInd: NumericBoolean;
+  FilePath: PathString;
+  ThumbFilePath: PathString;
+  ZoomFilePath: PathString;
+  OriginalFilePath: PathString;
+  OriginalFilenameUrl: URLString;
+  OriginalFilename: string;
+  OriginalWidth: number;
+  OriginalHeight: number;
+  SortOrder: number;
+  CoverFile: boolean;
+  AllowDownload: boolean;
+  ProcessingStatus: number;
+  IsPublic: boolean;
+  CorruptedFile: boolean;
+  FileEdited: false;
+  PhotoEapEnabled: boolean;
+  OriginalFilenameEditedUrl: URLString;
+  FilenameEditedUrl: URLString;
+  ThumbFilenameEditedUrl: URLString;
+  InsertDate: DateTimeString;
+  LastModifyDate: DateTimeString;
+  LastModifyUserId: number;
+};
+
+export type PhotoItem = {
+  Id: number;
+  LargeFilenameUrl: URLString;
+  LargeFilename: string;
+  LargeHeight: number;
+  LargeWidth: number;
+  ThumbFilenameUrl: URLString;
+  ThumbFilename: string;
+  ThumbWidth: number;
+  ThumbHeight: number;
+  ZoomFilenameUrl: URLString;
+  ZoomWidth: number;
+  ZoomHeight: number;
+  OriginalFilenameUrl: URLString;
+  OriginalFilename: string;
+  OriginalWidth: number;
+  OriginalHeight: number;
+  EditedWidth: number;
+  EditedHeight: number;
+  PhotoEditSettings: string;
+  Title: string;
+  Caption: string;
+  photo_alttext: string;
+  hover_alttext: string;
+  LongDescription: string;
+  TagList: string[];
+  FileEdited: boolean;
+  IsHoverPhoto: boolean;
+  PhotoEapEnabled: boolean;
+  ImageOps: any[];
+  OriginalFilenameEditedUrl: URLString;
+  LargeFilenameEditedUrl: URLString;
+  ZoomFilenameEditedUrl: URLString;
+  ThumbFilenameEditedUrl: URLString;
+  PhotoTypeId: number;
+  PhotoWidth: number;
+  PhotoPK: number;
+};
+
+export type Response = {
+  Photos: PhotoItem[];
+  Album_Id: number;
+  Album_Name: string;
+  AlbumId: number;
+  AlbumName: string;
+  AlbumDescription: string;
+  ContentId: number;
+  CoverFilename: number;
+  CoverFileEdited: boolean;
+  IsCustomThumb: boolean;
+  CoverFilenameUrl: URLString;
+  CoverCaption: string;
+  CoverTitle: string;
+  CoverWidth: number;
+  CoverHeight: number;
+  NumberOfViews: number;
+  Featured: boolean;
+  IsThumbExist: boolean;
+  FileCount: number;
+  VideoFileCount: number;
+  VideoEAP: boolean;
+  AllowDownload: boolean;
+  PublishDateDisplay: DateString;
+  ExpireDateDisplay: DateString;
+  GroupList: AudioGroup[];
+  GroupId: number;
+  ContentLabel: string;
+  FilenameUrl: URLString;
+  LongDescriptionInd: NumericBoolean;
+  PhotoCaptionInd: NumericBoolean;
+  PhotoDescriptionInd: NumericBoolean;
+  TranscriptInd: NumericBoolean;
+  PhotoTitleInd: NumericBoolean;
+  maxPhoto: number;
+  Files: AudioItem[];
+  ProcessedCount: number;
+  InProcessCount: number;
+  IsPhotoProcessed: boolean;
+  IsBackgroundJobTask: boolean;
+  RenditionsComplete: boolean;
+  AlbumPhotoCorrupted: boolean;
+  HasCorruptedFile: boolean;
+  CoverFileId: number;
+  MoreAlbums: boolean;
+};
