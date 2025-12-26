@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [0.3.6](https://github.com/groton-school/myschoolapp-reporting/compare/component/datadirect-puppeteer/0.3.5...component/datadirect-puppeteer/0.3.6) (2025-12-26)
+
+
+### Features
+
+* add Photo endpoint ([fcdbf44](https://github.com/groton-school/myschoolapp-reporting/commit/fcdbf44a47d2783e64add0a7534c500ed26899a9))
+* add Photocategory endpoint ([106b41e](https://github.com/groton-school/myschoolapp-reporting/commit/106b41e4a3bfbf0ef415114041d4fc08765f1641))
+* add videocategory and video/list endpoints ([e0cdf10](https://github.com/groton-school/myschoolapp-reporting/commit/e0cdf101e91d751afd7c67aa4c3725aa6a5bb7ab))
+* audio content endpoints ([a8c6ff6](https://github.com/groton-school/myschoolapp-reporting/commit/a8c6ff692de5a164098c5b068ebd030227e1f837))
+
+
+### Bug Fixes
+
+* update Colors usage to match current version ([7a82e9f](https://github.com/groton-school/myschoolapp-reporting/commit/7a82e9f3e624992c8c2a0ba7241d82327913391f))
+
 ## [0.3.5](https://github.com/groton-school/myschoolapp-reporting/compare/component/datadirect-puppeteer/0.3.4...component/datadirect-puppeteer/0.3.5) (2025-11-08)
 
 ### Bug Fixes
