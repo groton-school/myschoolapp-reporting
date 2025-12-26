@@ -2,6 +2,24 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [0.4.0](https://github.com/groton-school/myschoolapp-reporting/compare/workflow/snapshot/0.3.6...workflow/snapshot/0.4.0) (2025-12-26)
+
+
+### ⚠ BREAKING CHANGES
+
+* rewritten as cleaner extension of @oauth2-cli/qui-cli-plugin
+
+### Features
+
+* capture content management photo albums via Sky API ([c6c18bc](https://github.com/groton-school/myschoolapp-reporting/commit/c6c18bc9ff3188bd590b72ed7a16248ea72b555a))
+* rewritten as cleaner extension of @oauth2-cli/qui-cli-plugin ([e623f8a](https://github.com/groton-school/myschoolapp-reporting/commit/e623f8a5b3a08a28a832002176e76d2a4e6d1823))
+
+
+### Bug Fixes
+
+* update Colors usage to match current version ([7a82e9f](https://github.com/groton-school/myschoolapp-reporting/commit/7a82e9f3e624992c8c2a0ba7241d82327913391f))
+* update typing to reflect updates in @oauth2-cli/sky-api ([de01cf4](https://github.com/groton-school/myschoolapp-reporting/commit/de01cf46db97b463835377ced522c8547fe3634b))
+
 ## [0.3.6](https://github.com/groton-school/myschoolapp-reporting/compare/workflow/snapshot/0.3.5...workflow/snapshot/0.3.6) (2025-11-12)
 
 ## [0.3.5](https://github.com/groton-school/myschoolapp-reporting/compare/workflow/snapshot/0.3.4...workflow/snapshot/0.3.5) (2025-11-08)
