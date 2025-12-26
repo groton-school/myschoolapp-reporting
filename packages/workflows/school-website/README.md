@@ -17,7 +17,7 @@ It depends on [Node.js](https://nodejs.org/) which provides the `npm` package ma
 ## Usage:
 
 ```bash
-  msar schoolWebsite -h --o=<outputPath> --ignoreErrors --logRequests --commands --silent --pretty --announcements --news --photoAlbums --logFilePath=<logFilePath> --stdoutLevel=<stdoutLevel> --fileLevel=<fileLevel> --opAccount=<example.1password.com> --opItem=<1Password unique identifier> --opToken=<token value> --serviceAccountToken=<token value> --clientId=<clientId> --clientSecret=<clientSecret> --redirectUri=<"http://localhost:XXXX/path/to/redirect"> --subscriptionKey=<subscriptionKey> [...]
+  msar schoolWebsite -h --o=<outputPath> --u=<username> --p=<password> --ignoreErrors --logRequests --commands --silent --pretty --headless --devtools --quit --announcements --news --photoAlbums --videos --concurrency=<concurrency> --rate=<rate> --logFilePath=<logFilePath> --stdoutLevel=<stdoutLevel> --fileLevel=<fileLevel> --opAccount=<example.1password.com> --opItem=<1Password unique identifier> --opToken=<token value> --serviceAccountToken=<token value> --sso=<sso> --mfa=<mfa> --viewportWidth=<viewportWidth> --viewportHeight=<viewportHeight> --clientId=<clientId> --clientSecret=<clientSecret> --redirectUri=<"http://localhost:XXXX/path/to/redirect"> --subscriptionKey=<subscriptionKey> --url=<https://example.myschoolapp.com> [...]
 ```
 
 ## Arguments
@@ -35,6 +35,14 @@ Continue run even if errors are encountered (Default: true, use --no-ignoreError
 #### `--logRequests`
 
 Log fetch requests and responses for analysis and debugging (Default: false)
+
+#### `--concurrency=<n>`
+
+The number of concurrent threads to run (Default: 1)
+
+#### `--rate=<n>`
+
+The number of server requests allowed per second
 
 ### Logging options
 
@@ -92,6 +100,44 @@ Path to output directory or file to save command output, will use the value in e
 
 Pretty print output to file (if --outputPath option is used)
 
+### Puppeteer options
+
+#### `--headless`
+
+Run Puppeteer's Chrome instance headless (Default: false)
+
+#### `--devtools`
+
+Open Chrome DevTools with the window
+
+#### `--quit`
+
+Quit Puppeteer's Chrome instance on successful completion (Default: true, use --no-quit to disable)
+
+#### `-u<username> --username=<username>`
+
+MySchoolApp username
+
+#### `-p<password> --password=<password>`
+
+MySchoolApp password
+
+#### `--sso=<sso>`
+
+MySchoolApp SSO configuration (currently only accepts "entra-id", will use the value in environment variable PUPPETEER_SSO if present)
+
+#### `--mfa=<mfa>`
+
+MySchoolApp MFA configuration (currently only accepts "entra-id", will use the value in environment variable PUPPETEER_MFA if present)
+
+#### `--viewportWidth=<n>`
+
+Default: 0
+
+#### `--viewportHeight=<n>`
+
+Default: 0
+
 ### Sky API options
 
 #### `--clientId=<clientId>`
@@ -112,6 +158,10 @@ Blackbaud subscription access key; will use environment variable SKY_SUBSCRIPTIO
 
 ### School Website options
 
+#### `--url=<https://example.myschoolapp.com>`
+
+URL of MySchoolApp instance (required if capturing --videos)
+
 #### `--announcements`
 
 Download announcements (Default: true, use --no-announcements to disable)
@@ -123,3 +173,7 @@ Download news items (Default: true, use --no-news to disable)
 #### `--photoAlbums`
 
 Download photo albums (Default: true, use --no-photoAlbums to disable)
+
+#### `--videos`
+
+Download videos (Default: true, use --no-videos to disable)

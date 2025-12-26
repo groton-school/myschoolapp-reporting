@@ -644,12 +644,9 @@ importers:
 
   packages/workflows/school-website:
     dependencies:
-      '@msar/datadirect-puppeteer':
-        specifier: 0.x
-        version: 0.3.5(@msar/puppeteer-session@0.1.5(@msar/rate-limiter@0.1.3(@qui-cli/plugin@4.0.0))(@qui-cli/env-1password@1.2.3(@qui-cli/env@5.0.2(@qui-cli/plugin@4.0.0)(@qui-cli/root@3.0.4(@qui-cli/plugin@4.0.0)))(@qui-cli/plugin@4.0.0)(@qui-cli/root@3.0.4(@qui-cli/plugin@4.0.0)))(@qui-cli/log@4.0.1(@qui-cli/plugin@4.0.0)(@qui-cli/root@3.0.4(@qui-cli/plugin@4.0.0)))(@qui-cli/plugin@4.0.0)(typescript@5.9.3))(@qui-cli/log@4.0.1(@qui-cli/plugin@4.0.0)(@qui-cli/root@3.0.4(@qui-cli/plugin@4.0.0)))(@qui-cli/plugin@4.0.0)(puppeteer@24.34.0(typescript@5.9.3))
-      '@msar/puppeteer-session':
-        specifier: 0.x
-        version: 0.1.5(@msar/rate-limiter@0.1.3(@qui-cli/plugin@4.0.0))(@qui-cli/env-1password@1.2.3(@qui-cli/env@5.0.2(@qui-cli/plugin@4.0.0)(@qui-cli/root@3.0.4(@qui-cli/plugin@4.0.0)))(@qui-cli/plugin@4.0.0)(@qui-cli/root@3.0.4(@qui-cli/plugin@4.0.0)))(@qui-cli/log@4.0.1(@qui-cli/plugin@4.0.0)(@qui-cli/root@3.0.4(@qui-cli/plugin@4.0.0)))(@qui-cli/plugin@4.0.0)(typescript@5.9.3)
+      datadirect:
+        specifier: workspace:*
+        version: link:../../datadirect
       ora:
         specifier: ^8.2.0
         version: 8.2.0
@@ -657,9 +654,18 @@ importers:
       '@battis/descriptive-types':
         specifier: ^0.2.6
         version: 0.2.6
+      '@msar/datadirect-puppeteer':
+        specifier: workspace:*
+        version: link:../../components/datadirect-puppeteer
       '@msar/output':
         specifier: workspace:*
         version: link:../../components/output
+      '@msar/puppeteer-session':
+        specifier: workspace:*
+        version: link:../../components/puppeteer-session
+      '@msar/rate-limiter':
+        specifier: workspace:*
+        version: link:../../components/rate-limiter
       '@msar/workflow':
         specifier: workspace:*
         version: link:../../components/workflow
@@ -1132,27 +1138,6 @@ packages:
   '@lerna/create@8.2.4':
     resolution: {integrity: sha512-A8AlzetnS2WIuhijdAzKUyFpR5YbLLfV3luQ4lzBgIBgRfuoBDZeF+RSZPhra+7A6/zTUlrbhKZIOi/MNhqgvQ==}
     engines: {node: '>=18.0.0'}
-
-  '@msar/datadirect-puppeteer@0.3.5':
-    resolution: {integrity: sha512-/MhXWUHmN26RfrihFsKqAx33dpIA22liz2OVUQUqEnu5MaGoxW99c/qkf3uRAoqYFH+zcRX71xdiDdT82dCzjA==}
-    peerDependencies:
-      '@msar/puppeteer-session': 0.x
-      '@qui-cli/log': 4.x
-      '@qui-cli/plugin': 4.x
-      puppeteer: '*'
-
-  '@msar/puppeteer-session@0.1.5':
-    resolution: {integrity: sha512-QiCBfTnrZPl8WktbK98omIoPO/edn/Sx6l4qAvEwkHJRyaw2RCFD50BPM8SfwJDRLKA2qYepIkj8gbYDZsu98g==}
-    peerDependencies:
-      '@msar/rate-limiter': 0.x
-      '@qui-cli/env-1password': 1.x
-      '@qui-cli/log': 4.x
-      '@qui-cli/plugin': 4.x
-
-  '@msar/rate-limiter@0.1.3':
-    resolution: {integrity: sha512-yzEabvLhIRogksvNYSDyoVjpJ8fltwAwHKIrnok9iCHgLT9UPjEftUPXC2HOIzeCmiu9+mWvhK+knZZPr0yaNA==}
-    peerDependencies:
-      '@qui-cli/plugin': 4.x
 
   '@napi-rs/wasm-runtime@0.2.4':
     resolution: {integrity: sha512-9zESzOO5aDByvhIAsOy9TbpZ0Ur2AJbUI7UT73kcUTS2mxAMHOBaa1st/jAymNoCtvrit99kkzT1FZuXVcgfIQ==}
@@ -2296,9 +2281,6 @@ packages:
   data-view-byte-offset@1.0.1:
     resolution: {integrity: sha512-BS8PfmtDGnrgYdOonGZQdLZslWIeCGFP9tpan0hi1Co2Zr2NKADsvGYA8XxuG/4UWgJ6Cjtv+YJnB6MM69QGlQ==}
     engines: {node: '>= 0.4'}
-
-  datadirect@0.4.6:
-    resolution: {integrity: sha512-J2N1Nru2H5xCsgfHuRlxOguIDqV9oDUlBzYxmbJTZ8zKi3PFyNEnpL4y54Hr7stNUJsQxrjO2pEe/T69sZahvQ==}
 
   dateformat@3.0.3:
     resolution: {integrity: sha512-jyCETtSl3VMZMWeRo7iY1FL19ges1t55hMo5yaam4Jrsm5EPL89UQkoQRyiI+Yf4k8r2ZpdngkV8hr1lIdjb3Q==}
@@ -5845,43 +5827,6 @@ snapshots:
       - supports-color
       - typescript
 
-  '@msar/datadirect-puppeteer@0.3.5(@msar/puppeteer-session@0.1.5(@msar/rate-limiter@0.1.3(@qui-cli/plugin@4.0.0))(@qui-cli/env-1password@1.2.3(@qui-cli/env@5.0.2(@qui-cli/plugin@4.0.0)(@qui-cli/root@3.0.4(@qui-cli/plugin@4.0.0)))(@qui-cli/plugin@4.0.0)(@qui-cli/root@3.0.4(@qui-cli/plugin@4.0.0)))(@qui-cli/log@4.0.1(@qui-cli/plugin@4.0.0)(@qui-cli/root@3.0.4(@qui-cli/plugin@4.0.0)))(@qui-cli/plugin@4.0.0)(typescript@5.9.3))(@qui-cli/log@4.0.1(@qui-cli/plugin@4.0.0)(@qui-cli/root@3.0.4(@qui-cli/plugin@4.0.0)))(@qui-cli/plugin@4.0.0)(puppeteer@24.34.0(typescript@5.9.3))':
-    dependencies:
-      '@msar/puppeteer-session': 0.1.5(@msar/rate-limiter@0.1.3(@qui-cli/plugin@4.0.0))(@qui-cli/env-1password@1.2.3(@qui-cli/env@5.0.2(@qui-cli/plugin@4.0.0)(@qui-cli/root@3.0.4(@qui-cli/plugin@4.0.0)))(@qui-cli/plugin@4.0.0)(@qui-cli/root@3.0.4(@qui-cli/plugin@4.0.0)))(@qui-cli/log@4.0.1(@qui-cli/plugin@4.0.0)(@qui-cli/root@3.0.4(@qui-cli/plugin@4.0.0)))(@qui-cli/plugin@4.0.0)(typescript@5.9.3)
-      '@qui-cli/colors': 3.2.0
-      '@qui-cli/log': 4.0.1(@qui-cli/plugin@4.0.0)(@qui-cli/root@3.0.4(@qui-cli/plugin@4.0.0))
-      '@qui-cli/plugin': 4.0.0
-      async-mutex: 0.5.0
-      datadirect: 0.4.6
-      ora: 8.2.0
-      puppeteer: 24.34.0(typescript@5.9.3)
-
-  '@msar/puppeteer-session@0.1.5(@msar/rate-limiter@0.1.3(@qui-cli/plugin@4.0.0))(@qui-cli/env-1password@1.2.3(@qui-cli/env@5.0.2(@qui-cli/plugin@4.0.0)(@qui-cli/root@3.0.4(@qui-cli/plugin@4.0.0)))(@qui-cli/plugin@4.0.0)(@qui-cli/root@3.0.4(@qui-cli/plugin@4.0.0)))(@qui-cli/log@4.0.1(@qui-cli/plugin@4.0.0)(@qui-cli/root@3.0.4(@qui-cli/plugin@4.0.0)))(@qui-cli/plugin@4.0.0)(typescript@5.9.3)':
-    dependencies:
-      '@msar/rate-limiter': 0.1.3(@qui-cli/plugin@4.0.0)
-      '@qui-cli/colors': 3.2.0
-      '@qui-cli/env-1password': 1.2.3(@qui-cli/env@5.0.2(@qui-cli/plugin@4.0.0)(@qui-cli/root@3.0.4(@qui-cli/plugin@4.0.0)))(@qui-cli/plugin@4.0.0)(@qui-cli/root@3.0.4(@qui-cli/plugin@4.0.0))
-      '@qui-cli/log': 4.0.1(@qui-cli/plugin@4.0.0)(@qui-cli/root@3.0.4(@qui-cli/plugin@4.0.0))
-      '@qui-cli/plugin': 4.0.0
-      async-mutex: 0.5.0
-      datadirect: 0.4.6
-      ora: 8.2.0
-      puppeteer: 23.11.1(typescript@5.9.3)
-    transitivePeerDependencies:
-      - bare-abort-controller
-      - bare-buffer
-      - bufferutil
-      - react-native-b4a
-      - supports-color
-      - typescript
-      - utf-8-validate
-
-  '@msar/rate-limiter@0.1.3(@qui-cli/plugin@4.0.0)':
-    dependencies:
-      '@qui-cli/colors': 3.2.0
-      '@qui-cli/plugin': 4.0.0
-      p-queue: 8.1.1
-
   '@napi-rs/wasm-runtime@0.2.4':
     dependencies:
       '@emnapi/core': 1.7.1
@@ -7192,8 +7137,6 @@ snapshots:
       call-bound: 1.0.4
       es-errors: 1.3.0
       is-data-view: 1.0.2
-
-  datadirect@0.4.6: {}
 
   dateformat@3.0.3: {}
 

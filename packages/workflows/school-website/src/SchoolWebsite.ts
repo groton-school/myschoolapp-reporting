@@ -1,18 +1,23 @@
+import { URLString } from '@battis/descriptive-types';
 import '@msar/output';
+import { Colors } from '@qui-cli/colors';
 import * as Plugin from '@qui-cli/plugin';
 import * as ContentManagement from './ContentManagement/index.js';
 
 export type Configuration = Plugin.Configuration & {
+  url?: URLString;
   announcements?: boolean;
   news?: boolean;
   photoAlbums?: boolean;
+  videos?: boolean;
 };
 
 export const name = 'school-website';
 const config: Configuration = {
   announcements: true,
   news: true,
-  photoAlbums: true
+  photoAlbums: true,
+  videos: true
 };
 
 export function configure(proposal: Partial<Configuration> = {}) {
@@ -26,6 +31,13 @@ export function configure(proposal: Partial<Configuration> = {}) {
 export function options(): Plugin.Options {
   return {
     man: [{ level: 1, text: 'School Website options' }],
+    opt: {
+      url: {
+        description: `URL of MySchoolApp instance (required if capturing ${Colors.flagArg('--videos')})`,
+        hint: Colors.url('https://example.myschoolapp.com'),
+        default: config.url
+      }
+    },
     flag: {
       announcements: {
         description: `Download announcements`,
@@ -38,6 +50,10 @@ export function options(): Plugin.Options {
       photoAlbums: {
         description: `Download photo albums`,
         default: config.photoAlbums
+      },
+      videos: {
+        description: `Download videos`,
+        default: config.videos
       }
     }
   };
@@ -56,5 +72,14 @@ export async function run() {
   }
   if (config.photoAlbums) {
     await ContentManagement.PhotoAlbums.download();
+  }
+  if (config.videos) {
+    const { url } = config;
+    if (!url) {
+      throw new Error(
+        `${Colors.optionArg('--url')} is required to download videos`
+      );
+    }
+    await ContentManagement.Videos.download(url);
   }
 }

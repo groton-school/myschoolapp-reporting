@@ -23,11 +23,15 @@
     "release": "commit-and-tag-version"
   },
   "dependencies": {
+    "datadirect": "workspace:*",
     "ora": "^8.2.0"
   },
   "devDependencies": {
     "@battis/descriptive-types": "^0.2.6",
+    "@msar/datadirect-puppeteer": "workspace:*",
     "@msar/output": "workspace:*",
+    "@msar/puppeteer-session": "workspace:*",
+    "@msar/rate-limiter": "workspace:*",
     "@msar/workflow": "workspace:*",
     "@oauth2-cli/sky-api": "workspace:*",
     "@qui-cli/colors": "^3.2.0",
@@ -46,6 +50,7 @@
     "@msar/datadirect-puppeteer": "0.x",
     "@msar/output": "0.x",
     "@msar/puppeteer-session": "0.x",
+    "@msar/rate-limiter": "0.x",
     "@msar/workflow": "0.x",
     "@oauth2-cli/sky-api": "0.x",
     "@qui-cli/colors": "3.x",
