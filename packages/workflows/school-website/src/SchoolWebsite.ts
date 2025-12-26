@@ -44,7 +44,7 @@ export function options(): Plugin.Options {
 }
 
 export function init({ values }: Plugin.ExpectedArguments<typeof options>) {
-  configure({ values });
+  configure(values);
 }
 
 export async function run() {
