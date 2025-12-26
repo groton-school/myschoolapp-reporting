@@ -16,9 +16,8 @@
     "build:compile": "lerna run build",
     "release": "run-s release:*",
     "release:build": "run-s build",
-    "release:main": "git push --follow-tags; git checkout main; git merge dev; git push",
-    "release:publish": "pnpm publish -r --access public",
-    "release:dev": "git checkout dev"
+    "release:git": "git push --follow-tags",
+    "release:publish": "pnpm publish -r --access public"
   },
   "devDependencies": {
     "@battis/eslint-config": "^2.0.8",
