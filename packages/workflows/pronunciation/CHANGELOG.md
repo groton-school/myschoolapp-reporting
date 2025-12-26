@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [0.0.5](https://github.com/groton-school/myschoolapp-reporting/compare/workflow/pronunciation/0.0.4...workflow/pronunciation/0.0.5) (2025-12-26)
+
+
+### Bug Fixes
+
+* update Colors usage to match current version ([7a82e9f](https://github.com/groton-school/myschoolapp-reporting/commit/7a82e9f3e624992c8c2a0ba7241d82327913391f))
+
 ## [0.0.4](https://github.com/groton-school/myschoolapp-reporting/compare/workflow/pronunciation/0.0.3...workflow/pronunciation/0.0.4) (2025-11-12)
 
 ## [0.0.3](https://github.com/groton-school/myschoolapp-reporting/compare/workflow/pronunciation/0.0.2...workflow/pronunciation/0.0.3) (2025-11-08)
