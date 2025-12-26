@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [0.1.8](https://github.com/groton-school/myschoolapp-reporting/compare/component/output/0.1.7...component/output/0.1.8) (2025-12-26)
+
+
+### Features
+
+* cute color-coding of output paths ([94f4661](https://github.com/groton-school/myschoolapp-reporting/commit/94f46612198c45ec4da806ee4f955ca02a5c361d))
+
+
+### Bug Fixes
+
+* update Colors usage to match current version ([7a82e9f](https://github.com/groton-school/myschoolapp-reporting/commit/7a82e9f3e624992c8c2a0ba7241d82327913391f))
+
 ## [0.1.7](https://github.com/groton-school/myschoolapp-reporting/compare/component/output/0.1.6...component/output/0.1.7) (2025-11-12)
 
 ## [0.1.6](https://github.com/groton-school/myschoolapp-reporting/compare/component/output/0.1.5...component/output/0.1.6) (2025-11-08)
