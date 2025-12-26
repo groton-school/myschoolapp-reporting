@@ -16,6 +16,8 @@ export * as Photocategory from './Photocategory.js';
 export * as Rubric from './Rubric.js';
 export * as schoolinfo from './schoolinfo.js';
 export * as topic from './topic.js';
+export * as Video from './Video.js';
+export * as VideoCategory from './VideoCategory.js';
 export * as webapp from './webapp.js';
 
 export const init = PuppeteerSession.Fetchable.init;

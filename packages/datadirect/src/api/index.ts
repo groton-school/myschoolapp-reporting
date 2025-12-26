@@ -14,4 +14,6 @@ export * as Photocategory from './Photocategory/index.js';
 export * as Rubric from './Rubric/index.js';
 export * as schoolinfo from './schoolinfo/index.js';
 export * as topic from './topic/index.js';
+export * as Video from './Video/index.js';
+export * as VideoCategory from './VideoCategory/index.js';
 export * as webapp from './webapp/index.js';
