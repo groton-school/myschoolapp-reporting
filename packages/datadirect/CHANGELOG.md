@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [0.4.7](https://github.com/groton-school/myschoolapp-reporting/compare/datadirect/0.4.6...datadirect/0.4.7) (2025-12-26)
+
+
+### Features
+
+* add Photo endpoint ([fcdbf44](https://github.com/groton-school/myschoolapp-reporting/commit/fcdbf44a47d2783e64add0a7534c500ed26899a9))
+* add Photocategory endpoint ([106b41e](https://github.com/groton-school/myschoolapp-reporting/commit/106b41e4a3bfbf0ef415114041d4fc08765f1641))
+* add videocategory and video/list endpoints ([e0cdf10](https://github.com/groton-school/myschoolapp-reporting/commit/e0cdf101e91d751afd7c67aa4c3725aa6a5bb7ab))
+* audio content endpoints ([a8c6ff6](https://github.com/groton-school/myschoolapp-reporting/commit/a8c6ff692de5a164098c5b068ebd030227e1f837))
+
+
+### Bug Fixes
+
+* replace any with generic JSONValue ([5c2ca40](https://github.com/groton-school/myschoolapp-reporting/commit/5c2ca40d2b6f520c4748f6842c783cea01bffa06))
+* update to latest @qui-cli/* ([9abc514](https://github.com/groton-school/myschoolapp-reporting/commit/9abc514e58489409b9d7f1a888ffe254d9822df3))
+
 ## [0.4.6](https://github.com/groton-school/myschoolapp-reporting/compare/datadirect/0.4.5...datadirect/0.4.6) (2025-03-25)
 
 
