@@ -12,7 +12,7 @@ export const snapshot: Base.Snapshot<Snapshot.GradeBook.Data> = async ({
   Debug.withGroupId(sectionId, 'Start capturing gradebook');
   try {
     const markingPeriods =
-      await DatadirectPuppeteer.api.datadirect.GradeBookMarkingPeriodList({
+      await DatadirectPuppeteer.API.DataDirect.GradeBookMarkingPeriodList({
         ...options,
         payload: { sectionId }
       });
@@ -20,7 +20,7 @@ export const snapshot: Base.Snapshot<Snapshot.GradeBook.Data> = async ({
     for (const markingPeriod of markingPeriods) {
       const entry: Snapshot.GradeBook.Item = {
         markingPeriod,
-        gradebook: await DatadirectPuppeteer.api.gradebook.hydrategradebook({
+        gradebook: await DatadirectPuppeteer.API.Gradebook.hydrateGradebook({
           ...options,
           payload: {
             sectionId,

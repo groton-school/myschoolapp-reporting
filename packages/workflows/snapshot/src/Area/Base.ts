@@ -1,5 +1,5 @@
 import { PuppeteerSession } from '@msar/puppeteer-session';
-import { Endpoint, api } from 'datadirect';
+import { Endpoints } from 'datadirect';
 
 export class StudentDataError extends Error {
   public message = 'Student data is not included in this snapshot';
@@ -8,7 +8,7 @@ export class StudentDataError extends Error {
 export type Options = {
   session?: PuppeteerSession.Authenticated;
   groupId: number;
-  payload?: api.datadirect.ContentItem.Payload;
+  payload?: Endpoints.API.DataDirect.ContentItem.Payload;
   ignoreErrors?: boolean;
   logRequests?: boolean;
   studentData?: boolean;
@@ -18,6 +18,6 @@ type Context = {
   groupId: number;
 };
 
-export type Snapshot<Data = Endpoint.Response> = (
+export type Snapshot<Data = Endpoints.Endpoint.Response> = (
   options: Options & Context
 ) => Promise<Data | undefined>;

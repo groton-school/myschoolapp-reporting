@@ -1,9 +1,9 @@
-import { api } from 'datadirect';
+import { Endpoints, Entities } from 'datadirect';
 
 export type Item = {
-  markingPeriod: api.datadirect.GradeBookMarkingPeriodList.Item;
-  gradebook: Omit<api.gradebook.hydrategradebook.Response, 'Roster'> & {
-    Roster: api.gradebook.hydrategradebook.Roster | { error: string };
+  markingPeriod: Endpoints.API.DataDirect.GradeBookMarkingPeriodList.Item;
+  gradebook: Omit<Entities.Gradebook.Gradebook, 'Roster'> & {
+    Roster: Entities.Gradebook.Roster | { error: string };
   };
 };
 

@@ -1,7 +1,7 @@
 import { PuppeteerSession } from '@msar/puppeteer-session';
-import { AssessmentGetSpa as AssessmentSPA } from 'datadirect/dist/api/assessment/index.js';
+import { Get } from 'datadirect/dist/Endpoints/API/Assessment/index.js';
 
-export const AssessmentGetSpa: PuppeteerSession.Fetchable.Binding<
-  AssessmentSPA.Payload,
-  AssessmentSPA.Response
-> = PuppeteerSession.Fetchable.bind(AssessmentSPA);
+export const get: PuppeteerSession.Fetchable.Binding<
+  Get.Payload,
+  Get.Response
+> = PuppeteerSession.Fetchable.bind(Get);

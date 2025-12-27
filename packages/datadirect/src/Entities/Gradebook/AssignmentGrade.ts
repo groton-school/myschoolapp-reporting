@@ -1,0 +1,43 @@
+import { DateTimeString } from '@battis/descriptive-types';
+import { JSONValue } from '@battis/typescript-tricks';
+
+export type AssignmentGrade = {
+  AssignmentId: number;
+  AssignmentIndexId: number;
+  StudentUserId: number;
+  ValueId: number;
+  PointsEarned?: number;
+  Comment: string;
+  AttendanceRequired: boolean;
+  Exempt: boolean;
+  Incomplete: boolean;
+  Late: boolean;
+  AA: string;
+  AD: string;
+  Missing: boolean;
+  RubricInd: boolean;
+  TA: string;
+  TD: string;
+  EvaluationMethod: number;
+  FormativeInd: boolean;
+  AssessmentInd: boolean;
+  AssignmentSkillList: JSONValue[]; // TODO DataDirect/GradeBookMarkingPeriodList.AssignmentGrade.AssignmentSkillList type
+  DropboxResub: boolean;
+  Letter: string;
+  MarkingPeriodId: number;
+  AssignmentTypeId: number;
+  AssignmentType: string;
+  MaxPoints: number;
+  Collected: boolean;
+  SubmittedInd: boolean;
+  LockedInd: boolean;
+  SectionId: number;
+  NewAssessmentInd: boolean;
+  AssessmentSubmittedDate?: DateTimeString;
+  AttachmentId: number;
+  DropBoxInd: boolean;
+  Dropped: boolean;
+  SortGrade?: number;
+  DiscussionInd: boolean;
+  AssessmentId: number;
+};

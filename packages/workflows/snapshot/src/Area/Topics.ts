@@ -4,16 +4,17 @@ import * as Snapshot from '@msar/types.snapshot';
 import { Workflow } from '@msar/workflow';
 import { Colors } from '@qui-cli/colors';
 import { Log } from '@qui-cli/log';
-import { api } from 'datadirect';
+import { Endpoints } from 'datadirect';
 import * as Base from './Base.js';
 
-let possibleContent: api.datadirect.TopicContentTypesGet.Response | undefined =
-  undefined;
+let possibleContent:
+  | Endpoints.API.DataDirect.TopicContentTypesGet.Response
+  | undefined = undefined;
 
 async function getPossibleContent() {
   if (!possibleContent) {
     possibleContent = possibleContent =
-      await DatadirectPuppeteer.api.datadirect.TopicContentTypesGet({
+      await DatadirectPuppeteer.API.DataDirect.TopicContentTypesGet({
         payload: {}
       });
   }
@@ -42,7 +43,7 @@ export const snapshot: Base.Snapshot<Snapshot.Topics.Data> = async ({
   try {
     const Topics: Snapshot.Topics.Data = [];
     await getPossibleContent();
-    const topics = await DatadirectPuppeteer.api.datadirect.sectiontopicsget({
+    const topics = await DatadirectPuppeteer.API.DataDirect.sectiontopicsget({
       ...options,
       payload: {
         // TODO Fix typing to avoid parameter redundancy
@@ -61,13 +62,13 @@ export const snapshot: Base.Snapshot<Snapshot.Topics.Data> = async ({
     }
     for (const topic of topics) {
       const { TopicID } = topic;
-      const [detail] = await DatadirectPuppeteer.api.datadirect.topicget({
+      const [detail] = await DatadirectPuppeteer.API.DataDirect.topicget({
         payload: { format: 'json' },
         pathParams: { TopicID }
       });
       const Content: Snapshot.Topics.Item[] = [];
-      const items: api.datadirect.topiccontentget.Response =
-        await DatadirectPuppeteer.api.datadirect.topiccontentget({
+      const items: Endpoints.API.DataDirect.topiccontentget.Response =
+        await DatadirectPuppeteer.API.DataDirect.topiccontentget({
           ...options,
           payload: {
             format: 'json',
@@ -80,7 +81,7 @@ export const snapshot: Base.Snapshot<Snapshot.Topics.Data> = async ({
         });
       for (const item of items) {
         const ObjectType = possibleContent!.find(
-          (t: api.datadirect.TopicContentTypesGet.Item) =>
+          (t: Endpoints.API.DataDirect.TopicContentTypesGet.Item) =>
             t.Id == item.ContentId
         );
         try {
@@ -111,7 +112,7 @@ export const snapshot: Base.Snapshot<Snapshot.Topics.Data> = async ({
           } else {
             // @ts-expect-error 2322
             entry.Content =
-              await DatadirectPuppeteer.api.datadirect.TopicContent_detail(
+              await DatadirectPuppeteer.API.DataDirect.TopicContent_detail(
                 item,
                 possibleContent!,
                 {
@@ -135,7 +136,9 @@ export const snapshot: Base.Snapshot<Snapshot.Topics.Data> = async ({
 
           Content.push(entry);
         } catch (error) {
-          if (error instanceof api.datadirect.common.TopicContentError) {
+          if (
+            error instanceof Endpoints.API.DataDirect.common.TopicContentError
+          ) {
             Content.push({ ...item, ObjectType });
           } else {
             Content?.push({

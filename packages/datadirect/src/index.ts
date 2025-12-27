@@ -1,2 +1,3 @@
-export * as api from './api/index.js';
-export * as Endpoint from './Endpoint.js';
+export * as API from './Endpoints/API/index.js';
+export * as Endpoints from './Endpoints/index.js';
+export * as Entities from './Entities/index.js';

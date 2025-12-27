@@ -1,0 +1,26 @@
+export type LevelSetting = {
+  LevelNum: number;
+  LevelDescription: string;
+  MasteryUseLabel: string;
+  TransSkillUse: boolean;
+  ContentSkillUse: boolean;
+  SkillsUsedLabel: string;
+  RatingDisplayLabelStudent: string;
+  DisplayFormatLabelOnly: string;
+  DisplayFormatRatingLabel: string;
+  MasteryAccessStudent: boolean;
+  MasteryAccessParent: boolean;
+  MasteryAccessTeacher: boolean;
+  MasteryAccessAdvisor: boolean;
+  MasteryAccessAllSchoolAdvisor: boolean;
+  MasteryAccessCoach: boolean;
+  MasteryAccessDorm: boolean;
+  MasteryAccessLabel: string;
+  CompMethodLabel: string;
+  UseNTimes: boolean;
+  AllowTeacherCompMethod: boolean;
+  HasGrades: boolean;
+  HasAssignments: boolean;
+  ClassLevelCompMethodLabel: string;
+  ClassLevelUseNTimes: boolean;
+};

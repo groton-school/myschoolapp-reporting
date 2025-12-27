@@ -9,7 +9,7 @@ import * as Plugin from '@qui-cli/plugin';
 import { Progress } from '@qui-cli/progress';
 import { Root } from '@qui-cli/root';
 import { parse as parseCSV, stringify } from 'csv/sync';
-import { api as types } from 'datadirect';
+import { Endpoints, Entities } from 'datadirect';
 import moment from 'moment';
 import fs from 'node:fs/promises';
 import path from 'node:path';
@@ -194,10 +194,10 @@ export async function analytics(
       });
       Progress.caption(session.userInfo?.UserNameFormatted || val);
 
-      const conversations: types.message.inbox.Item[] = [];
+      const conversations: Entities.Inbox.Conversation[] = [];
       let complete = false;
       for (let pageNumber = 1; !complete; pageNumber++) {
-        const response = await DatadirectPuppeteer.api.message.inbox({
+        const response = await DatadirectPuppeteer.API.Message.inbox({
           session,
           payload: {
             format: 'json',
@@ -208,14 +208,15 @@ export async function analytics(
         for (const preview of response) {
           const { ConversationId } = preview;
           conversations.push(
-            await DatadirectPuppeteer.api.message.conversation({
+            await DatadirectPuppeteer.API.Message.conversation({
               session,
               payload: { format: 'json', markAsRead: false },
               pathParams: { ConversationId }
             })
           );
         }
-        complete = !response || response.length < types.message.inbox.pageSize;
+        complete =
+          !response || response.length < Endpoints.API.Message.Inbox.pageSize;
       }
 
       row[AnalyticsColumns.Conversations] = conversations.length;
@@ -279,9 +280,9 @@ export async function analytics(
   Log.info(`Analytics written to ${Colors.path(outputPath, Colors.value)}`);
 }
 
-function oldestMessage(messages: types.message.Types.Message[] = []) {
+function oldestMessage(messages: Entities.Inbox.Message[] = []) {
   return messages?.reduce(
-    (oldest: types.message.Types.Message | undefined, message) => {
+    (oldest: Entities.Inbox.Message | undefined, message) => {
       if (oldest && new Date(oldest.SendDate) < new Date(message.SendDate)) {
         return oldest;
       }
@@ -291,9 +292,9 @@ function oldestMessage(messages: types.message.Types.Message[] = []) {
   );
 }
 
-function newestMessage(messages: types.message.Types.Message[] = []) {
+function newestMessage(messages: Entities.Inbox.Message[] = []) {
   return messages?.reduce(
-    (newest: types.message.Types.Message | undefined, message) => {
+    (newest: Entities.Inbox.Message | undefined, message) => {
       if (newest && new Date(newest.SendDate) > new Date(message.SendDate)) {
         return newest;
       }
@@ -304,23 +305,21 @@ function newestMessage(messages: types.message.Types.Message[] = []) {
 }
 
 function isSender(
-  message: types.message.Types.Message | undefined,
+  message: Entities.Inbox.Message | undefined,
   session: PuppeteerSession.Impersonation
 ) {
   return message && message.FromUser.UserId === session.userInfo?.UserId;
 }
 
 function sentMessages(
-  messages: types.message.Types.Message[] = [],
+  messages: Entities.Inbox.Message[] = [],
   session: PuppeteerSession.Impersonation
 ) {
   return messages?.filter((message) => isSender(message, session));
 }
 
-function excludeUndefined(
-  messages: (types.message.Types.Message | undefined)[]
-) {
+function excludeUndefined(messages: (Entities.Inbox.Message | undefined)[]) {
   return messages.filter(
     (message) => message !== undefined
-  ) as types.message.Types.Message[];
+  ) as Entities.Inbox.Message[];
 }

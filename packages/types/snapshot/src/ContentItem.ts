@@ -1,10 +1,10 @@
-import { PathString, URLString } from '@battis/descriptive-types';
+import { PathString } from '@battis/descriptive-types';
 import { ArrayElement } from '@battis/typescript-tricks';
-import { api } from 'datadirect';
+import { API } from 'datadirect';
 import * as Assignments from './Assignments.js';
 
 export type Assignment<T = PathString> = Omit<
-  api.datadirect.ContentItem.Assignment.Assignment,
+  API.DataDirect.ContentItem.Assignment.Assignment,
   'LinkItems' | 'DownloadItems'
 > & {
   LinkItems: Assignments.Item<T>['LinkItems'];
@@ -12,7 +12,7 @@ export type Assignment<T = PathString> = Omit<
 };
 
 export type Media<T = PathString> = Omit<
-  api.datadirect.ContentItem.Media.Media,
+  API.DataDirect.ContentItem.Media.Media,
   'CoverFilenameUrl' | 'FilenameUrl'
 > & {
   CoverFilenameUrl: T;
@@ -24,7 +24,7 @@ export type Photo<T = PathString> = Media<T>;
 export type Video<T = PathString> = Media<T>;
 
 export type Download<T = PathString> = Omit<
-  api.datadirect.ContentItem.Download.Download,
+  API.DataDirect.ContentItem.Download.Download,
   'DownloadUrl' | 'FilePath'
 > & {
   DownloadUrl: T;
@@ -32,21 +32,21 @@ export type Download<T = PathString> = Omit<
 };
 
 export type Expectations<T = PathString> = Omit<
-  api.datadirect.ContentItem.Expectations.Expectations,
+  API.DataDirect.ContentItem.Expectations.Expectations,
   'Attachment'
 > & {
   Attachment: T;
 };
 
 export type GradingRubric<T = PathString> = Omit<
-  api.datadirect.ContentItem.GradingRubric.GradingRubric,
+  API.DataDirect.ContentItem.GradingRubric.GradingRubric,
   'Attachment'
 > & {
   Attachment: T;
 };
 
 export type Link<T = PathString> = Omit<
-  api.datadirect.ContentItem.Links.Link,
+  API.DataDirect.ContentItem.Links.Link,
   'Url' | 'LinkImageUrl' | 'HoverImageUrl'
 > & {
   Url: T;
@@ -55,7 +55,7 @@ export type Link<T = PathString> = Omit<
 };
 
 export type News<T = PathString> = Omit<
-  api.datadirect.ContentItem.News.News,
+  API.DataDirect.ContentItem.News.News,
   'LargeFilenameUrl' | 'ThumbFilenameUrl' | 'ZoomFilenameUrl'
 > & {
   LargeFilenameUrl: T;
@@ -64,21 +64,21 @@ export type News<T = PathString> = Omit<
   Url: T;
 };
 
-export type RSSReader = api.datadirect.ContentItem.RSSReader.Content;
+export type RSSReader = API.DataDirect.ContentItem.RSSReader.Content;
 
 export type Syllabus<T = PathString> = Omit<
-  api.datadirect.ContentItem.Syllabus.Syllabus,
+  API.DataDirect.ContentItem.Syllabus.Syllabus,
   'Attachment'
 > & {
   Attachment: T | null;
 };
 
 export type Text<T = PathString> = Omit<
-  api.datadirect.ContentItem.Text.Text,
+  API.DataDirect.ContentItem.Text.Text,
   'Photos'
 > & {
   Photos?: (Omit<
-    ArrayElement<NonNullable<api.datadirect.ContentItem.Text.Text['Photos']>>,
+    ArrayElement<NonNullable<API.DataDirect.ContentItem.Text.Text['Photos']>>,
     | 'LargeFilenameUrl'
     | 'ThumbFilenameUrl'
     | 'ZoomFilenameUrl'
@@ -100,7 +100,7 @@ export type Text<T = PathString> = Omit<
 };
 
 export type Any<T = PathString> =
-  | api.datadirect.ContentItem.Any.Content
+  | API.DataDirect.ContentItem.Any.Content
   | Assignment<T>[]
   | Media<T>[]
   | Audio<T>[]

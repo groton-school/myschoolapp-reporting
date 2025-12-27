@@ -1,7 +1,7 @@
 import { PathString } from '@battis/descriptive-types';
-import { api } from 'datadirect';
+import { Entities } from 'datadirect';
 
-export type AnnotatedPhotoItem = api.audio.edit.PhotoItem & {
+export type AnnotatedPhoto = Entities.Photos.PhotoAttachment & {
   large_file_path?: PathString;
   large_file_edited_path?: PathString;
   thumb_file_path?: PathString;
@@ -12,7 +12,7 @@ export type AnnotatedPhotoItem = api.audio.edit.PhotoItem & {
   original_file_edited_path?: PathString;
 };
 
-export type AnnotatedAudioItem = api.audio.edit.AudioItem & {
+export type AnnotatedAudio = Entities.Audio.Audio & {
   file_path?: PathString;
   file_edited_path?: PathString;
   thumb_file_path?: PathString;
@@ -22,15 +22,15 @@ export type AnnotatedAudioItem = api.audio.edit.AudioItem & {
   original_file_edited_Path?: PathString;
 };
 
-export type AnnotatedAudioAlbum = Omit<
-  api.audio.edit.Response,
+export type AnnotatedAlbum = Omit<
+  Entities.Audio.Album_EditResponse,
   'Photos' | 'Files'
 > & {
-  Photos?: AnnotatedPhotoItem[];
-  Files?: AnnotatedAudioItem[];
+  Photos?: AnnotatedPhoto[];
+  Files?: AnnotatedAudio[];
   cover_file_path?: PathString;
 };
 
-export type AnnotatedAudioCategory = api.AudioCategory.AudioCategory & {
-  albums?: AnnotatedAudioAlbum[];
+export type AnnotatedCategory = Entities.Audio.Category & {
+  albums?: AnnotatedAlbum[];
 };

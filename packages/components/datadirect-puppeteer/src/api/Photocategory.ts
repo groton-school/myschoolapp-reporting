@@ -1,7 +1,7 @@
 import { PuppeteerSession } from '@msar/puppeteer-session';
-import { Photocategory as C } from 'datadirect/dist/api/index.js';
+import { Categories } from 'datadirect/dist/Endpoints/API/PhotoCategory/index.js';
 
 export const Photocategory: PuppeteerSession.Fetchable.Binding<
-  C.Payload,
-  C.Response
-> = PuppeteerSession.Fetchable.bind(C);
+  Categories.Payload,
+  Categories.Response
+> = PuppeteerSession.Fetchable.bind(Categories);

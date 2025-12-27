@@ -1,12 +1,12 @@
 import { PuppeteerSession } from '@msar/puppeteer-session';
-import { audio } from 'datadirect/dist/api/index.js';
+import { Edit, List } from 'datadirect/dist/Endpoints/API/Audio/index.js';
 
 export const edit: PuppeteerSession.Fetchable.Binding<
-  audio.edit.Payload,
-  audio.edit.Response
-> = PuppeteerSession.Fetchable.bind(audio.edit);
+  Edit.Payload,
+  Edit.Response
+> = PuppeteerSession.Fetchable.bind(Edit);
 
-export const List: PuppeteerSession.Fetchable.Binding<
-  audio.List.Payload,
-  audio.List.Response
-> = PuppeteerSession.Fetchable.bind(audio.List);
+export const list: PuppeteerSession.Fetchable.Binding<
+  List.Payload,
+  List.Response
+> = PuppeteerSession.Fetchable.bind(List);

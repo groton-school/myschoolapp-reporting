@@ -25,7 +25,7 @@ export async function download(
       logRequests: Workflow.logRequests()
     }));
   try {
-    for (const category of await DatadirectPuppeteer.api.VideoCategory.categories(
+    for (const category of await DatadirectPuppeteer.API.VideoCategory.categories(
       // FIXME do real pagination
       { session, payload: { pageNumber: 1, rowsPerPage: 1000 } }
     )) {
@@ -33,7 +33,7 @@ export async function download(
       const spinner = ora(label).start();
       const categoryIndex: AnnotatedVideoCategory = category;
       categoryIndex.video_items = [];
-      const videos = await DatadirectPuppeteer.api.Video.List({
+      const videos = await DatadirectPuppeteer.API.Video.list({
         session,
         pathParams: { VideoCategoryId: category.GroupId },
         payload: {

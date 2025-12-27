@@ -1,7 +1,7 @@
 import { PuppeteerSession } from '@msar/puppeteer-session';
-import { Video } from 'datadirect/dist/api/index.js';
+import { List } from 'datadirect/dist/Endpoints/API/Video/index.js';
 
-export const List: PuppeteerSession.Fetchable.Binding<
-  Video.List.Payload,
-  Video.List.Response
-> = PuppeteerSession.Fetchable.bind(Video.List);
+export const list: PuppeteerSession.Fetchable.Binding<
+  List.Payload,
+  List.Response
+> = PuppeteerSession.Fetchable.bind(List);

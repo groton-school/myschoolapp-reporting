@@ -1,7 +1,7 @@
 import { PuppeteerSession } from '@msar/puppeteer-session';
-import { topicassignmentsget as TopicAssignments } from 'datadirect/dist/api/topic/index.js';
+import { TopicAssignments } from 'datadirect/dist/Endpoints/API/Topic/index.js';
 
-export const topicassignmentsget: PuppeteerSession.Fetchable.Binding<
+export const topicAssignments: PuppeteerSession.Fetchable.Binding<
   TopicAssignments.Payload,
   TopicAssignments.Response
 > = PuppeteerSession.Fetchable.bind(TopicAssignments);

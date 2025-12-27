@@ -1,27 +1,27 @@
 import { PathString } from '@battis/descriptive-types';
-import { api } from 'datadirect';
+import { API, Entities } from 'datadirect';
 import * as AlbumContent from './AlbumContent.js';
 import * as ContentItem from './ContentItem.js';
 
-export type MediaItem<T = PathString> = api.datadirect.topiccontentget.Item & {
-  ObjectType?: api.datadirect.TopicContentTypesGet.Item & {
+export type MediaItem<T = PathString> = API.DataDirect.topiccontentget.Item & {
+  ObjectType?: API.DataDirect.TopicContentTypesGet.Item & {
     Name: 'Photo' | 'Video' | 'Audio' | 'Media';
   };
   AlbumContent?: AlbumContent.Item<T>;
 };
 
 export type Item<T = PathString> =
-  | (api.datadirect.topiccontentget.Item & {
-      ObjectType?: api.datadirect.TopicContentTypesGet.Item;
+  | (API.DataDirect.topiccontentget.Item & {
+      ObjectType?: API.DataDirect.TopicContentTypesGet.Item;
       Content?: ContentItem.Any<T>;
     })
   | MediaItem<T>;
 
 export type Topic<T = PathString> = Omit<
-  api.datadirect.sectiontopicsget.Item,
+  Entities.Topics.Topic_Section,
   'ThumbFilename'
 > &
-  Omit<api.datadirect.topicget.Item, 'ThumbFilename'> & {
+  Omit<Entities.Topics.Topic, 'ThumbFilename'> & {
     ThumbFilename: T | null;
     Content?: Item<T>[];
   };

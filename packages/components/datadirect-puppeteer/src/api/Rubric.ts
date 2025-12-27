@@ -1,12 +1,15 @@
 import { PuppeteerSession } from '@msar/puppeteer-session';
-import { api } from 'datadirect';
+import {
+  AssignmentRubric,
+  List
+} from 'datadirect/dist/Endpoints/API/Rubric/index.js';
 
-export const List: PuppeteerSession.Fetchable.Binding<
-  api.Rubric.List.Payload,
-  api.Rubric.List.Response
-> = PuppeteerSession.Fetchable.bind(api.Rubric.List);
+export const list: PuppeteerSession.Fetchable.Binding<
+  List.Payload,
+  List.Response
+> = PuppeteerSession.Fetchable.bind(List);
 
-export const AssignmentRubric: PuppeteerSession.Fetchable.Binding<
-  api.Rubric.AssignmentRubric.Payload,
-  api.Rubric.AssignmentRubric.Response
-> = PuppeteerSession.Fetchable.bind(api.Rubric.AssignmentRubric);
+export const assignmentRubric: PuppeteerSession.Fetchable.Binding<
+  AssignmentRubric.Payload,
+  AssignmentRubric.Response
+> = PuppeteerSession.Fetchable.bind(AssignmentRubric);

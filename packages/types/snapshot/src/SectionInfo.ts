@@ -1,3 +1,3 @@
-import { api } from 'datadirect';
+import { Entities } from 'datadirect';
 
-export type Data = api.datadirect.SectionInfoView.Item;
+export type Data = Entities.Sections.Section;

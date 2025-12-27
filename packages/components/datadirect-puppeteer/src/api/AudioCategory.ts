@@ -1,12 +1,15 @@
 import { PuppeteerSession } from '@msar/puppeteer-session';
-import { AudioCategory as C } from 'datadirect/dist/api/index.js';
+import {
+  Categories,
+  Edit
+} from 'datadirect/dist/Endpoints/API/AudioCategory/index.js';
 
 export const categories: PuppeteerSession.Fetchable.Binding<
-  C.Payload,
-  C.Response
-> = PuppeteerSession.Fetchable.bind(C);
+  Categories.Payload,
+  Categories.Response
+> = PuppeteerSession.Fetchable.bind(Categories);
 
 export const edit: PuppeteerSession.Fetchable.Binding<
-  C.edit.Payload,
-  C.edit.Response
-> = PuppeteerSession.Fetchable.bind(C.edit);
+  Edit.Payload,
+  Edit.Response
+> = PuppeteerSession.Fetchable.bind(Edit);

@@ -1,5 +1,7 @@
 import { PuppeteerSession } from '@msar/puppeteer-session';
-import { List as L } from 'datadirect/dist/api/Photo/index.js';
+import { List } from 'datadirect/dist/Endpoints/API/Photo/index.js';
 
-export const List: PuppeteerSession.Fetchable.Binding<L.Payload, L.Response> =
-  PuppeteerSession.Fetchable.bind(L);
+export const list: PuppeteerSession.Fetchable.Binding<
+  List.Payload,
+  List.Response
+> = PuppeteerSession.Fetchable.bind(List);

@@ -1,0 +1,34 @@
+import { DateTimeString } from '@battis/descriptive-types';
+import { Answer } from './Answer.js';
+import { Option } from './Option.js';
+
+export type Prompt = {
+  AssessmentQuestionId: number;
+  QuestionTypeId: 5;
+  SortOrder: number;
+  Points: number;
+  Description: string;
+  Answers: Answer[];
+  QuestionType: 'Matching';
+  PossibleAnswers: string;
+  CharacterLimit: number;
+  UseEditor: boolean;
+  NumberCorrect: number;
+  NumberIncorrect: number;
+  NumberPartial: number;
+  NumberAwaiting: number;
+  PercentCorrect: number;
+  AlbumId: number;
+  DownloadId: number;
+  ContentId: number;
+  Checkboxes: boolean;
+  AssessmentId: number;
+  RandomizeAnswers: boolean;
+  PartialCredit: boolean;
+  MatchingAnswers: Option[];
+  AssessmentQuestionSubBankId: number;
+  AssessmentQuestionBankId: number;
+  ModifiedDate: DateTimeString;
+  InsertDate: DateTimeString;
+  AIGenerated: boolean;
+};

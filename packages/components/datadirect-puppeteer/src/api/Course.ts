@@ -1,7 +1,7 @@
 import { PuppeteerSession } from '@msar/puppeteer-session';
-import { TeacherCoursesGet as TeacherCourses } from 'datadirect/dist/api/Course/index.js';
+import { List } from 'datadirect/dist/Endpoints/API/Course/index.js';
 
-export const TeacherCoursesGet: PuppeteerSession.Fetchable.Binding<
-  TeacherCourses.Payload,
-  TeacherCourses.Response
-> = PuppeteerSession.Fetchable.bind(TeacherCourses);
+export const list: PuppeteerSession.Fetchable.Binding<
+  List.Payload,
+  List.Response
+> = PuppeteerSession.Fetchable.bind(List);

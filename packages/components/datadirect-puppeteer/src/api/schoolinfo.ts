@@ -1,7 +1,7 @@
 import { PuppeteerSession } from '@msar/puppeteer-session';
-import { schoolparams as S } from 'datadirect/dist/api/schoolinfo/index.js';
+import { SchoolParams } from 'datadirect/dist/Endpoints/API/SchoolInfo/index.js';
 
-export const schoolparams: PuppeteerSession.Fetchable.Binding<
-  S.Payload,
-  S.Response
-> = PuppeteerSession.Fetchable.bind(S);
+export const schoolParams: PuppeteerSession.Fetchable.Binding<
+  SchoolParams.Payload,
+  SchoolParams.Response
+> = PuppeteerSession.Fetchable.bind(SchoolParams);

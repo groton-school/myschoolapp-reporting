@@ -2,7 +2,7 @@ import { DatadirectPuppeteer } from '@msar/datadirect-puppeteer';
 import { Debug } from '@msar/debug';
 import * as Snapshot from '@msar/types.snapshot';
 import { Workflow } from '@msar/workflow';
-import { api } from 'datadirect';
+import { Endpoints } from 'datadirect';
 import * as Base from './Base.js';
 
 export const snapshot: Base.Snapshot<Snapshot.SectionInfo.Data> = async ({
@@ -13,7 +13,7 @@ export const snapshot: Base.Snapshot<Snapshot.SectionInfo.Data> = async ({
   Debug.withGroupId(sectionId, 'Start capturing section info');
   try {
     return (
-      await DatadirectPuppeteer.api.datadirect.SectionInfoView({
+      await DatadirectPuppeteer.API.DataDirect.SectionInfoView({
         ...options,
         payload: {
           format: 'json',
@@ -22,7 +22,10 @@ export const snapshot: Base.Snapshot<Snapshot.SectionInfo.Data> = async ({
         }
       })
     ).reduce(
-      (sectionInfo: api.datadirect.SectionInfoView.Item | undefined, elt) => {
+      (
+        sectionInfo: Endpoints.API.DataDirect.SectionInfoView.Item | undefined,
+        elt
+      ) => {
         if (!sectionInfo && elt.Id == sectionId) {
           return elt;
         }

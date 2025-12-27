@@ -1,8 +1,8 @@
 import { PuppeteerSession } from '@msar/puppeteer-session';
 import {
-  conversation as Conversation,
-  inbox as Inbox
-} from 'datadirect/dist/api/message/index.js';
+  Conversation,
+  Inbox
+} from 'datadirect/dist/Endpoints/API/Message/index.js';
 
 export const inbox = PuppeteerSession.Fetchable.bind<
   Inbox.Payload,

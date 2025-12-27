@@ -202,7 +202,7 @@ Capture all sections; positional argument url is used to identify MySchoolApp in
 
 #### `--fromDate=<fromDate>`
 
-Starting date for date-based filter where relevant (Default: "12/25/2025")
+Starting date for date-based filter where relevant (Default: "12/27/2025")
 
 #### `--toDate=<toDate>`
 

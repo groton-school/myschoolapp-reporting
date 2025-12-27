@@ -1,5 +1,5 @@
 import { Mutex } from 'async-mutex';
-import { Endpoint } from 'datadirect';
+import { Endpoint } from 'datadirect/dist/Endpoints/index.js';
 import { Authenticated, Options } from './Authenticated.js';
 import { InitializationError } from './InitializationError.js';
 

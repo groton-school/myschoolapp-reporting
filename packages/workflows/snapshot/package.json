@@ -34,6 +34,7 @@
   },
   "devDependencies": {
     "@battis/descriptive-types": "^0.2.6",
+    "@battis/typescript-tricks": "^0.7.5",
     "@msar/datadirect-puppeteer": "workspace:*",
     "@msar/debug": "workspace:*",
     "@msar/output": "workspace:*",

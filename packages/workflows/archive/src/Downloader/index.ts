@@ -44,7 +44,7 @@ export class Downloader implements Strategy {
     // @ts-expect-error 2346 conflict between DownloadItem and DownloadError
     return await Cache.get(original, async () => {
       let fetchUrl = original;
-      if (/^\/*[^\/]+\.myschoolcdn.com\//.test(fetchUrl)) {
+      if (/^\/*[^/]+\.myschoolcdn.com\//.test(fetchUrl)) {
         fetchUrl = `https://${fetchUrl.replace(/^\/+/, '')}`;
       } else if (fetchUrl.slice(0, 1) == '/') {
         fetchUrl = `https://${this.host}${fetchUrl}`;
@@ -59,7 +59,7 @@ export class Downloader implements Strategy {
       if (/:SchoolId/.test(fetchUrl)) {
         if (!this.SchoolId) {
           this.SchoolId = (
-            await DatadirectPuppeteer.api.schoolinfo.schoolparams({
+            await DatadirectPuppeteer.API.SchoolInfo.schoolParams({
               session: this.auth,
               payload: { all: true },
               logRequests: true

@@ -1,11 +1,11 @@
 import { PathString } from '@battis/descriptive-types';
-import { api } from 'datadirect';
+import { Entities } from 'datadirect';
 
-export type AnnotatedVideo = api.Video.List.VideoItem & {
+export type AnnotatedVideo = Entities.Videos.Video & {
   file_path?: PathString;
   cover_file_path?: PathString;
 };
 
-export type AnnotatedVideoCategory = api.VideoCategory.edit.Response & {
+export type AnnotatedVideoCategory = Entities.Videos.Cateogry_EditResponse & {
   video_items?: AnnotatedVideo[];
 };

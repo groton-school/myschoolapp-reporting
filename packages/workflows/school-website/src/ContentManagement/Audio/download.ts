@@ -7,9 +7,9 @@ import { Colors } from '@qui-cli/colors';
 import { Log } from '@qui-cli/log';
 import ora from 'ora';
 import { cachedDownload } from '../../cachedDownload.js';
-import { AnnotatedAudioAlbum, AnnotatedAudioCategory } from './Annotations.js';
+import { AnnotatedAlbum, AnnotatedCategory } from './Annotations.js';
 
-export type Index = AnnotatedAudioCategory[];
+export type Index = AnnotatedCategory[];
 
 export async function download(
   url: URLString,
@@ -25,14 +25,14 @@ export async function download(
       logRequests: Workflow.logRequests()
     }));
   try {
-    for (const category of await DatadirectPuppeteer.api.AudioCategory.categories(
+    for (const category of await DatadirectPuppeteer.API.AudioCategory.categories(
       // FIXME do real pagination
       { session, payload: { pageNumber: 1, rowsPerPage: 1000 } }
     )) {
-      const categoryIndex: AnnotatedAudioCategory = category;
+      const categoryIndex: AnnotatedCategory = category;
       categoryIndex.albums = [];
       const spinner = ora(category.GroupName).start();
-      for (const album of await DatadirectPuppeteer.api.audio.List({
+      for (const album of await DatadirectPuppeteer.API.Audio.list({
         session,
         pathParams: { AudioCategoryId: category.GroupId },
         payload: {
@@ -43,8 +43,8 @@ export async function download(
           contextValue: 0
         }
       })) {
-        const albumIndex: AnnotatedAudioAlbum =
-          await DatadirectPuppeteer.api.audio.edit({
+        const albumIndex: AnnotatedAlbum =
+          await DatadirectPuppeteer.API.Audio.edit({
             session,
             payload: { albumId: album.AlbumId, format: 'json' }
           });

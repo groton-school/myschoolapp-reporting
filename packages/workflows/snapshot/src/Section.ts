@@ -5,7 +5,7 @@ import { RateLimiter } from '@msar/rate-limiter';
 import { Data } from '@msar/types.snapshot';
 import { Workflow } from '@msar/workflow';
 import * as Plugin from '@qui-cli/plugin';
-import { api } from 'datadirect';
+import { Endpoints } from 'datadirect';
 import * as Area from './Area/index.js';
 
 /*
@@ -24,12 +24,12 @@ export type Configuration = Plugin.Configuration & {
   assignments?: boolean;
   gradebook?: boolean;
   studentData?: boolean;
-  payload?: api.datadirect.common.ContentItem.Payload;
+  payload?: Endpoints.API.DataDirect.common.ContentItem.Payload;
   metadata?: boolean;
   outputPath?: string;
   silent?: boolean;
 } & Context &
-  Partial<api.datadirect.ContentItem.Payload>;
+  Partial<Endpoints.API.DataDirect.ContentItem.Payload>;
 
 export class Snapshot {
   private constructor(private config: Configuration) {}

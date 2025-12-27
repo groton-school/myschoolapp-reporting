@@ -1,0 +1,44 @@
+import { EmailString, NumericString } from '@battis/descriptive-types';
+
+// from datadirect.sectionrosterget
+export type Constituent = {
+  Id: number;
+  name: string;
+  firstName: string;
+  nickName: string;
+  lastName: string;
+  email: EmailString;
+  emailBad: 'Yes' | 'No';
+  publishPage: boolean;
+  enrollmentType: string;
+  gradYear: NumericString;
+  teacherType: string;
+  MostRecentFormDate: string;
+  NumForms: number;
+  FormInstanceId: number;
+  NumViewableForms: number;
+  NumIconForms: number;
+  wireless: string;
+  homePhone: string;
+  userThumb: string;
+  userPhotoLarge: string;
+  addressLine1: string;
+  addressLine2: string;
+  addressLine3: string;
+  city: string;
+  state: string;
+  zip: string;
+  country: string;
+  province: string;
+  hasRelationships: number;
+  FormName: string;
+  allergies: string;
+  conditions: string;
+  medications: string;
+  roomNumber: string;
+  roomName: string;
+  boardingOrDay: 'B' | 'D' | null;
+  photoEditSettings: string;
+  profileNoticeInd: number;
+  pronoun: string;
+};

@@ -1,7 +1,7 @@
 import { PuppeteerSession } from '@msar/puppeteer-session';
-import { api } from 'datadirect';
+import { AlbumFiles } from 'datadirect/dist/Endpoints/API/Media/index.js';
 
-export const AlbumFilesGet = PuppeteerSession.Fetchable.bind<
-  api.media.AlbumFilesGet.Payload,
-  api.media.AlbumFilesGet.Response
->(api.media.AlbumFilesGet);
+export const albumFiles = PuppeteerSession.Fetchable.bind<
+  AlbumFiles.Payload,
+  AlbumFiles.Response
+>(AlbumFiles);

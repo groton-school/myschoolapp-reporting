@@ -1,0 +1,34 @@
+import { DateTimeString, HTMLString } from '@battis/descriptive-types';
+import { JSONValue } from '@battis/typescript-tricks';
+import { Option } from './Option.js';
+
+export type Prompt = {
+  AssessmentQuestionId: number;
+  QuestionTypeId: 3;
+  SortOrder: number;
+  Points: number;
+  Description: HTMLString;
+  Answers: Option[];
+  QuestionType: 'Multi Choice';
+  PossibleAnswers: string;
+  CharacterLimit: number;
+  UseEditor: boolean;
+  NumberCorrect: number;
+  NumberIncorrect: number;
+  NumberPartial: number;
+  NumberAwaiting: number;
+  PercentCorrect: number;
+  AlbumId: number;
+  DownloadId: number;
+  ContentId: number;
+  Checkboxes: boolean;
+  AssessmentId: number;
+  RandomizeAnswers: boolean;
+  PartialCredit: boolean;
+  MatchingAnswers: JSONValue[];
+  AssessmentQuestionSubBankId: number;
+  AssessmentQuestionBankId: number;
+  ModifiedDate: DateTimeString;
+  InsertDate: DateTimeString;
+  AIGenerated: boolean;
+};

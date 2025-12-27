@@ -1,6 +1,6 @@
 import { Colors } from '@qui-cli/colors';
 import { Mutex, MutexInterface } from 'async-mutex';
-import { api as types } from 'datadirect';
+import { Entities } from 'datadirect';
 import ora from 'ora';
 import { HTTPResponse, Page } from 'puppeteer';
 import * as Authenticated from './Authenticated.js';
@@ -28,7 +28,7 @@ export class Impersonation extends Authenticated.Authenticated {
   private isSelf = false;
   private isHeadless: boolean;
 
-  private _userInfo?: types.webapp.context.Response['UserInfo'];
+  private _userInfo?: Entities.Users.UserInfo;
   public get userInfo() {
     return this._userInfo;
   }
@@ -107,7 +107,7 @@ export class Impersonation extends Authenticated.Authenticated {
 
     const contextWatcher = (async (response: HTTPResponse) => {
       if (response.url().match(/\/api\/webapp\/context/)) {
-        const context: types.webapp.context.Response = await response.json();
+        const context: Entities.WebApp.Context = await response.json();
         if (!context.IsImpersonating || !context.MasterUserInfo) {
           this.isSelf = true;
         }

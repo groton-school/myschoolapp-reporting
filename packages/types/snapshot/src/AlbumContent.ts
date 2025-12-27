@@ -1,10 +1,10 @@
 import { PathString } from '@battis/descriptive-types';
-import { api } from 'datadirect';
+import { Entities } from 'datadirect';
 
 export type Item<T = PathString> = {
   AlbumId: number;
   Content: (Omit<
-    api.media.AlbumFilesGet.Response,
+    Entities.Media.Media,
     | 'FilenameUrl'
     | 'ThumbFilenameUrl'
     | 'OriginalFilenameUrl'

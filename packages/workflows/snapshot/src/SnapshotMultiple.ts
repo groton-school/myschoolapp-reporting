@@ -147,7 +147,7 @@ export async function run() {
       const associations = cleanSplit(association);
       const terms = cleanSplit(termsOffered);
       const groups = (
-        await DatadirectPuppeteer.api.datadirect.groupFinderByYear({
+        await DatadirectPuppeteer.API.DataDirect.groupFinderByYear({
           ...options,
           payload: {
             schoolYearLabel: year

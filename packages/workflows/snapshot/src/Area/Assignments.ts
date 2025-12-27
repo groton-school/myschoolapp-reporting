@@ -19,7 +19,7 @@ export const snapshot: Base.Snapshot<Snapshot.Assignments.Data> = async ({
   ).value;
 
   const assignmentList =
-    await DatadirectPuppeteer.api.datadirect.ImportAssignmentsGet({
+    await DatadirectPuppeteer.API.DataDirect.ImportAssignmentsGet({
       payload: {
         sectionId
       }
@@ -30,7 +30,7 @@ export const snapshot: Base.Snapshot<Snapshot.Assignments.Data> = async ({
     try {
       const ass: Snapshot.Assignments.Item = {
         ...assignment,
-        ...(await DatadirectPuppeteer.api.Assignment2.UserAssignmentDetailsGetAllData(
+        ...(await DatadirectPuppeteer.API.Assignment2.UserAssignmentDetailsGetAllData(
           {
             session,
             payload: {
@@ -47,7 +47,7 @@ export const snapshot: Base.Snapshot<Snapshot.Assignments.Data> = async ({
         )
       };
       if (ass.RubricId > 0) {
-        ass.Rubric = await DatadirectPuppeteer.api.Rubric.AssignmentRubric({
+        ass.Rubric = await DatadirectPuppeteer.API.Rubric.assignmentRubric({
           payload: { id: ass.RubricId }
         });
       }

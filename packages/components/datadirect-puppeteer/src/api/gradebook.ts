@@ -1,15 +1,15 @@
 import { PuppeteerSession } from '@msar/puppeteer-session';
 import {
-  DefaultAdminSettingsGet as DefaultAdminSettings,
-  hydrategradebook as Gradebook
-} from 'datadirect/dist/api/gradebook/index.js';
+  DefaultAdminSettings,
+  HydrateGradebook
+} from 'datadirect/dist/Endpoints/API/Gradebook/index.js';
 
-export const hydrategradebook: PuppeteerSession.Fetchable.Binding<
-  Gradebook.Payload,
-  Gradebook.Response
-> = PuppeteerSession.Fetchable.bind(Gradebook);
+export const hydrateGradebook: PuppeteerSession.Fetchable.Binding<
+  HydrateGradebook.Payload,
+  HydrateGradebook.Response
+> = PuppeteerSession.Fetchable.bind(HydrateGradebook);
 
-export const DefaultAdminSettingsGet: PuppeteerSession.Fetchable.Binding<
+export const defaultAdminSettings: PuppeteerSession.Fetchable.Binding<
   DefaultAdminSettings.Payload,
   DefaultAdminSettings.Response
 > = PuppeteerSession.Fetchable.bind(DefaultAdminSettings);

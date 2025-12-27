@@ -733,6 +733,9 @@ importers:
       '@battis/descriptive-types':
         specifier: ^0.2.6
         version: 0.2.6
+      '@battis/typescript-tricks':
+        specifier: ^0.7.5
+        version: 0.7.5
       '@msar/datadirect-puppeteer':
         specifier: workspace:*
         version: link:../../components/datadirect-puppeteer

@@ -2,19 +2,19 @@ import { DatadirectPuppeteer } from '@msar/datadirect-puppeteer';
 import { Debug } from '@msar/debug';
 import * as Snapshot from '@msar/types.snapshot';
 import { Workflow } from '@msar/workflow';
-import { api } from 'datadirect';
+import { Endpoints } from 'datadirect';
 import * as Base from './Base.js';
 
 const studentDataContentTypes = ['Roster'];
 
 let possibleContent:
-  | api.datadirect.GroupPossibleContentGet.Response
+  | Endpoints.API.DataDirect.GroupPossibleContentGet.Response
   | undefined = undefined;
 
 async function getPossibleContent(leadSectionId: number) {
   if (!possibleContent) {
     possibleContent =
-      await DatadirectPuppeteer.api.datadirect.GroupPossibleContentGet({
+      await DatadirectPuppeteer.API.DataDirect.GroupPossibleContentGet({
         payload: {
           format: 'json',
           leadSectionId
@@ -37,7 +37,7 @@ export const snaphot: Base.Snapshot<Snapshot.BulletinBoard.Data> = async ({
     const BulletinBoard: Snapshot.BulletinBoard.Data = [];
     await getPossibleContent(Id);
     const items =
-      await DatadirectPuppeteer.api.datadirect.BulletinBoardContentGet({
+      await DatadirectPuppeteer.API.DataDirect.BulletinBoardContentGet({
         session,
         payload: {
           format: 'json',
@@ -49,7 +49,8 @@ export const snaphot: Base.Snapshot<Snapshot.BulletinBoard.Data> = async ({
       });
     for (const item of items) {
       const ContentType = possibleContent!.find(
-        (e: api.datadirect.ContentType.Any) => e.ContentId == item.ContentId
+        (e: Endpoints.API.DataDirect.common.ContentType.Any) =>
+          e.ContentId == item.ContentId
       );
       try {
         if (
@@ -63,7 +64,7 @@ export const snaphot: Base.Snapshot<Snapshot.BulletinBoard.Data> = async ({
           ...item,
           ContentType,
           Content:
-            await DatadirectPuppeteer.api.datadirect.BulletinBoardContent_detail(
+            await DatadirectPuppeteer.API.DataDirect.BulletinBoardContent_detail(
               item,
               possibleContent!,
               {
@@ -88,7 +89,7 @@ export const snaphot: Base.Snapshot<Snapshot.BulletinBoard.Data> = async ({
           entry.AlbumContent = await Promise.all(
             albumIds.map(async (albumId) => ({
               AlbumId: albumId,
-              Content: await DatadirectPuppeteer.api.media.AlbumFilesGet({
+              Content: await DatadirectPuppeteer.API.Media.albumFiles({
                 session,
                 payload: {
                   format: 'json',

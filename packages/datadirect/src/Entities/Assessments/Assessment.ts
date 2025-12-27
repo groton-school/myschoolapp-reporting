@@ -1,0 +1,31 @@
+import { DateTimeString } from '@battis/descriptive-types';
+import { PhotoAttachment } from '../Photos/index.js';
+import { Question } from './Question.js';
+
+export type Assessment = {
+  AssignmentId: number;
+  AssessmentId: number;
+  AssessmentDescription: string;
+  Questions: Question[];
+  ShowTime: boolean;
+  ShowScore: boolean;
+  ShowTryAgain: boolean;
+  ShowAnswers: boolean;
+  ShowOnComplete: boolean;
+  RestrictResults: boolean;
+  ScoreOnly: boolean;
+  QuestionCount: number;
+  EssayCount: number;
+  FillInCount: number;
+  MultipleChoiceCount: number;
+  TrueFalseCount: number;
+  MatchingCount: number;
+  TimeToComplete: number;
+  PreviewShowTime: boolean;
+  PreviewShowPoints: boolean;
+  PreviewShowQuestionCounts: boolean;
+  LastSavedDate: DateTimeString;
+  Photos: PhotoAttachment[];
+  ReadyForTaking: boolean;
+  IsOwner: boolean;
+};
