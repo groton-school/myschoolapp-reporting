@@ -1,8 +1,10 @@
 # @msar/snapshot
 
-A component of [msar](https://www.npmjs.com/package/msar): Capture JSON snapshots of LMS course data
+A component of [msar](https://www.npmjs.com/package/msar): Capture a JSON snapshot of an individual course
 
 ![NPM Version](https://img.shields.io/npm/v/@msar/snapshot)
+
+Capture a JSON snapshot of an individual course. In addition to relevant flags and options, the only argument expected is a `url` to a page within the target course.
 
 ## Install
 

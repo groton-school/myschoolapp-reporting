@@ -140,7 +140,7 @@ Default: 0
 
 ### Archive options
 
-Download the supporting files for an existing snapshot JSON file.. This command requires a path to an existing snapshot file (snapshotPath).
+Download the supporting files for an existing snapshot JSON file. This command requires a path to an existing snapshot file (snapshotPath).
 
 #### `--retry`
 

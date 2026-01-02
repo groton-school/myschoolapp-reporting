@@ -33,7 +33,12 @@ export function configure(proposal: Partial<Configuration> = {}) {
 
 export function options(): Plugin.Options {
   return {
-    man: [{ level: 1, text: 'School Website options' }],
+    man: [
+      { level: 1, text: 'School Website options' },
+      {
+        text: `Archive content from the School Website. Output is organized as named JSON index files for each downloaded content type, with the files themselves stored in the same directory mirroring the CDN paths. Relative file paths to content are inserted into the index files alongside the original URLs.`
+      }
+    ],
     opt: {
       url: {
         description: `URL of MySchoolApp instance (required if capturing ${Colors.flagArg('--audio')} or ${Colors.flagArg('--videos')}})`,

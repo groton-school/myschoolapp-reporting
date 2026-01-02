@@ -1,8 +1,10 @@
 # @msar/school-website
 
-A component of [msar](https://www.npmjs.com/package/msar): Analyze the message inbox data
+A component of [msar](https://www.npmjs.com/package/msar): Archive content from the School Website
 
 ![NPM Version](https://img.shields.io/npm/v/@msar/school-website)
+
+Archive content from the School Website. Output is organized as named JSON index files for each downloaded content type, with the files themselves stored in the same directory mirroring the CDN paths. Relative file paths to content are inserted into the index files alongside the original URLs.
 
 ## Install
 
