@@ -17,7 +17,7 @@ It depends on [Node.js](https://nodejs.org/) which provides the `npm` package ma
 ## Usage:
 
 ```bash
-  msar archive -h --o=<outputPath> --u=<username> --p=<password> --ignoreErrors --logRequests --commands --silent --pretty --headless --devtools --quit --retry --concurrency=<concurrency> --rate=<rate> --logFilePath=<logFilePath> --stdoutLevel=<stdoutLevel> --fileLevel=<fileLevel> --opAccount=<example.1password.com> --opItem=<1Password unique identifier> --opToken=<token value> --serviceAccountToken=<token value> --sso=<sso> --mfa=<mfa> --viewportWidth=<viewportWidth> --viewportHeight=<viewportHeight> --include=<"^\\/,example\\.com"> --exclude=<"example\\.com,foo\\..+\\.com"> snapshotPath
+  msar archive -h --o=<outputPath> --u=<username> --p=<password> --ignoreErrors --logRequests --commands --silent --logging --pretty --headless --devtools --quit --retry --concurrency=<concurrency> --rate=<rate> --logFilePath=<logFilePath> --stdoutLevel=<stdoutLevel> --fileLevel=<fileLevel> --opAccount=<example.1password.com> --opItem=<1Password unique identifier> --opToken=<token value> --serviceAccountToken=<token value> --sso=<sso> --mfa=<mfa> --viewportWidth=<viewportWidth> --viewportHeight=<viewportHeight> --include=<"^\\/,example\\.com"> --exclude=<"example\\.com,foo\\..+\\.com"> snapshotPath
 ```
 
 ## Arguments
@@ -65,6 +65,10 @@ Include shell commands in log (Default: true, use --no-commands to disable)
 #### `--silent`
 
 Hide command output (Default: false)
+
+#### `--logging`
+
+Log commands and output at level debug (Default: true, use --no-logging to disable)
 
 ### 1Password environment integration
 

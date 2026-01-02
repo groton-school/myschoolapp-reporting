@@ -19,7 +19,7 @@ It depends on [Node.js](https://nodejs.org/) which provides the `npm` package ma
 ## Usage:
 
 ```bash
-  msar snapshot -hbtagA --u=<username> --p=<password> --o=<outputPath> --ignoreErrors --logRequests --commands --silent --headless --devtools --quit --pretty --active --future --expired --studentData --metadata --concurrency=<concurrency> --rate=<rate> --logFilePath=<logFilePath> --stdoutLevel=<stdoutLevel> --fileLevel=<fileLevel> --opAccount=<example.1password.com> --opItem=<1Password unique identifier> --opToken=<token value> --serviceAccountToken=<token value> --sso=<sso> --mfa=<mfa> --viewportWidth=<viewportWidth> --viewportHeight=<viewportHeight> --clientId=<clientId> --clientSecret=<clientSecret> --redirectUri=<"http://localhost:XXXX/path/to/redirect"> --subscriptionKey=<subscriptionKey> --fromDate=<fromDate> --toDate=<toDate> --association=<"Activities", "Advisories", "Classes", "Community Groups", "Dorms", and "Teams"> --termsOffered=<termsOffered> --groupsPath=<groupsPath> --year=<year> --csv=<csv> --resume=<resume> url
+  msar snapshot -hbtagA --u=<username> --p=<password> --o=<outputPath> --ignoreErrors --logRequests --commands --silent --logging --headless --devtools --quit --pretty --active --future --expired --studentData --metadata --concurrency=<concurrency> --rate=<rate> --logFilePath=<logFilePath> --stdoutLevel=<stdoutLevel> --fileLevel=<fileLevel> --opAccount=<example.1password.com> --opItem=<1Password unique identifier> --opToken=<token value> --serviceAccountToken=<token value> --sso=<sso> --mfa=<mfa> --viewportWidth=<viewportWidth> --viewportHeight=<viewportHeight> --clientId=<clientId> --clientSecret=<clientSecret> --redirectUri=<"http://localhost:XXXX/path/to/redirect"> --subscriptionKey=<subscriptionKey> --fromDate=<fromDate> --toDate=<toDate> --association=<"Activities", "Advisories", "Classes", "Community Groups", "Dorms", and "Teams"> --termsOffered=<termsOffered> --groupsPath=<groupsPath> --year=<year> --csv=<csv> --resume=<resume> url
 ```
 
 ## Arguments
@@ -67,6 +67,10 @@ Include shell commands in log (Default: true, use --no-commands to disable)
 #### `--silent`
 
 Hide command output (Default: false)
+
+#### `--logging`
+
+Log commands and output at level debug (Default: true, use --no-logging to disable)
 
 ### 1Password environment integration
 
@@ -134,7 +138,7 @@ Default: 0
 
 #### `-o<outputPath> --outputPath=<outputPath>`
 
-Path to output directory or file to save command output (default: /Users/sbattis/Documents/GitHub/myschoolapp-reporting/:Snapshot.json, where :Snapshot is either the name of the course in ":Year - :Teacher - :CourseTitle - :SectionId" format for a single section or group or "snapshot" if the --all flag is set. .:Snapshot.metadata.json is also output, recording the parameters of the snapshot command. Will use the value in environment variable OUTPUT_PATH if present)
+Path to output directory or file to save command output (default: /Users/sbattis/Documents/GitHub/myschoolapp-reporting/:Snapshot.json, where :Snapshot is either the name of the course in ":Year - :Teacher - :CourseTitle - :SectionId" format for a single section or group or "snapshot" if the --all flag is set. :Snapshot.metadata.json is also output, recording the parameters of the snapshot command. Will use the value in environment variable OUTPUT_PATH if present)
 
 #### `--pretty`
 
@@ -196,7 +200,7 @@ Include student data in the course snapshot (Default: true, use --no-studentData
 
 #### `--metadata`
 
-Include additional .:Snapshot.metadata.json recording the parameters of the snapshot command. (Default: true, use --no-metadata to disable)
+Include additional :Snapshot.metadata.json recording the parameters of the snapshot command. (Default: true, use --no-metadata to disable)
 
 #### `-A --all`
 

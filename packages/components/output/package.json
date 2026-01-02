@@ -22,12 +22,12 @@
     "release": "commit-and-tag-version"
   },
   "dependencies": {
-    "@qui-cli/colors": "^3.2.0"
+    "@qui-cli/colors": "^3.2.1"
   },
   "devDependencies": {
     "@msar/debug": "workspace:*",
     "@msar/workflow": "workspace:*",
-    "@qui-cli/env-1password": "^1.2.3",
+    "@qui-cli/env-1password": "^1.2.4",
     "@qui-cli/log": "^4.0.1",
     "@qui-cli/plugin": "^4.0.0",
     "@qui-cli/root": "^3.0.4",
