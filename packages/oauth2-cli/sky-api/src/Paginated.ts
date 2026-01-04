@@ -1,13 +1,14 @@
 import { URLString } from '@battis/descriptive-types';
-import * as Client from './Client.js';
+import { JSONValue } from '@battis/typescript-tricks';
+import { Client } from './SkyAPI.js';
 
-type Data<T> = {
+type Data<T extends JSONValue> = {
   count?: number;
   next_link?: URLString;
   value?: T[];
 };
 
-export class Paginated<T> implements AsyncIterable<T> {
+export class Paginated<T extends JSONValue> implements AsyncIterable<T> {
   public constructor(private data: Data<T>) {}
 
   [Symbol.asyncIterator](): AsyncIterator<T> {
