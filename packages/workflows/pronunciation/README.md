@@ -19,7 +19,7 @@ It depends on [Node.js](https://nodejs.org/) which provides the `npm` package ma
 ## Usage:
 
 ```bash
-  msar pronunciation -h --u=<username> --p=<password> --o=<outputPath> --ignoreErrors --logRequests --commands --silent --headless --devtools --quit --pretty --download --concurrency=<concurrency> --rate=<rate> --logFilePath=<logFilePath> --stdoutLevel=<stdoutLevel> --fileLevel=<fileLevel> --opAccount=<example.1password.com> --opItem=<1Password unique identifier> --opToken=<token value> --serviceAccountToken=<token value> --sso=<sso> --mfa=<mfa> --viewportWidth=<viewportWidth> --viewportHeight=<viewportHeight> --column=<column> --user=<user> instanceURL [pathToSourceCsvFile]
+  msar pronunciation -h --u=<username> --p=<password> --o=<outputPath> --ignoreErrors --logRequests --commands --silent --logging --headless --devtools --quit --pretty --download --concurrency=<concurrency> --rate=<rate> --logFilePath=<logFilePath> --stdoutLevel=<all|trace|debug|info|warning|error|fatal|off> --fileLevel=<all|trace|debug|info|warning|error|fatal|off> --opAccount=<example.1password.com> --opItem=<1Password unique identifier> --opToken=<token value> --serviceAccountToken=<token value> --sso=<sso> --mfa=<mfa> --viewportWidth=<viewportWidth> --viewportHeight=<viewportHeight> --column=<column> --user=<user> instanceURL [pathToSourceCsvFile]
 ```
 
 ## Arguments
@@ -52,13 +52,13 @@ Log fetch requests and responses for analysis and debugging (Default: false)
 
 Path to log file (optional)
 
-#### `--stdoutLevel=<stdoutLevel>`
+#### `--stdoutLevel=<all|trace|debug|info|warning|error|fatal|off>`
 
-Log level to console stdout: "all", "trace", "debug", "info", "warning", "error", "fatal", or "off" (Default: "info")
+Log level to console stdout (Default: "info")
 
-#### `--fileLevel=<fileLevel>`
+#### `--fileLevel=<all|trace|debug|info|warning|error|fatal|off>`
 
-Log level to log file (if --logFilePath provided): "all", "trace", "debug", "info", "warning", "error", "fatal", or "off" (Default: "all")
+Log level to log file if --logFilePath provided (Default: "all")
 
 #### `--commands`
 
@@ -67,6 +67,10 @@ Include shell commands in log (Default: true, use --no-commands to disable)
 #### `--silent`
 
 Hide command output (Default: false)
+
+#### `--logging`
+
+Log commands and output at level debug (Default: true, use --no-logging to disable)
 
 ### 1Password environment integration
 
@@ -142,7 +146,7 @@ Pretty print output to file (if --outputPath option is used)
 
 ### Name pronunciation options
 
-Scan users for name pronunciation recordings. Include the URL of the LMS instance as instanceURL (required) and path to a CSV file of Blackbaud User IDs to analyze as pathToSourceCsvFile (optional if --user is set). Intended to receive a generic .UserWorkList.csv export from the LMS as input, outputting the same CSV file to --outputPath with data columns appended.
+Scan users for name pronunciation recordings. Include the URL of the LMS instance as instanceURL (required) and path to a CSV file of Blackbaud User IDs to analyze as pathToSourceCsvFile (optional if --user is set). Intended to receive a generic UserWorkList.csv export from the LMS as input, outputting the same CSV file to --outputPath with data columns appended.
 
 Due to the number of impersonated clicks necessary for this workflow, running --headless reduces the likelihood of stray user actions interfering with the script.
 

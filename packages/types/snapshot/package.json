@@ -27,7 +27,7 @@
   },
   "devDependencies": {
     "@battis/descriptive-types": "^0.2.6",
-    "@battis/typescript-tricks": "^0.7.5",
+    "@battis/typescript-tricks": "^0.7.6",
     "@tsconfig/node20": "^20.1.8",
     "commit-and-tag-version": "^12.6.1",
     "del-cli": "^6.0.0",

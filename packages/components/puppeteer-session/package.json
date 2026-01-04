@@ -29,10 +29,10 @@
     "puppeteer": "^23.11.1"
   },
   "devDependencies": {
-    "@battis/typescript-tricks": "^0.7.5",
+    "@battis/typescript-tricks": "^0.7.6",
     "@msar/rate-limiter": "workspace:*",
-    "@qui-cli/env-1password": "^1.2.4",
-    "@qui-cli/log": "^4.0.1",
+    "@qui-cli/env-1password": "^1.2.5",
+    "@qui-cli/log": "^4.0.2",
     "@qui-cli/plugin": "^4.0.0",
     "@tsconfig/node20": "^20.1.8",
     "commit-and-tag-version": "^12.6.1",

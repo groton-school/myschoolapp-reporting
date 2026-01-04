@@ -19,7 +19,7 @@ It depends on [Node.js](https://nodejs.org/) which provides the `npm` package ma
 ## Usage:
 
 ```bash
-  msar inbox -h --u=<username> --p=<password> --o=<outputPath> --v=<val> --ignoreErrors --logRequests --commands --silent --logging --headless --devtools --quit --pretty --concurrency=<concurrency> --rate=<rate> --logFilePath=<logFilePath> --stdoutLevel=<stdoutLevel> --fileLevel=<fileLevel> --opAccount=<example.1password.com> --opItem=<1Password unique identifier> --opToken=<token value> --serviceAccountToken=<token value> --sso=<sso> --mfa=<mfa> --viewportWidth=<viewportWidth> --viewportHeight=<viewportHeight> --column=<column> --searchIn=<searchIn> url csv
+  msar inbox -h --u=<username> --p=<password> --o=<outputPath> --v=<val> --ignoreErrors --logRequests --commands --silent --logging --headless --devtools --quit --pretty --concurrency=<concurrency> --rate=<rate> --logFilePath=<logFilePath> --stdoutLevel=<all|trace|debug|info|warning|error|fatal|off> --fileLevel=<all|trace|debug|info|warning|error|fatal|off> --opAccount=<example.1password.com> --opItem=<1Password unique identifier> --opToken=<token value> --serviceAccountToken=<token value> --sso=<sso> --mfa=<mfa> --viewportWidth=<viewportWidth> --viewportHeight=<viewportHeight> --column=<column> --searchIn=<searchIn> url csv
 ```
 
 ## Arguments
@@ -52,13 +52,13 @@ Log fetch requests and responses for analysis and debugging (Default: false)
 
 Path to log file (optional)
 
-#### `--stdoutLevel=<stdoutLevel>`
+#### `--stdoutLevel=<all|trace|debug|info|warning|error|fatal|off>`
 
-Log level to console stdout: "all", "trace", "debug", "info", "warning", "error", "fatal", or "off" (Default: "info")
+Log level to console stdout (Default: "info")
 
-#### `--fileLevel=<fileLevel>`
+#### `--fileLevel=<all|trace|debug|info|warning|error|fatal|off>`
 
-Log level to log file (if --logFilePath provided): "all", "trace", "debug", "info", "warning", "error", "fatal", or "off" (Default: "all")
+Log level to log file if --logFilePath provided (Default: "all")
 
 #### `--commands`
 

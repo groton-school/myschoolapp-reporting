@@ -13,7 +13,7 @@ export const snapshot: Base.Snapshot<Snapshot.Assignments.Data> = async ({
   Debug.withGroupId(sectionId, 'Start capturing assignments');
 
   const skyAssignments = (
-    await SkyAPI.requestJSON<SkyAPI.school.v1.academics.sections.assignments.AssignmentCollection>(
+    await SkyAPI.Client.requestJSON<SkyAPI.school.v1.academics.sections.assignments.AssignmentCollection>(
       `/school/v1/academics/sections/${sectionId}/assignments`
     )
   ).value;
