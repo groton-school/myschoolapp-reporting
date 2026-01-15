@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [0.4.0](https://github.com/groton-school/myschoolapp-reporting/compare/oauth2-cli/sky-api/0.3.2...oauth2-cli/sky-api/0.4.0) (2026-01-15)
+
+
+### ⚠ BREAKING CHANGES
+
+* pre-registered plugin is ESM module, updated option arg names
+
+### Features
+
+* compile against Node.js v24 (current active version) ([dc67440](https://github.com/groton-school/myschoolapp-reporting/commit/dc6744054bc42139c4d17b1aca2ef9b057827f7f))
+
+
+### Bug Fixes
+
+* pre-registered plugin is ESM module, updated option arg names ([50ff079](https://github.com/groton-school/myschoolapp-reporting/commit/50ff079a5849ccc30c41e86d7b1d72d340fe9b87))
+
 ## [0.3.2](https://github.com/groton-school/myschoolapp-reporting/compare/oauth2-cli/sky-api/0.3.1...oauth2-cli/sky-api/0.3.2) (2026-01-04)
 
 
