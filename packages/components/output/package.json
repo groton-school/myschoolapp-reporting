@@ -22,7 +22,7 @@
     "release": "commit-and-tag-version"
   },
   "dependencies": {
-    "@qui-cli/colors": "^3.2.1"
+    "@qui-cli/colors": "^3.2.2"
   },
   "devDependencies": {
     "@msar/debug": "workspace:*",

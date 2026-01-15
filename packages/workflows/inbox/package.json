@@ -24,7 +24,7 @@
     "release": "commit-and-tag-version"
   },
   "dependencies": {
-    "@qui-cli/colors": "^3.2.1",
+    "@qui-cli/colors": "^3.2.2",
     "csv": "^6.4.1",
     "datadirect": "workspace:*",
     "moment": "^2.30.1"

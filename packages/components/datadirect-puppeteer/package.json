@@ -23,7 +23,7 @@
     "release": "commit-and-tag-version"
   },
   "dependencies": {
-    "@qui-cli/colors": "^3.2.1",
+    "@qui-cli/colors": "^3.2.2",
     "async-mutex": "^0.5.0",
     "datadirect": "workspace:*",
     "ora": "^8.2.0"
