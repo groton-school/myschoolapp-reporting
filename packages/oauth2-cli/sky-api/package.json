@@ -29,13 +29,13 @@
     "release": "commit-and-tag-version"
   },
   "dependencies": {
+    "@oauth2-cli/qui-cli": "^0.5.6",
     "node-fetch": "^3.3.2",
     "oauth2-cli": "^0.2.3"
   },
   "devDependencies": {
     "@battis/descriptive-types": "^0.2.6",
     "@battis/typescript-tricks": "^0.7.6",
-    "@oauth2-cli/qui-cli": "^0.5.6",
     "@qui-cli/colors": "^3.2.2",
     "@qui-cli/env-1password": "^1.2.6",
     "@qui-cli/plugin": "^4.0.0",
@@ -46,7 +46,6 @@
     "typescript": "^5.9.3"
   },
   "peerDependencies": {
-    "@oauth2-cli/qui-cli": ">=0.5",
     "@qui-cli/plugin": ">=3"
   }
 }
