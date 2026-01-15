@@ -19,7 +19,7 @@ It depends on [Node.js](https://nodejs.org/) which provides the `npm` package ma
 ## Usage:
 
 ```bash
-  msar snapshot -hbtagA --u=<username> --p=<password> --o=<outputPath> --ignoreErrors --logRequests --commands --silent --logging --headless --devtools --quit --pretty --active --future --expired --studentData --metadata --concurrency=<concurrency> --rate=<rate> --logFilePath=<logFilePath> --stdoutLevel=<all|trace|debug|info|warning|error|fatal|off> --fileLevel=<all|trace|debug|info|warning|error|fatal|off> --opAccount=<example.1password.com> --opItem=<1Password unique identifier> --opToken=<token value> --serviceAccountToken=<token value> --sso=<sso> --mfa=<mfa> --viewportWidth=<viewportWidth> --viewportHeight=<viewportHeight> --clientId=<clientId> --clientSecret=<clientSecret> --redirectUri=<"http://localhost:XXXX/path/to/redirect"> --subscriptionKey=<subscriptionKey> --fromDate=<fromDate> --toDate=<toDate> --association=<"Activities", "Advisories", "Classes", "Community Groups", "Dorms", and "Teams"> --termsOffered=<termsOffered> --groupsPath=<groupsPath> --year=<year> --csv=<csv> --resume=<resume> url
+  msar snapshot -hbtagA --u=<username> --p=<password> --o=<outputPath> --ignoreErrors --logRequests --commands --silent --logging --headless --devtools --quit --pretty --active --future --expired --studentData --metadata --concurrency=<concurrency> --rate=<rate> --logFilePath=<logFilePath> --stdoutLevel=<all|trace|debug|info|warning|error|fatal|off> --fileLevel=<all|trace|debug|info|warning|error|fatal|off> --opAccount=<example.1password.com> --opItem=<1Password unique identifier> --opToken=<token value> --serviceAccountToken=<token value> --sso=<sso> --mfa=<mfa> --viewportWidth=<viewportWidth> --viewportHeight=<viewportHeight> --skyClientId=<skyClientId> --skyClientSecret=<skyClientSecret> --skyRedirectUri=<"https://localhost:3000/redirect"> --subscriptionKey=<subscriptionKey> --fromDate=<fromDate> --toDate=<toDate> --association=<"Activities", "Advisories", "Classes", "Community Groups", "Dorms", and "Teams"> --termsOffered=<termsOffered> --groupsPath=<groupsPath> --year=<year> --csv=<csv> --resume=<resume> url
 ```
 
 ## Arguments
@@ -146,17 +146,17 @@ Pretty print output to file (if --outputPath option is used)
 
 ### Sky API options
 
-#### `--clientId=<clientId>`
+#### `--skyClientId=<skyClientId>`
 
-OAuth 2.0 client ID (defaults to environment variable SKY_CLIENT_ID)
+OAuth 2.0 client ID. Defaults to environment variable SKY_CLIENT_ID, if present.
 
-#### `--clientSecret=<clientSecret>`
+#### `--skyClientSecret=<skyClientSecret>`
 
-OAuth 2.0 client secret (defaults to environment variable SKY_CLIENT_SECRET
+OAuth 2.0 client secret. Defaults to environment variable SKY_CLIENT_SECRET, if present.
 
-#### `--redirectUri=<"http://localhost:XXXX/path/to/redirect">`
+#### `--skyRedirectUri=<"https://localhost:3000/redirect">`
 
-OAuth 2.0 redirect URI (must be to host localhost, defaults to environment variables SKY_REDIRECT_URI)
+OAuth 2.0 redirect URI, must be to host localhost. Defaults to environment variable SKY_REDIRECT_URI, if present.
 
 #### `--subscriptionKey=<subscriptionKey>`
 
@@ -208,7 +208,7 @@ Capture all sections; positional argument url is used to identify MySchoolApp in
 
 #### `--fromDate=<fromDate>`
 
-Starting date for date-based filter where relevant (Default: "1/4/2026")
+Starting date for date-based filter where relevant (Default: "1/15/2026")
 
 #### `--toDate=<toDate>`
 

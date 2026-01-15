@@ -19,7 +19,7 @@ It depends on [Node.js](https://nodejs.org/) which provides the `npm` package ma
 ## Usage:
 
 ```bash
-  msar schoolWebsite -h --o=<outputPath> --u=<username> --p=<password> --ignoreErrors --logRequests --commands --silent --logging --pretty --headless --devtools --quit --announcements --audio --news --photoAlbums --videos --concurrency=<concurrency> --rate=<rate> --logFilePath=<logFilePath> --stdoutLevel=<all|trace|debug|info|warning|error|fatal|off> --fileLevel=<all|trace|debug|info|warning|error|fatal|off> --opAccount=<example.1password.com> --opItem=<1Password unique identifier> --opToken=<token value> --serviceAccountToken=<token value> --sso=<sso> --mfa=<mfa> --viewportWidth=<viewportWidth> --viewportHeight=<viewportHeight> --clientId=<clientId> --clientSecret=<clientSecret> --redirectUri=<"http://localhost:XXXX/path/to/redirect"> --subscriptionKey=<subscriptionKey> --url=<https://example.myschoolapp.com> [...]
+  msar schoolWebsite -h --o=<outputPath> --u=<username> --p=<password> --ignoreErrors --logRequests --commands --silent --logging --pretty --headless --devtools --quit --announcements --audio --news --photoAlbums --videos --concurrency=<concurrency> --rate=<rate> --logFilePath=<logFilePath> --stdoutLevel=<all|trace|debug|info|warning|error|fatal|off> --fileLevel=<all|trace|debug|info|warning|error|fatal|off> --opAccount=<example.1password.com> --opItem=<1Password unique identifier> --opToken=<token value> --serviceAccountToken=<token value> --sso=<sso> --mfa=<mfa> --viewportWidth=<viewportWidth> --viewportHeight=<viewportHeight> --skyClientId=<skyClientId> --skyClientSecret=<skyClientSecret> --skyRedirectUri=<"https://localhost:3000/redirect"> --subscriptionKey=<subscriptionKey> --url=<https://example.myschoolapp.com> [...]
 ```
 
 ## Arguments
@@ -146,17 +146,17 @@ Default: 0
 
 ### Sky API options
 
-#### `--clientId=<clientId>`
+#### `--skyClientId=<skyClientId>`
 
-OAuth 2.0 client ID (defaults to environment variable SKY_CLIENT_ID)
+OAuth 2.0 client ID. Defaults to environment variable SKY_CLIENT_ID, if present.
 
-#### `--clientSecret=<clientSecret>`
+#### `--skyClientSecret=<skyClientSecret>`
 
-OAuth 2.0 client secret (defaults to environment variable SKY_CLIENT_SECRET
+OAuth 2.0 client secret. Defaults to environment variable SKY_CLIENT_SECRET, if present.
 
-#### `--redirectUri=<"http://localhost:XXXX/path/to/redirect">`
+#### `--skyRedirectUri=<"https://localhost:3000/redirect">`
 
-OAuth 2.0 redirect URI (must be to host localhost, defaults to environment variables SKY_REDIRECT_URI)
+OAuth 2.0 redirect URI, must be to host localhost. Defaults to environment variable SKY_REDIRECT_URI, if present.
 
 #### `--subscriptionKey=<subscriptionKey>`
 

@@ -1,6 +1,6 @@
 import { URLString } from '@battis/descriptive-types';
 import { JSONValue } from '@battis/typescript-tricks';
-import { Client } from './SkyAPI.js';
+import * as Client from './Module.js';
 
 type Data<T extends JSONValue> = {
   count?: number;

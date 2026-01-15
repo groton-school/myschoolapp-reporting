@@ -1,6 +1,6 @@
 import { register } from '@qui-cli/plugin';
-import { Client } from './SkyAPI.js';
+import * as SkyAPI from './Module.js';
 
-export * as SkyAPI from './SkyAPI.js';
+export {SkyAPI}
 
-await register(Client);
+await register(SkyAPI);
