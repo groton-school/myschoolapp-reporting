@@ -21,7 +21,7 @@
     "build:clean": "run-s clean",
     "build:compile": "tsc",
     "build:readme": "./scripts/msar\\ snapshot",
-    "release": "commit-and-tag-version"
+    "version": "commit-and-tag-version"
   },
   "dependencies": {
     "@msar/types.snapshot": "workspace:*",

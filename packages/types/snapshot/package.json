@@ -19,7 +19,7 @@
     "build:clean": "run-s clean",
     "build:compile": "tsc",
     "clean": "del ./dist",
-    "release": "commit-and-tag-version"
+    "version": "commit-and-tag-version"
   },
   "dependencies": {
     "@oauth2-cli/sky-api": "workspace:*",
