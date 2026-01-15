@@ -2,19 +2,26 @@ import * as OAuth2 from '@oauth2-cli/qui-cli/dist/OAuth2.js';
 import { Colors } from '@qui-cli/colors';
 import { Env } from '@qui-cli/env-1password';
 import * as Plugin from '@qui-cli/plugin';
+import { Client } from './Client.js';
+
+export {
+  EnvironmentStorage,
+  FileStorage,
+  TokenStorage
+} from '@oauth2-cli/qui-cli/dist/OAuth2.js';
+export * from './Client.js';
+export * as school from './school/index.js';
 
 type SkyConfiguration = {
   subscription_key?: string;
   subscriptionKeyEnvVar: string;
 };
 
-export type Credentials = OAuth2.Credentials & { subscription_key: string };
-
 export type Configuration = OAuth2.Configuration & SkyConfiguration;
 export type ConfigurationProposal = OAuth2.ConfigurationProposal &
   Partial<SkyConfiguration>;
 
-export class SkyAPI extends OAuth2.OAuth2 {
+export class SkyAPIPlugin extends OAuth2.OAuth2Plugin<Client> {
   private skyConfig: SkyConfiguration = {
     subscriptionKeyEnvVar: 'SKY_SUBSCRIPTION_KEY'
   };
@@ -82,8 +89,17 @@ export class SkyAPI extends OAuth2.OAuth2 {
     } = values;
     this.configure({
       subscription_key,
-      ...values,
-      headers: { 'Bb-Api-Subscription-Key': this.skyConfig.subscription_key }
+      ...values
+    });
+  }
+
+  protected instantiateClient(credentials: OAuth2.Credentials): Client {
+    if (!this.skyConfig.subscription_key) {
+      throw new Error('No subscription access key is defined.');
+    }
+    return new Client({
+      subscription_key: this.skyConfig.subscription_key,
+      ...credentials
     });
   }
 }

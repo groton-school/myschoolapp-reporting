@@ -1,13 +1,13 @@
-import { SkyAPI } from './SkyAPI.js';
+import { SkyAPIPlugin } from './SkyAPI.js';
 
-const sky = new SkyAPI();
+export * from './SkyAPI.js';
+
+const sky = new SkyAPIPlugin();
 
 export const name = sky.name;
 export const configure = sky.configure.bind(sky);
 export const options = sky.options.bind(sky);
 export const init = sky.init.bind(sky);
-
-export * as school from './school/index.js';
 
 export const getToken: typeof sky.getToken = sky.getToken.bind(sky);
 export const getClient: typeof sky.getClient = sky.getClient.bind(sky);
