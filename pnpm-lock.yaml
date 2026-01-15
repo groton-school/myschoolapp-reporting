@@ -9,14 +9,14 @@ importers:
   .:
     devDependencies:
       '@battis/eslint-config':
-        specifier: ^2.0.8
-        version: 2.0.8(@eslint/js@9.39.2)(@eslint/markdown@7.5.1)(eslint-config-prettier@10.1.8(eslint@9.39.2(jiti@2.6.1)))(eslint-plugin-html@8.1.3)(eslint@9.39.2(jiti@2.6.1))(globals@16.5.0)(typescript-eslint@8.50.1(eslint@9.39.2(jiti@2.6.1))(typescript@5.9.3))
+        specifier: ^2.0.9
+        version: 2.0.9(@eslint/js@9.39.2)(@eslint/markdown@7.5.1)(eslint-config-prettier@10.1.8(eslint@9.39.2(jiti@2.6.1)))(eslint-plugin-html@8.1.3)(eslint@9.39.2(jiti@2.6.1))(globals@16.5.0)(typescript-eslint@8.50.1(eslint@9.39.2(jiti@2.6.1))(typescript@5.9.3))
       '@battis/prettier-config':
         specifier: ^1.7.3
         version: 1.7.3(@prettier/plugin-xml@3.4.2(prettier@3.7.4))(@trivago/prettier-plugin-sort-imports@5.2.2(prettier@3.7.4))(prettier-plugin-ejs@1.0.3(prettier@3.7.4))(prettier-plugin-jsdoc@1.8.0(prettier@3.7.4))(prettier-plugin-organize-imports@4.3.0(prettier@3.7.4)(typescript@5.9.3))(prettier-plugin-packagejson@2.5.20(prettier@3.7.4))(prettier@3.7.4)
       '@commitlint/cli':
         specifier: ^19.8.1
-        version: 19.8.1(@types/node@25.0.3)(typescript@5.9.3)
+        version: 19.8.1(@types/node@25.0.8)(typescript@5.9.3)
       '@commitlint/config-conventional':
         specifier: ^19.8.1
         version: 19.8.1
@@ -25,10 +25,10 @@ importers:
         version: 19.9.1
       lerna:
         specifier: ^8.2.4
-        version: 8.2.4(@types/node@25.0.3)(encoding@0.1.13)
+        version: 8.2.4(@types/node@25.0.8)(encoding@0.1.13)
       monorepo-package-paths:
         specifier: ^0.4.3
-        version: 0.4.3(@types/node@25.0.3)(prettier@3.7.4)
+        version: 0.4.3(@types/node@25.0.8)(prettier@3.7.4)
       msar:
         specifier: workspace:*
         version: link:packages/msar
@@ -52,7 +52,7 @@ importers:
         version: 8.2.0
       puppeteer:
         specifier: '*'
-        version: 24.34.0(typescript@5.9.3)
+        version: 24.35.0(typescript@5.9.3)
     devDependencies:
       '@battis/typescript-tricks':
         specifier: ^0.7.6
@@ -66,9 +66,9 @@ importers:
       '@qui-cli/plugin':
         specifier: ^4.0.0
         version: 4.0.0
-      '@tsconfig/node20':
-        specifier: ^20.1.8
-        version: 20.1.8
+      '@tsconfig/node24':
+        specifier: ^24.0.3
+        version: 24.0.3
       commit-and-tag-version:
         specifier: ^12.6.1
         version: 12.6.1
@@ -94,9 +94,9 @@ importers:
       '@qui-cli/plugin':
         specifier: ^4.0.0
         version: 4.0.0
-      '@tsconfig/node20':
-        specifier: ^20.1.8
-        version: 20.1.8
+      '@tsconfig/node24':
+        specifier: ^24.0.3
+        version: 24.0.3
       commit-and-tag-version:
         specifier: ^12.6.1
         version: 12.6.1
@@ -123,8 +123,8 @@ importers:
         specifier: workspace:*
         version: link:../workflow
       '@qui-cli/env-1password':
-        specifier: ^1.2.5
-        version: 1.2.5(@qui-cli/env@5.0.2(@qui-cli/plugin@4.0.0)(@qui-cli/root@3.0.6(@qui-cli/plugin@4.0.0)))(@qui-cli/plugin@4.0.0)(@qui-cli/root@3.0.6(@qui-cli/plugin@4.0.0))
+        specifier: ^1.2.6
+        version: 1.2.6(@qui-cli/env@5.0.2(@qui-cli/plugin@4.0.0)(@qui-cli/root@3.0.6(@qui-cli/plugin@4.0.0)))(@qui-cli/log@4.0.2(@qui-cli/plugin@4.0.0)(@qui-cli/root@3.0.6(@qui-cli/plugin@4.0.0)))(@qui-cli/plugin@4.0.0)(@qui-cli/root@3.0.6(@qui-cli/plugin@4.0.0))(@qui-cli/shell@3.1.1(@qui-cli/log@4.0.2(@qui-cli/plugin@4.0.0)(@qui-cli/root@3.0.6(@qui-cli/plugin@4.0.0)))(@qui-cli/plugin@4.0.0))
       '@qui-cli/log':
         specifier: ^4.0.2
         version: 4.0.2(@qui-cli/plugin@4.0.0)(@qui-cli/root@3.0.6(@qui-cli/plugin@4.0.0))
@@ -134,9 +134,9 @@ importers:
       '@qui-cli/root':
         specifier: ^3.0.6
         version: 3.0.6(@qui-cli/plugin@4.0.0)
-      '@tsconfig/node20':
-        specifier: ^20.1.8
-        version: 20.1.8
+      '@tsconfig/node24':
+        specifier: ^24.0.3
+        version: 24.0.3
       commit-and-tag-version:
         specifier: ^12.6.1
         version: 12.6.1
@@ -175,17 +175,17 @@ importers:
         specifier: workspace:*
         version: link:../rate-limiter
       '@qui-cli/env-1password':
-        specifier: ^1.2.5
-        version: 1.2.5(@qui-cli/env@5.0.2(@qui-cli/plugin@4.0.0)(@qui-cli/root@3.0.6(@qui-cli/plugin@4.0.0)))(@qui-cli/plugin@4.0.0)(@qui-cli/root@3.0.6(@qui-cli/plugin@4.0.0))
+        specifier: ^1.2.6
+        version: 1.2.6(@qui-cli/env@5.0.2(@qui-cli/plugin@4.0.0)(@qui-cli/root@3.0.6(@qui-cli/plugin@4.0.0)))(@qui-cli/log@4.0.2(@qui-cli/plugin@4.0.0)(@qui-cli/root@3.0.6(@qui-cli/plugin@4.0.0)))(@qui-cli/plugin@4.0.0)(@qui-cli/root@3.0.6(@qui-cli/plugin@4.0.0))(@qui-cli/shell@3.1.1(@qui-cli/log@4.0.2(@qui-cli/plugin@4.0.0)(@qui-cli/root@3.0.6(@qui-cli/plugin@4.0.0)))(@qui-cli/plugin@4.0.0))
       '@qui-cli/log':
         specifier: ^4.0.2
         version: 4.0.2(@qui-cli/plugin@4.0.0)(@qui-cli/root@3.0.6(@qui-cli/plugin@4.0.0))
       '@qui-cli/plugin':
         specifier: ^4.0.0
         version: 4.0.0
-      '@tsconfig/node20':
-        specifier: ^20.1.8
-        version: 20.1.8
+      '@tsconfig/node24':
+        specifier: ^24.0.3
+        version: 24.0.3
       commit-and-tag-version:
         specifier: ^12.6.1
         version: 12.6.1
@@ -211,12 +211,12 @@ importers:
       '@qui-cli/plugin':
         specifier: ^4.0.0
         version: 4.0.0
-      '@tsconfig/node20':
-        specifier: ^20.1.8
-        version: 20.1.8
+      '@tsconfig/node24':
+        specifier: ^24.0.3
+        version: 24.0.3
       '@types/node':
-        specifier: ^24.10.4
-        version: 24.10.4
+        specifier: ^25.0.8
+        version: 25.0.8
       commit-and-tag-version:
         specifier: ^12.6.1
         version: 12.6.1
@@ -235,12 +235,12 @@ importers:
       '@qui-cli/plugin':
         specifier: ^4.0.0
         version: 4.0.0
-      '@tsconfig/node20':
-        specifier: ^20.1.8
-        version: 20.1.8
+      '@tsconfig/node24':
+        specifier: ^24.0.3
+        version: 24.0.3
       '@types/node':
-        specifier: ^24.10.4
-        version: 24.10.4
+        specifier: ^25.0.8
+        version: 25.0.8
       commit-and-tag-version:
         specifier: ^12.6.1
         version: 12.6.1
@@ -262,12 +262,12 @@ importers:
       '@battis/typescript-tricks':
         specifier: ^0.7.6
         version: 0.7.6
-      '@tsconfig/node20':
-        specifier: ^20.1.8
-        version: 20.1.8
+      '@tsconfig/node24':
+        specifier: ^24.0.3
+        version: 24.0.3
       '@types/node':
-        specifier: ^24.10.4
-        version: 24.10.4
+        specifier: ^25.0.8
+        version: 25.0.8
       commit-and-tag-version:
         specifier: ^12.6.1
         version: 12.6.1
@@ -308,12 +308,12 @@ importers:
         specifier: ^2.0.4
         version: 2.0.4(@qui-cli/core@5.0.2(@qui-cli/plugin@4.0.0))(@qui-cli/plugin@4.0.0)
     devDependencies:
-      '@tsconfig/node20':
-        specifier: ^20.1.8
-        version: 20.1.8
+      '@tsconfig/node24':
+        specifier: ^24.0.3
+        version: 24.0.3
       '@types/node':
-        specifier: ^24.10.4
-        version: 24.10.4
+        specifier: ^25.0.8
+        version: 25.0.8
       commit-and-tag-version:
         specifier: ^12.6.1
         version: 12.6.1
@@ -346,20 +346,20 @@ importers:
         specifier: ^0.7.6
         version: 0.7.6
       '@oauth2-cli/qui-cli':
-        specifier: ^0.4.1
-        version: 0.4.1(@qui-cli/colors@3.2.1)(@qui-cli/env-1password@1.2.5(@qui-cli/env@5.0.2(@qui-cli/plugin@4.0.0)(@qui-cli/root@3.0.6(@qui-cli/plugin@4.0.0)))(@qui-cli/plugin@4.0.0)(@qui-cli/root@3.0.6(@qui-cli/plugin@4.0.0)))(@qui-cli/plugin@4.0.0)(@qui-cli/root@3.0.6(@qui-cli/plugin@4.0.0))(ejs@3.1.10)
+        specifier: ^0.5.0
+        version: 0.5.0(@qui-cli/env-1password@1.2.6(@qui-cli/env@5.0.2(@qui-cli/plugin@4.0.0)(@qui-cli/root@3.0.6(@qui-cli/plugin@4.0.0)))(@qui-cli/log@4.0.2(@qui-cli/plugin@4.0.0)(@qui-cli/root@3.0.6(@qui-cli/plugin@4.0.0)))(@qui-cli/plugin@4.0.0)(@qui-cli/root@3.0.6(@qui-cli/plugin@4.0.0))(@qui-cli/shell@3.1.1(@qui-cli/log@4.0.2(@qui-cli/plugin@4.0.0)(@qui-cli/root@3.0.6(@qui-cli/plugin@4.0.0)))(@qui-cli/plugin@4.0.0)))(@qui-cli/plugin@4.0.0)(@qui-cli/root@3.0.6(@qui-cli/plugin@4.0.0))(ejs@3.1.10)
       '@qui-cli/colors':
         specifier: ^3.2.1
         version: 3.2.1
       '@qui-cli/env-1password':
-        specifier: ^1.2.5
-        version: 1.2.5(@qui-cli/env@5.0.2(@qui-cli/plugin@4.0.0)(@qui-cli/root@3.0.6(@qui-cli/plugin@4.0.0)))(@qui-cli/plugin@4.0.0)(@qui-cli/root@3.0.6(@qui-cli/plugin@4.0.0))
+        specifier: ^1.2.6
+        version: 1.2.6(@qui-cli/env@5.0.2(@qui-cli/plugin@4.0.0)(@qui-cli/root@3.0.6(@qui-cli/plugin@4.0.0)))(@qui-cli/log@4.0.2(@qui-cli/plugin@4.0.0)(@qui-cli/root@3.0.6(@qui-cli/plugin@4.0.0)))(@qui-cli/plugin@4.0.0)(@qui-cli/root@3.0.6(@qui-cli/plugin@4.0.0))(@qui-cli/shell@3.1.1(@qui-cli/log@4.0.2(@qui-cli/plugin@4.0.0)(@qui-cli/root@3.0.6(@qui-cli/plugin@4.0.0)))(@qui-cli/plugin@4.0.0))
       '@qui-cli/plugin':
         specifier: ^4.0.0
         version: 4.0.0
-      '@tsconfig/node20':
-        specifier: ^20.1.8
-        version: 20.1.8
+      '@tsconfig/node24':
+        specifier: ^24.0.3
+        version: 24.0.3
       commit-and-tag-version:
         specifier: ^12.6.1
         version: 12.6.1
@@ -388,9 +388,9 @@ importers:
       '@msar/types.snapshot':
         specifier: workspace:*
         version: link:../snapshot
-      '@tsconfig/node20':
-        specifier: ^20.1.8
-        version: 20.1.8
+      '@tsconfig/node24':
+        specifier: ^24.0.3
+        version: 24.0.3
       commit-and-tag-version:
         specifier: ^12.6.1
         version: 12.6.1
@@ -419,9 +419,9 @@ importers:
       '@battis/typescript-tricks':
         specifier: ^0.7.6
         version: 0.7.6
-      '@tsconfig/node20':
-        specifier: ^20.1.8
-        version: 20.1.8
+      '@tsconfig/node24':
+        specifier: ^24.0.3
+        version: 24.0.3
       commit-and-tag-version:
         specifier: ^12.6.1
         version: 12.6.1
@@ -487,8 +487,8 @@ importers:
         specifier: ^5.0.2
         version: 5.0.2(@qui-cli/plugin@4.0.0)
       '@qui-cli/env-1password':
-        specifier: ^1.2.5
-        version: 1.2.5(@qui-cli/env@5.0.2(@qui-cli/plugin@4.0.0)(@qui-cli/root@3.0.6(@qui-cli/plugin@4.0.0)))(@qui-cli/plugin@4.0.0)(@qui-cli/root@3.0.6(@qui-cli/plugin@4.0.0))
+        specifier: ^1.2.6
+        version: 1.2.6(@qui-cli/env@5.0.2(@qui-cli/plugin@4.0.0)(@qui-cli/root@3.0.6(@qui-cli/plugin@4.0.0)))(@qui-cli/log@4.0.2(@qui-cli/plugin@4.0.0)(@qui-cli/root@3.0.6(@qui-cli/plugin@4.0.0)))(@qui-cli/plugin@4.0.0)(@qui-cli/root@3.0.6(@qui-cli/plugin@4.0.0))(@qui-cli/shell@3.1.1(@qui-cli/log@4.0.2(@qui-cli/plugin@4.0.0)(@qui-cli/root@3.0.6(@qui-cli/plugin@4.0.0)))(@qui-cli/plugin@4.0.0))
       '@qui-cli/log':
         specifier: ^4.0.2
         version: 4.0.2(@qui-cli/plugin@4.0.0)(@qui-cli/root@3.0.6(@qui-cli/plugin@4.0.0))
@@ -504,9 +504,9 @@ importers:
       '@qui-cli/root':
         specifier: ^3.0.6
         version: 3.0.6(@qui-cli/plugin@4.0.0)
-      '@tsconfig/node20':
-        specifier: ^20.1.8
-        version: 20.1.8
+      '@tsconfig/node24':
+        specifier: ^24.0.3
+        version: 24.0.3
       '@types/content-disposition':
         specifier: ^0.5.9
         version: 0.5.9
@@ -554,8 +554,8 @@ importers:
         specifier: ^5.0.2
         version: 5.0.2(@qui-cli/plugin@4.0.0)
       '@qui-cli/env-1password':
-        specifier: ^1.2.5
-        version: 1.2.5(@qui-cli/env@5.0.2(@qui-cli/plugin@4.0.0)(@qui-cli/root@3.0.6(@qui-cli/plugin@4.0.0)))(@qui-cli/plugin@4.0.0)(@qui-cli/root@3.0.6(@qui-cli/plugin@4.0.0))
+        specifier: ^1.2.6
+        version: 1.2.6(@qui-cli/env@5.0.2(@qui-cli/plugin@4.0.0)(@qui-cli/root@3.0.6(@qui-cli/plugin@4.0.0)))(@qui-cli/log@4.0.2(@qui-cli/plugin@4.0.0)(@qui-cli/root@3.0.6(@qui-cli/plugin@4.0.0)))(@qui-cli/plugin@4.0.0)(@qui-cli/root@3.0.6(@qui-cli/plugin@4.0.0))(@qui-cli/shell@3.1.1(@qui-cli/log@4.0.2(@qui-cli/plugin@4.0.0)(@qui-cli/root@3.0.6(@qui-cli/plugin@4.0.0)))(@qui-cli/plugin@4.0.0))
       '@qui-cli/log':
         specifier: ^4.0.2
         version: 4.0.2(@qui-cli/plugin@4.0.0)(@qui-cli/root@3.0.6(@qui-cli/plugin@4.0.0))
@@ -571,9 +571,9 @@ importers:
       '@qui-cli/root':
         specifier: ^3.0.6
         version: 3.0.6(@qui-cli/plugin@4.0.0)
-      '@tsconfig/node20':
-        specifier: ^20.1.8
-        version: 20.1.8
+      '@tsconfig/node24':
+        specifier: ^24.0.3
+        version: 24.0.3
       commit-and-tag-version:
         specifier: ^12.6.1
         version: 12.6.1
@@ -609,8 +609,8 @@ importers:
         specifier: ^5.0.2
         version: 5.0.2(@qui-cli/plugin@4.0.0)
       '@qui-cli/env-1password':
-        specifier: ^1.2.5
-        version: 1.2.5(@qui-cli/env@5.0.2(@qui-cli/plugin@4.0.0)(@qui-cli/root@3.0.6(@qui-cli/plugin@4.0.0)))(@qui-cli/plugin@4.0.0)(@qui-cli/root@3.0.6(@qui-cli/plugin@4.0.0))
+        specifier: ^1.2.6
+        version: 1.2.6(@qui-cli/env@5.0.2(@qui-cli/plugin@4.0.0)(@qui-cli/root@3.0.6(@qui-cli/plugin@4.0.0)))(@qui-cli/log@4.0.2(@qui-cli/plugin@4.0.0)(@qui-cli/root@3.0.6(@qui-cli/plugin@4.0.0)))(@qui-cli/plugin@4.0.0)(@qui-cli/root@3.0.6(@qui-cli/plugin@4.0.0))(@qui-cli/shell@3.1.1(@qui-cli/log@4.0.2(@qui-cli/plugin@4.0.0)(@qui-cli/root@3.0.6(@qui-cli/plugin@4.0.0)))(@qui-cli/plugin@4.0.0))
       '@qui-cli/log':
         specifier: ^4.0.2
         version: 4.0.2(@qui-cli/plugin@4.0.0)(@qui-cli/root@3.0.6(@qui-cli/plugin@4.0.0))
@@ -626,9 +626,9 @@ importers:
       '@qui-cli/root':
         specifier: ^3.0.6
         version: 3.0.6(@qui-cli/plugin@4.0.0)
-      '@tsconfig/node20':
-        specifier: ^20.1.8
-        version: 20.1.8
+      '@tsconfig/node24':
+        specifier: ^24.0.3
+        version: 24.0.3
       commit-and-tag-version:
         specifier: ^12.6.1
         version: 12.6.1
@@ -682,8 +682,8 @@ importers:
         specifier: ^5.0.2
         version: 5.0.2(@qui-cli/plugin@4.0.0)
       '@qui-cli/env-1password':
-        specifier: ^1.2.5
-        version: 1.2.5(@qui-cli/env@5.0.2(@qui-cli/plugin@4.0.0)(@qui-cli/root@3.0.6(@qui-cli/plugin@4.0.0)))(@qui-cli/plugin@4.0.0)(@qui-cli/root@3.0.6(@qui-cli/plugin@4.0.0))
+        specifier: ^1.2.6
+        version: 1.2.6(@qui-cli/env@5.0.2(@qui-cli/plugin@4.0.0)(@qui-cli/root@3.0.6(@qui-cli/plugin@4.0.0)))(@qui-cli/log@4.0.2(@qui-cli/plugin@4.0.0)(@qui-cli/root@3.0.6(@qui-cli/plugin@4.0.0)))(@qui-cli/plugin@4.0.0)(@qui-cli/root@3.0.6(@qui-cli/plugin@4.0.0))(@qui-cli/shell@3.1.1(@qui-cli/log@4.0.2(@qui-cli/plugin@4.0.0)(@qui-cli/root@3.0.6(@qui-cli/plugin@4.0.0)))(@qui-cli/plugin@4.0.0))
       '@qui-cli/log':
         specifier: ^4.0.2
         version: 4.0.2(@qui-cli/plugin@4.0.0)(@qui-cli/root@3.0.6(@qui-cli/plugin@4.0.0))
@@ -693,9 +693,9 @@ importers:
       '@qui-cli/plugin':
         specifier: ^4.0.0
         version: 4.0.0
-      '@tsconfig/node20':
-        specifier: ^20.1.8
-        version: 20.1.8
+      '@tsconfig/node24':
+        specifier: ^24.0.3
+        version: 24.0.3
       commit-and-tag-version:
         specifier: ^12.6.1
         version: 12.6.1
@@ -758,8 +758,8 @@ importers:
         specifier: ^5.0.2
         version: 5.0.2(@qui-cli/plugin@4.0.0)
       '@qui-cli/env-1password':
-        specifier: ^1.2.5
-        version: 1.2.5(@qui-cli/env@5.0.2(@qui-cli/plugin@4.0.0)(@qui-cli/root@3.0.6(@qui-cli/plugin@4.0.0)))(@qui-cli/plugin@4.0.0)(@qui-cli/root@3.0.6(@qui-cli/plugin@4.0.0))
+        specifier: ^1.2.6
+        version: 1.2.6(@qui-cli/env@5.0.2(@qui-cli/plugin@4.0.0)(@qui-cli/root@3.0.6(@qui-cli/plugin@4.0.0)))(@qui-cli/log@4.0.2(@qui-cli/plugin@4.0.0)(@qui-cli/root@3.0.6(@qui-cli/plugin@4.0.0)))(@qui-cli/plugin@4.0.0)(@qui-cli/root@3.0.6(@qui-cli/plugin@4.0.0))(@qui-cli/shell@3.1.1(@qui-cli/log@4.0.2(@qui-cli/plugin@4.0.0)(@qui-cli/root@3.0.6(@qui-cli/plugin@4.0.0)))(@qui-cli/plugin@4.0.0))
       '@qui-cli/log':
         specifier: ^4.0.2
         version: 4.0.2(@qui-cli/plugin@4.0.0)(@qui-cli/root@3.0.6(@qui-cli/plugin@4.0.0))
@@ -778,9 +778,9 @@ importers:
       '@qui-cli/shell':
         specifier: ^3.1.1
         version: 3.1.1(@qui-cli/log@4.0.2(@qui-cli/plugin@4.0.0)(@qui-cli/root@3.0.6(@qui-cli/plugin@4.0.0)))(@qui-cli/plugin@4.0.0)
-      '@tsconfig/node20':
-        specifier: ^20.1.8
-        version: 20.1.8
+      '@tsconfig/node24':
+        specifier: ^24.0.3
+        version: 24.0.3
       commit-and-tag-version:
         specifier: ^12.6.1
         version: 12.6.1
@@ -802,12 +802,12 @@ packages:
   '@1password/sdk@0.3.1':
     resolution: {integrity: sha512-20zbQfqsjcECT0gvnAw4zONJDt3XQgNH946pZR0NV1Qxukyaz/DKB0cBnBNCCEWZg93Bah8poaR6gJCyuNX14w==}
 
-  '@babel/code-frame@7.27.1':
-    resolution: {integrity: sha512-cjQ7ZlQ0Mv3b47hABuTevyTuYN4i+loJKGeV9flcCgIK37cCXRh+L1bd3iBHlynerhQ7BhCkn2BPbQUL+rGqFg==}
+  '@babel/code-frame@7.28.6':
+    resolution: {integrity: sha512-JYgintcMjRiCvS8mMECzaEn+m3PfoQiyqukOMCCVQtoJGYJw8j/8LBJEiqkHLkfwCcs74E3pbAUFNg7d9VNJ+Q==}
     engines: {node: '>=6.9.0'}
 
-  '@babel/generator@7.28.5':
-    resolution: {integrity: sha512-3EwLFhZ38J4VyIP6WNtt2kUdW9dokXA9Cr4IVIFHuCpZ3H8/YFOl5JjZHisrn1fATPBmKKqXzDFvh9fUwHz6CQ==}
+  '@babel/generator@7.28.6':
+    resolution: {integrity: sha512-lOoVRwADj8hjf7al89tvQ2a1lf53Z+7tiXMgpZJL3maQPDxh0DgLMN62B2MKUOFcoodBHLMbDM6WAbKgNy5Suw==}
     engines: {node: '>=6.9.0'}
 
   '@babel/helper-globals@7.28.0':
@@ -822,36 +822,36 @@ packages:
     resolution: {integrity: sha512-qSs4ifwzKJSV39ucNjsvc6WVHs6b7S03sOh2OcHF9UHfVPqWWALUsNUVzhSBiItjRZoLHx7nIarVjqKVusUZ1Q==}
     engines: {node: '>=6.9.0'}
 
-  '@babel/parser@7.28.5':
-    resolution: {integrity: sha512-KKBU1VGYR7ORr3At5HAtUQ+TV3SzRCXmA/8OdDZiLDBIZxVyzXuztPjfLd3BV1PRAQGCMWWSHYhL0F8d5uHBDQ==}
+  '@babel/parser@7.28.6':
+    resolution: {integrity: sha512-TeR9zWR18BvbfPmGbLampPMW+uW1NZnJlRuuHso8i87QZNq2JRF9i6RgxRqtEq+wQGsS19NNTWr2duhnE49mfQ==}
     engines: {node: '>=6.0.0'}
     hasBin: true
 
-  '@babel/template@7.27.2':
-    resolution: {integrity: sha512-LPDZ85aEJyYSd18/DkjNh4/y1ntkE5KwUHWTiqgRxruuZL2F1yuHligVHLvcHY2vMHXttKFpJn6LwfI7cw7ODw==}
+  '@babel/template@7.28.6':
+    resolution: {integrity: sha512-YA6Ma2KsCdGb+WC6UpBVFJGXL58MDA6oyONbjyF/+5sBgxY/dwkhLogbMT2GXXyU84/IhRw/2D1Os1B/giz+BQ==}
     engines: {node: '>=6.9.0'}
 
-  '@babel/traverse@7.28.5':
-    resolution: {integrity: sha512-TCCj4t55U90khlYkVV/0TfkJkAkUg3jZFA3Neb7unZT8CPok7iiRfaX0F+WnqWqt7OxhOn0uBKXCw4lbL8W0aQ==}
+  '@babel/traverse@7.28.6':
+    resolution: {integrity: sha512-fgWX62k02qtjqdSNTAGxmKYY/7FSL9WAS1o2Hu5+I5m9T0yxZzr4cnrfXQ/MX0rIifthCSs6FKTlzYbJcPtMNg==}
     engines: {node: '>=6.9.0'}
 
-  '@babel/types@7.28.5':
-    resolution: {integrity: sha512-qQ5m48eI/MFLQ5PxQj4PFaprjyCTLI37ElWMmNs0K8Lk3dVeOdNpB3ks8jc7yM5CDmVC73eMVk/trk3fgmrUpA==}
+  '@babel/types@7.28.6':
+    resolution: {integrity: sha512-0ZrskXVEHSWIqZM/sQZ4EV3jZJXRkio/WCxaqKZP1g//CEWEPSfeZFcms4XeKBCHU0ZKnIkdJeU/kF+eRp5lBg==}
     engines: {node: '>=6.9.0'}
 
   '@battis/descriptive-types@0.2.6':
     resolution: {integrity: sha512-tgJ1OoOVlshBRdDrwhy5+cQM4s8xKVRlBDYDos7VuOh+1dF11+F6y/KZnBIhPeHitGiI3BRUXHW7sCF8zMvBsg==}
 
-  '@battis/eslint-config@2.0.8':
-    resolution: {integrity: sha512-/MgAtNaqeeDFwl27SQX+7MlXu4hZ5tvfSua4vTbMCQ/ykn2e+S9g/jqgUcwWySU2ogKyvnc9uaqcl799kN74Wg==}
+  '@battis/eslint-config@2.0.9':
+    resolution: {integrity: sha512-7iyjwWWtCBY8aKUDiDNNySwrRILdIOn1cBV+ARF90o5u210+pjA3+A/Hwgb5gCH8lkKEMyAq6jFQSauc3QRTtw==}
     peerDependencies:
       '@eslint/js': 9.x
       '@eslint/markdown': 7.x
       eslint: 9.x
       eslint-config-prettier: 10.x
       eslint-plugin-html: 8.x
-      globals: 16.x
-      typescript-eslint: 8.x
+      globals: '*'
+      typescript-eslint: '*'
 
   '@battis/import-package-json@0.1.7':
     resolution: {integrity: sha512-fDefeLqvjimxCcO3EvZbJg7WpZ6CqJLqFKIIbUEDC1Y//EaiK8hT6dwiYnn/nKCngeLIUw7lAw/LhNgWXZhvQA==}
@@ -1217,78 +1217,77 @@ packages:
     resolution: {integrity: sha512-y7efHHwghQfk28G2z3tlZ67pLG0XdfYbcVG26r7YIXALRsrVQcTq4/tdenSmdOrEsNahIYA/eh8aEVROWGFUDg==}
     engines: {node: ^16.14.0 || >=18.0.0}
 
-  '@nx/devkit@20.8.3':
-    resolution: {integrity: sha512-5lbfJ6ICFOiGeirldQOU5fQ/W/VQ8L3dfWnmHG4UgpWSLoK/YFdRf4lTB4rS0aDXsBL0gyWABz3sZGLPGNYnPA==}
+  '@nx/devkit@20.8.4':
+    resolution: {integrity: sha512-3r+6QmIXXAWL6K7m8vAbW31aniAZmZAZXeMhOhWcJoOAU7ggpCQaM8JP8/kO5ov/Bmhyf0i/SSVXI6kwiR5WNQ==}
     peerDependencies:
       nx: '>= 19 <= 21'
 
-  '@nx/nx-darwin-arm64@20.8.3':
-    resolution: {integrity: sha512-BeYnPAcnaerg6q+qR0bAb0nebwwrsvm4STSVqqVlaqLmmQpU3Bfpx44CEa5d6T9b0V11ZqVE/bkmRhMqhUcrhw==}
+  '@nx/nx-darwin-arm64@20.8.4':
+    resolution: {integrity: sha512-8Y7+4wj1qoZsuDRpnuiHzSIsMt3VqtJ0su8dgd/MyGccvvi4pndan2R5yTiVw/wmbMxtBmZ6PO6Z8dgSIrMVog==}
     engines: {node: '>= 10'}
     cpu: [arm64]
     os: [darwin]
 
-  '@nx/nx-darwin-x64@20.8.3':
-    resolution: {integrity: sha512-RIFg1VkQ4jhI+ErqEZuIeGBcJGD8t+u9J5CdQBDIASd8QRhtudBkiYLYCJb+qaQly09G7nVfxuyItlS2uRW3qA==}
+  '@nx/nx-darwin-x64@20.8.4':
+    resolution: {integrity: sha512-2lfuxRc56QWnAysMhcD03tpCPiRzV1+foUq0MhV2sSBIybXmgV4wHLkPZNhlBCl4FNXrWiZiN1OJ2X9AGiOdug==}
     engines: {node: '>= 10'}
     cpu: [x64]
     os: [darwin]
 
-  '@nx/nx-freebsd-x64@20.8.3':
-    resolution: {integrity: sha512-boQTgMUdnqpZhHMrV/xgnp/dTg5dfxw8I4d16NBwmW4j+Sez7zi/dydgsJpfZsj8TicOHvPu6KK4W5wzp82NPw==}
+  '@nx/nx-freebsd-x64@20.8.4':
+    resolution: {integrity: sha512-99vnUXZy+OUBHU+8Yhabre2qafepKg9GKkQkhmXvJGqOmuIsepK7wirUFo2PiVM8YhS6UV2rv6hKAZcQ7skYyg==}
     engines: {node: '>= 10'}
     cpu: [x64]
     os: [freebsd]
 
-  '@nx/nx-linux-arm-gnueabihf@20.8.3':
-    resolution: {integrity: sha512-wpiNyY1igx1rLN3EsTLum2lDtblFijdBZB9/9u/6UDub4z9CaQ4yaC4h9n5v7yFYILwfL44YTsQKzrE+iv0y1Q==}
+  '@nx/nx-linux-arm-gnueabihf@20.8.4':
+    resolution: {integrity: sha512-dht73zpnpzEUEzMHFQs4mfiwZH3WcJgQNWkD5p7WkeJewHq2Yyd0eG5Jg3kB7wnFtwPUV1eNJRM5rephgylkLA==}
     engines: {node: '>= 10'}
     cpu: [arm]
     os: [linux]
 
-  '@nx/nx-linux-arm64-gnu@20.8.3':
-    resolution: {integrity: sha512-nbi/eZtJfWxuDwdUCiP+VJolFubtrz6XxVtB26eMAkODnREOKELHZtMOrlm8JBZCdtWCvTqibq9Az74XsqSfdA==}
+  '@nx/nx-linux-arm64-gnu@20.8.4':
+    resolution: {integrity: sha512-syXxbJZ0yPaqzVmB28QJgUtaarSiW/PQmv/5Z2Ps8rCi7kYylISPVNjP1NNiIOcGDRWbHqoBfM0bEGPfSp0rBQ==}
     engines: {node: '>= 10'}
     cpu: [arm64]
     os: [linux]
 
-  '@nx/nx-linux-arm64-musl@20.8.3':
-    resolution: {integrity: sha512-LTTGzI8YVPlF1v0YlVf+exM+1q7rpsiUbjTTHJcfHFRU5t4BsiZD54K19Y1UBg1XFx5cwhEaIomSmJ88RwPPVQ==}
+  '@nx/nx-linux-arm64-musl@20.8.4':
+    resolution: {integrity: sha512-AlZZFolS/S0FahRKG7rJ0Z9CgmIkyzHgGaoy3qNEMDEjFhR3jt2ZZSLp90W7zjgrxojOo90ajNMrg2UmtcQRDA==}
     engines: {node: '>= 10'}
     cpu: [arm64]
     os: [linux]
 
-  '@nx/nx-linux-x64-gnu@20.8.3':
-    resolution: {integrity: sha512-SlA4GtXvQbSzSIWLgiIiLBOjdINPOUR/im+TUbaEMZ8wiGrOY8cnk0PVt95TIQJVBeXBCeb5HnoY0lHJpMOODg==}
+  '@nx/nx-linux-x64-gnu@20.8.4':
+    resolution: {integrity: sha512-MSu+xVNdR95tuuO+eL/a/ZeMlhfrZ627On5xaCZXnJ+lFxNg/S4nlKZQk0Eq5hYALCd/GKgFGasRdlRdOtvGPg==}
     engines: {node: '>= 10'}
     cpu: [x64]
     os: [linux]
 
-  '@nx/nx-linux-x64-musl@20.8.3':
-    resolution: {integrity: sha512-MNzkEwPktp5SQH9dJDH2wP9hgG9LsBDhKJXJfKw6sUI/6qz5+/aAjFziKy+zBnhU4AO1yXt5qEWzR8lDcIriVQ==}
+  '@nx/nx-linux-x64-musl@20.8.4':
+    resolution: {integrity: sha512-KxpQpyLCgIIHWZ4iRSUN9ohCwn1ZSDASbuFCdG3mohryzCy8WrPkuPcb+68J3wuQhmA5w//Xpp/dL0hHoit9zQ==}
     engines: {node: '>= 10'}
     cpu: [x64]
     os: [linux]
 
-  '@nx/nx-win32-arm64-msvc@20.8.3':
-    resolution: {integrity: sha512-qUV7CyXKwRCM/lkvyS6Xa1MqgAuK5da6w27RAehh7LATBUKn1I4/M7DGn6L7ERCxpZuh1TrDz9pUzEy0R+Ekkg==}
+  '@nx/nx-win32-arm64-msvc@20.8.4':
+    resolution: {integrity: sha512-ffLBrxM9ibk+eWSY995kiFFRTSRb9HkD5T1s/uZyxV6jfxYPaZDBAWAETDneyBXps7WtaOMu+kVZlXQ3X+TfIA==}
     engines: {node: '>= 10'}
     cpu: [arm64]
     os: [win32]
 
-  '@nx/nx-win32-x64-msvc@20.8.3':
-    resolution: {integrity: sha512-gX1G8u6W6EPX6PO/wv07+B++UHyCHBXyVWXITA3Kv6HoSajOxIa2Kk1rv1iDQGmX1WWxBaj3bUyYJAFBDITe4w==}
+  '@nx/nx-win32-x64-msvc@20.8.4':
+    resolution: {integrity: sha512-JxuuZc4h8EBqoYAiRHwskimpTJx70yn4lhIRFBoW5ICkxXW1Rw0yip/1UVsWRHXg/x9BxmH7VVazdfaQWmGu6A==}
     engines: {node: '>= 10'}
     cpu: [x64]
     os: [win32]
 
-  '@oauth2-cli/qui-cli@0.4.1':
-    resolution: {integrity: sha512-1z0kYAoewiwp180QeklY1aWam8EdUQfsWzfdpXcLyJNqYNfa8BUyFzmNgVbY8b9fMkQxPT79D9jLEkLYcIVDIA==}
+  '@oauth2-cli/qui-cli@0.5.0':
+    resolution: {integrity: sha512-cfgRoK0CS0pPqpZ59HpKjsj8TRD4HrhIhCxiv+rZZlVz6JWZzKOVXQ+oRaTTOtxJA3s7Op3XuofG6Zryft48WA==}
     peerDependencies:
-      '@qui-cli/colors': 3.x
-      '@qui-cli/env-1password': 1.x
-      '@qui-cli/plugin': 4.x
-      '@qui-cli/root': 3.x
+      '@qui-cli/env-1password': '>=1'
+      '@qui-cli/plugin': '>=3'
+      '@qui-cli/root': '>=3'
 
   '@octokit/auth-token@4.0.0':
     resolution: {integrity: sha512-tY/msAuJo6ARbK6SPIxZrPBms3xPbfwBrulZe0Wtr/DIY9lje2HeV1uoebShn6mx7SjCHif6EjMvoREj+gZ+SA==}
@@ -1386,8 +1385,8 @@ packages:
     peerDependencies:
       prettier: ^3.0.0
 
-  '@puppeteer/browsers@2.11.0':
-    resolution: {integrity: sha512-n6oQX6mYkG8TRPuPXmbPidkUbsSRalhmaaVAQxvH1IkQy63cwsH+kOjB3e4cpCDHg0aSvsiX9bQ4s2VB6mGWUQ==}
+  '@puppeteer/browsers@2.11.1':
+    resolution: {integrity: sha512-YmhAxs7XPuxN0j7LJloHpfD1ylhDuFmmwMvfy/+6nBSrETT2ycL53LrhgPtR+f+GcPSybQVuQ5inWWu5MrWCpA==}
     engines: {node: '>=18'}
     hasBin: true
 
@@ -1407,12 +1406,14 @@ packages:
     peerDependencies:
       '@qui-cli/plugin': '>=3'
 
-  '@qui-cli/env-1password@1.2.5':
-    resolution: {integrity: sha512-d+w9y2OHO0rK1MtvjlLrTMyGnf0mFoaJ3864CWVpndpdf8JhvFnCnPny4AabPbz3+0EeJ+X7D4poLa5wptR96g==}
+  '@qui-cli/env-1password@1.2.6':
+    resolution: {integrity: sha512-+nQcWBdPgikbsbkSMNMFop2n0yQHzp9baDlF8Qn2MWhlXV8RfBtgvq7S2bHxgyB+puBjtMDutcyGtcTfuB5nNA==}
     peerDependencies:
       '@qui-cli/env': '>=5'
+      '@qui-cli/log': '>=3'
       '@qui-cli/plugin': '>=3'
       '@qui-cli/root': '>=3'
+      '@qui-cli/shell': '>=3'
 
   '@qui-cli/env@5.0.2':
     resolution: {integrity: sha512-glgwnQhURPeW8k/1nNnyFTUGtE/Pwg2lycFvYqa+yzwwf5u9yVJjUs6Uocy5zYBah7WePNmErlN7Eq1A+jfkLg==}
@@ -1518,8 +1519,8 @@ packages:
       svelte:
         optional: true
 
-  '@tsconfig/node20@20.1.8':
-    resolution: {integrity: sha512-Em+IdPfByIzWRRpqWL4Z7ArLHZGxmc36BxE3jCz9nBFSm+5aLaPMZyjwu4yetvyKXeogWcxik4L1jB5JTWfw7A==}
+  '@tsconfig/node24@24.0.3':
+    resolution: {integrity: sha512-vcERKtKQKHgzt/vfS3Gjasd8SUI2a0WZXpgJURdJsMySpS5+ctgbPfuLj2z/W+w4lAfTWxoN4upKfu2WzIRYnw==}
 
   '@tufjs/canonical-json@2.0.0':
     resolution: {integrity: sha512-yVtV8zsdo8qFHe+/3kw81dSLyF7D576A5cCFCi4X7B39tWT7SekaEFUnvnWJHz+9qO7qJTah1JbrDjWKqFtdWA==}
@@ -1559,11 +1560,8 @@ packages:
   '@types/ms@2.1.0':
     resolution: {integrity: sha512-GsCCIZDE/p3i96vtEqx+7dBUGXrc7zeSK3wwPHIaRThS+9OhWIXRqzs4d6k1SVU8g91DrNRWxWUGhp5KXQb2VA==}
 
-  '@types/node@24.10.4':
-    resolution: {integrity: sha512-vnDVpYPMzs4wunl27jHrfmwojOGKya0xyM3sH+UE5iv5uPS6vX7UIoh6m+vQc5LGBq52HBKPIn/zcSZVzeDEZg==}
-
-  '@types/node@25.0.3':
-    resolution: {integrity: sha512-W609buLVRVmeW693xKfzHeIV6nJGGz98uCPfeXI1ELMLXVeKYZ9m15fAMSaUPBHYLGFsVRcMmSCksQOrZV9BYA==}
+  '@types/node@25.0.8':
+    resolution: {integrity: sha512-powIePYMmC3ibL0UJ2i2s0WIbq6cg6UyVFQxSCpaPxxzAaziRfimGivjdF943sSGV6RADVbk0Nvlm5P/FB44Zg==}
 
   '@types/normalize-package-data@2.4.4':
     resolution: {integrity: sha512-37i+OaWTh9qeK4LSHPsyRC7NahnGotNuZvjLSgcPzblpHB3rrCJxAOgI5gCdKm7coonsaX1Of0ILiTcnZjbfxA==}
@@ -1854,8 +1852,8 @@ packages:
   bl@4.1.0:
     resolution: {integrity: sha512-1W07cM9gS6DcLperZfFSj+bWLtaPGSOHWhPiGzXmvVJbRLdG82sH/Kn8EtW1VqWVA54AKf2h5k5BbnIbwF3h6w==}
 
-  body-parser@2.2.1:
-    resolution: {integrity: sha512-nfDwkulwiZYQIGwxdy0RUmowMhKcFVcYXUU7m4QlKYim1rUtg83xm2yjZ40QjDuc291AJjjeSc9b++AWHSgSHw==}
+  body-parser@2.2.2:
+    resolution: {integrity: sha512-oP5VkATKlNwcgvxi0vM0p/D3n2C3EReYVX+DNYs5TjZFn/oQt2j+4sVJtSMr18pdRr8wjTcBl6LoV+FUwzPmNA==}
     engines: {node: '>=18'}
 
   brace-expansion@1.1.12:
@@ -3015,8 +3013,8 @@ packages:
     resolution: {integrity: sha512-4fCk79wshMdzMp2rH06qWrJE4iolqLhCUH+OiuIgU++RB0+94NlDL81atO7GX55uUKueo0txHNtvEyI6D7WdMw==}
     engines: {node: '>=0.10.0'}
 
-  iconv-lite@0.7.1:
-    resolution: {integrity: sha512-2Tth85cXwGFHfvRgZWszZSvdo+0Xsqmw8k8ZwxScfcBneNUraK+dxRxRm24nszx80Y0TVio8kKLt5sLE7ZCLlw==}
+  iconv-lite@0.7.2:
+    resolution: {integrity: sha512-im9DjEDQ55s9fL4EYzOAv0yMqmMBSZp6G0VvFyTMPKWxiSBHUj9NW/qqLmXUwXrrM7AvqSlTCfvqRb0cM8yYqw==}
     engines: {node: '>=0.10.0'}
 
   ieee754@1.2.1:
@@ -3991,8 +3989,8 @@ packages:
     resolution: {integrity: sha512-S48WzZW777zhNIrn7gxOlISNAqi9ZC/uQFnRdbeIHhZhCA6UqpkOT8T1G7BvfdgP4Er8gF4sUbaS0i7QvIfCWw==}
     engines: {node: '>=8'}
 
-  nx@20.8.3:
-    resolution: {integrity: sha512-8w815WSMWar3A/LFzwtmEY+E8cVW62lMiFuPDXje+C8O8hFndfvscP56QHNMn2Zdhz3q0+BZUe+se4Em1BKYdA==}
+  nx@20.8.4:
+    resolution: {integrity: sha512-/++x0OM3/UTmDR+wmPeV13tSxeTr+QGzj3flgtH9DiOPmQnn2CjHWAMZiOhcSh/hHoE/V3ySL4757InQUsVtjQ==}
     hasBin: true
     peerDependencies:
       '@swc-node/register': ^1.8.0
@@ -4008,8 +4006,8 @@ packages:
     peerDependencies:
       ejs: '*'
 
-  oauth2-cli@0.4.0:
-    resolution: {integrity: sha512-ee5t3ZlThLLaJfC8VxzLWCxCtHCIgEFd8eebwmEUaGgev0mlP+DW1sbs2MrVsFZi+VkcKKMNEyxXHyBKZT4mgw==}
+  oauth2-cli@0.5.0:
+    resolution: {integrity: sha512-KWAc7d1r9O3pbO8xbMDqr8JlQ4IEEaA43L2ZTvg4LsYJYUVpMGour+sIPDY1ySli+XlFx/cH2khg2eG47+VoLg==}
     peerDependencies:
       ejs: '*'
 
@@ -4414,8 +4412,8 @@ packages:
     resolution: {integrity: sha512-3HZ2/7hdDKZvZQ7dhhITOUg4/wOrDRjyK2ZBllRB0ZCOi9u0cwq1ACHDjBB+nX+7+kltHjQvBRdeY7+W0T+7Gg==}
     engines: {node: '>=18'}
 
-  puppeteer-core@24.34.0:
-    resolution: {integrity: sha512-24evawO+mUGW4mvS2a2ivwLdX3gk8zRLZr9HP+7+VT2vBQnm0oh9jJEZmUE3ePJhRkYlZ93i7OMpdcoi2qNCLg==}
+  puppeteer-core@24.35.0:
+    resolution: {integrity: sha512-vt1zc2ME0kHBn7ZDOqLvgvrYD5bqNv5y2ZNXzYnCv8DEtZGw/zKhljlrGuImxptZ4rq+QI9dFGrUIYqG4/IQzA==}
     engines: {node: '>=18'}
 
   puppeteer@23.11.1:
@@ -4424,8 +4422,8 @@ packages:
     deprecated: < 24.15.0 is no longer supported
     hasBin: true
 
-  puppeteer@24.34.0:
-    resolution: {integrity: sha512-Sdpl/zsYOsagZ4ICoZJPGZw8d9gZmK5DcxVal11dXi/1/t2eIXHjCf5NfmhDg5XnG9Nye+yo/LqMzIxie2rHTw==}
+  puppeteer@24.35.0:
+    resolution: {integrity: sha512-sbjB5JnJ+3nwgSdRM/bqkFXqLxRz/vsz0GRIeTlCk+j+fGpqaF2dId9Qp25rXz9zfhqnN9s0krek1M/C2GDKtA==}
     engines: {node: '>=18'}
     hasBin: true
 
@@ -4716,8 +4714,8 @@ packages:
     resolution: {integrity: sha512-aUYIEU/UviqPgc8mHR6IW1EGxkAXpeRETYcrzg8cLAvUPZcpAlleSXHV2mY7G12GphSH6Gzv+4MMVSSkbdteHg==}
     engines: {node: '>=8'}
 
-  sort-object-keys@2.0.1:
-    resolution: {integrity: sha512-R89fO+z3x7hiKPXX5P0qim+ge6Y60AjtlW+QQpRozrrNcR1lw9Pkpm5MLB56HoNvdcLHL4wbpq16OcvGpEDJIg==}
+  sort-object-keys@2.1.0:
+    resolution: {integrity: sha512-SOiEnthkJKPv2L6ec6HMwhUcN0/lppkeYuN1x63PbyPRrgSPIuBJCiYxYyvWRTtjMlOi14vQUCGUJqS6PLVm8g==}
 
   sort-package-json@3.5.0:
     resolution: {integrity: sha512-moY4UtptUuP5sPuu9H9dp8xHNel7eP5/Kz/7+90jTvC0IOiPH2LigtRM/aSFSxreaWoToHUVUpEV4a2tAs2oKQ==}
@@ -5138,8 +5136,8 @@ packages:
     resolution: {integrity: sha512-K4jVyjnBdgvc86Y6BkaLZEN933SwYOuBFkdmBu9ZfkcAbdVbpITnDmjvZ/aQjRXQrv5EPkTnD1s39GiiqbngCw==}
     engines: {node: '>= 0.4'}
 
-  which-typed-array@1.1.19:
-    resolution: {integrity: sha512-rEvr90Bck4WZt9HHFC4DJMsjvu7x+r6bImz0/BrbWb7A2djJ8hnZMrWnHo9F8ssv0OMErasDhftrfROTyqSDrw==}
+  which-typed-array@1.1.20:
+    resolution: {integrity: sha512-LYfpUkmqwl0h9A2HL09Mms427Q1RZWuOHsukfVcKRq9q95iQxdw0ix1JQrqbcDR9PH1QDwf5Qo8OZb5lksZ8Xg==}
     engines: {node: '>= 0.4'}
 
   which@1.3.1:
@@ -5212,8 +5210,8 @@ packages:
     resolution: {integrity: sha512-FdNA4RyH1L43TlvGG8qOMIfcEczwA5ij+zLXUy3Z83CjxhLvcV7/Q/8pk22wnCgYw7PJhtK+7lhO+qqyT4NdvQ==}
     engines: {node: '>=16.14'}
 
-  ws@8.18.3:
-    resolution: {integrity: sha512-PEIGCY5tSlUt50cqyMXfCzX+oOPqN0vuGqWzbcJ2xvnkzkq46oOpz7dQaTDBdfICb4N14+GARUDw2XV2N4tvzg==}
+  ws@8.19.0:
+    resolution: {integrity: sha512-blAT2mjOEIi0ZzruJfIhb3nps74PRWTCz1IjglWEEpQl5XS/UNama6u2/rjFkDDouqr4L67ry+1aGIALViWjDg==}
     engines: {node: '>=10.0.0'}
     peerDependencies:
       bufferutil: ^4.0.1
@@ -5295,16 +5293,16 @@ snapshots:
     dependencies:
       '@1password/sdk-core': 0.3.1
 
-  '@babel/code-frame@7.27.1':
+  '@babel/code-frame@7.28.6':
     dependencies:
       '@babel/helper-validator-identifier': 7.28.5
       js-tokens: 4.0.0
       picocolors: 1.1.1
 
-  '@babel/generator@7.28.5':
+  '@babel/generator@7.28.6':
     dependencies:
-      '@babel/parser': 7.28.5
-      '@babel/types': 7.28.5
+      '@babel/parser': 7.28.6
+      '@babel/types': 7.28.6
       '@jridgewell/gen-mapping': 0.3.13
       '@jridgewell/trace-mapping': 0.3.31
       jsesc: 3.1.0
@@ -5315,36 +5313,36 @@ snapshots:
 
   '@babel/helper-validator-identifier@7.28.5': {}
 
-  '@babel/parser@7.28.5':
+  '@babel/parser@7.28.6':
     dependencies:
-      '@babel/types': 7.28.5
+      '@babel/types': 7.28.6
 
-  '@babel/template@7.27.2':
+  '@babel/template@7.28.6':
     dependencies:
-      '@babel/code-frame': 7.27.1
-      '@babel/parser': 7.28.5
-      '@babel/types': 7.28.5
+      '@babel/code-frame': 7.28.6
+      '@babel/parser': 7.28.6
+      '@babel/types': 7.28.6
 
-  '@babel/traverse@7.28.5':
+  '@babel/traverse@7.28.6':
     dependencies:
-      '@babel/code-frame': 7.27.1
-      '@babel/generator': 7.28.5
+      '@babel/code-frame': 7.28.6
+      '@babel/generator': 7.28.6
       '@babel/helper-globals': 7.28.0
-      '@babel/parser': 7.28.5
-      '@babel/template': 7.27.2
-      '@babel/types': 7.28.5
+      '@babel/parser': 7.28.6
+      '@babel/template': 7.28.6
+      '@babel/types': 7.28.6
       debug: 4.4.3
     transitivePeerDependencies:
       - supports-color
 
-  '@babel/types@7.28.5':
+  '@babel/types@7.28.6':
     dependencies:
       '@babel/helper-string-parser': 7.27.1
       '@babel/helper-validator-identifier': 7.28.5
 
   '@battis/descriptive-types@0.2.6': {}
 
-  '@battis/eslint-config@2.0.8(@eslint/js@9.39.2)(@eslint/markdown@7.5.1)(eslint-config-prettier@10.1.8(eslint@9.39.2(jiti@2.6.1)))(eslint-plugin-html@8.1.3)(eslint@9.39.2(jiti@2.6.1))(globals@16.5.0)(typescript-eslint@8.50.1(eslint@9.39.2(jiti@2.6.1))(typescript@5.9.3))':
+  '@battis/eslint-config@2.0.9(@eslint/js@9.39.2)(@eslint/markdown@7.5.1)(eslint-config-prettier@10.1.8(eslint@9.39.2(jiti@2.6.1)))(eslint-plugin-html@8.1.3)(eslint@9.39.2(jiti@2.6.1))(globals@16.5.0)(typescript-eslint@8.50.1(eslint@9.39.2(jiti@2.6.1))(typescript@5.9.3))':
     dependencies:
       '@eslint/js': 9.39.2
       '@eslint/markdown': 7.5.1
@@ -5422,11 +5420,11 @@ snapshots:
 
   '@colors/colors@1.6.0': {}
 
-  '@commitlint/cli@19.8.1(@types/node@25.0.3)(typescript@5.9.3)':
+  '@commitlint/cli@19.8.1(@types/node@25.0.8)(typescript@5.9.3)':
     dependencies:
       '@commitlint/format': 19.8.1
       '@commitlint/lint': 19.8.1
-      '@commitlint/load': 19.8.1(@types/node@25.0.3)(typescript@5.9.3)
+      '@commitlint/load': 19.8.1(@types/node@25.0.8)(typescript@5.9.3)
       '@commitlint/read': 19.8.1
       '@commitlint/types': 19.8.1
       tinyexec: 1.0.2
@@ -5479,7 +5477,7 @@ snapshots:
       '@commitlint/rules': 19.8.1
       '@commitlint/types': 19.8.1
 
-  '@commitlint/load@19.8.1(@types/node@25.0.3)(typescript@5.9.3)':
+  '@commitlint/load@19.8.1(@types/node@25.0.8)(typescript@5.9.3)':
     dependencies:
       '@commitlint/config-validator': 19.8.1
       '@commitlint/execute-rule': 19.8.1
@@ -5487,7 +5485,7 @@ snapshots:
       '@commitlint/types': 19.8.1
       chalk: 5.6.2
       cosmiconfig: 9.0.0(typescript@5.9.3)
-      cosmiconfig-typescript-loader: 6.2.0(@types/node@25.0.3)(cosmiconfig@9.0.0(typescript@5.9.3))(typescript@5.9.3)
+      cosmiconfig-typescript-loader: 6.2.0(@types/node@25.0.8)(cosmiconfig@9.0.0(typescript@5.9.3))(typescript@5.9.3)
       lodash.isplainobject: 4.0.6
       lodash.merge: 4.6.2
       lodash.uniq: 4.5.0
@@ -5634,38 +5632,38 @@ snapshots:
 
   '@inquirer/ansi@1.0.2': {}
 
-  '@inquirer/core@10.3.2(@types/node@25.0.3)':
+  '@inquirer/core@10.3.2(@types/node@25.0.8)':
     dependencies:
       '@inquirer/ansi': 1.0.2
       '@inquirer/figures': 1.0.15
-      '@inquirer/type': 3.0.10(@types/node@25.0.3)
+      '@inquirer/type': 3.0.10(@types/node@25.0.8)
       cli-width: 4.1.0
       mute-stream: 2.0.0
       signal-exit: 4.1.0
       wrap-ansi: 6.2.0
       yoctocolors-cjs: 2.1.3
     optionalDependencies:
-      '@types/node': 25.0.3
+      '@types/node': 25.0.8
 
-  '@inquirer/external-editor@1.0.3(@types/node@25.0.3)':
+  '@inquirer/external-editor@1.0.3(@types/node@25.0.8)':
     dependencies:
       chardet: 2.1.1
-      iconv-lite: 0.7.1
+      iconv-lite: 0.7.2
     optionalDependencies:
-      '@types/node': 25.0.3
+      '@types/node': 25.0.8
 
   '@inquirer/figures@1.0.15': {}
 
-  '@inquirer/input@4.3.1(@types/node@25.0.3)':
+  '@inquirer/input@4.3.1(@types/node@25.0.8)':
     dependencies:
-      '@inquirer/core': 10.3.2(@types/node@25.0.3)
-      '@inquirer/type': 3.0.10(@types/node@25.0.3)
+      '@inquirer/core': 10.3.2(@types/node@25.0.8)
+      '@inquirer/type': 3.0.10(@types/node@25.0.8)
     optionalDependencies:
-      '@types/node': 25.0.3
+      '@types/node': 25.0.8
 
-  '@inquirer/type@3.0.10(@types/node@25.0.3)':
+  '@inquirer/type@3.0.10(@types/node@25.0.8)':
     optionalDependencies:
-      '@types/node': 25.0.3
+      '@types/node': 25.0.8
 
   '@isaacs/balanced-match@4.0.1': {}
 
@@ -5702,12 +5700,12 @@ snapshots:
       '@jridgewell/resolve-uri': 3.1.2
       '@jridgewell/sourcemap-codec': 1.5.5
 
-  '@lerna/create@8.2.4(@types/node@25.0.3)(encoding@0.1.13)(typescript@5.9.3)':
+  '@lerna/create@8.2.4(@types/node@25.0.8)(encoding@0.1.13)(typescript@5.9.3)':
     dependencies:
       '@npmcli/arborist': 7.5.4
       '@npmcli/package-json': 5.2.0
       '@npmcli/run-script': 8.1.0
-      '@nx/devkit': 20.8.3(nx@20.8.3)
+      '@nx/devkit': 20.8.4(nx@20.8.4)
       '@octokit/plugin-enterprise-rest': 6.0.1
       '@octokit/rest': 20.1.2
       aproba: 2.0.0
@@ -5731,7 +5729,7 @@ snapshots:
       has-unicode: 2.0.1
       ini: 1.3.8
       init-package-json: 6.0.3
-      inquirer: 8.2.7(@types/node@25.0.3)
+      inquirer: 8.2.7(@types/node@25.0.8)
       is-ci: 3.0.1
       is-stream: 2.0.0
       js-yaml: 4.1.0
@@ -5744,7 +5742,7 @@ snapshots:
       npm-package-arg: 11.0.2
       npm-packlist: 8.0.2
       npm-registry-fetch: 17.1.0
-      nx: 20.8.3
+      nx: 20.8.4
       p-map: 4.0.0
       p-map-series: 2.1.0
       p-queue: 6.6.2
@@ -5932,56 +5930,56 @@ snapshots:
       - bluebird
       - supports-color
 
-  '@nx/devkit@20.8.3(nx@20.8.3)':
+  '@nx/devkit@20.8.4(nx@20.8.4)':
     dependencies:
       ejs: 3.1.10
       enquirer: 2.3.6
       ignore: 5.3.2
       minimatch: 9.0.3
-      nx: 20.8.3
+      nx: 20.8.4
       semver: 7.7.3
       tmp: 0.2.5
       tslib: 2.8.1
       yargs-parser: 21.1.1
 
-  '@nx/nx-darwin-arm64@20.8.3':
+  '@nx/nx-darwin-arm64@20.8.4':
     optional: true
 
-  '@nx/nx-darwin-x64@20.8.3':
+  '@nx/nx-darwin-x64@20.8.4':
     optional: true
 
-  '@nx/nx-freebsd-x64@20.8.3':
+  '@nx/nx-freebsd-x64@20.8.4':
     optional: true
 
-  '@nx/nx-linux-arm-gnueabihf@20.8.3':
+  '@nx/nx-linux-arm-gnueabihf@20.8.4':
     optional: true
 
-  '@nx/nx-linux-arm64-gnu@20.8.3':
+  '@nx/nx-linux-arm64-gnu@20.8.4':
     optional: true
 
-  '@nx/nx-linux-arm64-musl@20.8.3':
+  '@nx/nx-linux-arm64-musl@20.8.4':
     optional: true
 
-  '@nx/nx-linux-x64-gnu@20.8.3':
+  '@nx/nx-linux-x64-gnu@20.8.4':
     optional: true
 
-  '@nx/nx-linux-x64-musl@20.8.3':
+  '@nx/nx-linux-x64-musl@20.8.4':
     optional: true
 
-  '@nx/nx-win32-arm64-msvc@20.8.3':
+  '@nx/nx-win32-arm64-msvc@20.8.4':
     optional: true
 
-  '@nx/nx-win32-x64-msvc@20.8.3':
+  '@nx/nx-win32-x64-msvc@20.8.4':
     optional: true
 
-  '@oauth2-cli/qui-cli@0.4.1(@qui-cli/colors@3.2.1)(@qui-cli/env-1password@1.2.5(@qui-cli/env@5.0.2(@qui-cli/plugin@4.0.0)(@qui-cli/root@3.0.6(@qui-cli/plugin@4.0.0)))(@qui-cli/plugin@4.0.0)(@qui-cli/root@3.0.6(@qui-cli/plugin@4.0.0)))(@qui-cli/plugin@4.0.0)(@qui-cli/root@3.0.6(@qui-cli/plugin@4.0.0))(ejs@3.1.10)':
+  '@oauth2-cli/qui-cli@0.5.0(@qui-cli/env-1password@1.2.6(@qui-cli/env@5.0.2(@qui-cli/plugin@4.0.0)(@qui-cli/root@3.0.6(@qui-cli/plugin@4.0.0)))(@qui-cli/log@4.0.2(@qui-cli/plugin@4.0.0)(@qui-cli/root@3.0.6(@qui-cli/plugin@4.0.0)))(@qui-cli/plugin@4.0.0)(@qui-cli/root@3.0.6(@qui-cli/plugin@4.0.0))(@qui-cli/shell@3.1.1(@qui-cli/log@4.0.2(@qui-cli/plugin@4.0.0)(@qui-cli/root@3.0.6(@qui-cli/plugin@4.0.0)))(@qui-cli/plugin@4.0.0)))(@qui-cli/plugin@4.0.0)(@qui-cli/root@3.0.6(@qui-cli/plugin@4.0.0))(ejs@3.1.10)':
     dependencies:
       '@qui-cli/colors': 3.2.1
-      '@qui-cli/env-1password': 1.2.5(@qui-cli/env@5.0.2(@qui-cli/plugin@4.0.0)(@qui-cli/root@3.0.6(@qui-cli/plugin@4.0.0)))(@qui-cli/plugin@4.0.0)(@qui-cli/root@3.0.6(@qui-cli/plugin@4.0.0))
+      '@qui-cli/env-1password': 1.2.6(@qui-cli/env@5.0.2(@qui-cli/plugin@4.0.0)(@qui-cli/root@3.0.6(@qui-cli/plugin@4.0.0)))(@qui-cli/log@4.0.2(@qui-cli/plugin@4.0.0)(@qui-cli/root@3.0.6(@qui-cli/plugin@4.0.0)))(@qui-cli/plugin@4.0.0)(@qui-cli/root@3.0.6(@qui-cli/plugin@4.0.0))(@qui-cli/shell@3.1.1(@qui-cli/log@4.0.2(@qui-cli/plugin@4.0.0)(@qui-cli/root@3.0.6(@qui-cli/plugin@4.0.0)))(@qui-cli/plugin@4.0.0))
       '@qui-cli/log': 4.0.2(@qui-cli/plugin@4.0.0)(@qui-cli/root@3.0.6(@qui-cli/plugin@4.0.0))
       '@qui-cli/plugin': 4.0.0
       '@qui-cli/root': 3.0.6(@qui-cli/plugin@4.0.0)
-      oauth2-cli: 0.4.0(ejs@3.1.10)
+      oauth2-cli: 0.5.0(ejs@3.1.10)
       openid-client: 6.8.1
     transitivePeerDependencies:
       - ejs
@@ -6103,7 +6101,7 @@ snapshots:
       '@xml-tools/parser': 1.0.11
       prettier: 3.7.4
 
-  '@puppeteer/browsers@2.11.0':
+  '@puppeteer/browsers@2.11.1':
     dependencies:
       debug: 4.4.3
       extract-zip: 2.0.1
@@ -6149,13 +6147,16 @@ snapshots:
       jackspeak: 4.1.1
       wrap-ansi: 9.0.2
 
-  '@qui-cli/env-1password@1.2.5(@qui-cli/env@5.0.2(@qui-cli/plugin@4.0.0)(@qui-cli/root@3.0.6(@qui-cli/plugin@4.0.0)))(@qui-cli/plugin@4.0.0)(@qui-cli/root@3.0.6(@qui-cli/plugin@4.0.0))':
+  '@qui-cli/env-1password@1.2.6(@qui-cli/env@5.0.2(@qui-cli/plugin@4.0.0)(@qui-cli/root@3.0.6(@qui-cli/plugin@4.0.0)))(@qui-cli/log@4.0.2(@qui-cli/plugin@4.0.0)(@qui-cli/root@3.0.6(@qui-cli/plugin@4.0.0)))(@qui-cli/plugin@4.0.0)(@qui-cli/root@3.0.6(@qui-cli/plugin@4.0.0))(@qui-cli/shell@3.1.1(@qui-cli/log@4.0.2(@qui-cli/plugin@4.0.0)(@qui-cli/root@3.0.6(@qui-cli/plugin@4.0.0)))(@qui-cli/plugin@4.0.0))':
     dependencies:
       '@1password/sdk': 0.3.1
       '@battis/import-package-json': 0.1.7
+      '@qui-cli/colors': 3.2.1
       '@qui-cli/env': 5.0.2(@qui-cli/plugin@4.0.0)(@qui-cli/root@3.0.6(@qui-cli/plugin@4.0.0))
+      '@qui-cli/log': 4.0.2(@qui-cli/plugin@4.0.0)(@qui-cli/root@3.0.6(@qui-cli/plugin@4.0.0))
       '@qui-cli/plugin': 4.0.0
       '@qui-cli/root': 3.0.6(@qui-cli/plugin@4.0.0)
+      '@qui-cli/shell': 3.1.1(@qui-cli/log@4.0.2(@qui-cli/plugin@4.0.0)(@qui-cli/root@3.0.6(@qui-cli/plugin@4.0.0)))(@qui-cli/plugin@4.0.0)
       dotenv: 17.2.3
 
   '@qui-cli/env@5.0.2(@qui-cli/plugin@4.0.0)(@qui-cli/root@3.0.6(@qui-cli/plugin@4.0.0))':
@@ -6266,17 +6267,17 @@ snapshots:
 
   '@trivago/prettier-plugin-sort-imports@5.2.2(prettier@3.7.4)':
     dependencies:
-      '@babel/generator': 7.28.5
-      '@babel/parser': 7.28.5
-      '@babel/traverse': 7.28.5
-      '@babel/types': 7.28.5
+      '@babel/generator': 7.28.6
+      '@babel/parser': 7.28.6
+      '@babel/traverse': 7.28.6
+      '@babel/types': 7.28.6
       javascript-natural-sort: 0.7.1
       lodash: 4.17.21
       prettier: 3.7.4
     transitivePeerDependencies:
       - supports-color
 
-  '@tsconfig/node20@20.1.8': {}
+  '@tsconfig/node24@24.0.3': {}
 
   '@tufjs/canonical-json@2.0.0': {}
 
@@ -6293,7 +6294,7 @@ snapshots:
 
   '@types/conventional-commits-parser@5.0.2':
     dependencies:
-      '@types/node': 25.0.3
+      '@types/node': 25.0.8
 
   '@types/debug@4.1.12':
     dependencies:
@@ -6313,11 +6314,7 @@ snapshots:
 
   '@types/ms@2.1.0': {}
 
-  '@types/node@24.10.4':
-    dependencies:
-      undici-types: 7.16.0
-
-  '@types/node@25.0.3':
+  '@types/node@25.0.8':
     dependencies:
       undici-types: 7.16.0
 
@@ -6329,7 +6326,7 @@ snapshots:
 
   '@types/yauzl@2.10.3':
     dependencies:
-      '@types/node': 25.0.3
+      '@types/node': 25.0.8
     optional: true
 
   '@typescript-eslint/eslint-plugin@8.50.1(@typescript-eslint/parser@8.50.1(eslint@9.39.2(jiti@2.6.1))(typescript@5.9.3))(eslint@9.39.2(jiti@2.6.1))(typescript@5.9.3)':
@@ -6624,13 +6621,13 @@ snapshots:
       inherits: 2.0.4
       readable-stream: 3.6.2
 
-  body-parser@2.2.1:
+  body-parser@2.2.2:
     dependencies:
       bytes: 3.1.2
       content-type: 1.0.5
       debug: 4.4.3
       http-errors: 2.0.1
-      iconv-lite: 0.7.1
+      iconv-lite: 0.7.2
       on-finished: 2.4.1
       qs: 6.14.1
       raw-body: 3.0.2
@@ -7009,9 +7006,9 @@ snapshots:
 
   core-util-is@1.0.3: {}
 
-  cosmiconfig-typescript-loader@6.2.0(@types/node@25.0.3)(cosmiconfig@9.0.0(typescript@5.9.3))(typescript@5.9.3):
+  cosmiconfig-typescript-loader@6.2.0(@types/node@25.0.8)(cosmiconfig@9.0.0(typescript@5.9.3))(typescript@5.9.3):
     dependencies:
-      '@types/node': 25.0.3
+      '@types/node': 25.0.8
       cosmiconfig: 9.0.0(typescript@5.9.3)
       jiti: 2.6.1
       typescript: 5.9.3
@@ -7326,7 +7323,7 @@ snapshots:
       typed-array-byte-offset: 1.0.4
       typed-array-length: 1.0.7
       unbox-primitive: 1.1.0
-      which-typed-array: 1.1.19
+      which-typed-array: 1.1.20
 
   es-define-property@1.0.1: {}
 
@@ -7486,7 +7483,7 @@ snapshots:
   express@5.2.1:
     dependencies:
       accepts: 2.0.0
-      body-parser: 2.2.1
+      body-parser: 2.2.2
       content-disposition: 1.0.1
       content-type: 1.0.5
       cookie: 0.7.2
@@ -7935,7 +7932,7 @@ snapshots:
       safer-buffer: 2.1.2
     optional: true
 
-  iconv-lite@0.7.1:
+  iconv-lite@0.7.2:
     dependencies:
       safer-buffer: 2.1.2
 
@@ -7985,9 +7982,9 @@ snapshots:
     transitivePeerDependencies:
       - bluebird
 
-  inquirer@8.2.7(@types/node@25.0.3):
+  inquirer@8.2.7(@types/node@25.0.8):
     dependencies:
-      '@inquirer/external-editor': 1.0.3(@types/node@25.0.3)
+      '@inquirer/external-editor': 1.0.3(@types/node@25.0.8)
       ansi-escapes: 4.3.2
       chalk: 4.1.2
       cli-cursor: 3.1.0
@@ -8178,7 +8175,7 @@ snapshots:
 
   is-typed-array@1.1.15:
     dependencies:
-      which-typed-array: 1.1.19
+      which-typed-array: 1.1.20
 
   is-unicode-supported@0.1.0: {}
 
@@ -8311,13 +8308,13 @@ snapshots:
 
   kuler@2.0.0: {}
 
-  lerna@8.2.4(@types/node@25.0.3)(encoding@0.1.13):
+  lerna@8.2.4(@types/node@25.0.8)(encoding@0.1.13):
     dependencies:
-      '@lerna/create': 8.2.4(@types/node@25.0.3)(encoding@0.1.13)(typescript@5.9.3)
+      '@lerna/create': 8.2.4(@types/node@25.0.8)(encoding@0.1.13)(typescript@5.9.3)
       '@npmcli/arborist': 7.5.4
       '@npmcli/package-json': 5.2.0
       '@npmcli/run-script': 8.1.0
-      '@nx/devkit': 20.8.3(nx@20.8.3)
+      '@nx/devkit': 20.8.4(nx@20.8.4)
       '@octokit/plugin-enterprise-rest': 6.0.1
       '@octokit/rest': 20.1.2
       aproba: 2.0.0
@@ -8345,7 +8342,7 @@ snapshots:
       import-local: 3.1.0
       ini: 1.3.8
       init-package-json: 6.0.3
-      inquirer: 8.2.7(@types/node@25.0.3)
+      inquirer: 8.2.7(@types/node@25.0.8)
       is-ci: 3.0.1
       is-stream: 2.0.0
       jest-diff: 29.7.0
@@ -8360,7 +8357,7 @@ snapshots:
       npm-package-arg: 11.0.2
       npm-packlist: 8.0.2
       npm-registry-fetch: 17.1.0
-      nx: 20.8.3
+      nx: 20.8.4
       p-map: 4.0.0
       p-map-series: 2.1.0
       p-pipe: 3.1.0
@@ -9001,7 +8998,7 @@ snapshots:
 
   moment@2.30.1: {}
 
-  monorepo-package-paths@0.4.3(@types/node@25.0.3)(prettier@3.7.4):
+  monorepo-package-paths@0.4.3(@types/node@25.0.8)(prettier@3.7.4):
     dependencies:
       '@battis/import-package-json': 0.1.7
       '@battis/qui-cli.colors': 2.1.0(@battis/qui-cli.plugin@2.4.2)
@@ -9010,7 +9007,7 @@ snapshots:
       '@battis/qui-cli.plugin': 2.4.2
       '@battis/qui-cli.root': 2.0.5(@battis/qui-cli.plugin@2.4.2)
       '@battis/qui-cli.validators': 2.0.4(@battis/qui-cli.plugin@2.4.2)(@battis/qui-cli.root@2.0.5(@battis/qui-cli.plugin@2.4.2))
-      '@inquirer/input': 4.3.1(@types/node@25.0.3)
+      '@inquirer/input': 4.3.1(@types/node@25.0.8)
       glob: 11.1.0
       ora: 8.2.0
       package-json-type: 1.0.3
@@ -9160,7 +9157,7 @@ snapshots:
     dependencies:
       path-key: 3.1.1
 
-  nx@20.8.3:
+  nx@20.8.4:
     dependencies:
       '@napi-rs/wasm-runtime': 0.2.4
       '@yarnpkg/lockfile': 1.1.0
@@ -9197,16 +9194,16 @@ snapshots:
       yargs: 17.7.2
       yargs-parser: 21.1.1
     optionalDependencies:
-      '@nx/nx-darwin-arm64': 20.8.3
-      '@nx/nx-darwin-x64': 20.8.3
-      '@nx/nx-freebsd-x64': 20.8.3
-      '@nx/nx-linux-arm-gnueabihf': 20.8.3
-      '@nx/nx-linux-arm64-gnu': 20.8.3
-      '@nx/nx-linux-arm64-musl': 20.8.3
-      '@nx/nx-linux-x64-gnu': 20.8.3
-      '@nx/nx-linux-x64-musl': 20.8.3
-      '@nx/nx-win32-arm64-msvc': 20.8.3
-      '@nx/nx-win32-x64-msvc': 20.8.3
+      '@nx/nx-darwin-arm64': 20.8.4
+      '@nx/nx-darwin-x64': 20.8.4
+      '@nx/nx-freebsd-x64': 20.8.4
+      '@nx/nx-linux-arm-gnueabihf': 20.8.4
+      '@nx/nx-linux-arm64-gnu': 20.8.4
+      '@nx/nx-linux-arm64-musl': 20.8.4
+      '@nx/nx-linux-x64-gnu': 20.8.4
+      '@nx/nx-linux-x64-musl': 20.8.4
+      '@nx/nx-win32-arm64-msvc': 20.8.4
+      '@nx/nx-win32-x64-msvc': 20.8.4
     transitivePeerDependencies:
       - debug
 
@@ -9221,7 +9218,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  oauth2-cli@0.4.0(ejs@3.1.10):
+  oauth2-cli@0.5.0(ejs@3.1.10):
     dependencies:
       '@battis/oauth2-configure': 0.1.4
       async-mutex: 0.5.0
@@ -9473,7 +9470,7 @@ snapshots:
 
   parse-json@5.2.0:
     dependencies:
-      '@babel/code-frame': 7.27.1
+      '@babel/code-frame': 7.28.6
       error-ex: 1.3.4
       json-parse-even-better-errors: 2.3.1
       lines-and-columns: 1.2.4
@@ -9647,7 +9644,7 @@ snapshots:
       debug: 4.4.3
       devtools-protocol: 0.0.1367902
       typed-query-selector: 2.12.0
-      ws: 8.18.3
+      ws: 8.19.0
     transitivePeerDependencies:
       - bare-abort-controller
       - bare-buffer
@@ -9656,15 +9653,15 @@ snapshots:
       - supports-color
       - utf-8-validate
 
-  puppeteer-core@24.34.0:
+  puppeteer-core@24.35.0:
     dependencies:
-      '@puppeteer/browsers': 2.11.0
+      '@puppeteer/browsers': 2.11.1
       chromium-bidi: 12.0.1(devtools-protocol@0.0.1534754)
       debug: 4.4.3
       devtools-protocol: 0.0.1534754
       typed-query-selector: 2.12.0
       webdriver-bidi-protocol: 0.3.10
-      ws: 8.18.3
+      ws: 8.19.0
     transitivePeerDependencies:
       - bare-abort-controller
       - bare-buffer
@@ -9690,13 +9687,13 @@ snapshots:
       - typescript
       - utf-8-validate
 
-  puppeteer@24.34.0(typescript@5.9.3):
+  puppeteer@24.35.0(typescript@5.9.3):
     dependencies:
-      '@puppeteer/browsers': 2.11.0
+      '@puppeteer/browsers': 2.11.1
       chromium-bidi: 12.0.1(devtools-protocol@0.0.1534754)
       cosmiconfig: 9.0.0(typescript@5.9.3)
       devtools-protocol: 0.0.1534754
-      puppeteer-core: 24.34.0
+      puppeteer-core: 24.35.0
       typed-query-selector: 2.12.0
     transitivePeerDependencies:
       - bare-abort-controller
@@ -9721,7 +9718,7 @@ snapshots:
     dependencies:
       bytes: 3.1.2
       http-errors: 2.0.1
-      iconv-lite: 0.7.1
+      iconv-lite: 0.7.2
       unpipe: 1.0.0
 
   react-is@18.3.1: {}
@@ -10044,7 +10041,7 @@ snapshots:
     dependencies:
       is-plain-obj: 2.1.0
 
-  sort-object-keys@2.0.1: {}
+  sort-object-keys@2.1.0: {}
 
   sort-package-json@3.5.0:
     dependencies:
@@ -10053,7 +10050,7 @@ snapshots:
       git-hooks-list: 4.1.1
       is-plain-obj: 4.1.0
       semver: 7.7.3
-      sort-object-keys: 2.0.1
+      sort-object-keys: 2.1.0
       tinyglobby: 0.2.15
 
   source-map@0.6.1: {}
@@ -10499,7 +10496,7 @@ snapshots:
       isarray: 2.0.5
       which-boxed-primitive: 1.1.1
       which-collection: 1.0.2
-      which-typed-array: 1.1.19
+      which-typed-array: 1.1.20
 
   which-collection@1.0.2:
     dependencies:
@@ -10508,7 +10505,7 @@ snapshots:
       is-weakmap: 2.0.2
       is-weakset: 2.0.4
 
-  which-typed-array@1.1.19:
+  which-typed-array@1.1.20:
     dependencies:
       available-typed-arrays: 1.0.7
       call-bind: 1.0.8
@@ -10615,7 +10612,7 @@ snapshots:
       js-yaml: 4.1.1
       write-file-atomic: 5.0.1
 
-  ws@8.18.3: {}
+  ws@8.19.0: {}
 
   wsl-utils@0.3.1:
     dependencies:

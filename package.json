@@ -21,7 +21,7 @@
     "release:publish": "pnpm publish -r --access public"
   },
   "devDependencies": {
-    "@battis/eslint-config": "^2.0.8",
+    "@battis/eslint-config": "^2.0.9",
     "@battis/prettier-config": "^1.7.3",
     "@commitlint/cli": "^19.8.1",
     "@commitlint/config-conventional": "^19.8.1",

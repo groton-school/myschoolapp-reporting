@@ -37,7 +37,7 @@
     "@battis/typescript-tricks": "^0.7.6",
     "@oauth2-cli/qui-cli": "^0.4.1",
     "@qui-cli/colors": "^3.2.1",
-    "@qui-cli/env-1password": "^1.2.5",
+    "@qui-cli/env-1password": "^1.2.6",
     "@qui-cli/plugin": "^4.0.0",
     "@tsconfig/node24": "^24.0.3",
     "commit-and-tag-version": "^12.6.1",
