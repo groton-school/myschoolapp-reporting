@@ -34,11 +34,13 @@ export class SkyAPIPlugin extends OAuth2.OAuth2Plugin<Client> {
       opt: {
         clientId: 'skyClientId',
         clientSecret: 'skyClientSecret',
+        scope: 'skyScope',
         redirectUri: 'skyRedirectUri'
       },
       env: {
         clientId: 'SKY_CLIENT_ID',
         clientSecret: 'SKY_CLIENT_SECRET',
+        scope: 'SKY_SCOPE',
         redirectUri: 'SKY_REDIRECT_URI',
         tokenPath: 'SKY_TOKEN_PATH',
         accessToken: 'SKY_ACCESS_TOKEN'
