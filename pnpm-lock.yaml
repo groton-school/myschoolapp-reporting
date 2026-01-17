@@ -67,8 +67,8 @@ importers:
         specifier: ^4.0.0
         version: 4.0.0
       '@tsconfig/node24':
-        specifier: ^24.0.3
-        version: 24.0.3
+        specifier: ^24.0.4
+        version: 24.0.4
       commit-and-tag-version:
         specifier: ^12.6.1
         version: 12.6.1
@@ -95,8 +95,8 @@ importers:
         specifier: ^4.0.0
         version: 4.0.0
       '@tsconfig/node24':
-        specifier: ^24.0.3
-        version: 24.0.3
+        specifier: ^24.0.4
+        version: 24.0.4
       commit-and-tag-version:
         specifier: ^12.6.1
         version: 12.6.1
@@ -135,8 +135,8 @@ importers:
         specifier: ^3.0.6
         version: 3.0.6(@qui-cli/plugin@4.0.0)
       '@tsconfig/node24':
-        specifier: ^24.0.3
-        version: 24.0.3
+        specifier: ^24.0.4
+        version: 24.0.4
       commit-and-tag-version:
         specifier: ^12.6.1
         version: 12.6.1
@@ -184,8 +184,8 @@ importers:
         specifier: ^4.0.0
         version: 4.0.0
       '@tsconfig/node24':
-        specifier: ^24.0.3
-        version: 24.0.3
+        specifier: ^24.0.4
+        version: 24.0.4
       commit-and-tag-version:
         specifier: ^12.6.1
         version: 12.6.1
@@ -212,8 +212,8 @@ importers:
         specifier: ^4.0.0
         version: 4.0.0
       '@tsconfig/node24':
-        specifier: ^24.0.3
-        version: 24.0.3
+        specifier: ^24.0.4
+        version: 24.0.4
       '@types/node':
         specifier: ^25.0.9
         version: 25.0.9
@@ -236,8 +236,8 @@ importers:
         specifier: ^4.0.0
         version: 4.0.0
       '@tsconfig/node24':
-        specifier: ^24.0.3
-        version: 24.0.3
+        specifier: ^24.0.4
+        version: 24.0.4
       '@types/node':
         specifier: ^25.0.9
         version: 25.0.9
@@ -263,8 +263,8 @@ importers:
         specifier: ^0.7.6
         version: 0.7.6
       '@tsconfig/node24':
-        specifier: ^24.0.3
-        version: 24.0.3
+        specifier: ^24.0.4
+        version: 24.0.4
       '@types/node':
         specifier: ^25.0.9
         version: 25.0.9
@@ -309,8 +309,8 @@ importers:
         version: 2.0.4(@qui-cli/core@5.0.2(@qui-cli/plugin@4.0.0))(@qui-cli/plugin@4.0.0)
     devDependencies:
       '@tsconfig/node24':
-        specifier: ^24.0.3
-        version: 24.0.3
+        specifier: ^24.0.4
+        version: 24.0.4
       '@types/node':
         specifier: ^25.0.9
         version: 25.0.9
@@ -333,8 +333,8 @@ importers:
   packages/oauth2-cli/sky-api:
     dependencies:
       '@oauth2-cli/qui-cli':
-        specifier: ^0.5.6
-        version: 0.5.6(@qui-cli/env-1password@1.2.6(@qui-cli/env@5.0.2(@qui-cli/plugin@4.0.0)(@qui-cli/root@3.0.6(@qui-cli/plugin@4.0.0)))(@qui-cli/log@4.0.2(@qui-cli/plugin@4.0.0)(@qui-cli/root@3.0.6(@qui-cli/plugin@4.0.0)))(@qui-cli/plugin@4.0.0)(@qui-cli/root@3.0.6(@qui-cli/plugin@4.0.0))(@qui-cli/shell@3.1.1(@qui-cli/log@4.0.2(@qui-cli/plugin@4.0.0)(@qui-cli/root@3.0.6(@qui-cli/plugin@4.0.0)))(@qui-cli/plugin@4.0.0)))(@qui-cli/plugin@4.0.0)(@qui-cli/root@3.0.6(@qui-cli/plugin@4.0.0))(ejs@3.1.10)
+        specifier: ^0.5.9
+        version: 0.5.9(@qui-cli/env-1password@1.2.6(@qui-cli/env@5.0.2(@qui-cli/plugin@4.0.0)(@qui-cli/root@3.0.6(@qui-cli/plugin@4.0.0)))(@qui-cli/log@4.0.2(@qui-cli/plugin@4.0.0)(@qui-cli/root@3.0.6(@qui-cli/plugin@4.0.0)))(@qui-cli/plugin@4.0.0)(@qui-cli/root@3.0.6(@qui-cli/plugin@4.0.0))(@qui-cli/shell@3.1.1(@qui-cli/log@4.0.2(@qui-cli/plugin@4.0.0)(@qui-cli/root@3.0.6(@qui-cli/plugin@4.0.0)))(@qui-cli/plugin@4.0.0)))(@qui-cli/plugin@4.0.0)(@qui-cli/root@3.0.6(@qui-cli/plugin@4.0.0))(ejs@3.1.10)
       node-fetch:
         specifier: ^3.3.2
         version: 3.3.2
@@ -358,8 +358,8 @@ importers:
         specifier: ^4.0.0
         version: 4.0.0
       '@tsconfig/node24':
-        specifier: ^24.0.3
-        version: 24.0.3
+        specifier: ^24.0.4
+        version: 24.0.4
       commit-and-tag-version:
         specifier: ^12.6.1
         version: 12.6.1
@@ -389,8 +389,8 @@ importers:
         specifier: workspace:*
         version: link:../snapshot
       '@tsconfig/node24':
-        specifier: ^24.0.3
-        version: 24.0.3
+        specifier: ^24.0.4
+        version: 24.0.4
       commit-and-tag-version:
         specifier: ^12.6.1
         version: 12.6.1
@@ -420,8 +420,8 @@ importers:
         specifier: ^0.7.6
         version: 0.7.6
       '@tsconfig/node24':
-        specifier: ^24.0.3
-        version: 24.0.3
+        specifier: ^24.0.4
+        version: 24.0.4
       commit-and-tag-version:
         specifier: ^12.6.1
         version: 12.6.1
@@ -505,8 +505,8 @@ importers:
         specifier: ^3.0.6
         version: 3.0.6(@qui-cli/plugin@4.0.0)
       '@tsconfig/node24':
-        specifier: ^24.0.3
-        version: 24.0.3
+        specifier: ^24.0.4
+        version: 24.0.4
       '@types/content-disposition':
         specifier: ^0.5.9
         version: 0.5.9
@@ -572,8 +572,8 @@ importers:
         specifier: ^3.0.6
         version: 3.0.6(@qui-cli/plugin@4.0.0)
       '@tsconfig/node24':
-        specifier: ^24.0.3
-        version: 24.0.3
+        specifier: ^24.0.4
+        version: 24.0.4
       commit-and-tag-version:
         specifier: ^12.6.1
         version: 12.6.1
@@ -627,8 +627,8 @@ importers:
         specifier: ^3.0.6
         version: 3.0.6(@qui-cli/plugin@4.0.0)
       '@tsconfig/node24':
-        specifier: ^24.0.3
-        version: 24.0.3
+        specifier: ^24.0.4
+        version: 24.0.4
       commit-and-tag-version:
         specifier: ^12.6.1
         version: 12.6.1
@@ -694,8 +694,8 @@ importers:
         specifier: ^4.0.0
         version: 4.0.0
       '@tsconfig/node24':
-        specifier: ^24.0.3
-        version: 24.0.3
+        specifier: ^24.0.4
+        version: 24.0.4
       commit-and-tag-version:
         specifier: ^12.6.1
         version: 12.6.1
@@ -779,8 +779,8 @@ importers:
         specifier: ^3.1.1
         version: 3.1.1(@qui-cli/log@4.0.2(@qui-cli/plugin@4.0.0)(@qui-cli/root@3.0.6(@qui-cli/plugin@4.0.0)))(@qui-cli/plugin@4.0.0)
       '@tsconfig/node24':
-        specifier: ^24.0.3
-        version: 24.0.3
+        specifier: ^24.0.4
+        version: 24.0.4
       commit-and-tag-version:
         specifier: ^12.6.1
         version: 12.6.1
@@ -1282,8 +1282,8 @@ packages:
     cpu: [x64]
     os: [win32]
 
-  '@oauth2-cli/qui-cli@0.5.6':
-    resolution: {integrity: sha512-n8hj838WjCzhRr1jAQXOJiYJWYiug6OLN+qkhom175r1LbhkGIUMqMR2oYchUNHlyC5e8ltRvMhdw1ryFGXNHA==}
+  '@oauth2-cli/qui-cli@0.5.9':
+    resolution: {integrity: sha512-NXel7INDMMr4M5+HyLi7HKs/chhwAOLH1hkrklg3nqbTbIP05DNdyAZBeV7HxxHV3Ih7XDnO89wFR8/3YcXI4A==}
     peerDependencies:
       '@qui-cli/env-1password': '>=1'
       '@qui-cli/plugin': '>=3'
@@ -1522,8 +1522,8 @@ packages:
       svelte:
         optional: true
 
-  '@tsconfig/node24@24.0.3':
-    resolution: {integrity: sha512-vcERKtKQKHgzt/vfS3Gjasd8SUI2a0WZXpgJURdJsMySpS5+ctgbPfuLj2z/W+w4lAfTWxoN4upKfu2WzIRYnw==}
+  '@tsconfig/node24@24.0.4':
+    resolution: {integrity: sha512-2A933l5P5oCbv6qSxHs7ckKwobs8BDAe9SJ/Xr2Hy+nDlwmLE1GhFh/g/vXGRZWgxBg9nX/5piDtHR9Dkw/XuA==}
 
   '@tufjs/canonical-json@2.0.0':
     resolution: {integrity: sha512-yVtV8zsdo8qFHe+/3kw81dSLyF7D576A5cCFCi4X7B39tWT7SekaEFUnvnWJHz+9qO7qJTah1JbrDjWKqFtdWA==}
@@ -2063,8 +2063,8 @@ packages:
     resolution: {integrity: sha512-FQN4MRfuJeHf7cBbBMJFXhKSDq+2kAArBlmRBvcvFE5BB1HZKXtSFASDhdlz9zOYwxh8lDdnvmMOe/+5cdoEdg==}
     engines: {node: '>= 0.8'}
 
-  comment-parser@1.4.1:
-    resolution: {integrity: sha512-buhp5kePrmda3vhc5B9t7pUQXAb2Tnd0qgpkIhPhkHXxJpiPJ11H0ZEU0oBpJ2QztSbzG/ZxMj/CHsYJqRHmyg==}
+  comment-parser@1.4.3:
+    resolution: {integrity: sha512-qvEp8Hk/uxsIbBe2gnu87CrP2wSFLzG0fIgcxF27DiBlD12Nlyydt91T4KQNiRxfebMxU5QEoWQBNiha+A9I3A==}
     engines: {node: '>= 12.0.0'}
 
   commit-and-tag-version@12.6.1:
@@ -5975,7 +5975,7 @@ snapshots:
   '@nx/nx-win32-x64-msvc@20.8.4':
     optional: true
 
-  '@oauth2-cli/qui-cli@0.5.6(@qui-cli/env-1password@1.2.6(@qui-cli/env@5.0.2(@qui-cli/plugin@4.0.0)(@qui-cli/root@3.0.6(@qui-cli/plugin@4.0.0)))(@qui-cli/log@4.0.2(@qui-cli/plugin@4.0.0)(@qui-cli/root@3.0.6(@qui-cli/plugin@4.0.0)))(@qui-cli/plugin@4.0.0)(@qui-cli/root@3.0.6(@qui-cli/plugin@4.0.0))(@qui-cli/shell@3.1.1(@qui-cli/log@4.0.2(@qui-cli/plugin@4.0.0)(@qui-cli/root@3.0.6(@qui-cli/plugin@4.0.0)))(@qui-cli/plugin@4.0.0)))(@qui-cli/plugin@4.0.0)(@qui-cli/root@3.0.6(@qui-cli/plugin@4.0.0))(ejs@3.1.10)':
+  '@oauth2-cli/qui-cli@0.5.9(@qui-cli/env-1password@1.2.6(@qui-cli/env@5.0.2(@qui-cli/plugin@4.0.0)(@qui-cli/root@3.0.6(@qui-cli/plugin@4.0.0)))(@qui-cli/log@4.0.2(@qui-cli/plugin@4.0.0)(@qui-cli/root@3.0.6(@qui-cli/plugin@4.0.0)))(@qui-cli/plugin@4.0.0)(@qui-cli/root@3.0.6(@qui-cli/plugin@4.0.0))(@qui-cli/shell@3.1.1(@qui-cli/log@4.0.2(@qui-cli/plugin@4.0.0)(@qui-cli/root@3.0.6(@qui-cli/plugin@4.0.0)))(@qui-cli/plugin@4.0.0)))(@qui-cli/plugin@4.0.0)(@qui-cli/root@3.0.6(@qui-cli/plugin@4.0.0))(ejs@3.1.10)':
     dependencies:
       '@qui-cli/colors': 3.2.2
       '@qui-cli/env-1password': 1.2.6(@qui-cli/env@5.0.2(@qui-cli/plugin@4.0.0)(@qui-cli/root@3.0.6(@qui-cli/plugin@4.0.0)))(@qui-cli/log@4.0.2(@qui-cli/plugin@4.0.0)(@qui-cli/root@3.0.6(@qui-cli/plugin@4.0.0)))(@qui-cli/plugin@4.0.0)(@qui-cli/root@3.0.6(@qui-cli/plugin@4.0.0))(@qui-cli/shell@3.1.1(@qui-cli/log@4.0.2(@qui-cli/plugin@4.0.0)(@qui-cli/root@3.0.6(@qui-cli/plugin@4.0.0)))(@qui-cli/plugin@4.0.0))
@@ -6284,7 +6284,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@tsconfig/node24@24.0.3': {}
+  '@tsconfig/node24@24.0.4': {}
 
   '@tufjs/canonical-json@2.0.0': {}
 
@@ -6844,7 +6844,7 @@ snapshots:
     dependencies:
       delayed-stream: 1.0.0
 
-  comment-parser@1.4.1: {}
+  comment-parser@1.4.3: {}
 
   commit-and-tag-version@12.6.1:
     dependencies:
@@ -9564,7 +9564,7 @@ snapshots:
   prettier-plugin-jsdoc@1.8.0(prettier@3.7.4):
     dependencies:
       binary-searching: 2.0.5
-      comment-parser: 1.4.1
+      comment-parser: 1.4.3
       mdast-util-from-markdown: 2.0.2
       prettier: 3.7.4
     transitivePeerDependencies:

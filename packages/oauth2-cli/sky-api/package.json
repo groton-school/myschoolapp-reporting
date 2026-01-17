@@ -29,7 +29,7 @@
     "version": "commit-and-tag-version"
   },
   "dependencies": {
-    "@oauth2-cli/qui-cli": "^0.5.6",
+    "@oauth2-cli/qui-cli": "^0.5.9",
     "node-fetch": "^3.3.2",
     "oauth2-cli": "^0.2.3"
   },
@@ -39,7 +39,7 @@
     "@qui-cli/colors": "^3.2.2",
     "@qui-cli/env-1password": "^1.2.6",
     "@qui-cli/plugin": "^4.0.0",
-    "@tsconfig/node24": "^24.0.3",
+    "@tsconfig/node24": "^24.0.4",
     "commit-and-tag-version": "^12.6.1",
     "del-cli": "^6.0.0",
     "npm-run-all": "^4.1.5",

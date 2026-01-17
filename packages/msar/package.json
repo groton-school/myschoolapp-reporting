@@ -45,7 +45,7 @@
     "@qui-cli/structured": "^2.0.4"
   },
   "devDependencies": {
-    "@tsconfig/node24": "^24.0.3",
+    "@tsconfig/node24": "^24.0.4",
     "@types/node": "^25.0.9",
     "commit-and-tag-version": "^12.6.1",
     "del-cli": "^6.0.0",
