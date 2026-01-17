@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [0.4.2](https://github.com/groton-school/myschoolapp-reporting/compare/oauth2-cli/sky-api/0.4.1...oauth2-cli/sky-api/0.4.2) (2026-01-17)
+
+
+### Features
+
+* add scope support ([dae9f5a](https://github.com/groton-school/myschoolapp-reporting/commit/dae9f5aa7c2527f8fbf84184f19bc07c40001502))
+
 ## [0.4.1](https://github.com/groton-school/myschoolapp-reporting/compare/oauth2-cli/sky-api/0.4.0...oauth2-cli/sky-api/0.4.1) (2026-01-15)
 
 
