@@ -58,7 +58,7 @@ export class Authenticated extends Base {
     authenticated?: MutexInterface.Releaser
   ) {
     await super.ready();
-    await this.page.waitForSelector('div#site-header', { timeout });
+    await this.page.waitForSelector('div#site-header,header', { timeout });
     if (authenticated) {
       authenticated();
     }
