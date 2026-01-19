@@ -46,7 +46,7 @@ export async function download(
       });
       for (const video of videos) {
         const videoIndex: AnnotatedVideo = video;
-        videoIndex.file_path = await cachedDownload(video.FilenameUrl);
+        videoIndex.file_path = await cachedDownload(video.FilenameUrl, 3000);
         videoIndex.cover_file_path = await cachedDownload(
           video.CoverFilenameUrl
         );

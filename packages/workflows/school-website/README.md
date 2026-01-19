@@ -19,7 +19,7 @@ It depends on [Node.js](https://nodejs.org/) which provides the `npm` package ma
 ## Usage:
 
 ```bash
-  msar schoolWebsite -h --o=<outputPath> --u=<username> --p=<password> --ignoreErrors --logRequests --commands --silent --logging --pretty --headless --devtools --quit --announcements --audio --news --photoAlbums --videos --concurrency=<concurrency> --rate=<rate> --logFilePath=<logFilePath> --stdoutLevel=<all|trace|debug|info|warning|error|fatal|off> --fileLevel=<all|trace|debug|info|warning|error|fatal|off> --opAccount=<example.1password.com> --opItem=<1Password unique identifier> --opToken=<token value> --serviceAccountToken=<token value> --sso=<sso> --mfa=<mfa> --viewportWidth=<viewportWidth> --viewportHeight=<viewportHeight> --skyClientId=<skyClientId> --skyClientSecret=<skyClientSecret> --skyRedirectUri=<"https://localhost:3000/redirect"> --subscriptionKey=<subscriptionKey> --url=<https://example.myschoolapp.com> [...]
+  msar schoolWebsite -h --o=<outputPath> --u=<username> --p=<password> --ignoreErrors --logRequests --commands --silent --logging --pretty --headless --devtools --quit --announcements --audio --news --photoAlbums --videos --concurrency=<concurrency> --rate=<rate> --logFilePath=<logFilePath> --stdoutLevel=<all|trace|debug|info|warning|error|fatal|off> --fileLevel=<all|trace|debug|info|warning|error|fatal|off> --opAccount=<example.1password.com> --opItem=<1Password unique identifier> --opToken=<token value> --serviceAccountToken=<token value> --sso=<sso> --mfa=<mfa> --viewportWidth=<viewportWidth> --viewportHeight=<viewportHeight> --skyClientId=<skyClientId> --skyClientSecret=<skyClientSecret> --skyScope=<skyScope> --skyRedirectUri=<"https://localhost:3000/redirect"> --subscriptionKey=<subscriptionKey> --url=<https://example.myschoolapp.com> [...]
 ```
 
 ## Arguments
@@ -153,6 +153,10 @@ OAuth 2.0 client ID. Defaults to environment variable SKY_CLIENT_ID, if present.
 #### `--skyClientSecret=<skyClientSecret>`
 
 OAuth 2.0 client secret. Defaults to environment variable SKY_CLIENT_SECRET, if present.
+
+#### `--skyScope=<skyScope>`
+
+OAuth 2.0 scope. Defaults to environment variable SKY_SCOPE, if present.
 
 #### `--skyRedirectUri=<"https://localhost:3000/redirect">`
 
