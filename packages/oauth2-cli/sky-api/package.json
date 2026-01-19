@@ -29,16 +29,16 @@
     "version": "commit-and-tag-version"
   },
   "dependencies": {
-    "@oauth2-cli/qui-cli": "^0.5.9",
+    "@oauth2-cli/qui-cli": "^0.5.10",
     "node-fetch": "^3.3.2",
     "oauth2-cli": "^0.2.3"
   },
   "devDependencies": {
     "@battis/descriptive-types": "^0.2.6",
     "@battis/typescript-tricks": "^0.7.6",
-    "@qui-cli/colors": "^3.2.2",
-    "@qui-cli/env-1password": "^1.2.6",
-    "@qui-cli/plugin": "^4.0.0",
+    "@qui-cli/colors": "^3.2.3",
+    "@qui-cli/env-1password": "^1.2.9",
+    "@qui-cli/plugin": "^4.1.0",
     "@tsconfig/node24": "^24.0.4",
     "commit-and-tag-version": "^12.6.1",
     "del-cli": "^6.0.0",

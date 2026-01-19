@@ -22,11 +22,11 @@
     "version": "commit-and-tag-version"
   },
   "dependencies": {
-    "@qui-cli/colors": "^3.2.2",
+    "@qui-cli/colors": "^3.2.3",
     "p-queue": "^8.1.1"
   },
   "devDependencies": {
-    "@qui-cli/plugin": "^4.0.0",
+    "@qui-cli/plugin": "^4.1.0",
     "@tsconfig/node24": "^24.0.4",
     "@types/node": "^25.0.9",
     "commit-and-tag-version": "^12.6.1",

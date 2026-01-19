@@ -40,9 +40,9 @@
     "@msar/pronunciation": "workspace:*",
     "@msar/school-website": "workspace:*",
     "@msar/snapshot": "workspace:*",
-    "@qui-cli/core": "^5.0.2",
-    "@qui-cli/plugin": "^4.0.0",
-    "@qui-cli/structured": "^2.0.4"
+    "@qui-cli/core": "^5.0.3",
+    "@qui-cli/plugin": "^4.1.0",
+    "@qui-cli/structured": "^2.0.5"
   },
   "devDependencies": {
     "@tsconfig/node24": "^24.0.4",
