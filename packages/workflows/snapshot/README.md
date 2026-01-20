@@ -19,7 +19,7 @@ It depends on [Node.js](https://nodejs.org/) which provides the `npm` package ma
 ## Usage:
 
 ```bash
-  msar snapshot -hbtagA --u=<username> --p=<password> --o=<outputPath> --ignoreErrors --logRequests --commands --silent --logging --headless --devtools --quit --pretty --active --future --expired --studentData --metadata --concurrency=<concurrency> --rate=<rate> --logFilePath=<logFilePath> --stdoutLevel=<all|trace|debug|info|warning|error|fatal|off> --fileLevel=<all|trace|debug|info|warning|error|fatal|off> --opAccount=<example.1password.com> --opItem=<1Password unique identifier> --opToken=<token value> --serviceAccountToken=<token value> --sso=<sso> --mfa=<mfa> --viewportWidth=<viewportWidth> --viewportHeight=<viewportHeight> --skyClientId=<skyClientId> --skyClientSecret=<skyClientSecret> --skyRedirectUri=<"https://localhost:3000/redirect"> --subscriptionKey=<subscriptionKey> --fromDate=<fromDate> --toDate=<toDate> --association=<"Activities", "Advisories", "Classes", "Community Groups", "Dorms", and "Teams"> --termsOffered=<termsOffered> --groupsPath=<groupsPath> --year=<year> --csv=<csv> --resume=<resume> url
+  msar snapshot -hbtagA --o=<outputPath> --u=<username> --p=<password> --ignoreErrors --logRequests --pretty --headless --devtools --quit --active --future --expired --studentData --metadata --concurrency=<concurrency> --rate=<rate> --logFilePath=<logFilePath> --stdoutLevel=<all|trace|debug|info|warning|error|fatal|off> --fileLevel=<all|trace|debug|info|warning|error|fatal|off> --sso=<sso> --mfa=<mfa> --viewportWidth=<viewportWidth> --viewportHeight=<viewportHeight> --skyClientId=<skyClientId> --skyClientSecret=<skyClientSecret> --skyScope=<skyScope> --skyRedirectUri=<"https://localhost:3000/redirect"> --subscriptionKey=<subscriptionKey> --fromDate=<fromDate> --toDate=<toDate> --association=<"Activities", "Advisories", "Classes", "Community Groups", "Dorms", and "Teams"> --termsOffered=<termsOffered> --groupsPath=<groupsPath> --year=<year> --csv=<csv> --resume=<resume> url
 ```
 
 ## Arguments
@@ -60,41 +60,15 @@ Log level to console stdout (Default: "info")
 
 Log level to log file if --logFilePath provided (Default: "all")
 
-#### `--commands`
+### Output options
 
-Include shell commands in log (Default: true, use --no-commands to disable)
+#### `-o<outputPath> --outputPath=<outputPath>`
 
-#### `--silent`
+Path to output directory or file to save command output (default: /Users/sbattis/Documents/GitHub/msar/:Snapshot.json, where :Snapshot is either the name of the course in ":Year - :Teacher - :CourseTitle - :SectionId" format for a single section or group or "snapshot" if the --all flag is set. :Snapshot.metadata.json is also output, recording the parameters of the snapshot command. Will use the value in environment variable OUTPUT_PATH if present)
 
-Hide command output (Default: false)
+#### `--pretty`
 
-#### `--logging`
-
-Log commands and output at level debug (Default: true, use --no-logging to disable)
-
-### 1Password environment integration
-
-Store 1Password secret references in your environment, rather than the actual secrets.
-
-If 1Password secret references are stored in the environment, a 1Password service account token is required to access the secret values, which will be loaded into process.env. The service account token can be passed directly as the --opToken argument (e.g. example --opToken "$(op item get myToken)") or, if the 1Password CLI tool is also installed, by simply passing the name or ID of the API Credential in your 1Password vault that holds the service account token (e.g. example --opItem myToken). If you are signed into multiple 1Password account, use the --opAccount argument to specify the account containing the token.
-
-https://developer.1password.com/docs/cli
-
-#### `--opAccount=<example.1password.com>`
-
-1Password account to use (if signed into multiple); will use environment variable OP_ACCOUNT if present
-
-#### `--opItem=<1Password unique identifier>`
-
-Name or ID of the 1Password API Credential item storing the 1Password service account token; will use environment variable OP_ITEM if present
-
-#### `--opToken=<token value>`
-
-1Password service account token; will use environment variable OP_TOKEN if present
-
-#### `--serviceAccountToken=<token value>`
-
-1Password service account token (deprecated, use --opToken)
+Pretty print output to file (if --outputPath option is used)
 
 ### Puppeteer options
 
@@ -134,16 +108,6 @@ Default: 0
 
 Default: 0
 
-### Output options
-
-#### `-o<outputPath> --outputPath=<outputPath>`
-
-Path to output directory or file to save command output (default: /Users/sbattis/Documents/GitHub/myschoolapp-reporting/:Snapshot.json, where :Snapshot is either the name of the course in ":Year - :Teacher - :CourseTitle - :SectionId" format for a single section or group or "snapshot" if the --all flag is set. :Snapshot.metadata.json is also output, recording the parameters of the snapshot command. Will use the value in environment variable OUTPUT_PATH if present)
-
-#### `--pretty`
-
-Pretty print output to file (if --outputPath option is used)
-
 ### Sky API options
 
 #### `--skyClientId=<skyClientId>`
@@ -153,6 +117,10 @@ OAuth 2.0 client ID. Defaults to environment variable SKY_CLIENT_ID, if present.
 #### `--skyClientSecret=<skyClientSecret>`
 
 OAuth 2.0 client secret. Defaults to environment variable SKY_CLIENT_SECRET, if present.
+
+#### `--skyScope=<skyScope>`
+
+OAuth 2.0 scope. Defaults to environment variable SKY_SCOPE, if present.
 
 #### `--skyRedirectUri=<"https://localhost:3000/redirect">`
 
@@ -208,7 +176,7 @@ Capture all sections; positional argument url is used to identify MySchoolApp in
 
 #### `--fromDate=<fromDate>`
 
-Starting date for date-based filter where relevant (Default: "1/15/2026")
+Starting date for date-based filter where relevant (Default: "1/19/2026")
 
 #### `--toDate=<toDate>`
 
