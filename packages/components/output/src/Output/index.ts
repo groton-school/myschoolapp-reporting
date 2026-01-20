@@ -1,5 +1,6 @@
 import { Colors } from '@qui-cli/colors';
 import '@qui-cli/env-1password';
+import { Env } from '@qui-cli/env-1password';
 import * as Plugin from '@qui-cli/plugin';
 import * as Storage from './Storage.js';
 
@@ -40,10 +41,10 @@ export function options(): Plugin.Options {
   };
 }
 
-export function configure(config: Storage.Configuration = {}) {
+export async function configure(config: Storage.Configuration = {}) {
   Storage.outputPath(
     Plugin.hydrate(
-      config.outputPath || process.env[Storage.OUTPUT_PATH],
+      config.outputPath || (await Env.get({ key: Storage.OUTPUT_PATH })),
       Storage.outputPath()
     )
   );
@@ -56,8 +57,13 @@ export function configure(config: Storage.Configuration = {}) {
   Storage.pretty(Plugin.hydrate(config.pretty, Storage.pretty()));
 }
 
-export function init({ values }: Plugin.ExpectedArguments<typeof options>) {
-  configure({ outputPath: process.env.OUTPUT_PATH, ...values });
+export async function init({
+  values
+}: Plugin.ExpectedArguments<typeof options>) {
+  await configure({
+    outputPath: await Env.get({ key: 'OUTPUT_PATH' }),
+    ...values
+  });
 }
 
 export function outputPath() {

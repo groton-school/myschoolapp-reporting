@@ -1,5 +1,6 @@
 import { Colors } from '@qui-cli/colors';
 import '@qui-cli/env-1password';
+import { Env } from '@qui-cli/env-1password';
 import * as Plugin from '@qui-cli/plugin';
 import { Base } from './Base.js';
 import * as Storage from './Storage.js';
@@ -69,7 +70,7 @@ export function options(): Plugin.Options {
       },
       mfa: {
         description: `MySchoolApp MFA configuration (currently only accepts ${Colors.quotedValue(
-          '"entra-id"'
+          '"authenticator"'
         )}, will use the value in environment variable ${Colors.varName(PUPPETEER_MFA)} if present)`
       }
     },
@@ -84,10 +85,12 @@ export function options(): Plugin.Options {
   };
 }
 
-export function init({ values }: Plugin.ExpectedArguments<typeof options>) {
+export async function init({
+  values
+}: Plugin.ExpectedArguments<typeof options>) {
   configure({
-    mfa: process.env[PUPPETEER_MFA],
-    sso: process.env[PUPPETEER_SSO],
+    mfa: await Env.get({ key: PUPPETEER_MFA }),
+    sso: await Env.get({ key: PUPPETEER_SSO }),
     ...values
   });
 }
