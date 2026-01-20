@@ -47,6 +47,16 @@ export async function download(
       for (const video of videos) {
         const videoIndex: AnnotatedVideo = video;
         videoIndex.file_path = await cachedDownload(video.FilenameUrl, 3000);
+        if (!videoIndex.file_path) {
+          const preview = await session.fork(
+            new URL(`/app/detail/album/video/${video.AlbumId}?play=1`, url)
+          );
+          await preview.page.waitForSelector('video[data-mp4]');
+          videoIndex.file_path = await cachedDownload(
+            `https://${await preview.page.$eval('video[data-mp4]', (v) => v.dataset['mp4'])}`
+          );
+          await preview.page.close();
+        }
         videoIndex.cover_file_path = await cachedDownload(
           video.CoverFilenameUrl
         );
